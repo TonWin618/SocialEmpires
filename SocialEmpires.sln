@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialEmpires", "SocialEmpires.csproj", "{A27FC806-273F-4334-B3ED-80CC61E124F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialEmpires", "SocialEmpires.csproj", "{A9A46086-6BF0-4B0E-AB49-0CED3872D930}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A27FC806-273F-4334-B3ED-80CC61E124F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A27FC806-273F-4334-B3ED-80CC61E124F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A27FC806-273F-4334-B3ED-80CC61E124F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A27FC806-273F-4334-B3ED-80CC61E124F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A46086-6BF0-4B0E-AB49-0CED3872D930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A46086-6BF0-4B0E-AB49-0CED3872D930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A46086-6BF0-4B0E-AB49-0CED3872D930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A46086-6BF0-4B0E-AB49-0CED3872D930}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {197BA34F-5C41-42FA-BC69-E839A092AD35}
+		SolutionGuid = {71FB88F5-FC8C-41C2-BC2F-27EF56144577}
 	EndGlobalSection
 EndGlobal
