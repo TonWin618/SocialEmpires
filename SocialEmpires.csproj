@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -17,12 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Avatars\" />
     <Folder Include="Resources\Controllers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\crossdomain.xml">
+    <None Update="Assets">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

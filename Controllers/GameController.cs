@@ -10,6 +10,7 @@ namespace SocialEmpires.Controllers
             return SendFromLocal("crossdomain.xml", "application/xml");
         }
 
+
         private PhysicalFileResult SendFromLocal(string relativePath, string contentType)
         {
             return PhysicalFile(
