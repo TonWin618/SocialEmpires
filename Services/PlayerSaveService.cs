@@ -14,22 +14,22 @@ namespace SocialEmpires.Services
 
         }
 
-        public async Task CreatePlayerSave(PlayerSave save)
+        public async Task CreatePlayerSaveAsync(PlayerSave save)
         {
             playerSaves.Add(save);
         }
 
-        public async Task<PlayerSave?> GetPlayerSave(long playerId)
+        public async Task<PlayerSave?> GetPlayerSaveAsync(long playerId)
         {
             return playerSaves.FirstOrDefault(_ => _.PlayerInfo.Pid == playerId);
         }
 
-        public async Task UpdatePlayerSave(long playerId)
+        public async Task UpdatePlayerSaveAsync(long playerId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeletePlayerSave(long playerId)
+        public async Task DeletePlayerSaveAsync(long playerId)
         {
             throw new NotImplementedException();
         }

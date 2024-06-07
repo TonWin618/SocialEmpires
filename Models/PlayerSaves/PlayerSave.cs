@@ -13,6 +13,10 @@ namespace SocialEmpires.Models
 
         [JsonIgnore]
         [NotMapped]
-        public EmpireMap DefaultMap => Maps.FirstOrDefault(_ => _.Id == PlayerInfo.DefaultMap);
+        public long PlayerId => PlayerInfo.Pid;
+
+        [JsonIgnore]
+        [NotMapped]
+        public EmpireMap DefaultMap => Maps.First(_ => _.Id == PlayerInfo.DefaultMap);
     }
 }

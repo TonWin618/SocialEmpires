@@ -3,25 +3,44 @@
     public record PlayerState
     {
         public List<int> Gifts { get; init; }
+
         public Dictionary<string, int> NeighborAssists { get; init; }
+
         public List<int> CompletedMissions { get; init; }
+
         public List<int> RewardedMissions { get; init; }
+
         public int BonusNextId { get; init; }
+
         public long TimestampLastBonus { get; init; }
+
         public List<int> AttacksSent { get; init; }
+
         public Dictionary<string, int> UnlockedEarlyBuildings { get; init; }
+
         public int Potion { get; init; }
+
         public int KompuSpells { get; init; }
+
         public long KompuLastTimeStamp { get; init; }
+
         public List<int> KompuSteps { get; init; }
+
         public List<int> KompuCompleted { get; init; }
+
         public List<int> LastUpgrades { get; init; }
+
         public Dictionary<string, int> UnlockedSkins { get; init; }
         public int UnlockedQuestIndex { get; init; }
+
         public Dictionary<string, int> QuestsRank { get; init; }
+
         public Dictionary<string, int> Magics { get; init; }
+
         public int Mana { get; init; }
+
         public List<int> BoughtUnits { get; init; }
+
         public List<int> UnitCollectionsCompleted { get; init; }
 
         public int DragonNumber { get; init; }
