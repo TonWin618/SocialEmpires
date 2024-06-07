@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SocialEmpires
+namespace SocialEmpires.Controllers
 {
     public class HomeController : Controller
     {
