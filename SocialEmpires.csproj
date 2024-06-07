@@ -17,7 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Avatars\" />
     <Folder Include="Resources\Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\crossdomain.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
