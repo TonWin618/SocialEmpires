@@ -120,6 +120,9 @@
   <data name="Home" xml:space="preserve">
     <value>主页</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>登录</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>隐私政策</value>
   </data>

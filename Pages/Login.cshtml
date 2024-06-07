@@ -1,0 +1,15 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+
+<div>
+    <form action="/Login" method="post">
+        <input type="email" name="email" />
+        <input type="password" name="password" />
+        <button type="submit">Submit</button>
+    </form>
+    @if(TempData["ErrorMessage"] != null)
+    {
+        <p>@localizer[TempData["ErrorMessage"].ToString()]</p>
+    }
+</div>
