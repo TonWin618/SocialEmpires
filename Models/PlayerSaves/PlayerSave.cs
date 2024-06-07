@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Models
 {
@@ -11,6 +12,7 @@ namespace SocialEmpires.Models
         public PlayerState PrivateState { get; set; }
 
         [JsonIgnore]
+        [NotMapped]
         public EmpireMap DefaultMap => Maps.FirstOrDefault(_ => _.Id == PlayerInfo.DefaultMap);
     }
 }

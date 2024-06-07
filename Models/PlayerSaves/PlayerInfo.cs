@@ -2,10 +2,10 @@
 
 public record PlayerInfo
 {
-    public string Pid { get; init; }
+    public long Pid { get; init; }
     public string Name { get; init; }
     public string Pic { get; init; }
-    public int Cash { get; init; }
+    public long Cash { get; init; }
     public int CompletedTutorial { get; init; }
     public int DefaultMap { get; init; }
     public List<string> MapNames { get; init; }
