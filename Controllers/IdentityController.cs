@@ -116,12 +116,13 @@ namespace SocialEmpires.Controllers
                 TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
                 return Redirect("/Register");
             }
-
+            
             await _signInManager.SignInAsync(user, isPersistent: true);
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             _logger.LogInformation($"Confirmation token for {user.Id}: {token}");
-            return Ok();
+            TempData["SendingInterval"] = 60;
+            return Redirect("/Register");
         }
     }
 }
