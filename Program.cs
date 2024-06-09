@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Models;
 using System.Globalization;
@@ -46,10 +45,10 @@ services.AddDbContext<AppDbContext>(options =>
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     // Password settings.
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
     options.Password.RequiredLength = 6;
     options.Password.RequiredUniqueChars = 1;
 
@@ -58,10 +57,16 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
 
+    // Sign in settings.
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+    options.SignIn.RequireConfirmedEmail = false;
+
+    // Token provider settings.
+    options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultPhoneProvider;
+
     // User settings.
-    options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    options.User.RequireUniqueEmail = false;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    options.User.RequireUniqueEmail = true;
 })
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AppDbContext>();
@@ -71,14 +76,15 @@ services.ConfigureApplicationCookie(cookie =>
     cookie.LoginPath = "/Login";
     cookie.LogoutPath = "/Logout";
     cookie.AccessDeniedPath = "/AccessDenied";
-    cookie.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-    // cookie.SlidingExpiration = true;
+    cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
+
+services.AddLogging();
 
 var app = builder.Build();
 
 app.UseRequestLocalization();
-app.UseAuthorization();
+
 app.UseAuthentication();
 
 // Configure the HTTP request pipeline.
@@ -90,6 +96,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthorization();
 
 app.MapControllers();
 app.MapRazorPages();

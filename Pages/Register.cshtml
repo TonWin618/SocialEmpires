@@ -1,10 +1,17 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = localizer["Register"];
+}
 
 <div>
-    <form action="api/register" method="post">
+    <form action="api/sendEmailConfirmationEmail" method="post">
         <input type="email" name="email" />
+        <button type="submit">Send</button>
+    </form>
+    <form action="api/register" method="post">
+        <input type="number" name="code" />
         <input type="password" name="password" />
         <button type="submit">Submit</button>
     </form>
