@@ -37,11 +37,6 @@ services.AddDbContext<AppDbContext>(options =>
     });
 });
 
-//services.Configure<MvcOptions>(options =>
-//{
-//    options.Filters.Add<UnitOfWorkFilter>();
-//});
-
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     // Password settings.
@@ -93,7 +88,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.UseRouting();
 
