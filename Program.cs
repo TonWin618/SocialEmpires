@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Models;
 using System.Globalization;
@@ -35,6 +36,10 @@ services.AddDbContext<AppDbContext>(options =>
     {
         sqliteOptionsAction.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
     });
+});
+services.Configure<MvcOptions>(options =>
+{
+    options.Filters.Add<UnitOfWorkFilter>();
 });
 
 services.AddIdentity<IdentityUser, IdentityRole>(options =>

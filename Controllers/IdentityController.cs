@@ -22,7 +22,7 @@ namespace SocialEmpires.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("register")]
+        [HttpPost("api/register")]
         public async Task RegisterByEmailAndPassword(
             [FromForm] RegisterByEmailAndPasswordRequest request)
         {
@@ -35,7 +35,7 @@ namespace SocialEmpires.Controllers
 
         public record RegisterByEmailAndPasswordRequest(string email, string password);
 
-        [HttpPost("Login")]
+        [HttpPost("api/login")]
         public async Task<IActionResult> LoginByEmailAndPassword(
             [FromForm] LoginByEmailAndPasswordRequest request)
         {
