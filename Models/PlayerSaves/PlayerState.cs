@@ -43,16 +43,19 @@
 
         public List<int> UnitCollectionsCompleted { get; init; }
 
+        //dragon
         public int DragonNumber { get; init; }
         public int StepNumber { get; init; }
         public long TimeStampTakeCare { get; init; }
         public int DragonNestActive { get; init; }
 
+        //monster
         public int MonsterNumber { get; init; }
         public int StepMonsterNumber { get; init; }
         public long TimeStampTakeCareMonster { get; init; }
         public int MonsterNestActive { get; init; }
 
+        //rider
         public int RiderNumber { get; init; }
         public int RiderStepNumber { get; init; }
         public long RiderTimeStamp { get; init; }
@@ -62,6 +65,7 @@
 
         public long TimeStampDartsReset { get; init; }
         public long TimeStampDartsNewFree { get; init; }
+
         public List<int> DartsBalloonsShot { get; init; }
         public int DartsRandomSeed { get; init; }
         public bool DartsHasFree { get; init; }

@@ -42,6 +42,6 @@
 
         public List<long> LastQuestTimes { get; init; }
 
-        public List<(int, int, int, int, int, int)> Items { get; init; }
+        public List<(int id, int row, int col, int, long time, int, int[] contents, object[] objects)> Items { get; init; }
     }
 }

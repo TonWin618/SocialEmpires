@@ -23,9 +23,5 @@ public record PlayerInfo
     public List<int> MapSizes { get; init; }
 
     public int WorldId { get; init; }
-
-    public int SpRefUid { get; init; }
-    public string SpRefCatInstall { get; init; }
-
     public long LastLoggedIn { get; init; }
 }
