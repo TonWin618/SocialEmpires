@@ -12,7 +12,7 @@ var services = builder.Services;
 
 services.AddRazorPages()
     .AddViewLocalization(options => options.ResourcesPath = "Resources");
-services.AddControllers();
+services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
 
 var supportedCultures = new []
 {
@@ -37,10 +37,11 @@ services.AddDbContext<AppDbContext>(options =>
         sqliteOptionsAction.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
     });
 });
-services.Configure<MvcOptions>(options =>
-{
-    options.Filters.Add<UnitOfWorkFilter>();
-});
+
+//services.Configure<MvcOptions>(options =>
+//{
+//    options.Filters.Add<UnitOfWorkFilter>();
+//});
 
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {

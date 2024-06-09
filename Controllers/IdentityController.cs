@@ -23,14 +23,23 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost("api/register")]
-        public async Task RegisterByEmailAndPassword(
+        public async Task<IActionResult> RegisterByEmailAndPassword(
             [FromForm] RegisterByEmailAndPasswordRequest request)
         {
             var user = new IdentityUser()
             {
-                Email = request.email,
+                Email = request.email
             };
-            await _userManager.CreateAsync(user, request.password);
+
+            user.UserName = user.Id.Replace("-","");
+
+            var result = await _userManager.CreateAsync(user, request.password);
+            if (!result.Succeeded)
+            {
+                TempData["ErrorMessage"] = string.Join(',',result.Errors.Select(_ => _.Description));
+                return Redirect("/Register");
+            }
+            return Redirect("/");
         }
 
         public record RegisterByEmailAndPasswordRequest(string email, string password);
