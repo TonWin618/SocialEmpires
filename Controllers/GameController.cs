@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Json;
 
 namespace SocialEmpires.Controllers
 {
@@ -15,38 +16,52 @@ namespace SocialEmpires.Controllers
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
-            return SendFromLocal(path, "application/octet-stream");
+            return SendFromLocal(path, "application/x-shockwave-falsh");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_projectiles.swf")]
         public ActionResult GetProjectiles()
         {
-            return SendFromLocal("swf/05122012_projectiles.swf", "application/octet-stream");
+            return SendFromLocal("swf/05122012_projectiles.swf", "application/x-shockwave-falsh");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_magicParticles.swf")]
         public ActionResult GetMagicParticles()
         {
-            return SendFromLocal("swf/05122012_magicParticles.swf", "application/octet-stream");
+            return SendFromLocal("swf/05122012_magicParticles.swf", "application/x-shockwave-falsh");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_dynamic.swf")]
         public ActionResult GetDynamic()
         {
-            return SendFromLocal("swf/05122012_dynamic.swf", "application/octet-stream");
+            return SendFromLocal("swf/05122012_dynamic.swf", "application/x-shockwave-falsh");
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
-        public ActionResult TrackGameStatus()
+        public ActionResult TrackGameStatus(string status, string installId, string user_id)
         {
             return Ok("");
         }
 
-        //[HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
+        [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
+        public ActionResult GetGameConfig()
+        {
+            return SendFromLocal("config/game_config_4399.json", "application/json");
+        }
 
-        //[HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
+        [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
+        public ActionResult GetPlayerInfo(string userid, string user_key, string spdebug, string language)
+        {
+            return SendFromLocal("test_save.json", "application/json");
+        }
 
-        //[HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/sync_error_track.php")]
+        [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/sync_error_track.php")]
+        public ActionResult SyncErrorTrack(
+            string userid, string user_key, string spdebug, string language,
+            string error, string current_failed)
+        {
+            return Ok("");
+        }
 
         private PhysicalFileResult SendFromLocal(string relativePath, string contentType)
         {
