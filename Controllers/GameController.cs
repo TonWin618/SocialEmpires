@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Net.Http.Json;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SocialEmpires.Services;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SocialEmpires.Controllers
 {
@@ -61,6 +64,24 @@ namespace SocialEmpires.Controllers
             string error, string current_failed)
         {
             return Ok("");
+        }
+
+        [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/command.php")]
+        public async Task<ActionResult> Command([FromServices] CommandService commandService)
+        {
+            var userId = HttpContext.User.Identity?.Name;
+            if(userId == null )
+            {
+                return Redirect("/Login");
+            }
+
+            using (var reader = new StreamReader(Request.Body))
+            {
+                var command = await JsonNode.ParseAsync(reader.BaseStream);
+                await commandService.HandleCommandsAsync(userId, command);
+            }
+
+            return Ok("""{"result": "success"}""");
         }
 
         private PhysicalFileResult SendFromLocal(string relativePath, string contentType)

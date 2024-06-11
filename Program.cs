@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Models;
+using SocialEmpires.Services;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,6 +76,8 @@ services.ConfigureApplicationCookie(cookie =>
 });
 
 services.AddLogging();
+
+services.AddScoped<CommandService>();
 
 var app = builder.Build();
 
