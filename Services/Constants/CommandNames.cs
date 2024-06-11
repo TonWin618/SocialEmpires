@@ -1,6 +1,6 @@
 ﻿namespace SocialEmpires.Services.Constants
 {
-    public class Command
+    public class CommandNames
     {
         public const string PLACE_GIFT = "place_gift";
         public const string PLACE_STORED_ITEM = "place_stored_item";
