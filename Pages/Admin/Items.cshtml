@@ -1,0 +1,25 @@
+﻿@page
+@using SocialEmpires.Services
+@inject ConfigFileService service
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+
+<table>
+    <thead>
+        <tr>
+            <th>@localizer["Name"]</th>
+            <th>@localizer["Type"]</th>
+            <th>@localizer["Size"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in await service.GetAllItemsAsync(HttpContext.Request.Headers.AcceptLanguage))
+        {
+            <tr>
+                <td><input type="text" value="@item.Name"/><button>ChangeName</button></td>
+                <td>@item.Type</td>
+                <td>@item.Width * @item.Height</td>
+            </tr>
+        }
+    </tbody>
+</table>
