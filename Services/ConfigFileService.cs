@@ -29,6 +29,11 @@ namespace SocialEmpires.Services
             }
         }
 
+        public async Task<Item?> GetItemAsync(string id)
+        {
+            return configItems?.FirstOrDefault(_ => _.Id == id);
+        }
+
         public async Task<(int pageCount,IEnumerable<Item>? items)> GetItemsAsync(int pageIndex, int pageSize) 
         {
             if(configItems == null)

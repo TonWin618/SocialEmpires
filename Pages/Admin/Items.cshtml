@@ -33,53 +33,69 @@
             }
             foreach (var item in data)
             {
-                <tr>
-                    <td><img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/></td>
-                    <td>@item.Id</td>
-                    <td>@item.Type</td>
-                    <td>
-                    <input type="text" value="@item.Name" onclick="changeName()" />
-                    </td>
-                    <td>@item.CostType @item.Cost</td>
-                    <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
-                    <td>@item.CategoryId : @item.SubcategoryId</td>
-                    <td>@($"{item.Life,-5} | {item.Velocity,-2} | {item.Attack,-4} | {item.AttackInterval,-3} | {item.AttackRange,-2}")</td>
-                    <td>
-                        @(item.Flying == "1" ? "■Fly" : "")
-                        @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
-                        @(item.OnlyMobile == "1" ? $"■Mobile" : "")
-                        @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
-                        @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
-                    </td>
-                    <td>
-                        <button onclick="changeName()">@localizer["Edit"]</button>
-                        <button onclick="changeName()" disabled="@(item.InStore=="1")">@localizer["Shelve"]</button>
-                        <button onclick="changeName()" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/>
+                        </td>
+                        <td>@item.Id</td>
+                        <td>@item.Type</td>
+                        <td>
+                            <input type="text" value="@item.Name"/>
+                        </td>
+                        <td>@item.CostType @item.Cost</td>
+                        <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
+                        <td>@item.CategoryId : @item.SubcategoryId</td>
+                        <td>@($"{item.Life,-5} | {item.Velocity,-2} | {item.Attack,-4} | {item.AttackInterval,-3} | {item.AttackRange,-2}")</td>
+                        <td>
+                            @(item.Flying == "1" ? "■Fly" : "")
+                            @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
+                            @(item.OnlyMobile == "1" ? $"■Mobile" : "")
+                            @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
+                            @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
+                        </td>
+                        <td>
+                            <button onclick="changeName()">@localizer["Edit"]</button>
+                            <button onclick="shelveItem(@item.Id)" disabled="@(item.InStore=="1")">@localizer["Shelve"]</button>
+                            <button onclick="unshelveItem(@item.Id)" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
+                        </td>
+                    </tr>
             }
         }
     </tbody>
 </table>
+
 <div>
     @{
         for(int i = 0;i < pageCount;i++)
         {
-            <button>
-                <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
-            </button>
+                <button>
+                    <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
+                </button>
         }
     }
 </div>
 
+
 <script>
     const body = { newName: "int" };
-    function changeName() {
+    function shelveItem(id) {
         console.log("trigger")
-        fetch("/api/admin/config/changeName", {
+        fetch(`/api/admin/config/items/${id}/shelve`, {
             method:'Post',
             headers: {
                 'Content-Type':'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(res => console.log(res))
+    }
+
+    function unshelveItem(id) {
+        console.log("trigger")
+        fetch(`/api/admin/config/items/${id}/unshelve`, {
+            method: 'Post',
+            headers: {
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
         })

@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using SocialEmpires.Models;
 using SocialEmpires.Services;
 
 namespace SocialEmpires.Controllers
 {
-    [Route("api/admin/[controller]")]
+    [Route("api/admin/config")]
     [ApiController]
     public class ConfigController:ControllerBase
     {
@@ -24,13 +25,30 @@ namespace SocialEmpires.Controllers
             return Page(pageIndex, pageSize, count, items);
         }
 
-        [HttpPost("changeName")]
-        //[Authorize(Roles = "Admin")]
-        public async Task<bool> ChangeName(ChangeNameRequest request)
+        [HttpGet("items/{id}")]
+        public async Task<Item?> GetItem(string id)
         {
+            return await _configFileService.GetItemAsync(id);
+        }
+
+        [HttpPost("items/{id}/shelve")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<bool> ShelveItem(string id)
+        {
+            var item = await _configFileService.GetItemAsync(id);
+            item.InStore = "1";
             return true;
         }
-        public record ChangeNameRequest(string NewName);
+
+        [HttpPost("items/{id}/unshelve")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<bool> UnshelveItem(string id)
+        {
+            var item = await _configFileService.GetItemAsync(id);
+            item.InStore = "0";
+            return true;
+        }
+
 
         public PageResult<T> Page<T>(int pageIndex, int pageSize, int pageCount, IEnumerable<T>? data)
         {
