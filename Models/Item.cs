@@ -6,9 +6,26 @@ namespace SocialEmpires.Models
     public record Item
     {
         public string Id { get; set; }
+
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string InStore { get; set; }
+
+        /// <summary>
+        /// string
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// <see cref="Enums.ItemType"/>
+        /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// int 
+        /// </summary>
         public string Cost { get; set; }
 
         /// <summary>
@@ -21,91 +38,231 @@ namespace SocialEmpires.Models
 
         public string Groups { get; set; }
 
+        /// <summary>
+        /// item id
+        /// </summary>
         public string Trains { get; set; }
 
+        /// <summary>
+        /// item id
+        /// </summary>
         public string UpgradesTo { get; set; }
 
+        /// <summary>
+        /// int -8000 ~ 117
+        /// </summary>
         public string DisplayOrder { get; set; }
 
+        /// <summary>
+        /// int seconds
+        /// </summary>
         public string Activation { get; set; }
 
+        /// <summary>
+        /// always 0
+        /// </summary>
         public string Expiration { get; set; }
 
+        /// <summary>
+        /// int
+        /// </summary>
         public string Collect { get; set; }
 
+        /// <summary>
+        /// <see cref="Enums.CollectType"/>
+        /// </summary>
         public string CollectType { get; set; }
 
+        /// <summary>
+        /// int
+        /// </summary>
         public string CollectXp { get; set; }
 
+        /// <summary>
+        /// <see cref="Enums.CategoryType"/>
+        /// </summary>
         public string CategoryId { get; set; }
 
+        /// <summary>
+        /// <see cref="Enums.SubCategoryType"/>
+        /// </summary>
         public string SubcategoryId { get; set; }
 
+        /// <summary>
+        /// int 
+        /// </summary>
         public string SubcatFunctional { get; set; }
 
+        /// <summary>
+        /// int 
+        /// </summary>
         public string MinLevel { get; set; }
 
+        /// <summary>
+        /// int 
+        /// </summary>
         public string Width { get; set; }
 
+        /// <summary>
+        /// int 
+        /// </summary>
         public string Height { get; set; }
 
+        /// <summary>
+        /// int
+        /// </summary>
         public string MaxFrame { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string Giftable { get; set; }
 
+        /// <summary>
+        /// string 
+        /// </summary>
         public string ImgName { get; set; }
 
+        /// <summary>
+        /// 0,1,2,3,4
+        /// </summary>
         public string Elevation { get; set; }
 
+        /// <summary>
+        /// 0,1,2,4,5,6,10,50
+        /// </summary>
         public string UnitCapacity { get; set; }
 
+        /// <summary>
+        /// int 
+        /// </summary>
         public string Attack { get; set; }
 
+        /// <summary>
+        /// always 1
+        /// </summary>
         public string Defense { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 50000
+        /// </summary>
         public string Life { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 12
+        /// </summary>
         public string Velocity { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 20
+        /// </summary>
         public string AttackRange { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 175
+        /// </summary>
         public string AttackInterval { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string NewItem { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 50
+        /// </summary>
         public string Population { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 30
+        /// </summary>
         public string GiftLevel { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 10
+        /// </summary>
         public string CostUnitCash { get; set; }
 
+        /// <summary>
+        /// <see cref="Enums.RaceType"/>
+        /// </summary>
         public string Race { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string Flying { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string Protect { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 45
+        /// </summary>
         public string Potion { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string Achievement { get; set; }
 
+        /// <summary>
+        /// string
+        /// </summary>
         public string AchievementDesc { get; set; }
 
+        /// <summary>
+        /// int 0 ~ 15
+        /// </summary>
         public string UnitsLimit { get; set; }
 
+        /// <summary>
+        /// string
+        /// </summary>
         public string StoreGroups { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 20:
+        /// </summary>
         public string StoreLevel { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 2:
+        /// </summary>
         public string Size { get; set; }
 
         #region mobile
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string ShowOnMobile { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string ShowOnMobileStore { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string OnlyMobile { get; set; }
 
+        /// <summary>
+        /// 0:
+        /// 1:
+        /// </summary>
         public string IphoneAdjustments { get; set; }
         #endregion
     }
