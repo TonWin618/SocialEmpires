@@ -18,10 +18,23 @@ namespace SocialEmpires.Controllers
 
         [HttpGet("items")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IEnumerable<Item>> GetItems()
+        public async Task<PageResult<Item>> GetItems(int pageIndex, int pageSize)
         {
-            var items = await _configFileService.GetAllItemsAsync("zh");
-            return items;
+            var (count, items) = await _configFileService.GetItemsAsync(pageIndex,pageSize);
+            return Page(pageIndex, pageSize, count, items);
         }
+
+        [HttpGet("changeName")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<string> ChangeName(string newName)
+        {
+            return newName;
+        }
+
+        public PageResult<T> Page<T>(int pageIndex, int pageSize, int pageCount, IEnumerable<T>? data)
+        {
+            return new PageResult<T>(pageIndex, pageSize, pageCount, data?.Count()??0, data);
+        }
+        public record PageResult<T>(int PageIndex, int PageSize, int PageCount, int DataCount, IEnumerable<T>? Data);
     }
 }

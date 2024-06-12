@@ -11,6 +11,8 @@ namespace SocialEmpires.Services
 
         private readonly ILogger<ConfigFileService> _logger;
         private readonly JsonSerializerOptions jsonSerializerOptions;
+        private readonly JsonNode _config;
+        private IEnumerable<Item>? configItems; 
 
         public ConfigFileService(ILogger<ConfigFileService> logger)
         {
@@ -20,36 +22,50 @@ namespace SocialEmpires.Services
             {
                 PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
             };
-        }
 
-        public async Task<IEnumerable<Item>?> GetAllItemsAsync(string language) 
-        {
             using (var reader = new StreamReader(File.OpenRead(zhConfigFile)))
             {
-                try
-                {
-                    var config = await JsonNode.ParseAsync(reader.BaseStream);
-                    if (config == null) 
-                    {
-                        throw new FileNotFoundException(); 
-                    }
+                _config = JsonNode.Parse(reader.BaseStream)??throw new InvalidOperationException();
+            }
+        }
 
-                    var items = JsonSerializer.Deserialize<IEnumerable<Item>>(
-                        config["items"], 
-                        jsonSerializerOptions);
-
-                    if (items == null)
-                    {
-                        throw new InvalidDataException();
-                    }
-                    return items;
-                }
-                catch(Exception ex) 
+        public async Task<(int pageCount,IEnumerable<Item>? items)> GetItemsAsync(int pageIndex, int pageSize) 
+        {
+            if(configItems == null)
+            {
+                using (var reader = new StreamReader(File.OpenRead(zhConfigFile)))
                 {
-                    _logger.LogWarning(ex.Message);
-                    return null;
+                    try
+                    {
+                        configItems = JsonSerializer.Deserialize<IEnumerable<Item>>(
+                            _config["items"],
+                            jsonSerializerOptions);
+
+                        if (configItems == null)
+                        {
+                            throw new InvalidDataException();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex.Message);
+                        return NullPage<Item>();
+                    }
                 }
             }
+            return Page(pageIndex,pageSize,configItems);
+        }
+
+        private (int pageCount, IEnumerable<T>? data) NullPage<T>()
+        {
+            return (0, null);
+        }
+
+        private (int pageCount, IEnumerable<T>? data) Page<T>(int pageIndex, int pageSize, IEnumerable<T> data)
+        {
+            var pageCount = ((int)Math.Ceiling((double)data.Count() / pageSize));
+            var items = data.Skip(pageIndex * pageSize).Take(pageSize);
+            return (pageCount, items);
         }
     }
 }

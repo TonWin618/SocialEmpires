@@ -1,9 +1,15 @@
 ﻿@page
 @using SocialEmpires.Services
-@inject ConfigFileService service
+@inject ConfigFileService configFileService
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer localizer
+@{
+    var pageIndex = int.Parse(Request.Query["pageIndex"][0]);
+    var pageSize = int.Parse(Request.Query["pageSize"][0]);
+    var (pageCount,data) = await configFileService.GetItemsAsync(pageIndex, pageSize);
+}
 
+    
 <table>
     <thead>
         <tr>
@@ -13,13 +19,46 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in await service.GetAllItemsAsync(HttpContext.Request.Headers.AcceptLanguage))
-        {
-            <tr>
-                <td><input type="text" value="@item.Name"/><button>ChangeName</button></td>
-                <td>@item.Type</td>
-                <td>@item.Width * @item.Height</td>
-            </tr>
+        @{
+            if(data == null)
+            {
+                return;
+            }
+            foreach (var item in data)
+            {
+                <tr>
+                    <td><input type="text" value="@item.Name" onclick="changeName()" /><button>@localizer["ChangeName"]</button></td>
+                    <td>@item.Type</td>
+                    <td>@item.Width * @item.Height</td>
+                </tr>
+            }
         }
     </tbody>
 </table>
+<div>
+    @{
+        for(int i = 0;i < pageCount;i++)
+        {
+            <button>
+                <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
+            </button>
+        }
+    }
+</div>
+
+<script>
+    const data = { newName: "int" };
+    function changeName() {
+        fetch("/api/admin/changeName", {
+            method:'Post',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+            .then(data => {
+                console.log(data.body)
+            })
+    }
+</script>

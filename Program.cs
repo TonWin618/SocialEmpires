@@ -78,7 +78,7 @@ services.ConfigureApplicationCookie(cookie =>
 services.AddLogging();
 
 services.AddScoped<CommandService>();
-services.AddScoped<ConfigFileService>();
+services.AddSingleton<ConfigFileService>();
 
 var app = builder.Build();
 

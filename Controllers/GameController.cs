@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SocialEmpires.Services;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SocialEmpires.Controllers
 {
