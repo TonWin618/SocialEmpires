@@ -13,6 +13,7 @@
 <table width="100%">
     <thead>
         <tr>
+            <th></th>
             <th>@localizer["Id"]</th>
             <th>@localizer["T"]</th>
             <th>@localizer["Name"]</th>
@@ -33,6 +34,7 @@
             foreach (var item in data)
             {
                 <tr>
+                    <td><img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/></td>
                     <td>@item.Id</td>
                     <td>@item.Type</td>
                     <td>
