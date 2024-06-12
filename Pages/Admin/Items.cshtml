@@ -33,32 +33,32 @@
             }
             foreach (var item in data)
             {
-                    <tr>
-                        <td>
-                            <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/>
-                        </td>
-                        <td>@item.Id</td>
-                        <td>@item.Type</td>
-                        <td>
-                            <input type="text" value="@item.Name"/>
-                        </td>
-                        <td>@item.CostType @item.Cost</td>
-                        <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
-                        <td>@item.CategoryId : @item.SubcategoryId</td>
-                        <td>@($"{item.Life,-5} | {item.Velocity,-2} | {item.Attack,-4} | {item.AttackInterval,-3} | {item.AttackRange,-2}")</td>
-                        <td>
-                            @(item.Flying == "1" ? "■Fly" : "")
-                            @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
-                            @(item.OnlyMobile == "1" ? $"■Mobile" : "")
-                            @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
-                            @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
-                        </td>
-                        <td>
-                            <button onclick="changeName()">@localizer["Edit"]</button>
-                            <button onclick="shelveItem(@item.Id)" disabled="@(item.InStore=="1")">@localizer["Shelve"]</button>
-                            <button onclick="unshelveItem(@item.Id)" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/>
+                            </td>
+                            <td>@item.Id</td>
+                            <td>@item.Type</td>
+                            <td>
+                                <input type="text" value="@item.Name"/>
+                            </td>
+                            <td>@item.CostType @item.Cost</td>
+                            <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
+                            <td>@item.CategoryId : @item.SubcategoryId</td>
+                            <td>@($"{item.Life,-5} | {item.Velocity,-2} | {item.Attack,-4} | {item.AttackInterval,-3} | {item.AttackRange,-2}")</td>
+                            <td>
+                                @(item.Flying == "1" ? "■Fly" : "")
+                                @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
+                                @(item.OnlyMobile == "1" ? $"■Mobile" : "")
+                                @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
+                                @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
+                            </td>
+                            <td>
+                                <button onclick="openItemDetail(@item.Id)">@localizer["Edit"]</button>
+                                <button onclick="shelveItem(@item.Id)" disabled="@(item.InStore=="1")">@localizer["Shelve"]</button>
+                                <button onclick="unshelveItem(@item.Id)" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
+                            </td>
+                        </tr>
             }
         }
     </tbody>
@@ -68,16 +68,22 @@
     @{
         for(int i = 0;i < pageCount;i++)
         {
-                <button>
-                    <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
-                </button>
+                    <button>
+                        <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
+                    </button>
         }
     }
 </div>
 
+<div id="itemDetailDiv">
+    <button onclick="closeItemDetail()">X</button>
+    <div>
+        <iframe id="itemDetailFrame" onload="resizeIframe(this)">
+        </iframe>
+    </div>
+</div>
 
 <script>
-    const body = { newName: "int" };
     function shelveItem(id) {
         console.log("trigger")
         fetch(`/api/admin/config/items/${id}/shelve`, {
@@ -101,4 +107,36 @@
         })
             .then(res => console.log(res))
     }
+
+    function openItemDetail(id) {
+        document.getElementById("itemDetailDiv").style.display = "block";
+        document.getElementById("itemDetailFrame").src = `/admin/itemDetail?id=${id}`;
+    }
+
+    function closeItemDetail() {
+        document.getElementById("itemDetailDiv").style.display = "none";
+    }
+
+    function resizeIframe(iframe) {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+        iframe.style.width = iframe.contentWindow.document.body.scrollWidth + 'px';
+    }
+
+    closeItemDetail();
 </script>
+
+<style>
+    #itemDetailDiv {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 20%;
+        top: 5%;
+        width: 60%;
+        height: 80%;
+        overflow: auto;
+    }
+
+    #itemDetailFrame{
+    }
+</style>
