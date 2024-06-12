@@ -10,12 +10,17 @@
 }
 
     
-<table>
+<table width="100%">
     <thead>
         <tr>
+            <th>@localizer["Id"]</th>
+            <th>@localizer["T"]</th>
             <th>@localizer["Name"]</th>
-            <th>@localizer["Type"]</th>
-            <th>@localizer["Size"]</th>
+            <th>@localizer["Cost"]</th>
+            <th>@localizer["Trains"]</th>
+            <th>@localizer["Category"]</th>
+            <th>@localizer["Properties"] (l/v/a/i/r)</th>
+            <th>@localizer["Others"]</th>
             <th>@localizer["Operation"]</th>
         </tr>
     </thead>
@@ -28,13 +33,27 @@
             foreach (var item in data)
             {
                 <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Type</td>
                     <td>
                     <input type="text" value="@item.Name" onclick="changeName()" />
-                        
                     </td>
-                    <td>@item.Type</td>
-                    <td>@item.Width * @item.Height</td>
-                    <td><button onclick="changeName()">@localizer["Edit"]</button></td>
+                    <td>@item.CostType @item.Cost</td>
+                    <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
+                    <td>@item.CategoryId : @item.SubcategoryId</td>
+                    <td>@($"{item.Life,-5} | {item.Velocity,-2} | {item.Attack,-4} | {item.AttackInterval,-3} | {item.AttackRange,-2}")</td>
+                    <td>
+                        @(item.Flying == "1" ? "■Fly" : "")
+                        @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
+                        @(item.OnlyMobile == "1" ? $"■Mobile" : "")
+                        @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
+                        @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
+                    </td>
+                    <td>
+                        <button onclick="changeName()">@localizer["Edit"]</button>
+                        <button onclick="changeName()" disabled="@(item.InStore=="1")">@localizer["Shelve"]</button>
+                        <button onclick="changeName()" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
+                    </td>
                 </tr>
             }
         }
