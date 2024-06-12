@@ -24,12 +24,13 @@ namespace SocialEmpires.Controllers
             return Page(pageIndex, pageSize, count, items);
         }
 
-        [HttpGet("changeName")]
+        [HttpPost("changeName")]
         //[Authorize(Roles = "Admin")]
-        public async Task<string> ChangeName(string newName)
+        public async Task<bool> ChangeName(ChangeNameRequest request)
         {
-            return newName;
+            return true;
         }
+        public record ChangeNameRequest(string NewName);
 
         public PageResult<T> Page<T>(int pageIndex, int pageSize, int pageCount, IEnumerable<T>? data)
         {

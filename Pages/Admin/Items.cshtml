@@ -16,6 +16,7 @@
             <th>@localizer["Name"]</th>
             <th>@localizer["Type"]</th>
             <th>@localizer["Size"]</th>
+            <th>@localizer["Operation"]</th>
         </tr>
     </thead>
     <tbody>
@@ -27,9 +28,13 @@
             foreach (var item in data)
             {
                 <tr>
-                    <td><input type="text" value="@item.Name" onclick="changeName()" /><button>@localizer["ChangeName"]</button></td>
+                    <td>
+                    <input type="text" value="@item.Name" onclick="changeName()" />
+                        
+                    </td>
                     <td>@item.Type</td>
                     <td>@item.Width * @item.Height</td>
+                    <td><button onclick="changeName()">@localizer["Edit"]</button></td>
                 </tr>
             }
         }
@@ -47,18 +52,16 @@
 </div>
 
 <script>
-    const data = { newName: "int" };
+    const body = { newName: "int" };
     function changeName() {
-        fetch("/api/admin/changeName", {
+        console.log("trigger")
+        fetch("/api/admin/config/changeName", {
             method:'Post',
             headers: {
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(body)
         })
-        .then(res => res.json())
-            .then(data => {
-                console.log(data.body)
-            })
+            .then(res => console.log(res))
     }
 </script>
