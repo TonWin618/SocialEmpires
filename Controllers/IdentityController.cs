@@ -40,7 +40,7 @@ namespace SocialEmpires.Controllers
             {
                 Email = email
             };
-            user.UserName = user.Id.Replace("-", "");
+            user.UserName = user.Id.ToString();
             await _userManager.CreateAsync(user, password);
 
             await _userManager.AddToRoleAsync(user, "User");
@@ -108,9 +108,9 @@ namespace SocialEmpires.Controllers
             {
                 Email = email
             };
-            user.UserName = user.Id.Replace("-", "");
+            user.UserName = user.Id.ToString();
             var result = await _userManager.CreateAsync(user, Guid.NewGuid().ToString());
-            
+
             if (!result.Succeeded)
             {
                 TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));

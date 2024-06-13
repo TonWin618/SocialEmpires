@@ -16,5 +16,24 @@ namespace SocialEmpires.Models
         [JsonIgnore]
         [NotMapped]
         public EmpireMap DefaultMap => Maps.First();
+
+        private PlayerSave()
+        {
+            // for EF Core
+        }
+
+        public static PlayerSave Create(string playerId, string name) 
+        {
+            var info = PlayerInfo.Create(playerId,name);
+            var map = EmpireMap.Create(playerId);
+            var state = PlayerState.Create(playerId);
+            return new PlayerSave()
+            {
+                Pid = playerId,
+                PlayerInfo = info,
+                Maps = new() { map },
+                PrivateState = state
+            };
+        }
     }
 }

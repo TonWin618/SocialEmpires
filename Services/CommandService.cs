@@ -28,7 +28,6 @@ namespace SocialEmpires.Services
 
         public async Task HandleCommand(string userId, string cmd, params JsonArray[] args)
         {
-            var save = new PlayerSave();
             if (cmd == CommandNames.GAME_STATUS)
             {
                 
@@ -44,11 +43,11 @@ namespace SocialEmpires.Services
                 var priceMultiplier = args[6].ToString();
                 var type = args[7].ToString();
 
-                var map = save.Maps[townId];
+                //var map = save.Maps[townId];
 
                 if (!dontModifyResources)
                 {
-                    map.Xp += 10;
+                    //map.Xp += 10;
                 }
             }
             else if (cmd == CommandNames.COMPLETE_TUTORIAL)

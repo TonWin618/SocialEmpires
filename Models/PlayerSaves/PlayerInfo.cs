@@ -26,4 +26,26 @@ public class PlayerInfo
 
     public int WorldId { get; set; }
     public long LastLoggedIn { get; set; }
+
+    private PlayerInfo()
+    {
+        // for EF Core
+    }
+
+    public static PlayerInfo Create(string playerId, string name)
+    {
+        return new PlayerInfo()
+        {
+            Pid = playerId,
+            Name = name,
+            Pic = playerId,
+            Cash = 0,
+            CompletedTutorial = 0,
+            DefaultMap = 0,
+            MapNames = new List<string>() { "My Empire" },
+            MapSizes = new List<int>() { 0 },
+            WorldId = 0,
+            LastLoggedIn = DateTimeOffset.Now.ToUnixTimeSeconds(),
+        };
+    }
 }

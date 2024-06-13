@@ -61,7 +61,7 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultPhoneProvider;
 
     // User settings.
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
     options.User.RequireUniqueEmail = true;
 })
     .AddDefaultTokenProviders()

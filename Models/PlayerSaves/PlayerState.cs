@@ -78,5 +78,71 @@
         public Dictionary<string, int> Teams { get; set; }
         public Dictionary<string, int> ArrayAnimals { get; set; }
         public int Strategy { get; set; }
+
+        private PlayerState()
+        {
+            // for EF Core
+        }
+
+        public static PlayerState Create(string playerId)
+        {
+            return new ()
+            {
+                Pid = playerId,
+                Gifts = new(),
+                NeighborAssists = new(),
+                CompletedMissions = new(),
+                RewardedMissions = new(),
+                BonusNextId = 0,
+                TimestampLastBonus = 0,
+                AttacksSent = new(),
+                UnlockedEarlyBuildings = new(),
+                Potion = 0,
+
+                KompuSpells = 0,
+                KompuLastTimeStamp = 0,
+                KompuSteps = new(),
+                KompuCompleted = new(),
+
+                LastUpgrades = new(),
+                UnlockedSkins = new(),
+                UnlockedQuestIndex = 0,
+                QuestsRank = new(),
+                Magics = new(),
+                Mana = 0,
+                BoughtUnits = new(),
+                UnitCollectionsCompleted = new(),
+
+                DragonNumber = 0,
+                StepNumber = 0,
+                TimeStampTakeCare = 0,
+                DragonNestActive = 1,
+
+                MonsterNestActive = 0,
+                MonsterNumber = 0,
+                StepMonsterNumber = 0,
+                TimeStampTakeCareMonster = 0,
+
+                RiderNumber = 0,
+                RiderStepNumber = 0,
+                RiderTimeStamp = 0,
+
+                TimeStampHeavySiegeAttack = 0,
+                TimeStampHeavySiegePeriod = 0,
+
+                TimeStampDartsNewFree = 0,
+                TimeStampDartsReset = 0,
+                DartsBalloonsShot = new(),
+                DartsGotExtra = true,
+                DartsHasFree = true,
+                DartsRandomSeed = 0,
+
+                CountTimePacket = new(),
+                InfoShowed = new(),
+                Teams = new(),
+                ArrayAnimals = new(),
+                Strategy = 8
+            };
+        }
     }
 }
