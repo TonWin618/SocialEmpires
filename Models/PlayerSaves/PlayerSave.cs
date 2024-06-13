@@ -5,6 +5,8 @@ namespace SocialEmpires.Models
 {
     public record class PlayerSave
     {
+        public string Pid { get; set; }
+
         public PlayerInfo PlayerInfo { get; set; }
 
         public List<EmpireMap> Maps { get; set; }
@@ -13,10 +15,6 @@ namespace SocialEmpires.Models
 
         [JsonIgnore]
         [NotMapped]
-        public long PlayerId => PlayerInfo.Pid;
-
-        [JsonIgnore]
-        [NotMapped]
-        public EmpireMap DefaultMap => Maps.First(_ => _.Id == PlayerInfo.DefaultMap);
+        public EmpireMap DefaultMap => Maps.First();
     }
 }

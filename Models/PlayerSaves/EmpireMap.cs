@@ -2,7 +2,7 @@
 {
     public class EmpireMap
     {
-        public long Id { get; set; }
+        public string Pid { get; set; }
 
         public List<int> Expansions { get; set; }
 
@@ -34,7 +34,7 @@
 
         public int IncreasedPopulation { get; set; }
 
-        public Dictionary<string, long> ExpirableUnitsTime { get; set; }
+        public Dictionary<string, int> ExpirableUnitsTime { get; set; }
 
         public List<int> UniversAttackWin { get; set; }
 
@@ -42,6 +42,11 @@
 
         public List<long> LastQuestTimes { get; set; }
 
-        public List<(int id, int row, int col, int, long time, int, int[] contents, object[] objects)> Items { get; set; }
+        public List<MapItem> Items { get; set; }
     }
+
+    public record MapItem(int Id, int Row, int Col, int Keep1, long Time, int Keep2, int[] Contents, object[] Objects)
+    {
+
+    };
 }

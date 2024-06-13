@@ -1,7 +1,9 @@
 ﻿namespace SocialEmpires.Models
 {
-    public record PlayerState
+    public class PlayerState
     {
+        public string Pid { get; set; }
+
         public List<int> Gifts { get; set; }
 
         public Dictionary<string, int> NeighborAssists { get; set; }
@@ -73,7 +75,7 @@
 
         public List<int> CountTimePacket { get; set; }
         public List<int> InfoShowed { get; set; }
-        public Dictionary<string, int> Teams { get; set; } // Assuming 'tournament' is a special case that can be null
+        public Dictionary<string, int> Teams { get; set; }
         public Dictionary<string, int> ArrayAnimals { get; set; }
         public int Strategy { get; set; }
     }

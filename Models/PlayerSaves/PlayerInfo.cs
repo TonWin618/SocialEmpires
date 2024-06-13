@@ -1,15 +1,17 @@
 ﻿namespace SocialEmpires.Models;
 
-public record PlayerInfo
+public class PlayerInfo
 {
     /// <summary>
     /// player id
     /// </summary>
-    public int Pid { get; set; }
+    public string Pid { get; set; }
+
     /// <summary>
     /// player name
     /// </summary>
     public string Name { get; set; }
+
     /// <summary>
     /// player avatar
     /// </summary>

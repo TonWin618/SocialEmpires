@@ -19,7 +19,7 @@ namespace SocialEmpires.Services
             playerSaves.Add(save);
         }
 
-        public async Task<PlayerSave?> GetPlayerSaveAsync(long playerId)
+        public async Task<PlayerSave?> GetPlayerSaveAsync(string playerId)
         {
             return playerSaves.FirstOrDefault(_ => _.PlayerInfo.Pid == playerId);
         }
