@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Services;
+using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Controllers
 {
@@ -51,9 +52,9 @@ namespace SocialEmpires.Controllers
             return true;
         }
 
-        [HttpPut("items/{id}")]
+        [HttpPost("items/{id}")]
         //[Authorize(Roles = "Admin")]
-        public async Task<bool> UnshelveItem(string id, [FromForm]Item updatedItem)
+        public async Task<bool> UpdateItem(string id, [FromForm]Item updatedItem)
         {
             var item = await _configFileService.GetItemAsync(id);
             item = updatedItem;

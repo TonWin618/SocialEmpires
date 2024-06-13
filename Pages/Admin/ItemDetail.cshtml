@@ -10,17 +10,18 @@
 }
 
 <div style="background-color:#FFFFFF;width:100%;">
-    <form action="/api/amin/config/items/@item.Id" method="put">
+    <form action="/api/admin/config/items/@item.Id" method="post">
         <div class="section">
             <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="60" height="60" />
             <div>
-                <div>
-                    <label for="id">ID:</label>
-                    <input type="number" id="id" name="id" value="@item.Id" disabled style="width:80;">
-                </div>
+                
                 <div>
                     <label for="type">Type:</label>
                     <input type="text" id="type" name="type" value="@item.Type" style="width:20;">
+                </div>
+                <div>
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" name="id" value="@item.Id" style="width:80;">
                 </div>
             </div>
             <div>
@@ -41,50 +42,50 @@
         <div>
             <div class="section">
                 <label for="in_store">In Store:</label>
-                <input type="text" id="in_store" name="in_store" value="@item.InStore" style="width:20;">
+                <input type="text" id="in_store" name="inStore" value="@item.InStore" style="width:20;">
 
                 <label for="cost">Cost:</label>
                 <input type="text" id="cost" name="cost" value="@item.Cost" style="width:60;">
 
                 <label for="cost_type">Cost Type:</label>
-                <input type="text" id="cost_type" name="cost_type" value="@item.CostType" style="width:20;">
+                <input type="text" id="cost_type" name="costType" value="@item.CostType" style="width:20;">
 
                 <label for="display_order">Display Order:</label>
-                <input type="text" id="display_order" name="display_order" value="@item.DisplayOrder" style="width:80;">
+                <input type="text" id="display_order" name="displayOrder" value="@item.DisplayOrder" style="width:80;">
             </div>
             <div class="section">
                 <label for="giftable">Giftable:</label>
                 <input type="text" id="giftable" name="giftable" value="@item.Giftable" style="width:20;">
 
                 <label for="gift_level">Gift Level:</label>
-                <input type="text" id="gift_level" name="gift_level" value="@item.GiftLevel" style="width:40;">
-            </div>
+                <input type="text" id="gift_level" name="giftLevel" value="@item.GiftLevel" style="width:40;">
+            </div>name="
         </div>
 
         <span class="sectionName">Category</span>
         
         <div class="section">
             <label for="category_id">Category:</label>
-            <input type="text" id="category_id" name="category_id" value="@item.CategoryId" style="width:40;">
+            <input type="text" id="category_id" name="categoryId" value="@item.CategoryId" style="width:40;">
 
             <label for="subcategory_id">Subcategory:</label>
-            <input type="text" id="subcategory_id" name="subcategory_id" value="@item.SubcategoryId" style="width:80;">
+            <input type="text" id="subcategory_id" name="subcategoryId" value="@item.SubcategoryId" style="width:80;">
 
             <label for="subcat_functional">Functional:</label>
-            <input type="text" id="subcat_functional" name="subcat_functional" value="@item.SubcatFunctional" style="width:120;">
+            <input type="text" id="subcat_functional" name="subcatFunctional" value="@item.SubcatFunctional" style="width:120;">
         </div>
         
         <span class="sectionName">Gain</span>
         
         <div class="section">
             <label for="min_level">Min Level:</label>
-            <input type="text" id="min_level" name="min_level" value="@item.MinLevel">
+            <input type="text" id="min_level" name="minLevel" value="@item.MinLevel">
 
             <label for="xp">XP:</label>
             <input type="text" id="xp" name="xp" value="@item.Xp" style="width:40;">
 
             <label for="upgrades_to">Upgrade:</label>
-            <input type="text" id="upgrades_to" name="upgrades_to" value="@item.UpgradesTo" style="width:80;">
+            <input type="text" id="upgrades_to" name="upgradesTo" value="@item.UpgradesTo" style="width:80;">
         </div>
 
         <span class="sectionName">Time</span>
@@ -104,10 +105,10 @@
             <input type="text" id="collect" name="collect" value="@item.Collect" style="width:120;">
 
             <label for="collect_type">Collect Type:</label>
-            <input type="text" id="collect_type" name="collect_type" value="@item.CollectType" style="width:20;">
+            <input type="text" id="collect_type" name="collectType" value="@item.CollectType" style="width:20;">
 
             <label for="collect_xp">Collect XP:</label>
-            <input type="text" id="collect_xp" name="collect_xp" value="@item.CollectXp" style="width:40;">
+            <input type="text" id="collect_xp" name="collectXp" value="@item.CollectXp" style="width:40;">
         </div>
 
         <span class="sectionName">Size</span>
@@ -130,10 +131,10 @@
             <input type="text" id="attack" name="attack" value="@item.Attack" style="width:80;">
 
             <label for="attack_range">Range:</label>
-            <input type="text" id="attack_range" name="attack_range" value="@item.AttackRange" style="width:80;">
+            <input type="text" id="attack_range" name="attackRange" value="@item.AttackRange" style="width:80;">
 
             <label for="attack_interval">Interval:</label>
-            <input type="text" id="attack_interval" name="attack_interval" value="@item.AttackInterval" style="width:80;">
+            <input type="text" id="attack_interval" name="attackInterval" value="@item.AttackInterval" style="width:80;">
         </div>
 
         <div class="section">
@@ -162,10 +163,10 @@
             </div>
             <div class="section">
                 <label for="cost_unit_cash">Cost Unit Cash:</label>
-                <input type="text" id="cost_unit_cash" name="cost_unit_cash" value="@item.CostUnitCash" style="width:40;">
+                <input type="text" id="cost_unit_cash" name="costUnitCash" value="@item.CostUnitCash" style="width:40;">
 
                 <label for="units_limit">Units Limit:</label>
-                <input type="text" id="units_limit" name="units_limit" value="@item.UnitsLimit" style="width:40;" />
+                <input type="text" id="units_limit" name="unitsLimit" value="@item.UnitsLimit" style="width:40;" />
             </div>
         </div>
         
@@ -177,39 +178,39 @@
             <input type="text" id="achievement" name="achievement" value="@item.Achievement" style="width:20;">
 
             <label for="achievement_desc">Description:</label>
-            <input type="text" id="achievement_desc" name="achievement_desc" value="@item.AchievementDesc" style="width:200;">
+            <input type="text" id="achievement_desc" name="achievementDesc" value="@item.AchievementDesc" style="width:200;">
         </div>
         
         <span class="sectionName">Store</span>
         
         <div class="section">
             <label for="store_groups">Store Groups:</label>
-            <input type="text" id="store_groups" name="store_groups" value="@item.StoreGroups" style="width:40;">
+            <input type="text" id="store_groups" name="storeGroups" value="@item.StoreGroups" style="width:40;">
 
             <label for="store_level">Store Level:</label>
-            <input type="text" id="store_level" name="store_level" value="@item.StoreLevel" style="width:40;">
+            <input type="text" id="store_level" name="storeLevel" value="@item.StoreLevel" style="width:40;">
         </div>
 
         <span class="sectionName">Mobile</span>
         <div>
             <div class="section">
                 <label for="show_on_mobile">Show on Mobile:</label>
-                <input type="text" id="show_on_mobile" name="show_on_mobile" value="@item.ShowOnMobile" style="width:20;">
+                <input type="text" id="show_on_mobile" name="showOnMobile" value="@item.ShowOnMobile" style="width:20;">
 
                 <label for="show_on_mobile_store">Show on Mobile Store:</label>
-                <input type="text" id="show_on_mobile_store" name="show_on_mobile_store" value="@item.ShowOnMobileStore" style="width:20;">
+                <input type="text" id="show_on_mobile_store" name="showOnMobileStore" value="@item.ShowOnMobileStore" style="width:20;">
             </div>
             <div class="section">
                 <label for="only_mobile">Only Mobile:</label>
-                <input type="text" id="only_mobile" name="only_mobile" value="@item.OnlyMobile" style="width:20;">
+                <input type="text" id="only_mobile" name="onlyMobile" value="@item.OnlyMobile" style="width:20;">
 
                 <label for="iphone_adjustments">iPhone Adjustments:</label>
-                <input type="text" id="iphone_adjustments" name="iphone_adjustments" value="@item.IphoneAdjustments" style="width:20;">
+                <input type="text" id="iphone_adjustments" name="iphoneAdjustments" value="@item.IphoneAdjustments" style="width:20;">
             </div>
         </div>
 
         <div>
-            <input type="submit" value="Update" class="operation">
+            <button type="submit" class="operation">Update</button>
         </div>
 
         <span class="sectionName">Chore</span>
@@ -226,20 +227,20 @@
             </div>
             <div class="section">
                 <label for="new_item">New Item:</label>
-                <input type="text" id="new_item" name="new_item" value="@item.NewItem" style="width:20;">
+                <input type="text" id="new_item" name="newItem" value="@item.NewItem" style="width:20;">
 
                 <label for="protect">Protect:</label>
                 <input type="text" id="protect" name="protect" value="@item.Protect" style="width:20;">
 
                 <label for="unit_capacity">Unit Capacity:</label>
-                <input type="text" id="unit_capacity" name="unit_capacity" value="@item.UnitCapacity" style="width:40;">
+                <input type="text" id="unit_capacity" name="unitCapacity" value="@item.UnitCapacity" style="width:40;">
             </div>
             <div class="section">
                 <label for="max_frame">Max Frame:</label>
-                <input type="text" id="max_frame" name="max_frame" value="@item.MaxFrame" style="width:40;">
+                <input type="text" id="max_frame" name="maxFrame" value="@item.MaxFrame" style="width:40;">
 
                 <label for="img_name">Image</label>
-                <input type="text" id="img_name" name="img_name" value="@item.ImgName" style="width:120;">
+                <input type="text" id="img_name" name="imgName" value="@item.ImgName" style="width:120;">
 
                 <label for="elevation">Elevation:</label>
                 <input type="text" id="elevation" name="elevation" value="@item.Elevation" style="width:20;">

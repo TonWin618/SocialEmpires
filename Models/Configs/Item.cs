@@ -36,7 +36,7 @@ namespace SocialEmpires.Models.Configs
         [JsonConverter(typeof(IntToStringConverter))]
         public int Xp { get; set; }
 
-        public string Groups { get; set; }
+        public string? Groups { get; set; }
 
         /// <summary>
         /// item id
@@ -216,7 +216,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public string AchievementDesc { get; set; }
+        public string? AchievementDesc { get; set; }
 
         /// <summary>
         /// int 0 ~ 15
@@ -226,7 +226,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public string StoreGroups { get; set; }
+        public string? StoreGroups { get; set; }
 
         /// <summary>
         /// 0:
@@ -263,7 +263,7 @@ namespace SocialEmpires.Models.Configs
         /// 0:
         /// 1:
         /// </summary>
-        public string IphoneAdjustments { get; set; }
+        public string? IphoneAdjustments { get; set; }
         #endregion
     }
 }
