@@ -1,6 +1,7 @@
-﻿using SocialEmpires.Models;
+﻿using SocialEmpires.Models.Configs;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Unicode;
 
 namespace SocialEmpires.Services
 {
@@ -20,13 +21,22 @@ namespace SocialEmpires.Services
 
             jsonSerializerOptions = new JsonSerializerOptions()
             {
-                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true,
             };
 
             using (var reader = new StreamReader(File.OpenRead(zhConfigFile)))
             {
                 _config = JsonNode.Parse(reader.BaseStream)??throw new InvalidOperationException();
             }
+        }
+
+        public async Task Save()
+        {
+            var jsonString = JsonSerializer.Serialize(configItems, jsonSerializerOptions);
+            _config["items"] = JsonNode.Parse(jsonString);
+            await File.WriteAllTextAsync(zhConfigFile, _config.ToJsonString(jsonSerializerOptions));
         }
 
         public async Task<Item?> GetItemAsync(string id)

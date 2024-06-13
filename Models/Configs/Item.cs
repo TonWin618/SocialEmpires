@@ -1,7 +1,7 @@
 ﻿using SocialEmpires.Utils;
 using System.Text.Json.Serialization;
 
-namespace SocialEmpires.Models
+namespace SocialEmpires.Models.Configs
 {
     public record Item
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SocialEmpires.Models;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Services;
 
 namespace SocialEmpires.Controllers
@@ -37,6 +37,7 @@ namespace SocialEmpires.Controllers
         {
             var item = await _configFileService.GetItemAsync(id);
             item.InStore = "1";
+            await _configFileService.Save();
             return true;
         }
 
@@ -46,6 +47,17 @@ namespace SocialEmpires.Controllers
         {
             var item = await _configFileService.GetItemAsync(id);
             item.InStore = "0";
+            await _configFileService.Save();
+            return true;
+        }
+
+        [HttpPut("items/{id}")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<bool> UnshelveItem(string id, [FromForm]Item updatedItem)
+        {
+            var item = await _configFileService.GetItemAsync(id);
+            item = updatedItem;
+            await _configFileService.Save();
             return true;
         }
 
