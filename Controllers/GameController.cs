@@ -6,12 +6,28 @@ namespace SocialEmpires.Controllers
 {
     public class GameController : ControllerBase
     {
+        private readonly PlayerSaveService _playerSaveService;
+
+        public GameController(
+            PlayerSaveService playerSaveService) 
+        {
+            _playerSaveService = playerSaveService;
+        }
+
+        [HttpGet("CreatePlayerSaveForTest")]
+        public async Task<ActionResult> CreatePlayerSaveForTest()
+        {
+            var id = Guid.NewGuid().ToString();
+            var user = await _playerSaveService.CreatePlayerSaveAsync(id, id);
+
+            return Ok(id);
+        }
+
         [HttpGet("crossdomain.xml")]
         public ActionResult GetCrossdomainXml()
         {
             return SendFromLocal("crossdomain.xml", "application/xml");
         }
-
         
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)

@@ -2,7 +2,6 @@
 using SocialEmpires.Utils;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Unicode;
 
 namespace SocialEmpires.Services
 {
@@ -42,34 +41,42 @@ namespace SocialEmpires.Services
 
         public async Task<Item?> GetItemAsync(string id)
         {
+            if (configItems == null)
+            {
+                LoadItems();
+            }
             return configItems?.FirstOrDefault(_ => _.Id == id);
         }
 
-        public async Task<(int pageCount,IEnumerable<Item>? items)> GetItemsAsync(int pageIndex, int pageSize) 
+        public Task<(int pageCount,IEnumerable<Item>? items)> GetItemsAsync(int pageIndex, int pageSize) 
         {
             if(configItems == null)
             {
-                using (var reader = new StreamReader(File.OpenRead(zhConfigFile)))
-                {
-                    try
-                    {
-                        configItems = JsonSerializer.Deserialize<IEnumerable<Item>>(
-                            _config["items"],
-                            jsonSerializerOptions);
+                LoadItems();
+            }
+            return Task.FromResult(PageHelper.Page(pageIndex,pageSize, configItems));
+        }
 
-                        if (configItems == null)
-                        {
-                            throw new InvalidDataException();
-                        }
-                    }
-                    catch (Exception ex)
+        public void LoadItems()
+        {
+            using (var reader = new StreamReader(File.OpenRead(zhConfigFile)))
+            {
+                try
+                {
+                    configItems = JsonSerializer.Deserialize<IEnumerable<Item>>(
+                        _config["items"],
+                        jsonSerializerOptions);
+
+                    if (configItems == null)
                     {
-                        _logger.LogWarning(ex.Message);
-                        return PageHelper.Page<Item>();
+                        throw new InvalidDataException();
                     }
                 }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex.Message);
+                }
             }
-            return PageHelper.Page(pageIndex,pageSize,configItems);
         }
     }
 }

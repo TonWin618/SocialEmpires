@@ -1,7 +1,9 @@
 ﻿@page
 @using SocialEmpires.Services
 @inject PlayerSaveService playerSaveService
+@inject ConfigFileService configFileService
 @using Microsoft.AspNetCore.Mvc.Localization
+@using System.Text
 @inject IViewLocalizer localizer
 @{
     ViewData["Title"] = localizer["PlayerSave"];
@@ -11,10 +13,17 @@
 }
 
 <div>
-    <table>
+    <table style="width:100%;">
         <thead>
             <tr>
-                @localizer["Name"]
+                <th>Player</th>
+                <th>@localizer["Id"]</th>
+                <th>@localizer["Resources"]</th>
+                <th>@localizer["Tutorial"]</th>
+                <th>@localizer["Map Size"]</th>
+                <th>@localizer["Last Login"]</th>
+                <th>@localizer["Items"]</th>
+                <th>@localizer["Operation"]</th>
             </tr>
         </thead>
         <tbody>
@@ -22,9 +31,32 @@
                 foreach (var save in playerSaves)
                 {
                     <tr>
-                    <td>
-                    @save.PlayerInfo.Name
-                    </td>
+                        <td>[@save.DefaultMap.Level] @save.PlayerInfo.MapNames.First()</td>
+                        <td><p style="font-size:12px;">@save.Pid</p></td>
+                        <td>c:@save.PlayerInfo.Cash g:@save.DefaultMap.Coins s:@save.DefaultMap.Stone w:@save.DefaultMap.Wood f:@save.DefaultMap.Food</td>
+                        <td>@(save.PlayerInfo.CompletedTutorial == 1 ? localizer["Completed"] : "---")</td>
+                        <td>@save.DefaultMap.Expansions.Count()</td>
+                        <td>@DateTimeOffset.FromUnixTimeSeconds(save.PlayerInfo.LastLoggedIn).ToString("g")</td>
+                        <td>@{
+                                var sb = new StringBuilder();
+                                var itemGroups = save.DefaultMap.Items.GroupBy(_ => _.Id);
+                                foreach(var group in itemGroups)
+                                {
+                                    var id = group.Key;
+                                    if ((id > 500 && id < 900) || (id > 2000 && id < 3000))
+                                    {
+                                        var item = await configFileService.GetItemAsync(id.ToString());
+                                        sb.Append($"{item.Name}*{group.Count()}, ");
+                                    }
+                                }
+                                @sb.ToString();
+                            }
+                        </td>
+                        <td>
+                            <button>Item</button>
+                            <button>Cash</button>
+                            <button>Map</button>
+                        </td>
                     </tr>
                 }
             }
