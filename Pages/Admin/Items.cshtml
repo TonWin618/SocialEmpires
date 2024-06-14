@@ -86,19 +86,17 @@
 
 <script>
     function shelveItem(id) {
-        console.log("trigger")
         fetch(`/api/admin/config/items/${id}/shelve`, {
             method:'Post',
             headers: {
                 'Content-Type':'application/json'
             },
-            ody: JSON.stringify("{}")
+            body: JSON.stringify("{}")
         })
             .then(res => console.log(res))
     }
 
     function unshelveItem(id) {
-        console.log("trigger")
         fetch(`/api/admin/config/items/${id}/unshelve`, {
             method: 'Post',
             headers: {
