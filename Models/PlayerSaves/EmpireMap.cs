@@ -73,6 +73,9 @@
                 ReceivedAssists = new(),
                 IncreasedPopulation = 0,
                 ExpirableUnitsTime = new(),
+                UniversAttackWin = new(),
+                QuestTimes = new(),
+                LastQuestTimes = new(),
                 Items = new()
                 {
                     new(26,52,52,0,0,0,[],[]),
