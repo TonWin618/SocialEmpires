@@ -79,6 +79,7 @@ services.AddLogging();
 
 services.AddScoped<CommandService>();
 services.AddSingleton<ConfigFileService>();
+services.AddScoped<PlayerSaveService>();
 
 var app = builder.Build();
 

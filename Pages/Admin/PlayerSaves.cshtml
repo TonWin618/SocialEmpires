@@ -1,0 +1,44 @@
+﻿@page
+@using SocialEmpires.Services
+@inject PlayerSaveService playerSaveService
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = localizer["PlayerSave"];
+    var pageIndex = int.Parse(Request.Query["pageIndex"][0]);
+    var pageSize = int.Parse(Request.Query["pageSize"][0]);
+    var (pageCount, playerSaves) = await playerSaveService.GetAllPlayerSavesAsync(pageIndex,pageSize);
+}
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                @localizer["Name"]
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var save in playerSaves)
+                {
+                    <tr>
+                    <td>
+                    @save.PlayerInfo.Name
+                    </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div>
+        @{
+            for (int i = 0; i < pageCount; i++)
+            {
+                <button>
+                    <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
+                </button>
+            }
+        }
+    </div>
+</div>

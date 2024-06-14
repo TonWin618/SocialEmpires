@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Models;
+using SocialEmpires.Utils;
 
 namespace SocialEmpires.Services
 {
@@ -7,7 +8,7 @@ namespace SocialEmpires.Services
     {
         private readonly AppDbContext _appDbContext;
 
-        public PlayerSaveService(AppDbContext appDbContext) 
+        public PlayerSaveService(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
@@ -17,6 +18,14 @@ namespace SocialEmpires.Services
             var playerSave = PlayerSave.Create(userId, name);
             await _appDbContext.PlayerSaves.AddAsync(playerSave);
             return playerSave;
+        }
+
+        public async Task<(int pageCount, List<PlayerSave>)> GetAllPlayerSavesAsync(int pageIndex, int pageSize)
+        {
+            var saves = await _appDbContext.PlayerSaves
+                .Page(pageIndex, pageSize,out int pageCount)
+                .ToListAsync();
+            return (pageCount, saves);
         }
 
         public async Task<PlayerSave?> GetPlayerSaveAsync(string playerId)
