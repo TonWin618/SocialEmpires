@@ -1,4 +1,5 @@
 ﻿using SocialEmpires.Models.Configs;
+using SocialEmpires.Utils;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Unicode;
@@ -64,23 +65,11 @@ namespace SocialEmpires.Services
                     catch (Exception ex)
                     {
                         _logger.LogWarning(ex.Message);
-                        return NullPage<Item>();
+                        return PageHelper.Page<Item>();
                     }
                 }
             }
-            return Page(pageIndex,pageSize,configItems);
-        }
-
-        private (int pageCount, IEnumerable<T>? data) NullPage<T>()
-        {
-            return (0, null);
-        }
-
-        private (int pageCount, IEnumerable<T>? data) Page<T>(int pageIndex, int pageSize, IEnumerable<T> data)
-        {
-            var pageCount = ((int)Math.Ceiling((double)data.Count() / pageSize));
-            var items = data.Skip(pageIndex * pageSize).Take(pageSize);
-            return (pageCount, items);
+            return PageHelper.Page(pageIndex,pageSize,configItems);
         }
     }
 }
