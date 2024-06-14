@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer localizer
 @{
+    ViewData["Title"] = localizer["Items"];
     var pageIndex = int.Parse(Request.Query["pageIndex"][0]);
     var pageSize = int.Parse(Request.Query["pageSize"][0]);
     var (pageCount,data) = await configFileService.GetItemsAsync(pageIndex, pageSize);
