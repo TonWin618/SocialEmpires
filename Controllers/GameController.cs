@@ -62,12 +62,12 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public ActionResult GetGameConfig()
         {
-            return SendFromLocal("config/game_config_4399.json", "application/json");
+            return SendFromLocal("config/game_config_zh.json", "application/json");
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
         public ActionResult GetPlayerInfo(string userid, string user_key, string spdebug, string language)
-        {
+            {
             return SendFromLocal("test_save.json", "application/json");
         }
 

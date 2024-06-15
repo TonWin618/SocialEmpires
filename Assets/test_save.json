@@ -492,8 +492,6 @@
     "wood": 35,
     "xp": 2235341
   },
-  "neighbors": [
-  ],
   "playerInfo": {
     "__#__coins": 0,
     "__#__level": 1,
@@ -567,8 +565,5 @@
     "unlockedEarlyBuildings": {},
     "unlockedQuestIndex": 100000007,
     "unlockedSkins": {}
-  },
-  "processed_errors": 0,
-  "result": "ok",
-  "timestamp": 1718004774
+  }
 }
