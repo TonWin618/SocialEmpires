@@ -1,36 +1,27 @@
-﻿using SocialEmpires.Models;
-using SocialEmpires.Services.Constants;
-using System.Text.Json;
+﻿using SocialEmpires.Services.Constants;
 using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Services
 {
+    public record Command(string Cmd, object[] Args);
+
     public class CommandService
     {
         public CommandService() { }
 
-        public async Task HandleCommandsAsync(string userId, JsonNode data)
+        public async Task HandleCommandsAsync(string userId, IEnumerable<Command> commands)
         {
-            var timestamp = data["ts"];
-            var firstNumber = data["first_number"];
-            var accessToken = data["accessToken"];
-            var tries = data["tries"];
-            var publishActions = data["publishActions"];
-            var commands = data["commands"];
-
-            foreach (var command in commands.AsArray())
+            foreach (var command in commands)
             {
-                var cmd = command["cmd"].ToString();
-                var args = command["args"].AsArray();
-                await HandleCommand(userId, cmd, args);
+                await HandleCommand(userId, command.Cmd, command.Args);
             }
         }
 
-        public async Task HandleCommand(string userId, string cmd, params JsonArray[] args)
+        public async Task HandleCommand(string userId, string cmd, params object[] args)
         {
             if (cmd == CommandNames.GAME_STATUS)
             {
-                
+
             }
             else if (cmd == CommandNames.BUY)
             {

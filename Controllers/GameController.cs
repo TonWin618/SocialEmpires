@@ -4,6 +4,7 @@ using SocialEmpires.Models;
 using SocialEmpires.Services;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Controllers
 {
@@ -101,18 +102,33 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/command.php")]
-        public async Task<ActionResult> Command([FromServices] CommandService commandService)
+        public async Task<ActionResult> Command([FromServices] CommandService commandService, [FromForm] string data)
         {
             var userId = HttpContext.User.Identity?.Name;
-            if(userId == null)
+            if (userId == null)
             {
                 return Redirect("/Login");
             }
 
-            var command = await JsonNode.ParseAsync(Request.Body);
-            await commandService.HandleCommandsAsync(userId, command);
+            var commandDataString = data.Substring(65);
+            var commandData = JsonSerializer.Deserialize<CommandData>(commandDataString, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            }) ;
+            await commandService.HandleCommandsAsync(userId, commandData.Commands);
 
             return Ok("""{"result": "success"}""");
+        }
+
+        public record CommandData(
+            Command[] Commands, 
+            int Ts, 
+            string AccessToken, 
+            int Tries, 
+            string PublishActions)
+        {
+            [JsonPropertyName("first_number")]
+            public int FirstNumber { get; set; }
         }
 
         private PhysicalFileResult SendFromLocal(string relativePath, string contentType)
