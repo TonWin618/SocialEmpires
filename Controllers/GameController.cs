@@ -91,9 +91,6 @@ namespace SocialEmpires.Controllers
 
             return new JsonResult(root);
         }
-        public record PlayerInfoResponse(
-            PlayerInfo PlayerInfo, EmpireMap Map, PlayerState PrivateState,
-            long Timestamp, string Result = "ok", int ProcessErrors = 0);
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/sync_error_track.php")]
         public ActionResult SyncErrorTrack(
