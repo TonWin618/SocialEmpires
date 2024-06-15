@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SocialEmpires.Models;
 using SocialEmpires.Services;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Controllers
 {
+    [Authorize(Roles ="User")]
     public class GameController : ControllerBase
     {
         private readonly PlayerSaveService _playerSaveService;
@@ -66,10 +70,30 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
-        public ActionResult GetPlayerInfo(string userid, string user_key, string spdebug, string language)
+        public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language)
+        {
+            var save = await _playerSaveService.GetPlayerSaveAsync(userid);
+            if (save == null)
             {
-            return SendFromLocal("test_save.json", "application/json");
+                save = await _playerSaveService.CreatePlayerSaveAsync(userid, userid);
+            }
+
+            var root = new JsonObject();
+            root.Add("map", JsonSerializer.SerializeToNode(
+                save.DefaultMap,
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            root.Add("playerInfo", JsonSerializer.SerializeToNode(
+                save.PlayerInfo,
+                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower }));
+            root.Add("privateState", JsonSerializer.SerializeToNode(
+                save.PrivateState,
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+
+            return new JsonResult(root);
         }
+        public record PlayerInfoResponse(
+            PlayerInfo PlayerInfo, EmpireMap Map, PlayerState PrivateState,
+            long Timestamp, string Result = "ok", int ProcessErrors = 0);
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/sync_error_track.php")]
         public ActionResult SyncErrorTrack(
@@ -96,6 +120,7 @@ namespace SocialEmpires.Controllers
 
         private PhysicalFileResult SendFromLocal(string relativePath, string contentType)
         {
+            Response.Headers.CacheControl = "no-store";
             return PhysicalFile(
                 Directory.GetCurrentDirectory() + "/Assets/" + relativePath, 
                 contentType);

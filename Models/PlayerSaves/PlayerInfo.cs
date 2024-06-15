@@ -1,4 +1,7 @@
-﻿namespace SocialEmpires.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
+namespace SocialEmpires.Models;
 
 public class PlayerInfo
 {
@@ -26,6 +29,33 @@ public class PlayerInfo
 
     public int WorldId { get; set; }
     public long LastLoggedIn { get; set; }
+
+    [NotMapped]
+    public int Wood { get; } = 0;
+    [NotMapped]
+    public int Coin { get; } = 0;
+    [NotMapped]
+    public int Stone { get; } = 0;
+    [NotMapped]
+    public int Food { get; } = 0;
+    [NotMapped]
+    public int Xp { get; } = 0;
+    [NotMapped]
+    public int Level { get; } = 0;
+    [NotMapped]
+    public string SpRefCatInstall { get; } = "ts";
+    [NotMapped]
+    public long SpRefUid { get; } = 1000;
+    [NotMapped]
+    [JsonPropertyName("__#__coins")]
+    public int Coins { get; } = 0;
+    [NotMapped]
+    [JsonPropertyName("__#__level")]
+    public int Levels { get; } = 0;
+    [NotMapped]
+    [JsonPropertyName("__#__xp")]
+    public int Xps { get; } = 0;
+
 
     private PlayerInfo()
     {

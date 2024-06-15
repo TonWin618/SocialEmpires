@@ -9,7 +9,8 @@
     var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
     var (pageCount,data) = await configFileService.GetItemsAsync(pageIndex, pageSize);
 }
-
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles ="Admin")]
     
 <table width="100%">
     <thead>

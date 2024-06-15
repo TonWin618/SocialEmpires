@@ -1,4 +1,8 @@
-﻿namespace SocialEmpires.Models
+﻿using SocialEmpires.Utils;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
+namespace SocialEmpires.Models
 {
     public class EmpireMap
     {
@@ -44,7 +48,13 @@
 
         public List<long> LastQuestTimes { get; set; }
 
+        [JsonConverter(typeof(MapItemListConverter))]
         public List<MapItem> Items { get; set; }
+
+        [NotMapped]
+        [JsonInclude]
+        [JsonPropertyName("__#__ITEMS_hint")]
+        public string[] ItemsHint = ["item_id", "x", "y", "orientation", "collected_at_timestamp", "level", "units_array []", "attributes_dict {}"];
 
         private EmpireMap()
         {
@@ -58,7 +68,7 @@
                 Pid = playerId,
                 Id = 0,
                 Expansions = [13],
-                Timestamp = 0,
+                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
                 Coins = 250,
                 Xp = 4,
                 Level = 1,
