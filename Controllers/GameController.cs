@@ -83,16 +83,13 @@ namespace SocialEmpires.Controllers
         public async Task<ActionResult> Command([FromServices] CommandService commandService)
         {
             var userId = HttpContext.User.Identity?.Name;
-            if(userId == null )
+            if(userId == null)
             {
                 return Redirect("/Login");
             }
 
-            using (var reader = new StreamReader(Request.Body))
-            {
-                var command = await JsonNode.ParseAsync(reader.BaseStream);
-                await commandService.HandleCommandsAsync(userId, command);
-            }
+            var command = await JsonNode.ParseAsync(Request.Body);
+            await commandService.HandleCommandsAsync(userId, command);
 
             return Ok("""{"result": "success"}""");
         }

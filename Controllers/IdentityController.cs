@@ -33,6 +33,10 @@ namespace SocialEmpires.Controllers
             [FromForm] string email,
             [FromForm] string password)
         {
+            if(_roleManager.Roles.Any(_ => _.Name == "Admin"))
+            {
+                return Redirect("/");
+            }
             await _roleManager.CreateAsync(new IdentityRole("User"));
             await _roleManager.CreateAsync(new IdentityRole("Admin"));
 
@@ -46,7 +50,7 @@ namespace SocialEmpires.Controllers
             await _userManager.AddToRoleAsync(user, "User");
             await _userManager.AddToRoleAsync(user, "Admin");
 
-            return Redirect("/");
+            return Redirect("/Login");
         }
 
         [HttpPost("api/register")]
