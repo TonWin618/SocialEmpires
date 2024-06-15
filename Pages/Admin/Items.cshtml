@@ -5,8 +5,8 @@
 @inject IViewLocalizer localizer
 @{
     ViewData["Title"] = localizer["Items"];
-    var pageIndex = int.Parse(Request.Query["pageIndex"][0]);
-    var pageSize = int.Parse(Request.Query["pageSize"][0]);
+    var pageIndex = int.Parse(Request.Query["pageIndex"].FirstOrDefault() ?? "1");
+    var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
     var (pageCount,data) = await configFileService.GetItemsAsync(pageIndex, pageSize);
 }
 
@@ -70,7 +70,7 @@
         for(int i = 0;i < pageCount;i++)
         {
                     <button>
-                        <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
+                        <a href="?pageIndex=@(i+1)&pageSize=@pageSize">@(i + 1)</a>
                     </button>
         }
     }

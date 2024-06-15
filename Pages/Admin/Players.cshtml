@@ -7,8 +7,8 @@
 @inject IViewLocalizer localizer
 @{
     ViewData["Title"] = localizer["PlayerSave"];
-    var pageIndex = int.Parse(Request.Query["pageIndex"][0]);
-    var pageSize = int.Parse(Request.Query["pageSize"][0]);
+    var pageIndex = int.Parse(Request.Query["pageIndex"].FirstOrDefault() ?? "1");
+    var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
     var (pageCount, playerSaves) = await playerSaveService.GetAllPlayerSavesAsync(pageIndex,pageSize);
 }
 

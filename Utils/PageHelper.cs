@@ -13,7 +13,7 @@
             IEnumerable<T> data)
         {
             var pageCount = (int)Math.Ceiling((double)data.Count() / pageSize);
-            var items = data.Skip(pageIndex * pageSize).Take(pageSize);
+            var items = data.Skip((pageIndex - 1) * pageSize).Take(pageSize);
             return (pageCount, items);
         }
 

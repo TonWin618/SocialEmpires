@@ -26,9 +26,9 @@ namespace SocialEmpires.Services
                 WriteIndented = true,
             };
 
-            using (var reader = new StreamReader(File.OpenRead(zhConfigFile)))
+            using (var stream = File.OpenRead(zhConfigFile))
             {
-                _config = JsonNode.Parse(reader.BaseStream)??throw new InvalidOperationException();
+                _config = JsonNode.Parse(stream)??throw new InvalidOperationException();
             }
         }
 
