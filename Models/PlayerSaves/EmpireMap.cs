@@ -112,16 +112,27 @@ namespace SocialEmpires.Models
         }
     }
 
-    public record MapItem(
-        int Id, 
-        int X, 
-        int Y, 
-        int Orientation, 
-        long Timestamp, 
-        int Level, 
-        int[]? Units = null, 
-        object[]? Attributes = null)
+    public class MapItem
     {
+        public int Id { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Orientation { get; set; }
+        public long Timestamp { get; set; }
+        public int Level { get; set; }
+        public int[]? Units { get; set; }
+        public object[]? Attributes { get; set; }
 
-    };
+        public MapItem(int id, int x, int y, int orientation, long timestamp, int level, int[]? units = null, object[]? attributes = null)
+        {
+            Id = id;
+            X = x;
+            Y = y;
+            Orientation = orientation;
+            Timestamp = timestamp;
+            Level = level;
+            Units = units;
+            Attributes = attributes;
+        }
+    }
 }
