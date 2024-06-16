@@ -50,17 +50,77 @@ namespace SocialEmpires.Services
             {
                 HandleCompleteTutorialCommandAsync(save, args);
             }
-            else if(cmd == CommandNames.MOVE)
+            else if (cmd == CommandNames.MOVE)
             {
                 HandleMoveCommandAsync(save, args);
             }
-            else if(cmd == CommandNames.COMPLETE_TUTORIAL)
+            else if (cmd == CommandNames.COLLECT)
             {
-                HandleCompleteTutorialCommandAsync(save, args);
+                HandleCollectCommand(save, args);
+            }
+            else if (cmd == CommandNames.STORE_ITEM)
+            {
+                HandleStoreItemCommand(save, args);
+            }
+            else if (cmd == CommandNames.EXCHANGE_CASH)
+            {
+                HandleExchangeCashCommand(save, args);
+            }
+            else if (cmd == CommandNames.NAME_MAP)
+            {
+                HandleNameMapCommand(save, args);
+            }
+            else if (cmd == CommandNames.EXPAND)
+            {
+                HandleExpandCommand(save, args);
+            }
+            else if (cmd == CommandNames.RT_PUBLISH_SCORE)
+            {
+                HandleRTPublishScoreCommand(save, args);
+            }
+            else if (cmd == CommandNames.RT_LEVEL_UP)
+            {
+                HandleRTLevelUpCommand(save, args);
+            }
+            else if (cmd == CommandNames.POP_UNIT)
+            {
+                HandlePopUnitCommand(save, args);
+            }
+            else if (cmd == CommandNames.PUSH_UNIT)
+            {
+                HandlePushUnitCommand(save, args);
+            }
+            else if (cmd == CommandNames.REWARD_MISSION)
+            {
+                HandleRewardMissionCommand(save, args);
+            }
+            else if (cmd == CommandNames.COMPLETE_MISSION)
+            {
+                HandleCompleteMissionCommand(save, args);
+            }
+            else if (cmd == CommandNames.KILL)
+            {
+                HandleKillCommand(save, args);
+            }
+            else if (cmd == CommandNames.SELL)
+            {
+                HandleSellCommand(save, args);
+            }
+            else if(cmd == CommandNames.PLACE_GIFT)
+            {
+                HandlePlaceGiftCommand(save, args);
+            }
+            else if(cmd == CommandNames.SELL_GIFT)
+            {
+                HandleSellGiftCommand(save, args);
+            }
+            else
+            {
+                _logger.LogWarning($"Unknown command: {cmd}");
             }
         }
 
-        private async Task HandlePlaceGiftCommand(PlayerSave save, object[] args)
+        private void HandlePlaceGiftCommand(PlayerSave save, object[] args)
         {
             int itemId = Convert.ToInt32(args[0]);
             int x = Convert.ToInt32(args[1]);
