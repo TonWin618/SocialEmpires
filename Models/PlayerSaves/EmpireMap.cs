@@ -120,10 +120,10 @@ namespace SocialEmpires.Models
         public int Orientation { get; set; }
         public long Timestamp { get; set; }
         public int Level { get; set; }
-        public List<int[]>? Units { get; set; }
+        public int[]? Units { get; set; }
         public object[]? Attributes { get; set; }
 
-        public MapItem(int id, int x, int y, int orientation, long timestamp, int level, List<int[]>? units = null, object[]? attributes = null)
+        public MapItem(int id, int x, int y, int orientation, long timestamp, int level, int[]? units = null, object[]? attributes = null)
         {
             Id = id;
             X = x;

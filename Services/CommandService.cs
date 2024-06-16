@@ -60,44 +60,6 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task HandlePushUnitCommand(PlayerSave save, object[] args)
-        {
-            int unitX = Convert.ToInt32(args[0]);
-            int unitY = Convert.ToInt32(args[1]);
-            int unitId = Convert.ToInt32(args[2]);
-            int buildingX = Convert.ToInt32(args[3]);
-            int buildingY = Convert.ToInt32(args[4]);
-            int townId = Convert.ToInt32(args[5]);
-
-            _logger.LogInformation($"Push {unitId} to ({buildingX},{buildingY}).");
-
-            var map = save.Maps[townId];
-
-            // Unit into building
-            foreach (var item in map.Items)
-            {
-                if (item.X == buildingX && item.Y == buildingY)
-                {
-                    if (item.Units == null)
-                    {
-                        item.Units = new List<int[]>();
-                    }
-                    item.Units.Add(new int[] { unitId });
-                    break;
-                }
-            }
-
-            // Remove unit
-            foreach (var item in map.Items.ToList())  // ToList() creates a copy to avoid modification errors
-            {
-                if (item.Id == unitId && item.X == unitX && item.Y == unitY)
-                {
-                    map.Items.Remove(item);
-                    break;
-                }
-            }
-        }
-
         private async Task HandleRewardMissionCommand(PlayerSave save, object[] args)
         {
             var townId = Convert.ToInt32(args[0]);
