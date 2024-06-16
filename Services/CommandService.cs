@@ -60,6 +60,41 @@ namespace SocialEmpires.Services
             }
         }
 
+        private async Task HandleStoreItemCommand(PlayerSave save, object[] args)
+        {
+            int x = Convert.ToInt32(args[0]);
+            int y = Convert.ToInt32(args[1]);
+            int townId = Convert.ToInt32(args[2]);
+            int itemId = Convert.ToInt32(args[3]);
+            _logger.LogInformation($"Store {itemId} from ({x},{y})");
+
+            var map = save.Maps[townId];
+            var items = map.Items;
+
+            // Remove item from map's items
+            foreach (var item in items)
+            {
+                if (item.Id == itemId && item.X == x && item.Y == y)
+                {
+                    items.Remove(item);
+                    break;
+                }
+            }
+
+            // Ensure gifts list is sufficient to access the item_id
+            int length = save.PrivateState.Gifts.Count;
+            if (length <= itemId)
+            {
+                for (int i = itemId - length + 1; i > 0; i--)
+                {
+                    save.PrivateState.Gifts.Add(0);
+                }
+            }
+
+            // Increment the count of the item_id in gifts
+            save.PrivateState.Gifts[itemId]++;
+        }
+
         private async Task HandleExchangeCashCommand(PlayerSave save, object[] args)
         {
             int townId = Convert.ToInt32(args[0]);
