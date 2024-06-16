@@ -60,6 +60,56 @@ namespace SocialEmpires.Services
             }
         }
 
+        private async Task HandlePlaceGiftCommand(PlayerSave save, object[] args)
+        {
+            int itemId = Convert.ToInt32(args[0]);
+            int x = Convert.ToInt32(args[1]);
+            int y = Convert.ToInt32(args[2]);
+            int townId = Convert.ToInt32(args[3]); // Assuming this is correct based on your logic
+                                                   // args[4] is unknown and not used in the implementation
+            _logger.LogInformation($"Add {itemId} at ({x},{y})");
+
+            var items = save.Maps[townId].Items;
+            int orientation = 0; // TODO: Determine the orientation logic
+            var collectedAtTimestamp = TimestampNow(); // Assuming a function for current timestamp
+            int level = 0;
+
+            // Add the gift item to the map's items
+            items.Add(new MapItem(itemId, x, y, orientation, collectedAtTimestamp, level));
+
+            // Decrease the count of the gift in private state
+            save.PrivateState.Gifts[itemId]--;
+
+            // Remove excess zeros from the end of the gifts list if necessary
+            while (save.PrivateState.Gifts.Count > 0 && save.PrivateState.Gifts[^1] == 0)
+            {
+                save.PrivateState.Gifts.RemoveAt(save.PrivateState.Gifts.Count - 1);
+            }
+        }
+
+        private async Task HandleSellGiftCommand(PlayerSave save, object[] args)
+        {
+            int itemId = Convert.ToInt32(args[0]);
+            int townId = Convert.ToInt32(args[1]);
+            _logger.LogInformation($"Gift {itemId} sold on town: {townId}");
+
+            var gifts = save.PrivateState.Gifts;
+            gifts[itemId]--;
+
+            // Remove excess zeros from the end of the gifts list if necessary
+            while (gifts.Count > 0 && gifts[^1] == 0)
+            {
+                gifts.RemoveAt(gifts.Count - 1);
+            }
+
+            // Apply cost if applicable (assuming apply_cost_async is used elsewhere)
+            double priceMultiplier = -0.05;
+            if ((await _configFileService.GetItem(itemId)).CostType != CostType.Cash)
+            {
+                await ApplyCostAsync(save, itemId, priceMultiplier);
+            }
+        }
+
         private async Task HandleStoreItemCommand(PlayerSave save, object[] args)
         {
             int x = Convert.ToInt32(args[0]);
@@ -338,7 +388,7 @@ namespace SocialEmpires.Services
             if (!dontModifyResources)
             {
                 double priceMultiplier = -0.05;
-                var item = await _configFileService.GetItemAsync(id);
+                var item = await _configFileService.GetItem(id);
                 string costType = item.CostType;
                 
                 if (costType != CostType.Cash)
@@ -433,7 +483,7 @@ namespace SocialEmpires.Services
 
         private async Task ApplyCollectAsync(PlayerSave save, int id, double multiplier)
         {
-            var item = await _configFileService.GetItemAsync(id);
+            var item = await _configFileService.GetItem(id);
             if (item == null)
             {
                 return;
@@ -464,7 +514,7 @@ namespace SocialEmpires.Services
 
         private async Task ApplyCostAsync(PlayerSave save, int id, double multiplier)
         {
-            var item = await _configFileService.GetItemAsync(id);
+            var item = await _configFileService.GetItem(id);
             if (item == null)
             {
                 return;
@@ -493,7 +543,7 @@ namespace SocialEmpires.Services
 
         private async Task ApplyCollectXpAsync(PlayerSave save, int id)
         {
-            var item = await _configFileService.GetItemAsync(id);
+            var item = await _configFileService.GetItem(id);
             if (item == null)
             {
                 return;

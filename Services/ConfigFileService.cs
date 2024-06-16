@@ -13,7 +13,7 @@ namespace SocialEmpires.Services
         private readonly ILogger<ConfigFileService> _logger;
         private readonly JsonSerializerOptions jsonSerializerOptions;
         private readonly JsonNode _config;
-        private IEnumerable<Item>? configItems;
+        public IEnumerable<Item>? Items;
         private IEnumerable<Mission> configMissions;
         private IEnumerable<Level> configLevels;
         public List<ExpansionPrice> ExpansionPrices { get; private set; }
@@ -37,44 +37,36 @@ namespace SocialEmpires.Services
 
         public async Task Save()
         {
-            var jsonString = JsonSerializer.Serialize(configItems, jsonSerializerOptions);
+            var jsonString = JsonSerializer.Serialize(Items, jsonSerializerOptions);
             _config["items"] = JsonNode.Parse(jsonString);
             await File.WriteAllTextAsync(zhConfigFile, _config.ToJsonString(jsonSerializerOptions));
         }
 
         #region Items
-        public async Task<Item?> GetItemAsync(int id)
+        public async Task<Item?> GetItem(int id)
         {
-            return await GetItemAsync(id.ToString());
+            return await GetItem(id.ToString());
         }
 
-        public async Task<Item?> GetItemAsync(string id)
+        public async Task<Item?> GetItem(string id)
         {
-            if (configItems == null)
-            {
-                LoadItems();
-            }
-            return configItems?.FirstOrDefault(_ => _.Id == id);
+            return Items?.FirstOrDefault(_ => _.Id == id);
         }
 
-        public Task<(int pageCount,IEnumerable<Item>? items)> GetItemsAsync(int pageIndex, int pageSize) 
+        public Task<(int pageCount,IEnumerable<Item>? items)> GetItems(int pageIndex, int pageSize) 
         {
-            if(configItems == null)
-            {
-                LoadItems();
-            }
-            return Task.FromResult(PageHelper.Page(pageIndex,pageSize, configItems));
+            return Task.FromResult(PageHelper.Page(pageIndex,pageSize, Items));
         }
 
         public void LoadItems()
         {
             try
             {
-                configItems = JsonSerializer.Deserialize<IEnumerable<Item>>(
+                Items = JsonSerializer.Deserialize<IEnumerable<Item>>(
                     _config["items"],
                     jsonSerializerOptions);
 
-                if (configItems == null)
+                if (Items == null)
                 {
                     throw new InvalidDataException();
                 }
@@ -101,7 +93,7 @@ namespace SocialEmpires.Services
                     _config["missions"],
                     jsonSerializerOptions);
 
-                if (configItems == null)
+                if (Items == null)
                 {
                     throw new InvalidDataException();
                 }
@@ -134,7 +126,7 @@ namespace SocialEmpires.Services
                     _config["levels"],
                     jsonSerializerOptions);
 
-                if (configItems == null)
+                if (Items == null)
                 {
                     throw new InvalidDataException();
                 }
@@ -155,7 +147,7 @@ namespace SocialEmpires.Services
                     _config["levels"],
                     jsonSerializerOptions);
 
-                if (configItems == null)
+                if (Items == null)
                 {
                     throw new InvalidDataException();
                 }

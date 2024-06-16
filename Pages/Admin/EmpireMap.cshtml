@@ -30,7 +30,7 @@
                             @{
                                 if (map[x, y] != 0)
                                 {
-                                    var itemInfo = await configFileService.GetItemAsync(map[x, y].ToString());
+                                    var itemInfo = await configFileService.GetItem(map[x, y].ToString());
                                     <img 
                                     src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(itemInfo.ImgName).jpg" 
                                     width="@(int.Parse(itemInfo.Width) * 20)"

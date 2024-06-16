@@ -45,7 +45,7 @@
                                     var id = group.Key;
                                     if ((id > 500 && id < 900) || (id > 2000 && id < 3000))
                                     {
-                                        var item = await configFileService.GetItemAsync(id.ToString());
+                                        var item = await configFileService.GetItem(id.ToString());
                                         sb.Append($"{item.Name}*{group.Count()}, ");
                                     }
                                 }

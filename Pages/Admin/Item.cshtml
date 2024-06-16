@@ -6,7 +6,7 @@
 @{
     Layout = null;
     var id = Request.Query["id"][0];
-    var item = await configFileService.GetItemAsync(id);
+    var item = await configFileService.GetItem(id);
 }
 
 <div style="background-color:#FFFFFF;width:100%;">
