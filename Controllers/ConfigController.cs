@@ -18,6 +18,7 @@ namespace SocialEmpires.Controllers
             _configFileService = configFileService;
         }
 
+        #region Items
         [HttpGet("items")]
         //[Authorize(Roles = "Admin")]
         public async Task<PageResult<Item>> GetItems(int pageIndex, int pageSize)
@@ -61,7 +62,7 @@ namespace SocialEmpires.Controllers
             await _configFileService.Save();
             return true;
         }
-
+        #endregion
 
         public PageResult<T> Page<T>(int pageIndex, int pageSize, int pageCount, IEnumerable<T>? data)
         {

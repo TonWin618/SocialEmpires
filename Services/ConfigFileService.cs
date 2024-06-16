@@ -13,7 +13,8 @@ namespace SocialEmpires.Services
         private readonly ILogger<ConfigFileService> _logger;
         private readonly JsonSerializerOptions jsonSerializerOptions;
         private readonly JsonNode _config;
-        private IEnumerable<Item>? configItems; 
+        private IEnumerable<Item>? configItems;
+        private IEnumerable<Mission> configMissions;
 
         public ConfigFileService(ILogger<ConfigFileService> logger)
         {
@@ -39,6 +40,7 @@ namespace SocialEmpires.Services
             await File.WriteAllTextAsync(zhConfigFile, _config.ToJsonString(jsonSerializerOptions));
         }
 
+        #region Items
         public async Task<Item?> GetItemAsync(int id)
         {
             return await GetItemAsync(id.ToString());
@@ -64,24 +66,49 @@ namespace SocialEmpires.Services
 
         public void LoadItems()
         {
-            using (var reader = new StreamReader(File.OpenRead(zhConfigFile)))
+            try
             {
-                try
-                {
-                    configItems = JsonSerializer.Deserialize<IEnumerable<Item>>(
-                        _config["items"],
-                        jsonSerializerOptions);
+                configItems = JsonSerializer.Deserialize<IEnumerable<Item>>(
+                    _config["items"],
+                    jsonSerializerOptions);
 
-                    if (configItems == null)
-                    {
-                        throw new InvalidDataException();
-                    }
-                }
-                catch (Exception ex)
+                if (configItems == null)
                 {
-                    _logger.LogWarning(ex.Message);
+                    throw new InvalidDataException();
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+            }
         }
+        #endregion
+
+        #region Missions
+        public Task<Mission> GetMission(int missionId)
+        {
+            var mission = configMissions.FirstOrDefault(_ => _.Id == missionId);
+            return Task.FromResult(mission);
+        }
+
+        public void LoadMissions()
+        {
+            try
+            {
+                configMissions = JsonSerializer.Deserialize<IEnumerable<Mission>>(
+                    _config["missions"],
+                    jsonSerializerOptions);
+
+                if (configItems == null)
+                {
+                    throw new InvalidDataException();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+            }
+        }
+        #endregion
     }
 }

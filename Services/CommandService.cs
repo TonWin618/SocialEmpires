@@ -54,6 +54,23 @@ namespace SocialEmpires.Services
             {
                 await HandleMoveCommandAsync(save, args);
             }
+            else if(cmd == CommandNames.COMPLETE_TUTORIAL)
+            {
+                await HandleCompleteTutorialCommandAsync(save, args);
+            }
+        }
+
+        private async Task HandleRewardMissionCommand(PlayerSave save, object[] args)
+        {
+            var townId = Convert.ToInt32(args[0]);
+            var missionId = Convert.ToInt32(args[1]);
+
+            _logger.LogInformation($"Reward mission {missionId}");
+
+            var missions = await _configFileService.GetMission(missionId);
+            save.Maps[townId].Coins += missions.Reward;
+
+            save.PrivateState.RewardedMissions.Add(missionId);
         }
 
         private async Task HandleCompleteMissionCommand(PlayerSave save, object[] args)
