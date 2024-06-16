@@ -39,6 +39,11 @@ namespace SocialEmpires.Services
             await File.WriteAllTextAsync(zhConfigFile, _config.ToJsonString(jsonSerializerOptions));
         }
 
+        public async Task<Item?> GetItemAsync(int id)
+        {
+            return await GetItemAsync(id.ToString());
+        }
+
         public async Task<Item?> GetItemAsync(string id)
         {
             if (configItems == null)
