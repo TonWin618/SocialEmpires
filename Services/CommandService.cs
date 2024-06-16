@@ -205,7 +205,7 @@ namespace SocialEmpires.Services
 
             var map = save.Maps[0]; // Assuming xp is general across maps, adjust if necessary
             map.Xp = newXp;
-            var levels = (await _configFileService.GetLevels()).ToList();
+            var levels = _configFileService.Levels;
             var level = levels.FirstOrDefault(_ => _.ExpRequired > newXp);
             map.Level = levels.IndexOf(level);//GetLevelFromXp(newXp);
         }
@@ -219,7 +219,7 @@ namespace SocialEmpires.Services
             map.Level = newLevel;
 
             int currentXp = map.Xp;
-            var level = await _configFileService.GetLevel(newLevel);
+            var level = _configFileService.Levels[Math.Max(0, newLevel-1)];
             int minExpectedXp = level.ExpRequired;
             map.Xp = Math.Max(minExpectedXp, currentXp);
         }
@@ -316,9 +316,10 @@ namespace SocialEmpires.Services
 
             _logger.LogInformation($"Reward mission {missionId}");
 
-            var missions = await _configFileService.GetMission(missionId);
-            save.Maps[townId].Coins += missions.Reward;
+            var missions = _configFileService.Missions
+                .FirstOrDefault(_ => _.Id == missionId);
 
+            save.Maps[townId].Coins += missions.Reward;
             save.PrivateState.RewardedMissions.Add(missionId);
         }
 

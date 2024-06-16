@@ -13,9 +13,10 @@ namespace SocialEmpires.Services
         private readonly ILogger<ConfigFileService> _logger;
         private readonly JsonSerializerOptions jsonSerializerOptions;
         private readonly JsonNode _config;
-        public IEnumerable<Item>? Items;
-        private IEnumerable<Mission> configMissions;
-        private IEnumerable<Level> configLevels;
+
+        public List<Item> Items { get; private set; }
+        public List<Mission> Missions { get; private set; }
+        public List<Level> Levels { get; private set; }
         public List<ExpansionPrice> ExpansionPrices { get; private set; }
 
         public ConfigFileService(ILogger<ConfigFileService> logger)
@@ -35,6 +36,27 @@ namespace SocialEmpires.Services
             }
         }
 
+        public void Load()
+        {
+            Items = Load<Item>("items");
+            Missions = Load<Mission>("missions");
+            Levels = Load<Level>("levels");
+            ExpansionPrices = Load<ExpansionPrice>("expansion_prices");
+        }
+
+        private List<T> Load<T>(string key)
+        {
+            var result = JsonSerializer.Deserialize<List<T>>(
+                    _config[key],
+                    jsonSerializerOptions);
+            if(result == null)
+            {
+                _logger.LogError($"Error reading JSON game configuration file with Key [{key}].");
+                throw new InvalidOperationException();
+            }
+            return result;
+        }
+
         public async Task Save()
         {
             var jsonString = JsonSerializer.Serialize(Items, jsonSerializerOptions);
@@ -42,7 +64,6 @@ namespace SocialEmpires.Services
             await File.WriteAllTextAsync(zhConfigFile, _config.ToJsonString(jsonSerializerOptions));
         }
 
-        #region Items
         public async Task<Item?> GetItem(int id)
         {
             return await GetItem(id.ToString());
@@ -57,106 +78,5 @@ namespace SocialEmpires.Services
         {
             return Task.FromResult(PageHelper.Page(pageIndex,pageSize, Items));
         }
-
-        public void LoadItems()
-        {
-            try
-            {
-                Items = JsonSerializer.Deserialize<IEnumerable<Item>>(
-                    _config["items"],
-                    jsonSerializerOptions);
-
-                if (Items == null)
-                {
-                    throw new InvalidDataException();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex.Message);
-            }
-        }
-        #endregion
-
-        #region Missions
-        public Task<Mission> GetMission(int missionId)
-        {
-            var mission = configMissions.FirstOrDefault(_ => _.Id == missionId);
-            return Task.FromResult(mission);
-        }
-
-        public void LoadMissions()
-        {
-            try
-            {
-                configMissions = JsonSerializer.Deserialize<IEnumerable<Mission>>(
-                    _config["missions"],
-                    jsonSerializerOptions);
-
-                if (Items == null)
-                {
-                    throw new InvalidDataException();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex.Message);
-            }
-        }
-        #endregion
-
-        #region Levels
-        public Task<IEnumerable<Level>> GetLevels()
-        {
-            return Task.FromResult(configLevels);
-        }
-
-        public Task<Level> GetLevel(int levelId)
-        {
-            var index = Math.Max(0, levelId - 1);
-            var level = configLevels.ElementAtOrDefault(index);
-            return Task.FromResult(level);
-        }
-
-        public void LoadLevels()
-        {
-            try
-            {
-                configLevels = JsonSerializer.Deserialize<IEnumerable<Level>>(
-                    _config["levels"],
-                    jsonSerializerOptions);
-
-                if (Items == null)
-                {
-                    throw new InvalidDataException();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex.Message);
-            }
-        }
-        #endregion
-
-        #region Expansion Price
-        public void LoadExpansionPrices()
-        {
-            try
-            {
-                ExpansionPrices = JsonSerializer.Deserialize<List<ExpansionPrice>>(
-                    _config["levels"],
-                    jsonSerializerOptions);
-
-                if (Items == null)
-                {
-                    throw new InvalidDataException();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex.Message);
-            }
-        }
-        #endregion
     }
 }
