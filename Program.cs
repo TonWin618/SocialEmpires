@@ -12,6 +12,7 @@ var services = builder.Services;
 
 services.AddRazorPages()
     .AddViewLocalization(options => options.ResourcesPath = "Resources");
+
 services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
 
 var supportedCultures = new []
@@ -32,7 +33,8 @@ services.AddLocalization(
 services.AddDbContext<AppDbContext>(options =>
 {
     var dbstr = "Data Source = Models/data.db";
-    options.UseSqlite(dbstr, sqliteOptionsAction =>
+    options
+    .UseSqlite(dbstr, sqliteOptionsAction =>
     {
         sqliteOptionsAction.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
     });
@@ -74,8 +76,6 @@ services.ConfigureApplicationCookie(cookie =>
     cookie.AccessDeniedPath = "/AccessDenied";
     cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
-
-services.AddLogging();
 
 services.AddScoped<CommandService>();
 services.AddSingleton<ConfigFileService>();

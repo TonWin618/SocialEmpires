@@ -1,22 +1,27 @@
 ﻿using SocialEmpires.Models;
 using SocialEmpires.Models.Enums;
 using SocialEmpires.Services.Constants;
+using SQLitePCL;
+using System.Text.Json;
 
 namespace SocialEmpires.Services
 {
-    public record Command(string Cmd, object[] Args);
-
+    public record Command(string Cmd, JsonElement[] Args);
+    
     public class CommandService
     {
+        private readonly AppDbContext _appDbContext;
         private readonly ConfigFileService _configFileService;
         private readonly PlayerSaveService _playerSaveService;
         private readonly ILogger<CommandService> _logger;
 
         public CommandService(
+            AppDbContext appDbContext,
             ConfigFileService configFileService,
             PlayerSaveService playerSaveService,
             ILogger<CommandService> logger) 
         {
+            _appDbContext = appDbContext;
             _configFileService = configFileService;
             _playerSaveService = playerSaveService;
             _logger = logger;
@@ -30,7 +35,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        public async Task HandleCommand(string userId, string cmd, params object[] args)
+        public async Task HandleCommand(string userId, string cmd, params JsonElement[] args)
         {
             var save = await _playerSaveService.GetPlayerSaveAsync(userId);
             if(save == null)
@@ -120,19 +125,19 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void HandlePlaceGiftCommand(PlayerSave save, object[] args)
+        private void HandlePlaceGiftCommand(PlayerSave save, JsonElement[] args)
         {
-            int itemId = Convert.ToInt32(args[0]);
-            int x = Convert.ToInt32(args[1]);
-            int y = Convert.ToInt32(args[2]);
-            int townId = Convert.ToInt32(args[3]); // Assuming this is correct based on your logic
+            var itemId = args[0].GetInt32();
+            var x = args[1].GetInt32();
+            var y = args[2].GetInt32();
+            var townId = args[3].GetInt32(); // Assuming this is correct based on your logic
                                                    // args[4] is unknown and not used in the implementation
             _logger.LogInformation($"Add {itemId} at ({x},{y})");
 
             var items = save.Maps[townId].Items;
-            int orientation = 0; // TODO: Determine the orientation logic
+            var orientation = 0; // TODO: Determine the orientation logic
             var collectedAtTimestamp = TimestampNow(); // Assuming a function for current timestamp
-            int level = 0;
+            var level = 0;
 
             // Add the gift item to the map's items
             items.Add(new MapItem(itemId, x, y, orientation, collectedAtTimestamp, level));
@@ -147,10 +152,10 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void HandleSellGiftCommand(PlayerSave save, object[] args)
+        private void HandleSellGiftCommand(PlayerSave save, JsonElement[] args)
         {
-            int itemId = Convert.ToInt32(args[0]);
-            int townId = Convert.ToInt32(args[1]);
+            var itemId = args[0].GetInt32();
+            var townId = args[1].GetInt32();
             _logger.LogInformation($"Gift {itemId} sold on town: {townId}");
 
             var gifts = save.PrivateState.Gifts;
@@ -163,19 +168,19 @@ namespace SocialEmpires.Services
             }
 
             // Apply cost if applicable (assuming apply_cost_async is used elsewhere)
-            double priceMultiplier = -0.05;
+            var priceMultiplier = -0.05;
             if (_configFileService.GetItem(itemId).CostType != CostType.Cash)
             {
                 ApplyCostAsync(save, itemId, priceMultiplier);
             }
         }
 
-        private void HandleStoreItemCommand(PlayerSave save, object[] args)
+        private void HandleStoreItemCommand(PlayerSave save, JsonElement[] args)
         {
-            int x = Convert.ToInt32(args[0]);
-            int y = Convert.ToInt32(args[1]);
-            int townId = Convert.ToInt32(args[2]);
-            int itemId = Convert.ToInt32(args[3]);
+            var x = args[0].GetInt32();
+            var y = args[1].GetInt32();
+            var townId = args[2].GetInt32();
+            var itemId = args[3].GetInt32();
             _logger.LogInformation($"Store {itemId} from ({x},{y})");
 
             var map = save.Maps[townId];
@@ -192,10 +197,10 @@ namespace SocialEmpires.Services
             }
 
             // Ensure gifts list is sufficient to access the item_id
-            int length = save.PrivateState.Gifts.Count;
+            var length = save.PrivateState.Gifts.Count;
             if (length <= itemId)
             {
-                for (int i = itemId - length + 1; i > 0; i--)
+                for (var i = itemId - length + 1; i > 0; i--)
                 {
                     save.PrivateState.Gifts.Add(0);
                 }
@@ -205,29 +210,29 @@ namespace SocialEmpires.Services
             save.PrivateState.Gifts[itemId]++;
         }
 
-        private void HandleExchangeCashCommand(PlayerSave save, object[] args)
+        private void HandleExchangeCashCommand(PlayerSave save, JsonElement[] args)
         {
-            int townId = Convert.ToInt32(args[0]);
+            var townId = args[0].GetInt32();
             _logger.LogInformation("Exchange cash -> coins.");
 
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 5, 0); // Assuming a function for editing resources is used elsewhere
             save.Maps[townId].Coins += 2500;
         }
 
-        private void HandleNameMapCommand(PlayerSave save, object[] args)
+        private void HandleNameMapCommand(PlayerSave save, JsonElement[] args)
         {
-            int townId = Convert.ToInt32(args[0]);
-            string newName = Convert.ToString(args[1]);
+            var townId = args[0].GetInt32();
+            var  newName = args[1].GetString();
             _logger.LogInformation($"Map name changed to '{newName}'.");
 
             save.PlayerInfo.MapNames[townId] = newName;
         }
 
-        private void HandleExpandCommand(PlayerSave save, object[] args)
+        private void HandleExpandCommand(PlayerSave save, JsonElement[] args)
         {
-            int landId = Convert.ToInt32(args[0]);
-            string resource = Convert.ToString(args[1]);
-            int townId = Convert.ToInt32(args[2]);
+            var landId = args[0].GetInt32();
+            var  resource = args[1].GetString();
+            var townId = args[2].GetInt32();
 
             _logger.LogInformation($"Expansion {landId} purchased");
 
@@ -245,12 +250,12 @@ namespace SocialEmpires.Services
 
             if (resource == "gold")
             {
-                int toSubtract = exp.Coins;
+                var toSubtract = exp.Coins;
                 map.Coins = Math.Max(map.Coins - toSubtract, 0);
             }
             else if (resource == "cash")
             {
-                int toSubtract = exp.Cash;
+                var toSubtract = exp.Cash;
                 save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - toSubtract, 0);
             }
 
@@ -258,9 +263,9 @@ namespace SocialEmpires.Services
             expansions.Add(landId);
         }
 
-        private void HandleRTPublishScoreCommand(PlayerSave save, object[] args)
+        private void HandleRTPublishScoreCommand(PlayerSave save, JsonElement[] args)
         {
-            int newXp = Convert.ToInt32(args[0]);
+            var newXp = args[0].GetInt32();
             _logger.LogInformation($"xp set to {newXp}");
 
             var map = save.Maps[0]; // Assuming xp is general across maps, adjust if necessary
@@ -270,37 +275,37 @@ namespace SocialEmpires.Services
             map.Level = levels.IndexOf(level);//GetLevelFromXp(newXp);
         }
 
-        private void HandleRTLevelUpCommand(PlayerSave save, object[] args)
+        private void HandleRTLevelUpCommand(PlayerSave save, JsonElement[] args)
         {
-            int newLevel = Convert.ToInt32(args[0]);
+            var newLevel = args[0].GetInt32();
             _logger.LogInformation($"Level Up!: {newLevel}");
 
             var map = save.Maps[0]; // Assuming xp is general across maps, adjust if necessary
             map.Level = newLevel;
 
-            int currentXp = map.Xp;
+            var currentXp = map.Xp;
             var level = _configFileService.Levels[Math.Max(0, newLevel-1)];
-            int minExpectedXp = level.ExpRequired;
+            var minExpectedXp = level.ExpRequired;
             map.Xp = Math.Max(minExpectedXp, currentXp);
         }
 
-        private void HandlePopUnitCommand(PlayerSave save, object[] args)
+        private void HandlePopUnitCommand(PlayerSave save, JsonElement[] args)
         {
-            int buildingX = Convert.ToInt32(args[0]);
-            int buildingY = Convert.ToInt32(args[1]);
-            int townId = Convert.ToInt32(args[2]);
-            int unitId = Convert.ToInt32(args[3]);
+            var buildingX = args[0].GetInt32();
+            var buildingY = args[1].GetInt32();
+            var townId = args[2].GetInt32();
+            var unitId = args[3].GetInt32();
             bool placePoppedUnit = args.Length > 4;
 
-            int unitX = 0;
-            int unitY = 0;
-            int unitFrame = 0; // Assuming unit_frame is an integer, adjust if it's another type
+            var unitX = 0;
+            var unitY = 0;
+            var unitFrame = 0; // Assuming unit_frame is an integer, adjust if it's another type
 
             if (placePoppedUnit)
             {
-                unitX = Convert.ToInt32(args[4]);
-                unitY = Convert.ToInt32(args[5]);
-                unitFrame = Convert.ToInt32(args[6]);
+                unitX = args[4].GetInt32();
+                unitY = args[5].GetInt32();
+                unitFrame = args[6].GetInt32();
             }
 
             _logger.LogInformation($"Pop {unitId} from ({buildingX},{buildingY}).");
@@ -331,14 +336,14 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void HandlePushUnitCommand(PlayerSave save, object[] args)
+        private void HandlePushUnitCommand(PlayerSave save, JsonElement[] args)
         {
-            int unitX = Convert.ToInt32(args[0]);
-            int unitY = Convert.ToInt32(args[1]);
-            int unitId = Convert.ToInt32(args[2]);
-            int buildingX = Convert.ToInt32(args[3]);
-            int buildingY = Convert.ToInt32(args[4]);
-            int townId = Convert.ToInt32(args[5]);
+            var unitX = args[0].GetInt32();
+            var unitY = args[1].GetInt32();
+            var unitId = args[2].GetInt32();
+            var buildingX = args[3].GetInt32();
+            var buildingY = args[4].GetInt32();
+            var townId = args[5].GetInt32();
 
             _logger.LogInformation($"Push {unitId} to ({buildingX},{buildingY}).");
 
@@ -369,10 +374,10 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void HandleRewardMissionCommand(PlayerSave save, object[] args)
+        private void HandleRewardMissionCommand(PlayerSave save, JsonElement[] args)
         {
-            var townId = Convert.ToInt32(args[0]);
-            var missionId = Convert.ToInt32(args[1]);
+            var townId = args[0].GetInt32();
+            var missionId = args[1].GetInt32();
 
             _logger.LogInformation($"Reward mission {missionId}");
 
@@ -383,29 +388,29 @@ namespace SocialEmpires.Services
             save.PrivateState.RewardedMissions.Add(missionId);
         }
 
-        private void HandleCompleteMissionCommand(PlayerSave save, object[] args)
+        private void HandleCompleteMissionCommand(PlayerSave save, JsonElement[] args)
         {
-            int missionId = Convert.ToInt32(args[0]);
-            bool skippedWithCash = Convert.ToBoolean(args[1]);
+            var missionId = args[0].GetInt32();
+            var skippedWithCash = args[1].GetInt32();
 
             _logger.LogInformation($"Complete mission {missionId}");
 
-            if (skippedWithCash)
+            if (skippedWithCash == 1)
             {
-                int cashToSubtract = 0; // TODO: Determine the value for cash subtraction
+                var cashToSubtract = 0; // TODO: Determine the value for cash subtraction
                 save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
             }
 
             save.PrivateState.CompletedMissions.Add(missionId);
         }
 
-        private void HandleKillCommand(PlayerSave save, object[] args)
+        private void HandleKillCommand(PlayerSave save, JsonElement[] args)
         {
-            int x = Convert.ToInt32(args[0]);
-            int y = Convert.ToInt32(args[1]);
-            int id = Convert.ToInt32(args[2]);
-            int townId = Convert.ToInt32(args[3]);
-            string type = Convert.ToString(args[4]);
+            var x = args[0].GetInt32();
+            var y = args[1].GetInt32();
+            var id = args[2].GetInt32();
+            var townId = args[3].GetInt32();
+            var  type = args[4].GetString();
 
             _logger.LogInformation($"Kill {id} from ({x},{y}).");
 
@@ -424,14 +429,14 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void HandleSellCommand(PlayerSave save, object[] args)
+        private void HandleSellCommand(PlayerSave save, JsonElement[] args)
         {
-            int x = Convert.ToInt32(args[0]);
-            int y = Convert.ToInt32(args[1]);
-            int id = Convert.ToInt32(args[2]);
-            int townId = Convert.ToInt32(args[3]);
-            bool dontModifyResources = Convert.ToBoolean(args[4]);
-            string reason = Convert.ToString(args[5]);
+            var x = args[0].GetInt32();
+            var y = args[1].GetInt32();
+            var id = args[2].GetInt32();
+            var townId = args[3].GetInt32();
+            var dontModifyResources = args[4].GetInt32();
+            var  reason = args[5].GetString();
 
             _logger.LogInformation($"Remove {id} from ({x},{y}). Reason: {reason}");
 
@@ -446,11 +451,11 @@ namespace SocialEmpires.Services
             }
 
             // Modify resources if needed
-            if (!dontModifyResources)
+            if (dontModifyResources == 0)
             {
-                double priceMultiplier = -0.05;
+                var priceMultiplier = -0.05;
                 var item = _configFileService.GetItem(id);
-                string costType = item.CostType;
+                var costType = item.CostType;
                 
                 if (costType != CostType.Cash)
                 {
@@ -466,15 +471,15 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void HandleCollectCommand(PlayerSave save, object[] args)
+        private void HandleCollectCommand(PlayerSave save, JsonElement[] args)
         {
-            int x = Convert.ToInt32(args[0]);
-            int y = Convert.ToInt32(args[1]);
-            int townId = Convert.ToInt32(args[2]);
-            int id = Convert.ToInt32(args[3]);
-            int numUnitsContainedWhenHarvested = Convert.ToInt32(args[4]); // Assuming this affects multiplier logic elsewhere
-            int resourceMultiplier = Convert.ToInt32(args[5]);
-            int cashToSubtract = Convert.ToInt32(args[6]);
+            var x = args[0].GetInt32();
+            var y = args[1].GetInt32();
+            var townId = args[2].GetInt32();
+            var id = args[3].GetInt32();
+            var numUnitsContainedWhenHarvested = args[4].GetInt32(); // Assuming this affects multiplier logic elsewhere
+            var resourceMultiplier = args[5].GetInt32();
+            var cashToSubtract = args[6].GetInt32();
 
             _logger.LogInformation($"Collect {id}");
 
@@ -483,25 +488,25 @@ namespace SocialEmpires.Services
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
         }
 
-        private void HandleCompleteTutorialCommandAsync(PlayerSave save, object[] args)
+        private void HandleCompleteTutorialCommandAsync(PlayerSave save, JsonElement[] args)
         {
-            var tutorialStep = Convert.ToInt32(args[0]);
-            if (tutorialStep > 31)
+            var tutorialStep = args[0].GetInt32();
+            if (tutorialStep >= 31)
             {
-                save.PlayerInfo.CompletedTutorial = save.PlayerInfo.CompletedTutorial = 1;
+                save.PlayerInfo.CompletedTutorial = 1;
             }
         }
 
-        private void HandleMoveCommandAsync(PlayerSave save, object[] args)
+        private void HandleMoveCommandAsync(PlayerSave save, JsonElement[] args)
         {
-            int ix = Convert.ToInt32(args[0]);
-            int iy = Convert.ToInt32(args[1]);
-            int id = Convert.ToInt32(args[2]);
-            int newx = Convert.ToInt32(args[3]);
-            int newy = Convert.ToInt32(args[4]);
-            int frame = Convert.ToInt32(args[5]); // You may need to handle this parameter according to your requirements
-            int townId = Convert.ToInt32(args[6]);
-            string reason = Convert.ToString(args[7]); // "Unitat", "moveTo", "colisio", "MouseUsed"
+            var ix = args[0].GetInt32();
+            var iy = args[1].GetInt32();
+            var id = args[2].GetInt32();
+            var newx = args[3].GetInt32();
+            var newy = args[4].GetInt32();
+            var frame = args[5].GetInt32(); // You may need to handle this parameter according to your requirements
+            var townId = args[6].GetInt32();
+            var reason = args[7].GetString(); // "Unitat", "moveTo", "colisio", "MouseUsed"
 
             _logger.LogInformation($"Move {id} from ({ix},{iy}) to ({newx},{newy})");
 
@@ -517,24 +522,25 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void HandleBuyCommandAsync(PlayerSave save, object[] args)
+        private void HandleBuyCommandAsync(PlayerSave save, JsonElement[] args)
         {
-            var id = Convert.ToInt32(args[0]);
-            var x = Convert.ToInt32(args[1]);
-            var y = Convert.ToInt32(args[2]);
-            var frame = Convert.ToInt32(args[3]); // TODO ??
-            var townId = Convert.ToInt32(args[4]);
-            var dontModifyResources = Convert.ToBoolean(args[5]);
-            var priceMultiplier = Convert.ToInt32(args[6]);
-            var type = Convert.ToString(args[7]);
+            
+            var id = args[0].GetInt32();
+            var x = args[1].GetInt32();
+            var y = args[2].GetInt32();
+            var frame = args[3].GetInt32(); // TODO ??
+            var townId = args[4].GetInt32();
+            var dontModifyResources = args[5].GetInt32();
+            var priceMultiplier = args[6].GetInt32();
+            var type = args[7].GetString();
 
             _logger.LogInformation($"Add {id} at ({x},{y})");
             var collectedAtTimestamp = TimestampNow();
             var level = 0; // TODO 
             var orientation = 0;
-            var map = save.DefaultMap; // Adjusted from save["maps"][townId] to save.DefaultMap
+            var map = save.Maps[townId]; // Adjusted from save["maps"][townId] to save.DefaultMap
 
-            if (!dontModifyResources)
+            if (dontModifyResources == 0)
             {
                 ApplyCollectAsync(save, id, priceMultiplier);
                 ApplyCollectXpAsync(save, id);

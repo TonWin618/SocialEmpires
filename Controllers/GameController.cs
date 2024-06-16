@@ -75,6 +75,7 @@ namespace SocialEmpires.Controllers
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
             if (save == null)
             {
+                userid = HttpContext.User.Identity.Name;
                 save = await _playerSaveService.CreatePlayerSaveAsync(userid, userid);
             }
 
