@@ -64,19 +64,19 @@ namespace SocialEmpires.Services
             await File.WriteAllTextAsync(zhConfigFile, _config.ToJsonString(jsonSerializerOptions));
         }
 
-        public async Task<Item?> GetItem(int id)
+        public Item? GetItem(int id)
         {
-            return await GetItem(id.ToString());
+            return GetItem(id.ToString());
         }
 
-        public async Task<Item?> GetItem(string id)
+        public Item? GetItem(string id)
         {
             return Items?.FirstOrDefault(_ => _.Id == id);
         }
 
-        public Task<(int pageCount,IEnumerable<Item>? items)> GetItems(int pageIndex, int pageSize) 
+        public (int pageCount,IEnumerable<Item>? items) GetItems(int pageIndex, int pageSize) 
         {
-            return Task.FromResult(PageHelper.Page(pageIndex,pageSize, Items));
+            return PageHelper.Page(pageIndex,pageSize, Items);
         }
     }
 }

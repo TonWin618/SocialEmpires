@@ -44,19 +44,19 @@ namespace SocialEmpires.Services
             }
             else if (cmd == CommandNames.BUY)
             {
-                await HandleBuyCommandAsync(save, args);
+                HandleBuyCommandAsync(save, args);
             }
             else if (cmd == CommandNames.COMPLETE_TUTORIAL)
             {
-                await HandleCompleteTutorialCommandAsync(save, args);
+                HandleCompleteTutorialCommandAsync(save, args);
             }
             else if(cmd == CommandNames.MOVE)
             {
-                await HandleMoveCommandAsync(save, args);
+                HandleMoveCommandAsync(save, args);
             }
             else if(cmd == CommandNames.COMPLETE_TUTORIAL)
             {
-                await HandleCompleteTutorialCommandAsync(save, args);
+                HandleCompleteTutorialCommandAsync(save, args);
             }
         }
 
@@ -87,7 +87,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task HandleSellGiftCommand(PlayerSave save, object[] args)
+        private void HandleSellGiftCommand(PlayerSave save, object[] args)
         {
             int itemId = Convert.ToInt32(args[0]);
             int townId = Convert.ToInt32(args[1]);
@@ -104,13 +104,13 @@ namespace SocialEmpires.Services
 
             // Apply cost if applicable (assuming apply_cost_async is used elsewhere)
             double priceMultiplier = -0.05;
-            if ((await _configFileService.GetItem(itemId)).CostType != CostType.Cash)
+            if (_configFileService.GetItem(itemId).CostType != CostType.Cash)
             {
-                await ApplyCostAsync(save, itemId, priceMultiplier);
+                ApplyCostAsync(save, itemId, priceMultiplier);
             }
         }
 
-        private async Task HandleStoreItemCommand(PlayerSave save, object[] args)
+        private void HandleStoreItemCommand(PlayerSave save, object[] args)
         {
             int x = Convert.ToInt32(args[0]);
             int y = Convert.ToInt32(args[1]);
@@ -145,7 +145,7 @@ namespace SocialEmpires.Services
             save.PrivateState.Gifts[itemId]++;
         }
 
-        private async Task HandleExchangeCashCommand(PlayerSave save, object[] args)
+        private void HandleExchangeCashCommand(PlayerSave save, object[] args)
         {
             int townId = Convert.ToInt32(args[0]);
             _logger.LogInformation("Exchange cash -> coins.");
@@ -154,7 +154,7 @@ namespace SocialEmpires.Services
             save.Maps[townId].Coins += 2500;
         }
 
-        private async Task HandleNameMapCommand(PlayerSave save, object[] args)
+        private void HandleNameMapCommand(PlayerSave save, object[] args)
         {
             int townId = Convert.ToInt32(args[0]);
             string newName = Convert.ToString(args[1]);
@@ -163,7 +163,7 @@ namespace SocialEmpires.Services
             save.PlayerInfo.MapNames[townId] = newName;
         }
 
-        private async Task HandleExpandCommand(PlayerSave save, object[] args)
+        private void HandleExpandCommand(PlayerSave save, object[] args)
         {
             int landId = Convert.ToInt32(args[0]);
             string resource = Convert.ToString(args[1]);
@@ -198,7 +198,7 @@ namespace SocialEmpires.Services
             expansions.Add(landId);
         }
 
-        private async Task HandleRTPublishScoreCommand(PlayerSave save, object[] args)
+        private void HandleRTPublishScoreCommand(PlayerSave save, object[] args)
         {
             int newXp = Convert.ToInt32(args[0]);
             _logger.LogInformation($"xp set to {newXp}");
@@ -210,7 +210,7 @@ namespace SocialEmpires.Services
             map.Level = levels.IndexOf(level);//GetLevelFromXp(newXp);
         }
 
-        private async Task HandleRTLevelUpCommand(PlayerSave save, object[] args)
+        private void HandleRTLevelUpCommand(PlayerSave save, object[] args)
         {
             int newLevel = Convert.ToInt32(args[0]);
             _logger.LogInformation($"Level Up!: {newLevel}");
@@ -271,7 +271,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task HandlePushUnitCommand(PlayerSave save, object[] args)
+        private void HandlePushUnitCommand(PlayerSave save, object[] args)
         {
             int unitX = Convert.ToInt32(args[0]);
             int unitY = Convert.ToInt32(args[1]);
@@ -309,7 +309,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task HandleRewardMissionCommand(PlayerSave save, object[] args)
+        private void HandleRewardMissionCommand(PlayerSave save, object[] args)
         {
             var townId = Convert.ToInt32(args[0]);
             var missionId = Convert.ToInt32(args[1]);
@@ -323,7 +323,7 @@ namespace SocialEmpires.Services
             save.PrivateState.RewardedMissions.Add(missionId);
         }
 
-        private async Task HandleCompleteMissionCommand(PlayerSave save, object[] args)
+        private void HandleCompleteMissionCommand(PlayerSave save, object[] args)
         {
             int missionId = Convert.ToInt32(args[0]);
             bool skippedWithCash = Convert.ToBoolean(args[1]);
@@ -339,7 +339,7 @@ namespace SocialEmpires.Services
             save.PrivateState.CompletedMissions.Add(missionId);
         }
 
-        private async Task HandleKillCommand(PlayerSave save, object[] args)
+        private void HandleKillCommand(PlayerSave save, object[] args)
         {
             int x = Convert.ToInt32(args[0]);
             int y = Convert.ToInt32(args[1]);
@@ -357,14 +357,14 @@ namespace SocialEmpires.Services
             if (itemToRemove != null)
             {
                 // Apply XP collection
-                await ApplyCollectXpAsync(save, id);
+                ApplyCollectXpAsync(save, id);
 
                 // Remove the item from the map
                 items.Remove(itemToRemove);
             }
         }
 
-        private async Task HandleSellCommand(PlayerSave save, object[] args)
+        private void HandleSellCommand(PlayerSave save, object[] args)
         {
             int x = Convert.ToInt32(args[0]);
             int y = Convert.ToInt32(args[1]);
@@ -389,12 +389,12 @@ namespace SocialEmpires.Services
             if (!dontModifyResources)
             {
                 double priceMultiplier = -0.05;
-                var item = await _configFileService.GetItem(id);
+                var item = _configFileService.GetItem(id);
                 string costType = item.CostType;
                 
                 if (costType != CostType.Cash)
                 {
-                    await ApplyCostAsync(save, id, priceMultiplier);
+                    ApplyCostAsync(save, id, priceMultiplier);
                 }
             }
 
@@ -406,7 +406,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task HandleCollectCommand(PlayerSave save, object[] args)
+        private void HandleCollectCommand(PlayerSave save, object[] args)
         {
             int x = Convert.ToInt32(args[0]);
             int y = Convert.ToInt32(args[1]);
@@ -419,11 +419,11 @@ namespace SocialEmpires.Services
             _logger.LogInformation($"Collect {id}");
 
             var map = save.Maps[townId];
-            await ApplyCollectAsync(save, id, resourceMultiplier);
+            ApplyCollectAsync(save, id, resourceMultiplier);
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
         }
 
-        private async Task HandleCompleteTutorialCommandAsync(PlayerSave save, object[] args)
+        private void HandleCompleteTutorialCommandAsync(PlayerSave save, object[] args)
         {
             var tutorialStep = Convert.ToInt32(args[0]);
             if (tutorialStep > 31)
@@ -432,7 +432,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task HandleMoveCommandAsync(PlayerSave save, object[] args)
+        private void HandleMoveCommandAsync(PlayerSave save, object[] args)
         {
             int ix = Convert.ToInt32(args[0]);
             int iy = Convert.ToInt32(args[1]);
@@ -457,7 +457,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task HandleBuyCommandAsync(PlayerSave save, object[] args)
+        private void HandleBuyCommandAsync(PlayerSave save, object[] args)
         {
             var id = Convert.ToInt32(args[0]);
             var x = Convert.ToInt32(args[1]);
@@ -476,15 +476,15 @@ namespace SocialEmpires.Services
 
             if (!dontModifyResources)
             {
-                await ApplyCollectAsync(save, id, priceMultiplier);
-                await ApplyCollectXpAsync(save, id);
+                ApplyCollectAsync(save, id, priceMultiplier);
+                ApplyCollectXpAsync(save, id);
             }
             map.Items.Add(new MapItem(id, x, y, orientation, collectedAtTimestamp, level));
         }
 
-        private async Task ApplyCollectAsync(PlayerSave save, int id, double multiplier)
+        private void ApplyCollectAsync(PlayerSave save, int id, double multiplier)
         {
-            var item = await _configFileService.GetItem(id);
+            var item = _configFileService.GetItem(id);
             if (item == null)
             {
                 return;
@@ -513,9 +513,9 @@ namespace SocialEmpires.Services
             save.DefaultMap.Xp += collectXp;
         }
 
-        private async Task ApplyCostAsync(PlayerSave save, int id, double multiplier)
+        private void ApplyCostAsync(PlayerSave save, int id, double multiplier)
         {
-            var item = await _configFileService.GetItem(id);
+            var item = _configFileService.GetItem(id);
             if (item == null)
             {
                 return;
@@ -542,9 +542,9 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async Task ApplyCollectXpAsync(PlayerSave save, int id)
+        private void ApplyCollectXpAsync(PlayerSave save, int id)
         {
-            var item = await _configFileService.GetItem(id);
+            var item = _configFileService.GetItem(id);
             if (item == null)
             {
                 return;

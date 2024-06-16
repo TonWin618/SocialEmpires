@@ -7,7 +7,7 @@
     ViewData["Title"] = localizer["Items"];
     var pageIndex = int.Parse(Request.Query["pageIndex"].FirstOrDefault() ?? "1");
     var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
-    var (pageCount,data) = await configFileService.GetItems(pageIndex, pageSize);
+    var (pageCount,data) = configFileService.GetItems(pageIndex, pageSize);
 }
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles ="Admin")]
