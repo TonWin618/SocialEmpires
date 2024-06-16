@@ -16,6 +16,7 @@ namespace SocialEmpires.Services
         private IEnumerable<Item>? configItems;
         private IEnumerable<Mission> configMissions;
         private IEnumerable<Level> configLevels;
+        public List<ExpansionPrice> ExpansionPrices { get; private set; }
 
         public ConfigFileService(ILogger<ConfigFileService> logger)
         {
@@ -130,6 +131,27 @@ namespace SocialEmpires.Services
             try
             {
                 configLevels = JsonSerializer.Deserialize<IEnumerable<Level>>(
+                    _config["levels"],
+                    jsonSerializerOptions);
+
+                if (configItems == null)
+                {
+                    throw new InvalidDataException();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Expansion Price
+        public void LoadExpansionPrices()
+        {
+            try
+            {
+                ExpansionPrices = JsonSerializer.Deserialize<List<ExpansionPrice>>(
                     _config["levels"],
                     jsonSerializerOptions);
 

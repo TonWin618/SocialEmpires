@@ -60,6 +60,41 @@ namespace SocialEmpires.Services
             }
         }
 
+        private async Task HandleExpandCommand(PlayerSave save, object[] args)
+        {
+            int landId = Convert.ToInt32(args[0]);
+            string resource = Convert.ToString(args[1]);
+            int townId = Convert.ToInt32(args[2]);
+
+            _logger.LogInformation($"Expansion {landId} purchased");
+
+            var map = save.DefaultMap;
+            var expansions = map.Expansions;
+
+            if (expansions.Contains(landId))
+            {
+                return;
+            }
+
+            // Subtract resources
+            var expansionPrices = _configFileService.ExpansionPrices;
+            var exp = expansionPrices[expansions.Count - 1];
+
+            if (resource == "gold")
+            {
+                int toSubtract = exp.Coins;
+                map.Coins = Math.Max(map.Coins - toSubtract, 0);
+            }
+            else if (resource == "cash")
+            {
+                int toSubtract = exp.Cash;
+                save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - toSubtract, 0);
+            }
+
+            // Add expansion
+            expansions.Add(landId);
+        }
+
         private async Task HandleRTPublishScoreCommand(PlayerSave save, object[] args)
         {
             int newXp = Convert.ToInt32(args[0]);
