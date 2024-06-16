@@ -15,6 +15,7 @@ namespace SocialEmpires.Services
         private readonly JsonNode _config;
         private IEnumerable<Item>? configItems;
         private IEnumerable<Mission> configMissions;
+        private IEnumerable<Level> configLevels;
 
         public ConfigFileService(ILogger<ConfigFileService> logger)
         {
@@ -97,6 +98,34 @@ namespace SocialEmpires.Services
             {
                 configMissions = JsonSerializer.Deserialize<IEnumerable<Mission>>(
                     _config["missions"],
+                    jsonSerializerOptions);
+
+                if (configItems == null)
+                {
+                    throw new InvalidDataException();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Levels
+        public Task<Level> GetLevel(int levelId)
+        {
+            var index = Math.Max(0, levelId - 1);
+            var level = configLevels.ElementAtOrDefault(index);
+            return Task.FromResult(level);
+        }
+
+        public void LoadLevels()
+        {
+            try
+            {
+                configLevels = JsonSerializer.Deserialize<IEnumerable<Level>>(
+                    _config["levels"],
                     jsonSerializerOptions);
 
                 if (configItems == null)

@@ -60,6 +60,20 @@ namespace SocialEmpires.Services
             }
         }
 
+        private async void HandleRTLevelUpCommand(PlayerSave save, object[] args)
+        {
+            int newLevel = Convert.ToInt32(args[0]);
+            _logger.LogInformation($"Level Up!: {newLevel}");
+
+            var map = save.Maps[0]; // Assuming xp is general across maps, adjust if necessary
+            map.Level = newLevel;
+
+            int currentXp = map.Xp;
+            var level = await _configFileService.GetLevel(newLevel);
+            int minExpectedXp = level.ExpRequired;
+            map.Xp = Math.Max(minExpectedXp, currentXp);
+        }
+
         private void HandlePopUnitCommand(PlayerSave save, object[] args)
         {
             int buildingX = Convert.ToInt32(args[0]);
