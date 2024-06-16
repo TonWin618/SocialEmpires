@@ -60,6 +60,15 @@ namespace SocialEmpires.Services
             }
         }
 
+        private async Task HandleNameMapCommand(PlayerSave save, object[] args)
+        {
+            int townId = Convert.ToInt32(args[0]);
+            string newName = Convert.ToString(args[1]);
+            _logger.LogInformation($"Map name changed to '{newName}'.");
+
+            save.PlayerInfo.MapNames[townId] = newName;
+        }
+
         private async Task HandleExpandCommand(PlayerSave save, object[] args)
         {
             int landId = Convert.ToInt32(args[0]);
