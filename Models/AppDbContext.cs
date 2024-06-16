@@ -52,21 +52,42 @@ namespace SocialEmpires.Models
             builder.Entity<PlayerSave>().HasKey(x => x.Pid);
 
             builder.Entity<EmpireMap>().HasKey(x => x.Pid);
-            builder.Entity<EmpireMap>().Property(_ => _.Items)
+            builder.Entity<EmpireMap>()
+                .Property(_ => _.Items)
                 .HasConversion(mapItemListConverter)
                 .Metadata.SetValueComparer(mapItemListComparer);
+            builder.Entity<EmpireMap>().Property(_ => _.ExpirableUnitsTime)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<EmpireMap>().Property(_ => _.ReceivedAssists)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<EmpireMap>().Property(_ => _.ResourcesTraded)
+                .Metadata.SetValueComparer(dictionaryComparer);
 
             builder.Entity<PlayerState>().HasKey(x => x.Pid);
+            builder.Entity<PlayerState>().Property(_ => _.ArrayAnimals)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<PlayerState>().Property(_ => _.Magics)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<PlayerState>().Property(_ => _.NeighborAssists)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<PlayerState>().Property(_ => _.QuestsRank)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<PlayerState>().Property(_ => _.Teams)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<PlayerState>().Property(_ => _.UnlockedEarlyBuildings)
+                .Metadata.SetValueComparer(dictionaryComparer);
+            builder.Entity<PlayerState>().Property(_ => _.UnlockedSkins)
+                .Metadata.SetValueComparer(dictionaryComparer);
 
             builder.Entity<PlayerInfo>().HasKey(x => x.Pid);
-
-
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
             base.ConfigureConventions(configurationBuilder);
-            configurationBuilder.Properties<Dictionary<string, int>>().HaveConversion<DictionaryConverter>();
+            configurationBuilder
+                .Properties<Dictionary<string, int>>()
+                .HaveConversion<DictionaryConverter>();
         }
 
         public class DictionaryConverter : ValueConverter<Dictionary<string, int>, string>
