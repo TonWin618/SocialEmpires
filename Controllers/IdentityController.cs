@@ -73,8 +73,13 @@ namespace SocialEmpires.Controllers
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _userManager.ResetPasswordAsync(user, token, password);
-
+            var resetPasswordResult = await _userManager.ResetPasswordAsync(user, token, password);
+            if(!resetPasswordResult.Succeeded)
+            {
+                TempData["ErrorMessage"] = "PasswordSetFailed";
+                return Redirect("/Register");
+            }
+            
             await _userManager.AddToRoleAsync(user, "User");
 
             return Redirect("/");
@@ -108,6 +113,15 @@ namespace SocialEmpires.Controllers
         public async Task<IActionResult> SendEmailConfirmationEmail(
             [FromForm]string email)
         {
+            if(HttpContext.User.Identity.Name != null)
+            {
+                var loginUser = await _userManager.FindByIdAsync(HttpContext.User.Identity.Name);
+                if(loginUser.EmailConfirmed)
+                {
+                    return Redirect("/Privacy");
+                }
+            }
+
             var user = new IdentityUser()
             {
                 Email = email
