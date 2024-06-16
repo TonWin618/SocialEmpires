@@ -113,6 +113,11 @@ namespace SocialEmpires.Services
         #endregion
 
         #region Levels
+        public Task<IEnumerable<Level>> GetLevels()
+        {
+            return Task.FromResult(configLevels);
+        }
+
         public Task<Level> GetLevel(int levelId)
         {
             var index = Math.Max(0, levelId - 1);

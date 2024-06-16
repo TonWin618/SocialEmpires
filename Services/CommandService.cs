@@ -60,7 +60,19 @@ namespace SocialEmpires.Services
             }
         }
 
-        private async void HandleRTLevelUpCommand(PlayerSave save, object[] args)
+        private async Task HandleRTPublishScoreCommand(PlayerSave save, object[] args)
+        {
+            int newXp = Convert.ToInt32(args[0]);
+            _logger.LogInformation($"xp set to {newXp}");
+
+            var map = save.Maps[0]; // Assuming xp is general across maps, adjust if necessary
+            map.Xp = newXp;
+            var levels = (await _configFileService.GetLevels()).ToList();
+            var level = levels.FirstOrDefault(_ => _.ExpRequired > newXp);
+            map.Level = levels.IndexOf(level);//GetLevelFromXp(newXp);
+        }
+
+        private async Task HandleRTLevelUpCommand(PlayerSave save, object[] args)
         {
             int newLevel = Convert.ToInt32(args[0]);
             _logger.LogInformation($"Level Up!: {newLevel}");
