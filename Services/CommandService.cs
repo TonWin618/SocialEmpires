@@ -60,6 +60,15 @@ namespace SocialEmpires.Services
             }
         }
 
+        private async Task HandleExchangeCashCommand(PlayerSave save, object[] args)
+        {
+            int townId = Convert.ToInt32(args[0]);
+            _logger.LogInformation("Exchange cash -> coins.");
+
+            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 5, 0); // Assuming a function for editing resources is used elsewhere
+            save.Maps[townId].Coins += 2500;
+        }
+
         private async Task HandleNameMapCommand(PlayerSave save, object[] args)
         {
             int townId = Convert.ToInt32(args[0]);
