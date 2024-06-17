@@ -18,6 +18,7 @@ namespace SocialEmpires.Services
         public List<Mission> Missions { get; private set; }
         public List<Level> Levels { get; private set; }
         public List<ExpansionPrice> ExpansionPrices { get; private set; }
+        public JsonElement Globals { get; private set; }
 
         public ConfigFileService(ILogger<ConfigFileService> logger)
         {
