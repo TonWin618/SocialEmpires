@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Models.Configs
 {
-    public record Item
+    public class Item
     {
         public string Id { get; set; }
 

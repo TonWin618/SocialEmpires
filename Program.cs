@@ -77,6 +77,11 @@ services.ConfigureApplicationCookie(cookie =>
     cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
 
+services.AddAutoMapper(options =>
+{
+    options.AddProfile(typeof(AutoMapperProfile));
+});
+
 services.AddScoped<CommandService>();
 services.AddSingleton<ConfigFileService>();
 services.AddScoped<PlayerSaveService>();

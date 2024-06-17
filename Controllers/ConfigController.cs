@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SocialEmpires.Models.Configs;
@@ -12,10 +13,14 @@ namespace SocialEmpires.Controllers
     public class ConfigController:ControllerBase
     {
         private readonly ConfigFileService _configFileService;
+        private readonly IMapper _mapper;
+
         public ConfigController(
-            ConfigFileService configFileService)
+            ConfigFileService configFileService,
+            IMapper mapper)
         {
             _configFileService = configFileService;
+            _mapper = mapper;
         }
 
         #region Items
@@ -57,8 +62,8 @@ namespace SocialEmpires.Controllers
         //[Authorize(Roles = "Admin")]
         public async Task<bool> UpdateItem(string id, [FromForm]Item updatedItem)
         {
-            var item = _configFileService.GetItem(id);
-            item = updatedItem;
+            var item = _configFileService.Items.FirstOrDefault(_ => _.Id == id);
+            _mapper.Map(updatedItem, item);
             await _configFileService.Save();
             return true;
         }
