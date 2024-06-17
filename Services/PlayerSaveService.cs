@@ -26,7 +26,7 @@ namespace SocialEmpires.Services
                 .Include(_ => _.PlayerInfo)
                 .Include(_ => _.Maps)
                 .Include(_ => _.PrivateState)
-                .Page(pageIndex, pageSize,out int pageCount)
+                .Page(pageIndex, pageSize, out int pageCount)
                 .ToListAsync();
             return (pageCount, saves);
         }

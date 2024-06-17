@@ -19,7 +19,7 @@ namespace SocialEmpires.Controllers
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            ILogger<IdentityController> logger) 
+            ILogger<IdentityController> logger)
         {
             _appDbContext = appDbContext;
             _userManager = userManager;
@@ -33,7 +33,7 @@ namespace SocialEmpires.Controllers
             [FromForm] string email,
             [FromForm] string password)
         {
-            if(_roleManager.Roles.Any(_ => _.Name == "Admin"))
+            if (_roleManager.Roles.Any(_ => _.Name == "Admin"))
             {
                 return Redirect("/");
             }
@@ -60,7 +60,7 @@ namespace SocialEmpires.Controllers
             [FromForm] string code)
         {
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            if(user == null)
+            if (user == null)
             {
                 return Redirect("/Login");
             }
@@ -74,12 +74,12 @@ namespace SocialEmpires.Controllers
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var resetPasswordResult = await _userManager.ResetPasswordAsync(user, token, password);
-            if(!resetPasswordResult.Succeeded)
+            if (!resetPasswordResult.Succeeded)
             {
                 TempData["ErrorMessage"] = "PasswordSetFailed";
                 return Redirect("/Register");
             }
-            
+
             await _userManager.AddToRoleAsync(user, "User");
 
             return Redirect("/");
@@ -87,16 +87,16 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("api/login")]
         public async Task<IActionResult> LoginByEmailAndPassword(
-            [FromForm] string email, 
+            [FromForm] string email,
             [FromForm] string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            if(user == null)
+            if (user == null)
             {
                 TempData["ErrorMessage"] = "UserNotFound";
                 return Redirect("/Login");
             }
-            
+
             var result = await _signInManager.PasswordSignInAsync(user, password, true, false);
             if (result.Succeeded)
             {
@@ -111,12 +111,12 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("api/sendEmailConfirmationEmail")]
         public async Task<IActionResult> SendEmailConfirmationEmail(
-            [FromForm]string email)
+            [FromForm] string email)
         {
-            if(HttpContext.User.Identity.Name != null)
+            if (HttpContext.User.Identity.Name != null)
             {
                 var loginUser = await _userManager.FindByIdAsync(HttpContext.User.Identity.Name);
-                if(loginUser.EmailConfirmed)
+                if (loginUser.EmailConfirmed)
                 {
                     return Redirect("/Privacy");
                 }
@@ -134,7 +134,7 @@ namespace SocialEmpires.Controllers
                 TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
                 return Redirect("/Register");
             }
-            
+
             await _signInManager.SignInAsync(user, isPersistent: true);
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);

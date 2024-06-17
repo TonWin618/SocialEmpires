@@ -18,9 +18,9 @@
         }
 
         public static IQueryable<T> Page<T>(
-            this IQueryable<T> query, 
-            int pageIndex, 
-            int pageSize, 
+            this IQueryable<T> query,
+            int pageIndex,
+            int pageSize,
             out int pageCount)
         {
             pageCount = (int)Math.Ceiling((double)query.Count() / pageSize);

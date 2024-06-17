@@ -5,10 +5,10 @@ namespace SocialEmpires.Controllers
 {
     [ApiController]
     [Route("api/admin/players")]
-    public class PlayerController:ControllerBase
+    public class PlayerController : ControllerBase
     {
         private readonly PlayerSaveService _playerSaveService;
-        public PlayerController(PlayerSaveService playerSaveService) 
+        public PlayerController(PlayerSaveService playerSaveService)
         {
             _playerSaveService = playerSaveService;
         }

@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Services;
-using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Controllers
 {
     [Route("api/admin/config")]
     [ApiController]
-    public class ConfigController:ControllerBase
+    public class ConfigController : ControllerBase
     {
         private readonly ConfigFileService _configFileService;
         private readonly IMapper _mapper;
@@ -60,7 +58,7 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("items/{id}")]
         //[Authorize(Roles = "Admin")]
-        public async Task<bool> UpdateItem(string id, [FromForm]Item updatedItem)
+        public async Task<bool> UpdateItem(string id, [FromForm] Item updatedItem)
         {
             var item = _configFileService.Items.FirstOrDefault(_ => _.Id == id);
             _mapper.Map(updatedItem, item);
@@ -71,7 +69,7 @@ namespace SocialEmpires.Controllers
 
         public PageResult<T> Page<T>(int pageIndex, int pageSize, int pageCount, IEnumerable<T>? data)
         {
-            return new PageResult<T>(pageIndex, pageSize, pageCount, data?.Count()??0, data);
+            return new PageResult<T>(pageIndex, pageSize, pageCount, data?.Count() ?? 0, data);
         }
         public record PageResult<T>(int PageIndex, int PageSize, int PageCount, int DataCount, IEnumerable<T>? Data);
     }
