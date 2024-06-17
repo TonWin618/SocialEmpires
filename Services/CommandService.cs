@@ -1,7 +1,9 @@
 ﻿using SocialEmpires.Models;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Enums;
 using SocialEmpires.Services.Constants;
 using SQLitePCL;
+using System.Reflection.Metadata;
 using System.Text.Json;
 
 namespace SocialEmpires.Services
@@ -123,6 +125,364 @@ namespace SocialEmpires.Services
             {
                 _logger.LogWarning($"Unknown command: {cmd}");
             }
+        }
+
+        private void HandleAddCollectableCommand(PlayerSave save, object[] args)
+        {
+            int collectionId = Convert.ToInt32(args[0]);
+            int collectibleId = Convert.ToInt32(args[1]);
+            var collections = save.PrivateState.Collections;
+        }
+
+        private void HandleStartQuestCommand(PlayerSave save, object[] args)
+        {
+            int questId = Convert.ToInt32(args[0]);
+            int townId = Convert.ToInt32(args[1]);
+            _logger.LogInformation($"Start quest {questId}");
+            // Additional logic for starting the quest can be added here if needed
+        }
+
+        private void HandleEndQuestCommand(PlayerSave save, object[] args)
+        {
+            var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(Convert.ToString(args[0]));
+            int townId = Convert.ToInt32(data["map"]);
+            int goldGained = Convert.ToInt32(data["resources"]["g"]);
+            int xpGained = Convert.ToInt32(data["resources"]["x"]);
+            var units = data["units"] as JArray;
+            bool win = Convert.ToInt32(data["win"]) == 1;
+            int durationSec = Convert.ToInt32(data["duration"]);
+            bool voluntaryEnd = Convert.ToInt32(data["voluntary_end"]) == 1;
+            int questId = Convert.ToInt32(data["quest_id"]);
+            var itemRewards = data.ContainsKey("item_rewards") ? data["item_rewards"] as JArray : null;
+            var activatorsLeft = data.ContainsKey("activators_left") ? data["activators_left"] as JArray : null;
+            var difficulty = data["difficulty"];
+
+            var map = save.Maps[townId];
+            map.Coins += goldGained;
+            map.Xp += xpGained;
+
+            var privateState = save.PrivateState;
+            privateState.UnlockedQuestIndex = Math.Max(questId + 1, privateState.UnlockedQuestIndex);
+
+            // Uncomment and add logic if needed
+            // privateState.QuestsRank = TODO;
+            // map.QuestTimes[questId] = TODO;
+            // map.LastQuestTimes[questId] = TODO;
+
+            _logger.LogInformation($"Ended quest {questId}.");
+        }
+
+        private void HandleSetStrategyCommand(PlayerSave save, object[] args)
+        {
+            int strategyType = Convert.ToInt32(args[0]);
+            string typeName = GetStrategyType(strategyType);
+            save.PrivateState.Strategy = strategyType;
+            _logger.LogInformation($"Set defense strategy type to {typeName}");
+        }
+
+
+        private void HandleBuySuperOfferPackCommand(PlayerSave save, object[] args)
+        {
+            int townId = Convert.ToInt32(args[0]);
+            int superOfferPackId = Convert.ToInt32(args[1]); // assuming this is the super offer pack ID
+            string items = Convert.ToString(args[2]);
+            int cashUsed = Convert.ToInt32(args[3]);
+
+            var map = save.Maps[townId];
+            var itemArray = items.Split(',');
+
+            foreach (var item in itemArray)
+            {
+                int itemId = Convert.ToInt32(item);
+                var gifts = save.PrivateState.Gifts;
+                if (gifts.Count <= itemId)
+                {
+                    for (int i = itemId - gifts.Count + 1; i > 0; i--)
+                    {
+                        gifts.Add(0);
+                    }
+                }
+                gifts[itemId] += 1;
+            }
+
+            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashUsed, 0);
+            _logger.LogInformation($"Used {cashUsed} cash to buy super offer pack!");
+        }
+
+        private void HandleNextMonsterCommand(PlayerSave save)
+        {
+            _logger.LogInformation("Monster Step reset and Monster Number increased.");
+
+            var privateState = save.PrivateState;
+            privateState.StepMonsterNumber = 0;
+            privateState.MonsterNumber += 1;
+            privateState.TimeStampTakeCareMonster = -1; // Remove timer
+        }
+
+        private void HandleNextMonsterStepCommand(PlayerSave save)
+        {
+            _logger.LogInformation("Monster Step increased.");
+
+            var privateState = save.PrivateState;
+            privateState.StepMonsterNumber += 1;
+            privateState.TimeStampTakeCareMonster = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+        }
+
+        private void HandleDesactivateMonsterCommand(PlayerSave save)
+        {
+            _logger.LogInformation("Monster nest deactivated.");
+
+            var privateState = save.PrivateState;
+            privateState.MonsterNestActive = 0;
+            privateState.StepMonsterNumber = 0;
+            privateState.MonsterNumber = 0;
+            privateState.TimeStampTakeCareMonster = -1; // Remove timer if any
+        }
+
+        private void HandleActivateMonsterCommand(PlayerSave save, object[] args)
+        {
+            string currency = Convert.ToString(args[0]);
+            _logger.LogInformation("Monster nest activated.");
+
+            if (currency == "c")
+            {
+                save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 50, 0);
+            }
+            else if (currency == "g")
+            {
+                var map = save.Maps[0];
+                map.Coins = Math.Max(map.Coins - 100000, 0);
+            }
+
+            var privateState = save.PrivateState;
+            privateState.MonsterNestActive = 1;
+            privateState.TimeStampTakeCareMonster = -1; // Remove timer if any
+        }
+
+        private void HandleMonsterBuyStepCashCommand(PlayerSave save, object[] args)
+        {
+            int price = Convert.ToInt32(args[0]);
+            _logger.LogInformation("Buy monster step with cash.");
+
+            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - price, 0);
+            save.PrivateState.TimeStampTakeCareMonster = -1; // Remove timer
+        }
+
+
+        private void HandleOrientCommand(PlayerSave save, object[] args)
+        {
+            int x = Convert.ToInt32(args[0]);
+            int y = Convert.ToInt32(args[1]);
+            int newOrientation = Convert.ToInt32(args[2]);
+            int townId = Convert.ToInt32(args[3]);
+
+            _logger.LogInformation($"Item at ({x},{y}) changed to orientation {newOrientation}");
+
+            var map = save.Maps[townId];
+            foreach (var item in map.Items)
+            {
+                if (item.X == x && item.Y == y)
+                {
+                    item.Orientation = newOrientation;
+                    break;
+                }
+            }
+        }
+
+        private void HandleResurrectHeroCommand(PlayerSave save, object[] args)
+        {
+            int unitId = Convert.ToInt32(args[0]);
+            int x = Convert.ToInt32(args[1]);
+            int y = Convert.ToInt32(args[2]);
+            int townId = Convert.ToInt32(args[3]);
+            bool usedPotion = args.Length > 4 && Convert.ToString(args[4]) == "1";
+
+            _logger.LogInformation($"Resurrect {unitId} from graveyard");
+
+            if (usedPotion)
+            {
+                int quantity = 1;
+                save.PrivateState.Potion = Math.Max(save.PrivateState.Potion - quantity, 0);
+            }
+            else
+            {
+                // TODO: Handle the case where potion is not used
+            }
+
+            var map = save.Maps[townId];
+            var collectedAtTimestamp = TimestampNow();
+            int level = 0; // TODO: Set the correct level
+            int orientation = 0;
+
+            map.Items.Add(new MapItem(unitId,x,y,orientation,collectedAtTimestamp,level));
+        }
+
+
+        private void HandleGraveyardBuyPotionsCommand(PlayerSave save)
+        {
+            _logger.LogInformation("Graveyard buy potion");
+
+            var config = GetGameConfig();
+            var graveyardPotions = config.Globals.GraveyardPotions;
+            int amount = graveyardPotions.Amount;
+            int priceCash = graveyardPotions.Price.Cash;
+
+            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - priceCash, 0);
+            save.PrivateState.Potion += amount;
+        }
+
+        private void HandleAdminAddAnimalCommand(PlayerSave save, object[] args)
+        {
+            string subcatFunc = Convert.ToString(args[0]);
+            int toBeAdded = Convert.ToInt32(args[1]);
+            var item = GetItemFromSubcatFunctional(subcatFunc);
+            _logger.LogInformation($"Added {toBeAdded} {item.Name}");
+
+            var oAnimals = save.PrivateState.ArrayAnimals;
+            if (!oAnimals.ContainsKey(subcatFunc))
+            {
+                oAnimals[subcatFunc] = 0;
+            }
+            oAnimals[subcatFunc] += toBeAdded;
+        }
+
+        private void HandleWinBonusCommand(PlayerSave save, object[] args)
+        {
+            int coins = Convert.ToInt32(args[0]);
+            int townId = Convert.ToInt32(args[1]);
+            int hero = Convert.ToInt32(args[2]);
+            int claimId = Convert.ToInt32(args[3]);
+            int cash = Convert.ToInt32(args[4]);
+
+            _logger.LogInformation("Claiming Win Bonus");
+
+            var map = save.Maps[townId];
+
+            if (cash != 0)
+            {
+                save.PlayerInfo.Cash += cash;
+                _logger.LogInformation($"Added {cash} Cash to player's balance");
+            }
+
+            if (coins != 0)
+            {
+                map.Coins += coins;
+                _logger.LogInformation($"Added {coins} Gold to player's balance");
+            }
+
+            if (hero != 0)
+            {
+                var gifts = save.PrivateState.Gifts;
+                while (gifts.Count <= hero)
+                {
+                    gifts.Add(0);
+                }
+                gifts[hero] += 1;
+                _logger.LogInformation($"Added Hero ID={hero}");
+            }
+
+            var privateState = save.PrivateState;
+            privateState.BonusNextId = claimId + 1;
+            privateState.TimestampLastBonus = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+        }
+
+
+        private void HandleSelectRiderCommand(PlayerSave save, object[] args)
+        {
+            int number = Convert.ToInt32(args[0]);
+            var pState = save.PrivateState;
+
+            if (number == 1 || number == 2 || number == 3)
+            {
+                pState.RiderNumber = number;
+                _logger.LogInformation($"Rider {number} Selected.");
+            }
+            else
+            {
+                pState.RiderNumber = 0;
+                pState.RiderStepNumber = 0;
+                pState.RiderTimeStamp = -1; // Remove timer
+                _logger.LogInformation("Rider reset.");
+            }
+        }
+
+
+        private void HandleNextRiderStepCommand(PlayerSave save)
+        {
+            _logger.LogInformation("Rider step increased.");
+
+            var pState = save.PrivateState;
+            pState.RiderStepNumber += 1;
+            pState.RiderTimeStamp = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+        }
+
+
+        private void HandleRiderBuyStepCashCommand(PlayerSave save, object[] args)
+        {
+            int price = Convert.ToInt32(args[0]);
+            _logger.LogInformation("Buy rider step with cash.");
+
+            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - price, 0);
+            save.PrivateState.RiderTimeStamp = -1; // Remove timer
+        }
+
+
+        private void HandleNextDragonStepCommand(PlayerSave save, object[] args)
+        {
+            _logger.LogInformation("Dragon step increased.");
+
+            var pState = save.PrivateState;
+            pState.StepNumber += 1;
+            pState.TimeStampTakeCare = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+        }
+
+        private void HandleNextDragonCommand(PlayerSave save)
+        {
+            _logger.LogInformation("Dragon step reset and dragonNumber increased.");
+
+            var pState = save.PrivateState;
+            pState.StepNumber = 0;
+            pState.DragonNumber += 1;
+            pState.TimeStampTakeCare = -1; // Remove timer
+        }
+
+        private void HandleDragonBuyStepCashCommand(PlayerSave save, object[] args)
+        {
+            int price = Convert.ToInt32(args[0]);
+            _logger.LogInformation("Buy dragon step with cash.");
+
+            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - price, 0);
+            save.PrivateState.TimeStampTakeCare = -1; // Remove timer
+        }
+
+        private void HandleDeactivateDragonCommand(PlayerSave save)
+        {
+            _logger.LogInformation("Dragon nest deactivated.");
+
+            var pState = save.PrivateState;
+            pState.DragonNestActive = 0;
+            pState.StepNumber = 0;
+            pState.DragonNumber = 0;
+            pState.TimeStampTakeCare = -1; // Remove timer if any
+        }
+
+        private void HandleActivateDragonCommand(PlayerSave save, object[] args)
+        {
+            string currency = Convert.ToString(args[0]);
+            _logger.LogInformation("Dragon nest activated.");
+
+            if (currency == "c")
+            {
+                save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 50, 0);
+            }
+            else if (currency == "g")
+            {
+                var map = save.Maps[0];
+                map.Coins = Math.Max(map.Coins - 100000, 0);
+            }
+
+            save.PrivateState.DragonNestActive = 1;
+            save.PrivateState.TimeStampTakeCare = -1; // Remove timer if any
         }
 
         private void HandlePlaceGiftCommand(PlayerSave save, JsonElement[] args)
