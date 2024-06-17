@@ -15,7 +15,7 @@ services.AddRazorPages()
 
 services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
 
-var supportedCultures = new []
+var supportedCultures = new[]
 {
     new CultureInfo("en"),
     new CultureInfo("zh")

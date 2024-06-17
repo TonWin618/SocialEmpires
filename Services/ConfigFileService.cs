@@ -33,7 +33,7 @@ namespace SocialEmpires.Services
 
             using (var stream = File.OpenRead(zhConfigFile))
             {
-                _config = JsonNode.Parse(stream)??throw new InvalidOperationException();
+                _config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
             }
 
             Load();
@@ -52,7 +52,7 @@ namespace SocialEmpires.Services
             var result = JsonSerializer.Deserialize<List<T>>(
                     _config[key],
                     jsonSerializerOptions);
-            if(result == null)
+            if (result == null)
             {
                 _logger.LogError($"Error reading JSON game configuration file with Key [{key}].");
                 throw new InvalidOperationException();
@@ -77,9 +77,9 @@ namespace SocialEmpires.Services
             return Items?.FirstOrDefault(_ => _.Id == id);
         }
 
-        public (int pageCount,IEnumerable<Item>? items) GetItems(int pageIndex, int pageSize) 
+        public (int pageCount, IEnumerable<Item>? items) GetItems(int pageIndex, int pageSize)
         {
-            return PageHelper.Page(pageIndex,pageSize, Items);
+            return PageHelper.Page(pageIndex, pageSize, Items);
         }
     }
 }

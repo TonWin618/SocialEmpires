@@ -22,9 +22,9 @@ namespace SocialEmpires.Models
             // for EF Core
         }
 
-        public static PlayerSave Create(string playerId, string name) 
+        public static PlayerSave Create(string playerId, string name)
         {
-            var info = PlayerInfo.Create(playerId,name);
+            var info = PlayerInfo.Create(playerId, name);
             var map = EmpireMap.Create(playerId);
             var state = PlayerState.Create(playerId);
             return new PlayerSave()

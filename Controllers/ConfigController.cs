@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Services;
-using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Controllers
 {
     [Route("api/admin/config")]
     [ApiController]
-    public class ConfigController:ControllerBase
+    public class ConfigController : ControllerBase
     {
         private readonly ConfigFileService _configFileService;
         public ConfigController(
@@ -55,7 +52,7 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("items/{id}")]
         //[Authorize(Roles = "Admin")]
-        public async Task<bool> UpdateItem(string id, [FromForm]Item updatedItem)
+        public async Task<bool> UpdateItem(string id, [FromForm] Item updatedItem)
         {
             var item = _configFileService.GetItem(id);
             item = updatedItem;
@@ -66,7 +63,7 @@ namespace SocialEmpires.Controllers
 
         public PageResult<T> Page<T>(int pageIndex, int pageSize, int pageCount, IEnumerable<T>? data)
         {
-            return new PageResult<T>(pageIndex, pageSize, pageCount, data?.Count()??0, data);
+            return new PageResult<T>(pageIndex, pageSize, pageCount, data?.Count() ?? 0, data);
         }
         public record PageResult<T>(int PageIndex, int PageSize, int PageCount, int DataCount, IEnumerable<T>? Data);
     }

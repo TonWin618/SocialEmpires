@@ -7,13 +7,13 @@ using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Controllers
 {
-    [Authorize(Roles ="User")]
+    [Authorize(Roles = "User")]
     public class GameController : ControllerBase
     {
         private readonly PlayerSaveService _playerSaveService;
 
         public GameController(
-            PlayerSaveService playerSaveService) 
+            PlayerSaveService playerSaveService)
         {
             _playerSaveService = playerSaveService;
         }
@@ -32,7 +32,7 @@ namespace SocialEmpires.Controllers
         {
             return SendFromLocal("crossdomain.xml", "application/xml");
         }
-        
+
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
@@ -85,7 +85,7 @@ namespace SocialEmpires.Controllers
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             root.Add("playerInfo", JsonSerializer.SerializeToNode(
                 save.PlayerInfo,
-                new JsonSerializerOptions() {PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower }));
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower }));
             root.Add("privateState", JsonSerializer.SerializeToNode(
                 save.PrivateState,
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
@@ -114,17 +114,17 @@ namespace SocialEmpires.Controllers
             var commandData = JsonSerializer.Deserialize<CommandData>(commandDataString, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            }) ;
+            });
             await commandService.HandleCommandsAsync(userId, commandData.Commands);
 
             return Ok("""{"result": "success"}""");
         }
 
         public record CommandData(
-            Command[] Commands, 
-            int Ts, 
-            string AccessToken, 
-            int Tries, 
+            Command[] Commands,
+            int Ts,
+            string AccessToken,
+            int Tries,
             string PublishActions)
         {
             [JsonPropertyName("first_number")]
@@ -135,7 +135,7 @@ namespace SocialEmpires.Controllers
         {
             Response.Headers.CacheControl = "no-store";
             return PhysicalFile(
-                Directory.GetCurrentDirectory() + "/Assets/" + relativePath, 
+                Directory.GetCurrentDirectory() + "/Assets/" + relativePath,
                 contentType);
         }
     }

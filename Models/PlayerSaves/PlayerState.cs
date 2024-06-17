@@ -86,7 +86,7 @@
 
         public static PlayerState Create(string playerId)
         {
-            return new ()
+            return new()
             {
                 Pid = playerId,
                 Gifts = new(),

@@ -2,8 +2,6 @@
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Enums;
 using SocialEmpires.Services.Constants;
-using SQLitePCL;
-using System.Reflection.Metadata;
 using System.Text.Json;
 
 namespace SocialEmpires.Services

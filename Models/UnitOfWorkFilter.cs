@@ -7,10 +7,10 @@ namespace SocialEmpires.Models
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var result = await next();
-            if(result.Exception == null)
+            if (result.Exception == null)
             {
                 var dbContext = context.HttpContext.RequestServices.GetService<AppDbContext>();
-                if(dbContext != null)
+                if (dbContext != null)
                 {
                     await dbContext.SaveChangesAsync();
                 }

@@ -8,7 +8,7 @@ namespace SocialEmpires.Models
     {
         public string Pid { get; set; }
 
-        public int Id {  get; set; }
+        public int Id { get; set; }
 
         public List<int> Expansions { get; set; }
 

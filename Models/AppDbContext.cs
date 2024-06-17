@@ -92,7 +92,7 @@ namespace SocialEmpires.Models
 
         public class DictionaryConverter : ValueConverter<Dictionary<string, int>, string>
         {
-            public DictionaryConverter(): base(
+            public DictionaryConverter() : base(
                 v => JsonSerializer.Serialize(
                     v, new JsonSerializerOptions()),
                 v => JsonSerializer.Deserialize<Dictionary<string, int>>(

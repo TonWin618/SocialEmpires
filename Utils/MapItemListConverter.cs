@@ -25,7 +25,7 @@ namespace SocialEmpires.Utils
                 writer.WriteNumberValue(item.Level);
                 JsonSerializer.Serialize(writer, item.Units, options);
                 writer.WriteStartObject();
-                if(item.Attributes != null)
+                if (item.Attributes != null)
                 {
                     foreach (var attribute in item.Attributes)
                     {
