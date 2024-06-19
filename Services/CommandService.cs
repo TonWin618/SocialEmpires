@@ -274,7 +274,7 @@ namespace SocialEmpires.Services
         private void HandleBuySuperOfferPackCommand(PlayerSave save, JsonElement[] args)
         {
             var townId = args[0].GetInt32();
-            var superOfferPackId = args[1].GetInt32(); // assuming this is the super offer pack ID
+            var superOfferPackId = args[1].GetInt32(); //TODO: assuming this is the super offer pack ID
             var items = args[2].GetString();
             var cashUsed = args[3].GetInt32();
 
@@ -668,7 +668,11 @@ namespace SocialEmpires.Services
         {
             var townId = args[0].GetInt32();
             _logger.LogInformation("Exchange cash -> coins.");
-
+            if(save.PlayerInfo.Cash - 5 < 0)
+            {
+                //TODO: 
+                _logger.LogInformation($"{save.Pid}: an exception occurred during the processing of the ExchangeCash command.");
+            }
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 5, 0); // Assuming a function for editing resources is used elsewhere
             save.Maps[townId].Coins += 2500;
         }
@@ -677,6 +681,7 @@ namespace SocialEmpires.Services
         {
             var townId = args[0].GetInt32();
             var newName = args[1].GetString();
+            //TODO: limit length
             _logger.LogInformation($"Map name changed to '{newName}'.");
 
             save.PlayerInfo.MapNames[townId] = newName;
@@ -722,11 +727,11 @@ namespace SocialEmpires.Services
             var newXp = args[0].GetInt32();
             _logger.LogInformation($"xp set to {newXp}");
 
-            var map = save.Maps[0]; // Assuming xp is general across maps, adjust if necessary
+            var map = save.Maps[0]; //TODO: Assuming xp is general across maps, adjust if necessary
             map.Xp = newXp;
             var levels = _configFileService.Levels;
             var level = levels.FirstOrDefault(_ => _.ExpRequired > newXp);
-            map.Level = levels.IndexOf(level);//GetLevelFromXp(newXp);
+            map.Level = levels.IndexOf(level);
         }
 
         private void HandleRTLevelUpCommand(PlayerSave save, JsonElement[] args)
@@ -734,7 +739,7 @@ namespace SocialEmpires.Services
             var newLevel = args[0].GetInt32();
             _logger.LogInformation($"Level Up!: {newLevel}");
 
-            var map = save.Maps[0]; // Assuming xp is general across maps, adjust if necessary
+            var map = save.Maps[0]; //TODO: Assuming xp is general across maps, adjust if necessary
             map.Level = newLevel;
 
             var currentXp = map.Xp;
@@ -749,11 +754,11 @@ namespace SocialEmpires.Services
             var buildingY = args[1].GetInt32();
             var townId = args[2].GetInt32();
             var unitId = args[3].GetInt32();
-            bool placePoppedUnit = args.Length > 4;
+            var placePoppedUnit = args.Length > 4;
 
             var unitX = 0;
             var unitY = 0;
-            var unitFrame = 0; // Assuming unit_frame is an integer, adjust if it's another type
+            var unitFrame = 0;
 
             if (placePoppedUnit)
             {
@@ -773,7 +778,7 @@ namespace SocialEmpires.Services
                 {
                     if (item.Units != null && item.Units.Count >= 7)
                     {
-                        item.Units.RemoveAll(u => u == unitId);
+                        item.Units.Remove(unitId);
                         break;
                     }
                 }
@@ -782,9 +787,9 @@ namespace SocialEmpires.Services
             if (placePoppedUnit)
             {
                 // Spawn unit outside
-                var collectedAtTimestamp = TimestampNow(); // Implement your timestamp logic
+                var collectedAtTimestamp = TimestampNow();
                 var level = 0; // TODO: Adjust level logic as needed
-                var orientation = 0; // TODO: Implement orientation logic if required
+                var orientation = 0;
 
                 map.Items.Add(new MapItem(unitId, unitX, unitY, orientation, collectedAtTimestamp, level));
             }
@@ -808,10 +813,6 @@ namespace SocialEmpires.Services
             {
                 if (item.X == buildingX && item.Y == buildingY)
                 {
-                    if (item.Units == null)
-                    {
-                        item.Units = new List<int>();
-                    }
                     item.Units.Add(unitId);
                     break;
                 }
@@ -838,7 +839,7 @@ namespace SocialEmpires.Services
             var missions = _configFileService.Missions
                 .FirstOrDefault(_ => _.Id == missionId);
 
-            save.Maps[townId].Coins += missions.Reward;
+            save.Maps[townId].Coins += missions?.Reward ?? 0;
             save.PrivateState.RewardedMissions.Add(missionId);
         }
 

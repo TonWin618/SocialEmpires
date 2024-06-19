@@ -133,7 +133,6 @@ namespace SocialEmpires.Controllers
 
         private PhysicalFileResult SendFromLocal(string relativePath, string contentType)
         {
-            Response.Headers.CacheControl = "no-store";
             return PhysicalFile(
                 Directory.GetCurrentDirectory() + "/Assets/" + relativePath,
                 contentType);
