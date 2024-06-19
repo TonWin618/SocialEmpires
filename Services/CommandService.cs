@@ -119,6 +119,98 @@ namespace SocialEmpires.Services
             {
                 HandleSellGiftCommand(save, args);
             }
+            else if (cmd == CommandNames.ADD_COLLECTABLE)
+            {
+                HandleAddCollectableCommand(save, args);
+            }
+            else if (cmd == CommandNames.START_QUEST)
+            {
+                HandleStartQuestCommand(save, args);
+            }
+            else if (cmd == CommandNames.END_QUEST)
+            {
+                HandleEndQuestCommand(save, args);
+            }
+            else if (cmd == CommandNames.SET_STRATEGY)
+            {
+                HandleSetStrategyCommand(save, args);
+            }
+            else if (cmd == CommandNames.BUY_SUPER_OFFER_PACK)
+            {
+                HandleBuySuperOfferPackCommand(save, args);
+            }
+            else if (cmd == CommandNames.NEXT_MONSTER)
+            {
+                HandleNextMonsterCommand(save);
+            }
+            else if (cmd == CommandNames.NEXT_MONSTER_STEP)
+            {
+                HandleNextMonsterStepCommand(save);
+            }
+            else if (cmd == CommandNames.DESACTIVATE_MONSTER)
+            {
+                HandleDesactivateMonsterCommand(save);
+            }
+            else if (cmd == CommandNames.ACTIVATE_MONSTER)
+            {
+                HandleActivateMonsterCommand(save, args);
+            }
+            else if (cmd == CommandNames.MONSTER_BUY_STEP_CASH)
+            {
+                HandleMonsterBuyStepCashCommand(save, args);
+            }
+            else if (cmd == CommandNames.ORIENT)
+            {
+                HandleOrientCommand(save, args);
+            }
+            else if (cmd == CommandNames.RESURRECT_HERO)
+            {
+                HandleResurrectHeroCommand(save, args);
+            }
+            else if (cmd == CommandNames.GRAVEYARD_BUY_POTIONS)
+            {
+                HandleGraveyardBuyPotionsCommand(save);
+            }
+            else if (cmd == CommandNames.ADMIN_ADD_ANIMAL)
+            {
+                HandleAdminAddAnimalCommand(save, args);
+            }
+            else if (cmd == CommandNames.WIN_BONUS)
+            {
+                HandleWinBonusCommand(save, args);
+            }
+            else if (cmd == CommandNames.SELECT_RIDER)
+            {
+                HandleSelectRiderCommand(save, args);
+            }
+            else if (cmd == CommandNames.NEXT_RIDER_STEP)
+            {
+                HandleNextRiderStepCommand(save);
+            }
+            else if (cmd == CommandNames.RIDER_BUY_STEP_CASH)
+            {
+                HandleRiderBuyStepCashCommand(save, args);
+            }
+            else if (cmd == CommandNames.NEXT_DRAGON_STEP)
+            {
+                HandleNextDragonStepCommand(save, args);
+            }
+            else if (cmd == CommandNames.NEXT_DRAGON)
+            {
+                HandleNextDragonCommand(save);
+            }
+            else if (cmd == CommandNames.DRAGON_BUY_STEP_CASH)
+            {
+                HandleDragonBuyStepCashCommand(save, args);
+            }
+            else if (cmd == CommandNames.DESACTIVATE_DRAGON)
+            {
+                HandleDesactivateDragonCommand(save);
+            }
+            else if (cmd == CommandNames.ACTIVATE_DRAGON)
+            {
+                HandleActivateDragonCommand(save, args);
+            }
             else
             {
                 _logger.LogWarning($"Unknown command: {cmd}");
@@ -326,7 +418,6 @@ namespace SocialEmpires.Services
             save.PrivateState.Potion += amount;
         }
 
-
         private void HandleAdminAddAnimalCommand(PlayerSave save, JsonElement[] args)
         {
             var subcatFunc = args[0].GetString();
@@ -458,7 +549,7 @@ namespace SocialEmpires.Services
             save.PrivateState.TimeStampTakeCare = -1; // Remove timer
         }
 
-        private void HandleDeactivateDragonCommand(PlayerSave save)
+        private void HandleDesactivateDragonCommand(PlayerSave save)
         {
             _logger.LogInformation("Dragon nest deactivated.");
 
