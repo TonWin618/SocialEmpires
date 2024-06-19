@@ -98,7 +98,7 @@ namespace SocialEmpires.Controllers
             string userid, string user_key, string spdebug, string language,
             string error, string current_failed)
         {
-            return Ok("");
+            return Redirect("/");
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/command.php")]
