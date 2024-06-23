@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - se
+name: Build and deploy ASP.Net Core app to Azure Web App - socialempires
 
 on:
   push:
@@ -52,15 +52,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_915FC307129745E393CE6A6FB713BF4E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_6A336262606449BBA9ABF4C0467490DB }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BF76D1608EB34AB6B3EC24F6C45A07ED }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3A798E79D41B4514A159EACF35B86E9B }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E4B6B209BDEA40659993CEDE534D9D87 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_525319D4BEFE402DAA298364ED3EA977 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'se'
+          app-name: 'socialempires'
           slot-name: 'Production'
           package: .
           
