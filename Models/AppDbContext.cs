@@ -54,8 +54,16 @@ namespace SocialEmpires.Models
             builder.Entity<EmpireMap>().HasKey(x => x.Pid);
             builder.Entity<EmpireMap>()
                 .Property(_ => _.Items)
-                .HasConversion(mapItemListConverter)
-                .Metadata.SetValueComparer(mapItemListComparer);
+                .HasConversion(
+                v => JsonSerializer.Serialize(
+                    v, new JsonSerializerOptions()),
+                v => JsonSerializer.Deserialize<List<MapItem>>(
+                    v, new JsonSerializerOptions())!,
+                new ValueComparer<List<MapItem>>(
+                    (list1, list2) => list1.SequenceEqual(list2),
+                    list => list.Aggregate(0, (hash, item) => HashCode.Combine(hash, item.GetHashCode())),
+                    list => list.Select(_ => new MapItem(_.Id, _.X,_.Y,_.Orientation,_.Timestamp,_.Level,_.Units,_.Attributes)).ToList()));
+
             builder.Entity<EmpireMap>().Property(_ => _.ExpirableUnitsTime)
                 .Metadata.SetValueComparer(dictionaryComparer);
             builder.Entity<EmpireMap>().Property(_ => _.ReceivedAssists)

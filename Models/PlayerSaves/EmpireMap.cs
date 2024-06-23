@@ -1,6 +1,7 @@
 ﻿using SocialEmpires.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace SocialEmpires.Models
 {
@@ -112,7 +113,7 @@ namespace SocialEmpires.Models
         }
     }
 
-    public class MapItem
+    public class MapItem: IEquatable<MapItem>
     {
         public int Id { get; set; }
         public int X { get; set; }
@@ -134,5 +135,26 @@ namespace SocialEmpires.Models
             Units = units;
             Attributes = attributes;
         }
+
+        public bool Equals(MapItem? other)
+        {
+            if(other == null)
+            {
+                return false;
+            }
+
+            return Id == other.Id &&
+                       X == other.X &&
+                       Y == other.Y &&
+                       Orientation == other.Orientation &&
+                       Timestamp == other.Timestamp &&
+                       Level == other.Level &&
+                       (Units == other.Units || (Units != null && other.Units != null && Units.SequenceEqual(other.Units))) &&
+                       (Attributes == other.Attributes || (Attributes != null && other.Attributes != null && Attributes.SequenceEqual(other.Attributes)));
+        }
+
+        public override bool Equals(object? obj) => Equals(obj as MapItem);
+
+        public override int GetHashCode() => (Id, X, Y, Orientation, Timestamp, Level, Units, Attributes).GetHashCode();
     }
 }
