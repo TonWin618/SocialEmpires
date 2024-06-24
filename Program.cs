@@ -32,12 +32,15 @@ services.AddLocalization(
 
 services.AddDbContext<AppDbContext>(options =>
 {
-    var dbstr = "Data Source = Models/data.db";
-    options
-    .UseSqlite(dbstr, sqliteOptionsAction =>
+    var connectionString = builder.Configuration["DbConnectionString"];
+    if (builder.Environment.IsDevelopment())
     {
-        sqliteOptionsAction.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-    });
+        options.UseSqlite(connectionString);
+    }
+    else
+    {
+        options.UseSqlServer(connectionString);
+    }
 });
 
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
