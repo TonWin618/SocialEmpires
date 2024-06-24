@@ -91,12 +91,6 @@ services.AddScoped<PlayerSaveService>();
 
 var app = builder.Build();
 
-var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<AppDbContext>();
-if (dbContext.Database.GetPendingMigrations().Any())
-{
-    dbContext.Database.Migrate();
-}
-
 app.UseRequestLocalization();
 
 app.UseAuthentication();
