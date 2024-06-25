@@ -6,11 +6,6 @@
 # Ignore appsettings files
 appsettings.*.json
 
-#databse
-*.db
-*.db-shm
-*.db-wal
-
 # User-specific files
 *.rsuser
 *.suo

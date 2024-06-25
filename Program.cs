@@ -33,14 +33,7 @@ services.AddLocalization(
 services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration["DbConnectionString"];
-    if (builder.Environment.IsDevelopment())
-    {
-        options.UseSqlite(connectionString);
-    }
-    else
-    {
-        options.UseNpgsql(connectionString);
-    }
+    options.UseSqlServer(connectionString);
 });
 
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
