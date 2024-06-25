@@ -28,4 +28,18 @@
     </Content>
   </ItemGroup>
 
+	<ItemGroup>
+	  <Content Remove="Assets\config\game_config_en.json" />
+	  <Content Remove="Assets\config\game_config_zh.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Assets\config\game_config_en.json">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
+	  <None Include="Assets\config\game_config_zh.json">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
