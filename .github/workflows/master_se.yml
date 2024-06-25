@@ -29,7 +29,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Migrate database
-        run: dotnet ef database update -- --DbConnectionString ${{ secrets.AZURE_POSTGRESQL_CONNECTIONSTRING }}
+        run: dotnet ef database update -- --environment Production --DbConnectionString ${{ secrets.AZURE_POSTGRESQL_CONNECTIONSTRING }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
