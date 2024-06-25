@@ -36,6 +36,7 @@ services.AddLocalization(
 services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration["DbConnectionString"];
+    Console.WriteLine("DbConnectionString: " + connectionString);
     if (builder.Environment.IsDevelopment())
     {
         options.UseSqlite(connectionString);
