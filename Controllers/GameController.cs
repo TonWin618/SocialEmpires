@@ -66,7 +66,9 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public ActionResult GetGameConfig()
         {
-            return SendFromLocal("config/game_config_zh.json", "application/json");
+            return PhysicalFile(
+                Directory.GetCurrentDirectory() + "/ConfigFiles/" + "game_config_zh.json",
+                "application/json");
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
