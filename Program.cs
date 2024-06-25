@@ -7,6 +7,9 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Configuration
+builder.Configuration.AddEnvironmentVariables();
+
 // Add services to the container.
 var services = builder.Services;
 
