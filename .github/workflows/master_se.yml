@@ -38,7 +38,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Migrate database
-        run: dotnet ef database update -- --environment Production --DbConnectionString ${{secrets.DBCONNECTIONSTRING}}
+        run: dotnet ef database update -- --DbConnectionString ${{secrets.DBCONNECTIONSTRING}}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
