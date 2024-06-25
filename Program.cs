@@ -39,7 +39,7 @@ services.AddDbContext<AppDbContext>(options =>
     }
     else
     {
-        options.UseSqlServer(connectionString);
+        options.UseNpgsql(connectionString);
     }
 });
 
