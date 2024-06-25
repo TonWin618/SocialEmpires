@@ -7,9 +7,6 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Configuration
-builder.Configuration.AddEnvironmentVariables();
-
 // Add services to the container.
 var services = builder.Services;
 
@@ -35,7 +32,7 @@ services.AddLocalization(
 
 services.AddDbContext<AppDbContext>(options =>
 {
-    var connectionString = builder.Configuration["AZURE_POSTGRESQL_CONNECTIONSTRING"];
+    var connectionString = builder.Configuration["DbConnectionString"];
     Console.WriteLine("DbConnectionString: " + connectionString);
     if (builder.Environment.IsDevelopment())
     {
