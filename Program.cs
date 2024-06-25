@@ -33,7 +33,7 @@ services.AddLocalization(
 services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration["DbConnectionString"];
-    options.UseSqlServer(connectionString);
+    options.UseSqlServer(connectionString, options=> options.EnableRetryOnFailure(3));
 });
 
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
