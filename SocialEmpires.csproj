@@ -21,10 +21,4 @@
     </PackageReference>
   </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="ConfigFiles\**\*.*">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
 </Project>

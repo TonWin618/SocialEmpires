@@ -13,8 +13,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
       - uses: actions/checkout@v4
@@ -25,42 +28,24 @@ jobs:
           dotnet-version: '8.x'
           include-prerelease: true
 
-      - name: Install dotnet-ef
-        run: dotnet tool install --global dotnet-ef
-
-      - name: Migrate database
-        run: dotnet ef database update -- --environment Production --DbConnectionString ${{secrets.DBCONNECTIONSTRING}}
-
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+      - name: Install dotnet-ef
+        run: dotnet tool install --global dotnet-ef
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: .net-app
-      
+      - name: Migrate database
+        run: dotnet ef database update -- --environment Production --DbConnectionString ${{secrets.DBCONNECTIONSTRING}}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'se'
           slot-name: 'Production'
-          package: .
+          package: ${{env.DOTNET_ROOT}}/myapp
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E1CCB4A1BCC0465E9287A244B7F0AE1C }}
+      
