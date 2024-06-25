@@ -35,7 +35,7 @@ services.AddLocalization(
 
 services.AddDbContext<AppDbContext>(options =>
 {
-    var connectionString = builder.Configuration["DbConnectionString"];
+    var connectionString = builder.Configuration["AZURE_POSTGRESQL_CONNECTIONSTRING"];
     Console.WriteLine("DbConnectionString: " + connectionString);
     if (builder.Environment.IsDevelopment())
     {
