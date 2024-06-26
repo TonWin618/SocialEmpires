@@ -30,31 +30,31 @@ namespace SocialEmpires.Controllers
         [HttpGet("crossdomain.xml")]
         public ActionResult GetCrossdomainXml()
         {
-            return SendFromLocal("crossdomain.xml", "application/xml");
+            return SendFromAssets("crossdomain.xml");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
-            return SendFromLocal(path, "application/x-shockwave-falsh");
+            return SendFromAssets(path);
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_projectiles.swf")]
         public ActionResult GetProjectiles()
         {
-            return SendFromLocal("swf/05122012_projectiles.swf", "application/x-shockwave-falsh");
+            return SendFromAssets("swf/05122012_projectiles.swf");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_magicParticles.swf")]
         public ActionResult GetMagicParticles()
         {
-            return SendFromLocal("swf/05122012_magicParticles.swf", "application/x-shockwave-falsh");
+            return SendFromAssets("swf/05122012_magicParticles.swf");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_dynamic.swf")]
         public ActionResult GetDynamic()
         {
-            return SendFromLocal("swf/05122012_dynamic.swf", "application/x-shockwave-falsh");
+            return SendFromAssets("swf/05122012_dynamic.swf");
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
@@ -133,8 +133,16 @@ namespace SocialEmpires.Controllers
             public int FirstNumber { get; set; }
         }
 
-        private PhysicalFileResult SendFromLocal(string relativePath, string contentType)
+        private PhysicalFileResult SendFromAssets(string relativePath)
         {
+            var contentType = Path.GetExtension(relativePath) switch
+            {
+                "swf" => "application/x-shockwave-falsh",
+                "xml" => "application/xml",
+                "json" => "application/json",
+                _ => "application/octet-stream"
+            };
+
             return PhysicalFile(
                 Directory.GetCurrentDirectory() + "/Assets/" + relativePath,
                 contentType);
