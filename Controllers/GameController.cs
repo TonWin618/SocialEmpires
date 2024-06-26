@@ -39,24 +39,6 @@ namespace SocialEmpires.Controllers
             return SendFromLocal(path);
         }
 
-        [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_projectiles.swf")]
-        public ActionResult GetProjectiles()
-        {
-            return SendFromLocal("swf/05122012_projectiles.swf");
-        }
-
-        [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_magicParticles.swf")]
-        public ActionResult GetMagicParticles()
-        {
-            return SendFromLocal("swf/05122012_magicParticles.swf");
-        }
-
-        [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_dynamic.swf")]
-        public ActionResult GetDynamic()
-        {
-            return SendFromLocal("swf/05122012_dynamic.swf");
-        }
-
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
         public ActionResult TrackGameStatus(string status, string installId, string user_id)
         {
