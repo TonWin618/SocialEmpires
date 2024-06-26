@@ -30,31 +30,31 @@ namespace SocialEmpires.Controllers
         [HttpGet("crossdomain.xml")]
         public ActionResult GetCrossdomainXml()
         {
-            return SendFromAssets("crossdomain.xml");
+            return SendFromLocal("crossdomain.xml");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
-            return SendFromAssets(path);
+            return SendFromLocal(path);
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_projectiles.swf")]
         public ActionResult GetProjectiles()
         {
-            return SendFromAssets("swf/05122012_projectiles.swf");
+            return SendFromLocal("swf/05122012_projectiles.swf");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_magicParticles.swf")]
         public ActionResult GetMagicParticles()
         {
-            return SendFromAssets("swf/05122012_magicParticles.swf");
+            return SendFromLocal("swf/05122012_magicParticles.swf");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_dynamic.swf")]
         public ActionResult GetDynamic()
         {
-            return SendFromAssets("swf/05122012_dynamic.swf");
+            return SendFromLocal("swf/05122012_dynamic.swf");
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
@@ -66,9 +66,14 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public ActionResult GetGameConfig()
         {
-            return PhysicalFile(
-                Directory.GetCurrentDirectory() + "/ConfigFiles/" + "game_config_zh.json",
-                "application/json");
+            if (HttpContext.Request.Headers.AcceptLanguage.Contains("zh"))
+            {
+                return SendFromConfigFile("game_config_zh.json");
+            }
+            else
+            {
+                return SendFromConfigFile("game_config_en.json");
+            }
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
@@ -122,18 +127,13 @@ namespace SocialEmpires.Controllers
             return Ok("""{"result": "success"}""");
         }
 
-        public record CommandData(
-            Command[] Commands,
-            int Ts,
-            string AccessToken,
-            int Tries,
-            string PublishActions)
+        public record CommandData(Command[] Commands, int Ts, string AccessToken, int Tries, string PublishActions)
         {
             [JsonPropertyName("first_number")]
             public int FirstNumber { get; set; }
         }
 
-        private PhysicalFileResult SendFromAssets(string relativePath)
+        private PhysicalFileResult SendFromLocal(string relativePath)
         {
             var contentType = Path.GetExtension(relativePath) switch
             {
@@ -146,6 +146,13 @@ namespace SocialEmpires.Controllers
             return PhysicalFile(
                 Directory.GetCurrentDirectory() + "/Assets/" + relativePath,
                 contentType);
+        }
+
+        private PhysicalFileResult SendFromConfigFile(string fileName)
+        {
+            return PhysicalFile(
+                Directory.GetCurrentDirectory() + "/ConfigFiles/" + fileName,
+                "application/json");
         }
     }
 }
