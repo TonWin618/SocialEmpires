@@ -6,6 +6,7 @@
 @using System.Text
 @inject IViewLocalizer localizer
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = localizer["EmpireMap"];
     var id = Request.Query["id"][0];
     var save = await playerSaveService.GetPlayerSaveAsync(id);

@@ -6,6 +6,7 @@
 @using System.Text
 @inject IViewLocalizer localizer
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = localizer["PlayerSave"];
     var pageIndex = int.Parse(Request.Query["pageIndex"].FirstOrDefault() ?? "1");
     var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
