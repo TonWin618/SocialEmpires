@@ -85,7 +85,7 @@ services.AddScoped<PlayerSaveService>();
 
 //Email Sender
 services.AddScoped<IEmailSender, AzureEmailSender>();
-services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("EmailSender"));
+services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("AzureEmailSender"));
 
 var app = builder.Build();
 
