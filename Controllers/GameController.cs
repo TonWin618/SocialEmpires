@@ -27,16 +27,23 @@ namespace SocialEmpires.Controllers
             return Ok(id);
         }
 
+
+        [HttpGet("avatar/{userid}.png")]
+        public ActionResult GetAvatar()
+        {
+            return SendFromLocal("UploadFiles/Avatars/example.png");
+        }
+
         [HttpGet("crossdomain.xml")]
         public ActionResult GetCrossdomainXml()
         {
-            return SendFromLocal("crossdomain.xml");
+            return SendFromLocal("Assets/crossdomain.xml");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
-            return SendFromLocal(path);
+            return SendFromLocal("Assets/" + path);
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
@@ -50,11 +57,11 @@ namespace SocialEmpires.Controllers
         {
             if (HttpContext.Request.Headers.AcceptLanguage.Contains("zh"))
             {
-                return SendFromConfigFile("game_config_zh.json");
+                return SendFromLocal("ConfigFiles/game_config_zh.json");
             }
             else
             {
-                return SendFromConfigFile("game_config_en.json");
+                return SendFromLocal("ConfigFiles/game_config_en.json");
             }
         }
 
@@ -122,19 +129,14 @@ namespace SocialEmpires.Controllers
                 "swf" => "application/x-shockwave-falsh",
                 "xml" => "application/xml",
                 "json" => "application/json",
+                "png" => "image/png",
+                "jpg" => "image/jpeg",
                 _ => "application/octet-stream"
             };
 
             return PhysicalFile(
-                Directory.GetCurrentDirectory() + "/Assets/" + relativePath,
+                Path.Combine(Directory.GetCurrentDirectory(),relativePath),
                 contentType);
-        }
-
-        private PhysicalFileResult SendFromConfigFile(string fileName)
-        {
-            return PhysicalFile(
-                Directory.GetCurrentDirectory() + "/ConfigFiles/" + fileName,
-                "application/json");
         }
     }
 }

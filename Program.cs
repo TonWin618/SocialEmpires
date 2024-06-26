@@ -88,6 +88,8 @@ services.AddScoped<PlayerSaveService>();
 services.AddScoped<IEmailSender, AzureEmailSender>();
 services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("AzureEmailSender"));
 
+services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 app.UseRequestLocalization();
