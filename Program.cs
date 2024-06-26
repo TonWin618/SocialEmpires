@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Models;
 using SocialEmpires.Services;
 using System.Globalization;
@@ -81,6 +82,10 @@ services.AddAutoMapper(options =>
 services.AddScoped<CommandService>();
 services.AddSingleton<ConfigFileService>();
 services.AddScoped<PlayerSaveService>();
+
+//Email Sender
+services.AddScoped<IEmailSender, AzureEmailSender>();
+services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("EmailSender"));
 
 var app = builder.Build();
 
