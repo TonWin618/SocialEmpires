@@ -7,8 +7,8 @@ namespace SocialEmpires.Services
 {
     public class ConfigFileService
     {
-        private const string enConfigFile = "Assets/config/game_config_en.json";
-        private const string zhConfigFile = "Assets/config/game_config_zh.json";
+        private const string enConfigFile = "ConfigFiles/game_config_en.json";
+        private const string zhConfigFile = "ConfigFiles/game_config_zh.json";
 
         private readonly ILogger<ConfigFileService> _logger;
         private readonly JsonSerializerOptions jsonSerializerOptions;

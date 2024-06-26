@@ -10,14 +10,14 @@
     var (pageCount,data) = configFileService.GetItems(pageIndex, pageSize);
 }
 @using Microsoft.AspNetCore.Authorization
+@using SocialEmpires.Utils
 @attribute [Authorize(Roles ="Admin")]
     
-<table width="100%">
+<table width="100%" class="table table-striped">
     <thead>
         <tr>
             <th></th>
             <th>@localizer["Id"]</th>
-            <th>@localizer["T"]</th>
             <th>@localizer["Name"]</th>
             <th>@localizer["Cost"]</th>
             <th>@localizer["Trains"]</th>
@@ -35,47 +35,59 @@
             }
             foreach (var item in data)
             {
-                        <tr>
-                            <td>
-                                <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/>
-                            </td>
-                            <td>@item.Id</td>
-                            <td>@item.Type</td>
-                            <td>
-                                <input type="text" value="@item.Name"/>
-                            </td>
-                            <td>@item.CostType @item.Cost</td>
-                            <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
-                            <td>@item.CategoryId : @item.SubcategoryId</td>
-                            <td>@($"{item.Life,-5} | {item.Velocity,-2} | {item.Attack,-4} | {item.AttackInterval,-3} | {item.AttackRange,-2}")</td>
-                            <td>
-                                @(item.Flying == "1" ? "■Fly" : "")
-                                @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
-                                @(item.OnlyMobile == "1" ? $"■Mobile" : "")
-                                @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
-                                @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
-                            </td>
-                            <td>
-                                <button onclick="openItemDetail(@item.Id)">@localizer["Edit"]</button>
-                                <button onclick="shelveItem(@item.Id)" disabled="@(item.InStore=="1")">@localizer["Shelve"]</button>
-                                <button onclick="unshelveItem(@item.Id)" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/>
+                    </td>
+                    <td>@($"[{item.Type}] {item.Id}")</td>
+                    <td>@item.Name</td>
+                    <td>@item.CostType @item.Cost</td>
+                    <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
+                    <td>@item.CategoryId : @item.SubcategoryId</td>
+                    <td>@($"{item.Life,-5} | {item.Velocity,-2} | {item.Attack,-4} | {item.AttackInterval,-3} | {item.AttackRange,-2}")</td>
+                    <td>
+                        @(item.Flying == "1" ? "■Fly" : "")
+                        @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
+                        @(item.OnlyMobile == "1" ? $"■Mobile" : "")
+                        @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
+                        @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" onclick="openItemDetail(@item.Id)">@localizer["Edit"]</button>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-warning" onclick="shelveItem(@item.Id)" disabled="@(item.InStore=="1")">@localizer["Shelve"]</button>
+                            <button class="btn btn-warning" onclick="unshelveItem(@item.Id)" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
+                        </div>
+                    </td>
+                </tr>
             }
         }
     </tbody>
 </table>
 
-<div>
-    @{
-        for(int i = 0;i < pageCount;i++)
-        {
-                    <button>
-                        <a href="?pageIndex=@(i+1)&pageSize=@pageSize">@(i + 1)</a>
-                    </button>
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
         }
-    }
-</div>
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <div id="itemDetailDiv">
     <button onclick="closeItemDetail()">X</button>
