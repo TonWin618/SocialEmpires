@@ -3,6 +3,7 @@
 @using SocialEmpires.Services
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
+@using SocialEmpires.Utils
 @attribute [Authorize(Roles = "Admin")]
 @inject PlayerSaveService playerSaveService
 @inject ConfigFileService configFileService
@@ -69,16 +70,29 @@
         </tbody>
     </table>
 
-    <div>
-        @{
-            for (int i = 0; i < pageCount; i++)
-            {
-                <button>
-                    <a href="?pageIndex=@i&pageSize=@pageSize">@(i + 1)</a>
-                </button>
+    <nav>
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(pageIndex <= 1?"disabled":"")">
+                <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @{
+                var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+                foreach (var index in indexes)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                    </li>
+                }
             }
-        }
-    </div>
+            <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+                <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <script>
