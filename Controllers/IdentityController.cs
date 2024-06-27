@@ -88,7 +88,7 @@ namespace SocialEmpires.Controllers
             return Redirect("/");
         }
 
-        [HttpPost("api/login")]
+        [HttpPost("api/loginByEmailAndPassword")]
         public async Task<IActionResult> LoginByEmailAndPassword(
             [FromForm] string email,
             [FromForm] string password,
