@@ -10,16 +10,13 @@ namespace SocialEmpires.Controllers
     [Authorize(Roles = "User")]
     public class GameController : ControllerBase
     {
-        private readonly PlayerSaveService _playerSaveService;
-
-        public GameController(
-            PlayerSaveService playerSaveService)
+        public GameController()
         {
-            _playerSaveService = playerSaveService;
+
         }
 
         [HttpGet("CreatePlayerSaveForTest")]
-        public async Task<ActionResult> CreatePlayerSaveForTest()
+        public async Task<ActionResult> CreatePlayerSaveForTest([FromServices] PlayerSaveService _playerSaveService)
         {
             var id = Guid.NewGuid().ToString();
             var user = await _playerSaveService.CreatePlayerSaveAsync(id, id);
@@ -66,7 +63,8 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
-        public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language)
+        public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language,
+            [FromServices] PlayerSaveService _playerSaveService)
         {
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
             if (save == null)

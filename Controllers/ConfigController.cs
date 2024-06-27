@@ -12,14 +12,12 @@ namespace SocialEmpires.Controllers
     public class ConfigController : ControllerBase
     {
         private readonly ConfigFileService _configFileService;
-        private readonly IMapper _mapper;
 
         public ConfigController(
             ConfigFileService configFileService,
             IMapper mapper)
         {
             _configFileService = configFileService;
-            _mapper = mapper;
         }
 
         #region Items
@@ -59,7 +57,10 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("items/{id}")]
         //[Authorize(Roles = "Admin")]
-        public async Task<bool> UpdateItem(string id, [FromForm] Item updatedItem)
+        public async Task<bool> UpdateItem(
+            string id, 
+            [FromForm] Item updatedItem,
+            [FromServices] IMapper _mapper)
         {
             var item = _configFileService.Items.FirstOrDefault(_ => _.Id == id);
             _mapper.Map(updatedItem, item);
