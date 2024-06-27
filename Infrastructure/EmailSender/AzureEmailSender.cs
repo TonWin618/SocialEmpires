@@ -14,22 +14,33 @@ namespace SocialEmpires.Infrastructure.EmailSender
             IOptions<AzureEmailSenderOptions> options,
             ILogger<AzureEmailSender> logger)
         {
-            this._options = options.Value;
-            this._logger = logger;
+            _options = options.Value;
+            _logger = logger;
 
             _emailClient = new EmailClient(_options.ConnectionString);
         }
 
-        public async Task SendEmailAsync(string address, string subject, string content, CancellationToken cancellationToken = default)
+        public void Send(string address, string subject, string content)
         {
-            await _emailClient.SendAsync(
-                Azure.WaitUntil.Completed, 
-                _options.SenderAddress, 
-                address, 
-                subject, 
-                content, 
+            _emailClient.Send(
+                Azure.WaitUntil.Completed,
+                _options.SenderAddress,
+                address,
+                subject,
+                content);
+        }
+
+        public async Task SendAsync(string address, string subject, string content, CancellationToken cancellationToken = default)
+        {
+            var result = await _emailClient.SendAsync(
+                Azure.WaitUntil.Completed,
+                _options.SenderAddress,
+                address,
+                subject,
+                content,
                 null,
                 cancellationToken);
+            _logger.LogInformation("[subject:{subject}][address:{address}][status:{status}]", subject, address, result.Value.Status);
         }
     }
 }

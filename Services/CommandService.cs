@@ -1,5 +1,4 @@
 ﻿using SocialEmpires.Models;
-using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Enums;
 using SocialEmpires.Services.Constants;
 using System.Text.Json;
@@ -10,18 +9,15 @@ namespace SocialEmpires.Services
 
     public partial class CommandService
     {
-        private readonly AppDbContext _appDbContext;
         private readonly ConfigFileService _configFileService;
         private readonly PlayerSaveService _playerSaveService;
         private readonly ILogger<CommandService> _logger;
 
         public CommandService(
-            AppDbContext appDbContext,
             ConfigFileService configFileService,
             PlayerSaveService playerSaveService,
             ILogger<CommandService> logger)
         {
-            _appDbContext = appDbContext;
             _configFileService = configFileService;
             _playerSaveService = playerSaveService;
             _logger = logger;
@@ -43,177 +39,137 @@ namespace SocialEmpires.Services
                 return;
             }
 
-            if (cmd == CommandNames.GAME_STATUS)
+            switch (cmd)
             {
-                _logger.LogInformation(string.Join('|', args));
-            }
-            else if (cmd == CommandNames.BUY)
-            {
-                HandleBuyCommandAsync(save, args);
-            }
-            else if (cmd == CommandNames.COMPLETE_TUTORIAL)
-            {
-                HandleCompleteTutorialCommandAsync(save, args);
-            }
-            else if (cmd == CommandNames.MOVE)
-            {
-                HandleMoveCommandAsync(save, args);
-            }
-            else if (cmd == CommandNames.COLLECT)
-            {
-                HandleCollectCommand(save, args);
-            }
-            else if (cmd == CommandNames.STORE_ITEM)
-            {
-                HandleStoreItemCommand(save, args);
-            }
-            else if (cmd == CommandNames.EXCHANGE_CASH)
-            {
-                HandleExchangeCashCommand(save, args);
-            }
-            else if (cmd == CommandNames.NAME_MAP)
-            {
-                HandleNameMapCommand(save, args);
-            }
-            else if (cmd == CommandNames.EXPAND)
-            {
-                HandleExpandCommand(save, args);
-            }
-            else if (cmd == CommandNames.RT_PUBLISH_SCORE)
-            {
-                HandleRTPublishScoreCommand(save, args);
-            }
-            else if (cmd == CommandNames.RT_LEVEL_UP)
-            {
-                HandleRTLevelUpCommand(save, args);
-            }
-            else if (cmd == CommandNames.POP_UNIT)
-            {
-                HandlePopUnitCommand(save, args);
-            }
-            else if (cmd == CommandNames.PUSH_UNIT)
-            {
-                HandlePushUnitCommand(save, args);
-            }
-            else if (cmd == CommandNames.REWARD_MISSION)
-            {
-                HandleRewardMissionCommand(save, args);
-            }
-            else if (cmd == CommandNames.COMPLETE_MISSION)
-            {
-                HandleCompleteMissionCommand(save, args);
-            }
-            else if (cmd == CommandNames.KILL)
-            {
-                HandleKillCommand(save, args);
-            }
-            else if (cmd == CommandNames.SELL)
-            {
-                HandleSellCommand(save, args);
-            }
-            else if (cmd == CommandNames.PLACE_GIFT)
-            {
-                HandlePlaceGiftCommand(save, args);
-            }
-            else if (cmd == CommandNames.SELL_GIFT)
-            {
-                HandleSellGiftCommand(save, args);
-            }
-            else if (cmd == CommandNames.ADD_COLLECTABLE)
-            {
-                HandleAddCollectableCommand(save, args);
-            }
-            else if (cmd == CommandNames.START_QUEST)
-            {
-                HandleStartQuestCommand(save, args);
-            }
-            else if (cmd == CommandNames.END_QUEST)
-            {
-                HandleEndQuestCommand(save, args);
-            }
-            else if (cmd == CommandNames.SET_STRATEGY)
-            {
-                HandleSetStrategyCommand(save, args);
-            }
-            else if (cmd == CommandNames.BUY_SUPER_OFFER_PACK)
-            {
-                HandleBuySuperOfferPackCommand(save, args);
-            }
-            else if (cmd == CommandNames.NEXT_MONSTER)
-            {
-                HandleNextMonsterCommand(save);
-            }
-            else if (cmd == CommandNames.NEXT_MONSTER_STEP)
-            {
-                HandleNextMonsterStepCommand(save);
-            }
-            else if (cmd == CommandNames.DESACTIVATE_MONSTER)
-            {
-                HandleDesactivateMonsterCommand(save);
-            }
-            else if (cmd == CommandNames.ACTIVATE_MONSTER)
-            {
-                HandleActivateMonsterCommand(save, args);
-            }
-            else if (cmd == CommandNames.MONSTER_BUY_STEP_CASH)
-            {
-                HandleMonsterBuyStepCashCommand(save, args);
-            }
-            else if (cmd == CommandNames.ORIENT)
-            {
-                HandleOrientCommand(save, args);
-            }
-            else if (cmd == CommandNames.RESURRECT_HERO)
-            {
-                HandleResurrectHeroCommand(save, args);
-            }
-            else if (cmd == CommandNames.GRAVEYARD_BUY_POTIONS)
-            {
-                HandleGraveyardBuyPotionsCommand(save);
-            }
-            else if (cmd == CommandNames.ADMIN_ADD_ANIMAL)
-            {
-                HandleAdminAddAnimalCommand(save, args);
-            }
-            else if (cmd == CommandNames.WIN_BONUS)
-            {
-                HandleWinBonusCommand(save, args);
-            }
-            else if (cmd == CommandNames.SELECT_RIDER)
-            {
-                HandleSelectRiderCommand(save, args);
-            }
-            else if (cmd == CommandNames.NEXT_RIDER_STEP)
-            {
-                HandleNextRiderStepCommand(save);
-            }
-            else if (cmd == CommandNames.RIDER_BUY_STEP_CASH)
-            {
-                HandleRiderBuyStepCashCommand(save, args);
-            }
-            else if (cmd == CommandNames.NEXT_DRAGON_STEP)
-            {
-                HandleNextDragonStepCommand(save, args);
-            }
-            else if (cmd == CommandNames.NEXT_DRAGON)
-            {
-                HandleNextDragonCommand(save);
-            }
-            else if (cmd == CommandNames.DRAGON_BUY_STEP_CASH)
-            {
-                HandleDragonBuyStepCashCommand(save, args);
-            }
-            else if (cmd == CommandNames.DESACTIVATE_DRAGON)
-            {
-                HandleDesactivateDragonCommand(save);
-            }
-            else if (cmd == CommandNames.ACTIVATE_DRAGON)
-            {
-                HandleActivateDragonCommand(save, args);
-            }
-            else
-            {
-                _logger.LogWarning($"Unknown command: {cmd}");
+                case CommandNames.GAME_STATUS:
+                    _logger.LogInformation("{message}", string.Join('|', args));
+                    break;
+                case CommandNames.BUY:
+                    HandleBuyCommandAsync(save, args);
+                    break;
+                case CommandNames.COMPLETE_TUTORIAL:
+                    HandleCompleteTutorialCommandAsync(save, args);
+                    break;
+                case CommandNames.MOVE:
+                    HandleMoveCommandAsync(save, args);
+                    break;
+                case CommandNames.COLLECT:
+                    HandleCollectCommand(save, args);
+                    break;
+                case CommandNames.STORE_ITEM:
+                    HandleStoreItemCommand(save, args);
+                    break;
+                case CommandNames.EXCHANGE_CASH:
+                    HandleExchangeCashCommand(save, args);
+                    break;
+                case CommandNames.NAME_MAP:
+                    HandleNameMapCommand(save, args);
+                    break;
+                case CommandNames.EXPAND:
+                    HandleExpandCommand(save, args);
+                    break;
+                case CommandNames.RT_PUBLISH_SCORE:
+                    HandleRTPublishScoreCommand(save, args);
+                    break;
+                case CommandNames.RT_LEVEL_UP:
+                    HandleRTLevelUpCommand(save, args);
+                    break;
+                case CommandNames.POP_UNIT:
+                    HandlePopUnitCommand(save, args);
+                    break;
+                case CommandNames.PUSH_UNIT:
+                    HandlePushUnitCommand(save, args);
+                    break;
+                case CommandNames.REWARD_MISSION:
+                    HandleRewardMissionCommand(save, args);
+                    break;
+                case CommandNames.COMPLETE_MISSION:
+                    HandleCompleteMissionCommand(save, args);
+                    break;
+                case CommandNames.KILL:
+                    HandleKillCommand(save, args);
+                    break;
+                case CommandNames.SELL:
+                    HandleSellCommand(save, args);
+                    break;
+                case CommandNames.PLACE_GIFT:
+                    HandlePlaceGiftCommand(save, args);
+                    break;
+                case CommandNames.SELL_GIFT:
+                    HandleSellGiftCommand(save, args);
+                    break;
+                case CommandNames.ADD_COLLECTABLE:
+                    HandleAddCollectableCommand(save, args);
+                    break;
+                case CommandNames.START_QUEST:
+                    HandleStartQuestCommand(save, args);
+                    break;
+                case CommandNames.END_QUEST:
+                    HandleEndQuestCommand(save, args);
+                    break;
+                case CommandNames.SET_STRATEGY:
+                    HandleSetStrategyCommand(save, args);
+                    break;
+                case CommandNames.BUY_SUPER_OFFER_PACK:
+                    HandleBuySuperOfferPackCommand(save, args);
+                    break;
+                case CommandNames.NEXT_MONSTER:
+                    HandleNextMonsterCommand(save);
+                    break;
+                case CommandNames.NEXT_MONSTER_STEP:
+                    HandleNextMonsterStepCommand(save);
+                    break;
+                case CommandNames.DESACTIVATE_MONSTER:
+                    HandleDesactivateMonsterCommand(save);
+                    break;
+                case CommandNames.ACTIVATE_MONSTER:
+                    HandleActivateMonsterCommand(save, args);
+                    break;
+                case CommandNames.MONSTER_BUY_STEP_CASH:
+                    HandleMonsterBuyStepCashCommand(save, args);
+                    break;
+                case CommandNames.ORIENT:
+                    HandleOrientCommand(save, args);
+                    break;
+                case CommandNames.RESURRECT_HERO:
+                    HandleResurrectHeroCommand(save, args);
+                    break;
+                case CommandNames.GRAVEYARD_BUY_POTIONS:
+                    HandleGraveyardBuyPotionsCommand(save);
+                    break;
+                case CommandNames.ADMIN_ADD_ANIMAL:
+                    HandleAdminAddAnimalCommand(save, args);
+                    break;
+                case CommandNames.WIN_BONUS:
+                    HandleWinBonusCommand(save, args);
+                    break;
+                case CommandNames.SELECT_RIDER:
+                    HandleSelectRiderCommand(save, args);
+                    break;
+                case CommandNames.NEXT_RIDER_STEP:
+                    HandleNextRiderStepCommand(save);
+                    break;
+                case CommandNames.RIDER_BUY_STEP_CASH:
+                    HandleRiderBuyStepCashCommand(save, args);
+                    break;
+                case CommandNames.NEXT_DRAGON_STEP:
+                    HandleNextDragonStepCommand(save, args);
+                    break;
+                case CommandNames.NEXT_DRAGON:
+                    HandleNextDragonCommand(save);
+                    break;
+                case CommandNames.DRAGON_BUY_STEP_CASH:
+                    HandleDragonBuyStepCashCommand(save, args);
+                    break;
+                case CommandNames.DESACTIVATE_DRAGON:
+                    HandleDesactivateDragonCommand(save);
+                    break;
+                case CommandNames.ACTIVATE_DRAGON:
+                    HandleActivateDragonCommand(save, args);
+                    break;
+                default:
+                    _logger.LogWarning("Unknown command: {cmd}", cmd);
+                    break;
             }
         }
 
@@ -288,7 +244,7 @@ namespace SocialEmpires.Services
             save.DefaultMap.Xp += collectXp;
         }
 
-        private long TimestampNow()
+        private static long TimestampNow()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         }

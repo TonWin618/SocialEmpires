@@ -8,19 +8,19 @@ namespace SocialEmpires.Services
         private void HandleRTPublishScoreCommand(PlayerSave save, JsonElement[] args)
         {
             var newXp = args[0].GetInt32();
-            _logger.LogInformation($"xp set to {newXp}");
+            _logger.LogInformation("xp set to {newXp}", newXp);
 
             var map = save.Maps[0]; //TODO: Assuming xp is general across maps, adjust if necessary
             map.Xp = newXp;
             var levels = _configFileService.Levels;
-            var level = levels.FirstOrDefault(_ => _.ExpRequired > newXp);
+            var level = levels.First(_ => _.ExpRequired > newXp);
             map.Level = levels.IndexOf(level);
         }
 
         private void HandleRTLevelUpCommand(PlayerSave save, JsonElement[] args)
         {
             var newLevel = args[0].GetInt32();
-            _logger.LogInformation($"Level Up!: {newLevel}");
+            _logger.LogInformation("Level Up!: {newLevel}", newLevel);
 
             var map = save.Maps[0]; //TODO: Assuming xp is general across maps, adjust if necessary
             map.Level = newLevel;

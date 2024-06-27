@@ -1,17 +1,16 @@
 ﻿using SocialEmpires.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
 
 namespace SocialEmpires.Models
 {
     public class EmpireMap
     {
-        public string Pid { get; set; }
+        public string Pid { get; set; } = null!;
 
         public int Id { get; set; }
 
-        public List<int> Expansions { get; set; }
+        public List<int> Expansions { get; set; } = null!;
 
         public long Timestamp { get; set; }
 
@@ -27,7 +26,7 @@ namespace SocialEmpires.Models
 
         public int Food { get; set; }
 
-        public string Race { get; set; }
+        public string Race { get; set; } = null!;
 
         public int Skin { get; set; }
 
@@ -35,22 +34,22 @@ namespace SocialEmpires.Models
 
         public long TimestampLastTreasure { get; set; }
 
-        public Dictionary<string, int> ResourcesTraded { get; set; }
+        public Dictionary<string, int> ResourcesTraded { get; set; } = null!;
 
-        public Dictionary<string, int> ReceivedAssists { get; set; }
+        public Dictionary<string, int> ReceivedAssists { get; set; } = null!;
 
         public int IncreasedPopulation { get; set; }
 
-        public Dictionary<string, int> ExpirableUnitsTime { get; set; }
+        public Dictionary<string, int> ExpirableUnitsTime { get; set; } = null!;
 
-        public List<int> UniversAttackWin { get; set; }
+        public List<int> UniversAttackWin { get; set; } = null!;
 
-        public List<long> QuestTimes { get; set; }
+        public List<long> QuestTimes { get; set; } = null!;
 
-        public List<long> LastQuestTimes { get; set; }
+        public List<long> LastQuestTimes { get; set; } = null!;
 
         [JsonConverter(typeof(MapItemListConverter))]
-        public List<MapItem> Items { get; set; }
+        public List<MapItem> Items { get; set; } = null!;
 
         [NotMapped]
         [JsonInclude]
@@ -80,15 +79,15 @@ namespace SocialEmpires.Models
                 Skin = 0,
                 IdCurrentTreasure = 0,
                 TimestampLastTreasure = 0,
-                ResourcesTraded = new(),
-                ReceivedAssists = new(),
+                ResourcesTraded = [],
+                ReceivedAssists = [],
                 IncreasedPopulation = 0,
-                ExpirableUnitsTime = new(),
-                UniversAttackWin = new(),
-                QuestTimes = new(),
-                LastQuestTimes = new(),
-                Items = new()
-                {
+                ExpirableUnitsTime = [],
+                UniversAttackWin = [],
+                QuestTimes = [],
+                LastQuestTimes = [],
+                Items =
+                [
                     new(26,52,52,0,0,0,[],[]),
                     new(19,50,58,0,0,0,[],[]),
                     new(512,50,44,2,0,0,[],[]),
@@ -108,12 +107,12 @@ namespace SocialEmpires.Models
                     new(29,59,49,0,0,0,[],[]),
                     new(525,40,40,0,0,0,[],[]),
                     new(525,39,40,1,0,0,[],[])
-                }
+                ]
             };
         }
     }
 
-    public class MapItem: IEquatable<MapItem>
+    public class MapItem : IEquatable<MapItem>
     {
         public int Id { get; set; }
         public int X { get; set; }
@@ -138,7 +137,7 @@ namespace SocialEmpires.Models
 
         public bool Equals(MapItem? other)
         {
-            if(other == null)
+            if (other == null)
             {
                 return false;
             }
