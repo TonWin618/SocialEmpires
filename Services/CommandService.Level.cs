@@ -13,7 +13,7 @@ namespace SocialEmpires.Services
             var map = save.Maps[0]; //TODO: Assuming xp is general across maps, adjust if necessary
             map.Xp = newXp;
             var levels = _configFileService.Levels;
-            var level = levels.FirstOrDefault(_ => _.ExpRequired > newXp);
+            var level = levels.First(_ => _.ExpRequired > newXp);
             map.Level = levels.IndexOf(level);
         }
 

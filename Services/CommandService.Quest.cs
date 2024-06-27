@@ -15,7 +15,7 @@ namespace SocialEmpires.Services
 
         private void HandleEndQuestCommand(PlayerSave save, JsonElement[] args)
         {
-            var data = JsonDocument.Parse(args[0].GetString()).RootElement;
+            var data = JsonDocument.Parse(args[0].GetString()!).RootElement;
 
             var townId = data.GetProperty("map").GetInt32();
             var goldGained = data.GetProperty("resources").GetProperty("g").GetInt32();

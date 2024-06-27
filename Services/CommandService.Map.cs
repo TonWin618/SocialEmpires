@@ -73,7 +73,7 @@ namespace SocialEmpires.Services
 
         private void HandleAdminAddAnimalCommand(PlayerSave save, JsonElement[] args)
         {
-            var subcatFunc = args[0].GetString();
+            var subcatFunc = args[0].GetString()!;
             var toBeAdded = args[1].GetInt32();
 
             var itemsDictSubcatFunctionalToIndex = _configFileService.Items
@@ -82,12 +82,15 @@ namespace SocialEmpires.Services
 
             Item? item = null;
 
-            if (itemsDictSubcatFunctionalToIndex.TryGetValue(subcatFunc, out int index))
+            if (!itemsDictSubcatFunctionalToIndex.TryGetValue(subcatFunc, out int index))
             {
-                item = index >= 0 && index < _configFileService.Items.Count ? _configFileService.Items[index] : null;
+                return;
             }
-
-            _logger.LogInformation($"Added {toBeAdded} {item.Name}");
+            item = index >= 0 && index < _configFileService.Items.Count ? _configFileService.Items[index] : null;
+            if (item == null)
+            {
+                return;
+            }
 
             var oAnimals = save.PrivateState.ArrayAnimals;
             if (!oAnimals.ContainsKey(subcatFunc))
@@ -95,6 +98,8 @@ namespace SocialEmpires.Services
                 oAnimals[subcatFunc] = 0;
             }
             oAnimals[subcatFunc] += toBeAdded;
+
+            _logger.LogInformation($"Added {toBeAdded} {item.Name}");
         }
     }
 }
