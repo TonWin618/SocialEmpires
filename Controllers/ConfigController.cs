@@ -6,8 +6,9 @@ using SocialEmpires.Services;
 
 namespace SocialEmpires.Controllers
 {
-    [Route("api/admin/config")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
+    [Route("api/admin/config")]
     public class ConfigController : ControllerBase
     {
         private readonly ConfigFileService _configFileService;

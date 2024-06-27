@@ -57,8 +57,8 @@ namespace SocialEmpires.Controllers
             return Redirect("/Login");
         }
 
-        [HttpPost("api/register")]
         [Authorize]
+        [HttpPost("api/register")]
         public async Task<IActionResult> RegisterByEmailAndPassword(
             [FromForm] string password,
             [FromForm] string code)
