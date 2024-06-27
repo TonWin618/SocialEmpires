@@ -52,16 +52,32 @@ namespace SocialEmpires.Controllers
         public async Task<IActionResult> RegisterByEmailAndPassword(
             [FromForm] string password,
             [FromForm] string code,
-            [FromServices] UserManager<IdentityUser> _userManager)
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager)
         {
+            if(HttpContext?.User?.Identity?.Name == null)
+            {
+                return Redirect("/Register");
+            }
+
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             if (user == null)
             {
-                return Redirect("/Login");
+                return Redirect("/Register");
             }
 
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (!result.Succeeded)
+            var validatePasswordResult = await _userManager.PasswordValidators
+                .First()
+                .ValidateAsync(_userManager, user, password);
+
+            if (!validatePasswordResult.Succeeded) 
+            {
+                TempData["ErrorMessage"] = "PasswordSetFailed";
+                return Redirect("/Register");
+            }
+
+            var emailConfrimResult = await _userManager.ConfirmEmailAsync(user, code);
+            if (!emailConfrimResult.Succeeded)
             {
                 TempData["ErrorMessage"] = "ConfirmEmailFailed";
                 return Redirect("/Register");
@@ -69,13 +85,10 @@ namespace SocialEmpires.Controllers
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var resetPasswordResult = await _userManager.ResetPasswordAsync(user, token, password);
-            if (!resetPasswordResult.Succeeded)
-            {
-                TempData["ErrorMessage"] = "PasswordSetFailed";
-                return Redirect("/Register");
-            }
 
             await _userManager.AddToRoleAsync(user, "User");
+
+            await _signInManager.SignOutAsync();
 
             return Redirect("/");
         }
@@ -127,26 +140,30 @@ namespace SocialEmpires.Controllers
                     TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
                     return Redirect("/Register");
                 }
+
                 await _signInManager.SignInAsync(user, isPersistent: true);
+                return Redirect("/Register");
             }
             else
             {
                 if (user.EmailConfirmed)
                 {
-                    return Redirect("/");
+                    return Redirect("/Login");
                 }
+
+                await _signInManager.SignInAsync(user, isPersistent: true);
+
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                _logger.LogInformation($"Confirmation token for {user.Id}: {token}");
+
+                await _emailSender.SendAsync(
+                    email,
+                    "[Social Empires] Verification code",
+                    $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+
+                TempData["SendingInterval"] = 60;
+                return Redirect("/Register");
             }
-
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            _logger.LogInformation($"Confirmation token for {user.Id}: {token}");
-
-            await _emailSender.SendAsync(
-                email, 
-                "[Social Empires] Verification code",
-                $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
-
-            TempData["SendingInterval"] = 60;
-            return Redirect("/Register");
         }
     }
 }
