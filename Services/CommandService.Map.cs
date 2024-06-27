@@ -29,7 +29,7 @@ namespace SocialEmpires.Services
         private void HandleNameMapCommand(PlayerSave save, JsonElement[] args)
         {
             var townId = args[0].GetInt32();
-            var newName = args[1].GetString();
+            var newName = args[1].GetString()!;
             //TODO: limit length
             _logger.LogInformation($"Map name changed to '{newName}'.");
 

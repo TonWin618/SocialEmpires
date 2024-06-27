@@ -7,7 +7,9 @@
 
         public AzureEmailSenderOptions() 
         {
-            // for ConfigureOptions
+            // for configure options
+            ArgumentNullException.ThrowIfNull(ConnectionString, nameof(ConnectionString));
+            ArgumentNullException.ThrowIfNull(SenderAddress, nameof(SenderAddress));
         }
     }
 }

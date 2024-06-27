@@ -49,6 +49,10 @@
                                     if ((id > 500 && id < 900) || (id > 2000 && id < 3000))
                                     {
                                         var item = configFileService.GetItem(id.ToString());
+                                        if(item == null)
+                                        {
+                                            continue;
+                                        }
                                         sb.Append($"{item.Name}*{group.Count()}, ");
                                     }
                                 }

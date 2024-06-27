@@ -9,6 +9,10 @@
     Layout = null;
     var id = Request.Query["id"][0] ?? "1";
     var item = configFileService.GetItem(id);
+    if(item == null)
+    {
+        return;
+    }
 }
 
 <div style="background-color:#FFFFFF;width:100%;">

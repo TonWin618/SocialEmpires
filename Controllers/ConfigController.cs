@@ -23,16 +23,16 @@ namespace SocialEmpires.Controllers
         #region Items
         [HttpGet("items")]
         //[Authorize(Roles = "Admin")]
-        public async Task<PageResult<Item>> GetItems(int pageIndex, int pageSize)
+        public Task<PageResult<Item>> GetItems(int pageIndex, int pageSize)
         {
             var (count, items) = _configFileService.GetItems(pageIndex, pageSize);
-            return Page(pageIndex, pageSize, count, items);
+            return Task.FromResult(Page(pageIndex, pageSize, count, items));
         }
 
         [HttpGet("items/{id}")]
-        public async Task<Item?> GetItem(string id)
+        public Task<Item?> GetItem(string id)
         {
-            return _configFileService.GetItem(id);
+            return Task.FromResult(_configFileService.GetItem(id));
         }
 
         [HttpPost("items/{id}/shelve")]
@@ -40,6 +40,10 @@ namespace SocialEmpires.Controllers
         public async Task<bool> ShelveItem(string id)
         {
             var item = _configFileService.GetItem(id);
+            if(item == null)
+            {
+                return false;
+            }
             item.InStore = "1";
             await _configFileService.Save();
             return true;
@@ -50,6 +54,10 @@ namespace SocialEmpires.Controllers
         public async Task<bool> UnshelveItem(string id)
         {
             var item = _configFileService.GetItem(id);
+            if (item == null)
+            {
+                return false;
+            }
             item.InStore = "0";
             await _configFileService.Save();
             return true;
