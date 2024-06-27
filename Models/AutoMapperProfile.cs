@@ -3,7 +3,7 @@ using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Models
 {
-    public class AutoMapperProfile: Profile
+    public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {

@@ -39,7 +39,7 @@ namespace SocialEmpires.Controllers
         public async Task<bool> ShelveItem(string id)
         {
             var item = _configFileService.GetItem(id);
-            if(item == null)
+            if (item == null)
             {
                 return false;
             }
@@ -65,7 +65,7 @@ namespace SocialEmpires.Controllers
         [HttpPost("items/{id}")]
         //[Authorize(Roles = "Admin")]
         public async Task<bool> UpdateItem(
-            string id, 
+            string id,
             [FromForm] Item updatedItem,
             [FromServices] IMapper _mapper)
         {

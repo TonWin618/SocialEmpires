@@ -1,7 +1,6 @@
 ﻿using SocialEmpires.Utils;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using System.Xml.Linq;
 
 namespace SocialEmpires.Models
 {
@@ -113,7 +112,7 @@ namespace SocialEmpires.Models
         }
     }
 
-    public class MapItem: IEquatable<MapItem>
+    public class MapItem : IEquatable<MapItem>
     {
         public int Id { get; set; }
         public int X { get; set; }
@@ -138,7 +137,7 @@ namespace SocialEmpires.Models
 
         public bool Equals(MapItem? other)
         {
-            if(other == null)
+            if (other == null)
             {
                 return false;
             }

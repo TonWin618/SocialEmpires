@@ -1,5 +1,4 @@
 ﻿using SocialEmpires.Models;
-using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Enums;
 using SocialEmpires.Services.Constants;
 using System.Text.Json;
@@ -210,7 +209,7 @@ namespace SocialEmpires.Services
             }
             else
             {
-                _logger.LogWarning("Unknown command: {cmd}",cmd);
+                _logger.LogWarning("Unknown command: {cmd}", cmd);
             }
         }
 

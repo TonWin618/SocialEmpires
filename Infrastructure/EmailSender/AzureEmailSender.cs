@@ -33,11 +33,11 @@ namespace SocialEmpires.Infrastructure.EmailSender
         public async Task SendAsync(string address, string subject, string content, CancellationToken cancellationToken = default)
         {
             var result = await _emailClient.SendAsync(
-                Azure.WaitUntil.Completed, 
-                _options.SenderAddress, 
-                address, 
-                subject, 
-                content, 
+                Azure.WaitUntil.Completed,
+                _options.SenderAddress,
+                address,
+                subject,
+                content,
                 null,
                 cancellationToken);
             _logger.LogInformation("[subject:{subject}][address:{address}][status:{status}]", subject, address, result.Value.Status);

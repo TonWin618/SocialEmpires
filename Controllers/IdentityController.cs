@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Infrastructure.EmailSender;
-using SocialEmpires.Models;
 
 namespace SocialEmpires.Controllers
 {
@@ -51,7 +50,7 @@ namespace SocialEmpires.Controllers
             [FromServices] UserManager<IdentityUser> _userManager,
             [FromServices] SignInManager<IdentityUser> _signInManager)
         {
-            if(HttpContext?.User?.Identity?.Name == null)
+            if (HttpContext?.User?.Identity?.Name == null)
             {
                 return Redirect("/Register");
             }
@@ -66,7 +65,7 @@ namespace SocialEmpires.Controllers
                 .First()
                 .ValidateAsync(_userManager, user, password);
 
-            if (!validatePasswordResult.Succeeded) 
+            if (!validatePasswordResult.Succeeded)
             {
                 TempData["ErrorMessage"] = "PasswordSetFailed";
                 return Redirect("/Register");

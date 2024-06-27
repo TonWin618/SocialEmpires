@@ -133,7 +133,7 @@ namespace SocialEmpires.Controllers
             };
 
             return PhysicalFile(
-                Path.Combine(Directory.GetCurrentDirectory(),relativePath),
+                Path.Combine(Directory.GetCurrentDirectory(), relativePath),
                 contentType);
         }
     }

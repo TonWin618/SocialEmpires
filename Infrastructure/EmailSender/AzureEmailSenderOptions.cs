@@ -5,7 +5,7 @@
         public string ConnectionString { get; init; }
         public string SenderAddress { get; init; }
 
-        public AzureEmailSenderOptions() 
+        public AzureEmailSenderOptions()
         {
             // for configure options
             ArgumentNullException.ThrowIfNull(ConnectionString, nameof(ConnectionString));
