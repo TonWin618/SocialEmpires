@@ -5,16 +5,22 @@
     ViewData["Title"] = localizer["Login"];
 }
 
-<div>
+<div style="max-width:400px;margin:auto;">
     <form action="api/login" method="post">
-        <span>Email:</span>
-        <input type="email" name="email" />
-        <span>Password:</span>
-        <input type="password" name="password" />
-        <button type="submit">Login</button>
+        <div class="form-group">
+            <label>@localizer["Email Address"]</label>
+            <input type="email" class="form-control" name="email" />
+        </div>
+        <div class="form-group">
+            <label>@localizer["Password"]</label>
+            <input type="password" class="form-control" name="password" />
+        </div>
+        <div class="form-group">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <p>@localizer[TempData["ErrorMessage"].ToString()]</p>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">Login</button>
     </form>
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <p>@localizer[TempData["ErrorMessage"].ToString()]</p>
-    }
 </div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Models;
 
 namespace SocialEmpires.Controllers
@@ -9,29 +10,22 @@ namespace SocialEmpires.Controllers
     public class IdentityController : Controller
     {
         private readonly AppDbContext _appDbContext;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<IdentityController> _logger;
 
         public IdentityController(
             AppDbContext appDbContext,
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager,
             ILogger<IdentityController> logger)
         {
             _appDbContext = appDbContext;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
             _logger = logger;
         }
 
         [HttpPost("api/initialize")]
         public async Task<IActionResult> Initialize(
             [FromForm] string email,
-            [FromForm] string password)
+            [FromForm] string password,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] RoleManager<IdentityRole> _roleManager)
         {
             if (_roleManager.Roles.Any(_ => _.Name == "Admin"))
             {
@@ -53,11 +47,12 @@ namespace SocialEmpires.Controllers
             return Redirect("/Login");
         }
 
-        [HttpPost("api/register")]
         [Authorize]
+        [HttpPost("api/register")]
         public async Task<IActionResult> RegisterByEmailAndPassword(
             [FromForm] string password,
-            [FromForm] string code)
+            [FromForm] string code,
+            [FromServices] UserManager<IdentityUser> _userManager)
         {
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             if (user == null)
@@ -88,7 +83,9 @@ namespace SocialEmpires.Controllers
         [HttpPost("api/login")]
         public async Task<IActionResult> LoginByEmailAndPassword(
             [FromForm] string email,
-            [FromForm] string password)
+            [FromForm] string password,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -111,34 +108,43 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("api/sendEmailConfirmationEmail")]
         public async Task<IActionResult> SendEmailConfirmationEmail(
-            [FromForm] string email)
+            [FromForm] string email,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager,
+            [FromServices] IEmailSender _emailSender)
         {
-            if (HttpContext.User.Identity.Name != null)
+            IdentityUser? user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
             {
-                var loginUser = await _userManager.FindByIdAsync(HttpContext.User.Identity.Name);
-                if (loginUser.EmailConfirmed)
+                user = new IdentityUser()
                 {
-                    return Redirect("/Privacy");
+                    Email = email
+                };
+                user.UserName = user.Id.ToString();
+                var result = await _userManager.CreateAsync(user, Guid.NewGuid().ToString());
+                if (!result.Succeeded)
+                {
+                    TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
+                    return Redirect("/Register");
+                }
+                await _signInManager.SignInAsync(user, isPersistent: true);
+            }
+            else
+            {
+                if (user.EmailConfirmed)
+                {
+                    return Redirect("/");
                 }
             }
 
-            var user = new IdentityUser()
-            {
-                Email = email
-            };
-            user.UserName = user.Id.ToString();
-            var result = await _userManager.CreateAsync(user, Guid.NewGuid().ToString());
-
-            if (!result.Succeeded)
-            {
-                TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
-                return Redirect("/Register");
-            }
-
-            await _signInManager.SignInAsync(user, isPersistent: true);
-
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             _logger.LogInformation($"Confirmation token for {user.Id}: {token}");
+
+            await _emailSender.SendEmailAsync(
+                email, 
+                "[Social Empires] Verification code",
+                $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+
             TempData["SendingInterval"] = 60;
             return Redirect("/Register");
         }

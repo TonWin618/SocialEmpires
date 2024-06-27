@@ -1,11 +1,14 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @using SocialEmpires.Services
-@inject PlayerSaveService playerSaveService
-@inject ConfigFileService configFileService
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
+@attribute [Authorize(Roles = "Admin")]
+@inject PlayerSaveService playerSaveService
+@inject ConfigFileService configFileService
 @inject IViewLocalizer localizer
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = localizer["EmpireMap"];
     var id = Request.Query["id"][0];
     var save = await playerSaveService.GetPlayerSaveAsync(id);

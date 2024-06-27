@@ -10,16 +10,13 @@ namespace SocialEmpires.Controllers
     [Authorize(Roles = "User")]
     public class GameController : ControllerBase
     {
-        private readonly PlayerSaveService _playerSaveService;
-
-        public GameController(
-            PlayerSaveService playerSaveService)
+        public GameController()
         {
-            _playerSaveService = playerSaveService;
+
         }
 
         [HttpGet("CreatePlayerSaveForTest")]
-        public async Task<ActionResult> CreatePlayerSaveForTest()
+        public async Task<ActionResult> CreatePlayerSaveForTest([FromServices] PlayerSaveService _playerSaveService)
         {
             var id = Guid.NewGuid().ToString();
             var user = await _playerSaveService.CreatePlayerSaveAsync(id, id);
@@ -27,34 +24,23 @@ namespace SocialEmpires.Controllers
             return Ok(id);
         }
 
+
+        [HttpGet("avatar/{userid}.png")]
+        public ActionResult GetAvatar()
+        {
+            return SendFromLocal("UploadFiles/Avatars/example.png");
+        }
+
         [HttpGet("crossdomain.xml")]
         public ActionResult GetCrossdomainXml()
         {
-            return SendFromLocal("crossdomain.xml", "application/xml");
+            return SendFromLocal("Assets/crossdomain.xml");
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
-            return SendFromLocal(path, "application/x-shockwave-falsh");
-        }
-
-        [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_projectiles.swf")]
-        public ActionResult GetProjectiles()
-        {
-            return SendFromLocal("swf/05122012_projectiles.swf", "application/x-shockwave-falsh");
-        }
-
-        [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_magicParticles.swf")]
-        public ActionResult GetMagicParticles()
-        {
-            return SendFromLocal("swf/05122012_magicParticles.swf", "application/x-shockwave-falsh");
-        }
-
-        [HttpGet("/default01.static.socialpointgames.com/static/socialempires/swf/05122012_dynamic.swf")]
-        public ActionResult GetDynamic()
-        {
-            return SendFromLocal("swf/05122012_dynamic.swf", "application/x-shockwave-falsh");
+            return SendFromLocal("Assets/" + path);
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
@@ -66,13 +52,19 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public ActionResult GetGameConfig()
         {
-            return PhysicalFile(
-                Directory.GetCurrentDirectory() + "/ConfigFiles/" + "game_config_zh.json",
-                "application/json");
+            if (HttpContext.Request.Headers.AcceptLanguage.Contains("zh"))
+            {
+                return SendFromLocal("ConfigFiles/game_config_zh.json");
+            }
+            else
+            {
+                return SendFromLocal("ConfigFiles/game_config_en.json");
+            }
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
-        public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language)
+        public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language,
+            [FromServices] PlayerSaveService _playerSaveService)
         {
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
             if (save == null)
@@ -122,21 +114,26 @@ namespace SocialEmpires.Controllers
             return Ok("""{"result": "success"}""");
         }
 
-        public record CommandData(
-            Command[] Commands,
-            int Ts,
-            string AccessToken,
-            int Tries,
-            string PublishActions)
+        public record CommandData(Command[] Commands, int Ts, string AccessToken, int Tries, string PublishActions)
         {
             [JsonPropertyName("first_number")]
             public int FirstNumber { get; set; }
         }
 
-        private PhysicalFileResult SendFromLocal(string relativePath, string contentType)
+        private PhysicalFileResult SendFromLocal(string relativePath)
         {
+            var contentType = Path.GetExtension(relativePath) switch
+            {
+                "swf" => "application/x-shockwave-falsh",
+                "xml" => "application/xml",
+                "json" => "application/json",
+                "png" => "image/png",
+                "jpg" => "image/jpeg",
+                _ => "application/octet-stream"
+            };
+
             return PhysicalFile(
-                Directory.GetCurrentDirectory() + "/Assets/" + relativePath,
+                Path.Combine(Directory.GetCurrentDirectory(),relativePath),
                 contentType);
         }
     }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Models;
 using SocialEmpires.Services;
 using System.Globalization;
@@ -25,6 +26,7 @@ services.Configure<RequestLocalizationOptions>(options =>
 {
     options.DefaultRequestCulture = new RequestCulture("zh");
     options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
 });
 
 services.AddLocalization(
@@ -81,6 +83,12 @@ services.AddAutoMapper(options =>
 services.AddScoped<CommandService>();
 services.AddSingleton<ConfigFileService>();
 services.AddScoped<PlayerSaveService>();
+
+//Email Sender
+services.AddScoped<IEmailSender, AzureEmailSender>();
+services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("AzureEmailSender"));
+
+services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

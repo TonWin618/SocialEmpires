@@ -1,11 +1,14 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @using SocialEmpires.Services
-@inject PlayerSaveService playerSaveService
-@inject ConfigFileService configFileService
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
+@attribute [Authorize(Roles = "Admin")]
+@inject PlayerSaveService playerSaveService
+@inject ConfigFileService configFileService
 @inject IViewLocalizer localizer
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = localizer["PlayerSave"];
     var pageIndex = int.Parse(Request.Query["pageIndex"].FirstOrDefault() ?? "1");
     var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
@@ -13,7 +16,7 @@
 }
 
 <div>
-    <table style="width:100%;">
+    <table style="width:100%;" class="table table-striped">
         <thead>
             <tr>
                 <th>Player</th>
