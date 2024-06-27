@@ -7,22 +7,22 @@
 <body>
     <div style="max-width:400px;margin:auto;">
         <form action="api/sendEmailConfirmationEmail" method="post">
-            <label>@localizer["Email Address"]: </label>
+            <label>@localizer["Email Address"]</label>
             <div class="input-group">
                 <input type="email" class="form-control" name="email" />
-                <button id="SendEmailButton" class="btn btn-primary" type="submit" disabled></button>
+                <button id="SendEmailButton" class="btn btn-primary" type="submit" disabled>@localizer["SendAuthCode"]</button>
             </div>
         </form>
         <form action="api/register" method="post">
             <div class="form-group">
-                <label>@localizer["Code"]: </label>
+                <label>@localizer["Code"]</label>
                 <input type="text" class="form-control" name="code" />
             </div>
             <div class="form-group">
-                <label>@localizer["Password"]: </label>
+                <label>@localizer["Password"]</label>
                 <input type="password" class="form-control" name="password" />
             </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">Register</button>
+            <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">@localizer["Register"]</button>
         </form>
         @if (TempData["ErrorMessage"] != null)
         {
@@ -34,7 +34,7 @@
         var button = document.getElementById("SendEmailButton");
 
         if (@(TempData["SendingInterval"]??"null") == null) {
-            button.textContent = "Send";
+            button.textContent = "@localizer["SendAuthCode"]";
             button.disabled = false;
         }else{
             function countdown() {
