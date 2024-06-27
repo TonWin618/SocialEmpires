@@ -14,8 +14,7 @@ namespace SocialEmpires.Controllers
         private readonly ConfigFileService _configFileService;
 
         public ConfigController(
-            ConfigFileService configFileService,
-            IMapper mapper)
+            ConfigFileService configFileService)
         {
             _configFileService = configFileService;
         }

@@ -13,7 +13,7 @@ namespace SocialEmpires.Services
             var newOrientation = args[2].GetInt32();
             var townId = args[3].GetInt32();
 
-            _logger.LogInformation($"Item at ({x},{y}) changed to orientation {newOrientation}");
+            _logger.LogInformation("Item at ({x},{y}) changed to orientation {newOrientation}", x, y, newOrientation);
 
             var map = save.Maps[townId];
             foreach (var item in map.Items)
@@ -31,7 +31,7 @@ namespace SocialEmpires.Services
             var townId = args[0].GetInt32();
             var newName = args[1].GetString()!;
             //TODO: limit length
-            _logger.LogInformation($"Map name changed to '{newName}'.");
+            _logger.LogInformation("Map name changed to '{newName}'.", newName);
 
             save.PlayerInfo.MapNames[townId] = newName;
         }
@@ -42,7 +42,7 @@ namespace SocialEmpires.Services
             var resource = args[1].GetString();
             var townId = args[2].GetInt32();
 
-            _logger.LogInformation($"Expansion {landId} purchased");
+            _logger.LogInformation("Expansion {landId} purchased", landId);
 
             var map = save.DefaultMap;
             var expansions = map.Expansions;
@@ -99,7 +99,7 @@ namespace SocialEmpires.Services
             }
             oAnimals[subcatFunc] += toBeAdded;
 
-            _logger.LogInformation($"Added {toBeAdded} {item.Name}");
+            _logger.LogInformation("Added {toBeAdded} {itemName}", toBeAdded, item.Name);
         }
     }
 }

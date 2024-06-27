@@ -9,14 +9,10 @@ namespace SocialEmpires.Controllers
     [ApiController]
     public class IdentityController : Controller
     {
-        private readonly AppDbContext _appDbContext;
         private readonly ILogger<IdentityController> _logger;
 
-        public IdentityController(
-            AppDbContext appDbContext,
-            ILogger<IdentityController> logger)
+        public IdentityController(ILogger<IdentityController> logger)
         {
-            _appDbContext = appDbContext;
             _logger = logger;
         }
 
@@ -84,7 +80,7 @@ namespace SocialEmpires.Controllers
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var resetPasswordResult = await _userManager.ResetPasswordAsync(user, token, password);
+            await _userManager.ResetPasswordAsync(user, token, password);
 
             await _userManager.AddToRoleAsync(user, "User");
 
@@ -154,7 +150,7 @@ namespace SocialEmpires.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: true);
 
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                _logger.LogInformation($"Confirmation token for {user.Id}: {token}");
+                _logger.LogInformation("Confirmation token for {user.Id}: {token}", user.Id, token);
 
                 await _emailSender.SendAsync(
                     email,

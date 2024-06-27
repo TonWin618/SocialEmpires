@@ -32,11 +32,13 @@ namespace SocialEmpires.Models
         {
             base.OnModelCreating(builder);
 
+            var jsonSerializeOptions = new JsonSerializerOptions();
+
             var mapItemListConverter = new ValueConverter<List<MapItem>, string>(
                 v => JsonSerializer.Serialize(
-                    v, new JsonSerializerOptions()),
+                    v, jsonSerializeOptions),
                 v => JsonSerializer.Deserialize<List<MapItem>>(
-                    v, new JsonSerializerOptions())!
+                    v, jsonSerializeOptions)!
             );
 
             var dictionaryComparer = new ValueComparer<Dictionary<string, int>>(
@@ -57,9 +59,9 @@ namespace SocialEmpires.Models
                 .Property(_ => _.Items)
                 .HasConversion(
                 v => JsonSerializer.Serialize(
-                    v, new JsonSerializerOptions()),
+                    v, jsonSerializeOptions),
                 v => JsonSerializer.Deserialize<List<MapItem>>(
-                    v, new JsonSerializerOptions())!,
+                    v, jsonSerializeOptions)!,
                 new ValueComparer<List<MapItem>>(
                     (list1, list2) => list1.NullRespectingSequenceEqual(list2),
                     list => list.Aggregate(0, (hash, item) => HashCode.Combine(hash, item.GetHashCode())),
@@ -101,11 +103,13 @@ namespace SocialEmpires.Models
 
         public class DictionaryConverter : ValueConverter<Dictionary<string, int>, string>
         {
+            private static readonly JsonSerializerOptions jsonSerializeOptions = new();
+
             public DictionaryConverter() : base(
                 v => JsonSerializer.Serialize(
-                    v, new JsonSerializerOptions()),
+                    v, jsonSerializeOptions),
                 v => JsonSerializer.Deserialize<Dictionary<string, int>>(
-                    v, new JsonSerializerOptions())!)
+                    v, jsonSerializeOptions)!)
             {
 
             }

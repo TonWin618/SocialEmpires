@@ -10,18 +10,15 @@ namespace SocialEmpires.Services
 
     public partial class CommandService
     {
-        private readonly AppDbContext _appDbContext;
         private readonly ConfigFileService _configFileService;
         private readonly PlayerSaveService _playerSaveService;
         private readonly ILogger<CommandService> _logger;
 
         public CommandService(
-            AppDbContext appDbContext,
             ConfigFileService configFileService,
             PlayerSaveService playerSaveService,
             ILogger<CommandService> logger)
         {
-            _appDbContext = appDbContext;
             _configFileService = configFileService;
             _playerSaveService = playerSaveService;
             _logger = logger;
@@ -45,7 +42,7 @@ namespace SocialEmpires.Services
 
             if (cmd == CommandNames.GAME_STATUS)
             {
-                _logger.LogInformation(string.Join('|', args));
+                _logger.LogInformation("{message}", string.Join('|', args));
             }
             else if (cmd == CommandNames.BUY)
             {
@@ -213,7 +210,7 @@ namespace SocialEmpires.Services
             }
             else
             {
-                _logger.LogWarning($"Unknown command: {cmd}");
+                _logger.LogWarning("Unknown command: {cmd}",cmd);
             }
         }
 
@@ -288,7 +285,7 @@ namespace SocialEmpires.Services
             save.DefaultMap.Xp += collectXp;
         }
 
-        private long TimestampNow()
+        private static long TimestampNow()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         }
