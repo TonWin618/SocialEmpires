@@ -1,9 +1,11 @@
 ﻿@page
+@using Microsoft.AspNetCore.Authorization
 @using SocialEmpires.Services
-@inject PlayerSaveService playerSaveService
-@inject ConfigFileService configFileService
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
+@attribute [Authorize(Roles = "Admin")]
+@inject PlayerSaveService playerSaveService
+@inject ConfigFileService configFileService
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";

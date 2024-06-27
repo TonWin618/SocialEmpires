@@ -1,7 +1,10 @@
 ﻿@page
 @using SocialEmpires.Services
-@inject ConfigFileService configFileService
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Authorization
+@using SocialEmpires.Utils
+@attribute [Authorize(Roles = "Admin")]
+@inject ConfigFileService configFileService
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";
@@ -10,9 +13,6 @@
     var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
     var (pageCount,data) = configFileService.GetItems(pageIndex, pageSize);
 }
-@using Microsoft.AspNetCore.Authorization
-@using SocialEmpires.Utils
-@attribute [Authorize(Roles ="Admin")]
     
 <table width="100%" class="table table-striped">
     <thead>

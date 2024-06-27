@@ -1,7 +1,9 @@
 ﻿@page
-@using SocialEmpires.Services
-@inject ConfigFileService configFileService
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Services
+@attribute [Authorize(Roles = "Admin")]
+@inject ConfigFileService configFileService
 @inject IViewLocalizer localizer
 @{
     Layout = null;
