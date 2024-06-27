@@ -9,12 +9,15 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
+var config = builder.Configuration;
+
+services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
 
 services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
 
 services.AddDbContext<AppDbContext>(options =>
 {
-    var connectionString = builder.Configuration["DbConnectionString"];
+    var connectionString = config["DbConnectionString"];
     options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure(3));
 });
 
@@ -26,7 +29,7 @@ services.AddAutoMapper(options =>
 services.AddHttpContextAccessor();
 
 services.AddScoped<CommandService>();
-services.AddSingleton<ConfigFileService>();
+services.AddScoped<ConfigFileService>();
 services.AddScoped<PlayerSaveService>();
 
 #region Localization
@@ -80,7 +83,7 @@ services.ConfigureApplicationCookie(cookie =>
 
 #region Email Sender
 services.AddScoped<IEmailSender, AzureEmailSender>();
-services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("AzureEmailSender"));
+services.Configure<AzureEmailSenderOptions>(config.GetSection("AzureEmailSender"));
 #endregion
 
 var app = builder.Build();
