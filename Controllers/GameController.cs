@@ -31,10 +31,10 @@ namespace SocialEmpires.Controllers
         }
 
 
-        [HttpGet("avatar/{userid}.png")]
+        [HttpGet("/avatar/{userid}.png")]
         public ActionResult GetAvatar()
         {
-            return SendFromLocal(Path.Combine(_options.Uploads, "/Avatars/example.png"));
+            return SendFromLocal(Path.Combine(_options.Uploads, "Avatars/example.png"));
         }
 
         [HttpGet("crossdomain.xml")]
