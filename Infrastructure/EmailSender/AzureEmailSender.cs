@@ -20,7 +20,17 @@ namespace SocialEmpires.Infrastructure.EmailSender
             _emailClient = new EmailClient(_options.ConnectionString);
         }
 
-        public async Task SendEmailAsync(string address, string subject, string content, CancellationToken cancellationToken = default)
+        public void Send(string address, string subject, string content)
+        {
+            _emailClient.Send(
+                Azure.WaitUntil.Completed,
+                _options.SenderAddress,
+                address,
+                subject,
+                content);
+        }
+
+        public async Task SendAsync(string address, string subject, string content, CancellationToken cancellationToken = default)
         {
             await _emailClient.SendAsync(
                 Azure.WaitUntil.Completed, 

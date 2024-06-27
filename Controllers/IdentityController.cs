@@ -140,7 +140,7 @@ namespace SocialEmpires.Controllers
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             _logger.LogInformation($"Confirmation token for {user.Id}: {token}");
 
-            await _emailSender.SendEmailAsync(
+            await _emailSender.SendAsync(
                 email, 
                 "[Social Empires] Verification code",
                 $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");

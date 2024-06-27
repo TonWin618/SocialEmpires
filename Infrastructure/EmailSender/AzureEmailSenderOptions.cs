@@ -7,7 +7,7 @@
 
         public AzureEmailSenderOptions() 
         {
-
+            // for ConfigureOptions
         }
     }
 }
