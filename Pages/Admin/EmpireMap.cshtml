@@ -11,11 +11,19 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["EmpireMap"];
     var id = Request.Query["id"][0];
+    if(id == null)
+    {
+        return;
+    }
     var save = await playerSaveService.GetPlayerSaveAsync(id);
 }
 
 <div style="background-color:#FFFFFF;width:100%;">
     @{
+        if(save == null)
+        {
+            return;
+        }
         var map = new int[100,100];
         foreach(var item in save.DefaultMap.Items)
         {
@@ -33,9 +41,8 @@
                             @{
                                 if (map[x, y] != 0)
                                 {
-                                    var itemInfo = configFileService.GetItem(map[x, y].ToString());
-                                    <img 
-                                    src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(itemInfo.ImgName).jpg" 
+                                    var itemInfo = configFileService.GetItem(map[x, y].ToString())!;
+                                    <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(itemInfo.ImgName).jpg" 
                                     width="@(int.Parse(itemInfo.Width) * 20)"
                                     height="@(int.Parse(itemInfo.Height) * 20)"
                                     style="z-index:1;position:absolute;bottom:50%;right:100%"/>
