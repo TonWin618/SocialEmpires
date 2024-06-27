@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using SocialEmpires.Services;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -10,12 +11,14 @@ namespace SocialEmpires.Controllers
     [Authorize(Roles = "User")]
     public class GameController : ControllerBase
     {
+        private readonly FileDirectoriesOptions _options;
+
         private JsonSerializerOptions camelCaseJsonoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         private JsonSerializerOptions snakeCaseoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 
-        public GameController()
+        public GameController(IOptions<FileDirectoriesOptions> options)
         {
-
+            _options = options.Value;
         }
 
         [HttpGet("CreatePlayerSaveForTest")]
@@ -31,19 +34,19 @@ namespace SocialEmpires.Controllers
         [HttpGet("avatar/{userid}.png")]
         public ActionResult GetAvatar()
         {
-            return SendFromLocal("UploadFiles/Avatars/example.png");
+            return SendFromLocal(Path.Combine(_options.Uploads, "/Avatars/example.png"));
         }
 
         [HttpGet("crossdomain.xml")]
         public ActionResult GetCrossdomainXml()
         {
-            return SendFromLocal("Assets/crossdomain.xml");
+            return SendFromLocal(Path.Combine(_options.Assets, "crossdomain.xml"));
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
-            return SendFromLocal("Assets/" + path);
+            return SendFromLocal(Path.Combine(_options.Assets, path));
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
@@ -57,11 +60,11 @@ namespace SocialEmpires.Controllers
         {
             if (HttpContext.Request.Headers.AcceptLanguage.Contains("zh"))
             {
-                return SendFromLocal("ConfigFiles/game_config_zh.json");
+                return SendFromLocal(Path.Combine(_options.Configs, "game_config_zh.json"));
             }
             else
             {
-                return SendFromLocal("ConfigFiles/game_config_en.json");
+                return SendFromLocal(Path.Combine(_options.Configs, "game_config_en.json"));
             }
         }
 
