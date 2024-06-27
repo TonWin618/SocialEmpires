@@ -10,6 +10,9 @@ namespace SocialEmpires.Controllers
     [Authorize(Roles = "User")]
     public class GameController : ControllerBase
     {
+        private JsonSerializerOptions camelCaseJsonoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private JsonSerializerOptions snakeCaseoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
+
         public GameController()
         {
 
@@ -69,20 +72,22 @@ namespace SocialEmpires.Controllers
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
             if (save == null)
             {
-                userid = HttpContext.User.Identity.Name;
+                userid = HttpContext!.User!.Identity!.Name!;
                 save = await _playerSaveService.CreatePlayerSaveAsync(userid, userid);
             }
 
             var root = new JsonObject();
+            
+
             root.Add("map", JsonSerializer.SerializeToNode(
                 save.DefaultMap,
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                camelCaseJsonoptions));
             root.Add("playerInfo", JsonSerializer.SerializeToNode(
                 save.PlayerInfo,
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower }));
+                snakeCaseoptions));
             root.Add("privateState", JsonSerializer.SerializeToNode(
                 save.PrivateState,
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                camelCaseJsonoptions));
 
             return new JsonResult(root);
         }
@@ -105,10 +110,13 @@ namespace SocialEmpires.Controllers
             }
 
             var commandDataString = data.Substring(65);
-            var commandData = JsonSerializer.Deserialize<CommandData>(commandDataString, new JsonSerializerOptions()
+            var commandData = JsonSerializer.Deserialize<CommandData>(commandDataString, camelCaseJsonoptions);
+
+            if(commandData == null)
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
+                return Ok("""{"result": "failed"}""");
+            }
+
             await commandService.HandleCommandsAsync(userId, commandData.Commands);
 
             return Ok("""{"result": "success"}""");
