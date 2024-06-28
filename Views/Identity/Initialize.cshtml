@@ -2,7 +2,7 @@
 @inject IViewLocalizer localizer
 
 <div style="max-width:400px;margin:auto;">
-    <form action="api/initialize" method="post">
+    <form asp-action="Initialize" method="post">
         <div class="form-group">
             <label>@localizer["EmailAddress"]</label>
             <input type="email" class="form-control" name="email" />
@@ -11,6 +11,6 @@
             <label>@localizer["Password"]</label>
             <input type="password" class="form-control" name="password" />
         </div>
-        <button type="submit" class="btn btn-danger" style="width:100%;margin-top:20px;">Initialize</button>
+        <button type="submit" class="btn btn-danger" style="width:100%;margin-top:20px;">@localizer["Initialize"]</button>
     </form>
 </div>

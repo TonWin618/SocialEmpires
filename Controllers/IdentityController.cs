@@ -131,7 +131,7 @@ namespace SocialEmpires.Controllers
 
             if (!(await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, token)))
             {
-                ViewData["ErrorMessage"] = "InvalidAuthCode";
+                ViewData["ErrorMessage"] = "InvalidToken";
                 return View("Login");
             }
 
@@ -223,7 +223,7 @@ namespace SocialEmpires.Controllers
             var emailConfrimResult = await _userManager.ConfirmEmailAsync(user, code);
             if (!emailConfrimResult.Succeeded)
             {
-                ViewData["ErrorMessage"] = "InvalidAuthCode";
+                ViewData["ErrorMessage"] = "InvalidToken";
                 return View("Register");
             }
 

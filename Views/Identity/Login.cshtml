@@ -13,7 +13,7 @@
                 <label>@localizer["EmailAddress"]</label>
                 <div class="input-group">
                     <input type="email" class="form-control" name="email" value="@ViewData["Email"]" />
-                    <button id="SendEmailButton" class="btn btn-primary" type="submit" disabled>@localizer["SendAuthCode"]</button>
+                    <button id="SendEmailButton" class="btn btn-primary" type="submit" disabled>@localizer["SendToken"]</button>
                 </div>
             </form>
             <form asp-action="LoginByEmailAndToken" method="post">
@@ -22,7 +22,7 @@
                     <input type="email" class="form-control" name="email" value="@ViewData["Email"]" />
                 </div>
                 <div class="form-group">
-                    <label>@localizer["AuthCode"]</label>
+                    <label>@localizer["Token"]</label>
                     <input type="text" class="form-control" name="token" value="@ViewData["Token"]" />
                 </div>
                 <div class="form-group">
@@ -44,7 +44,7 @@
                 var button = document.getElementById("SendEmailButton");
 
                 if (@(ViewData["SendingInterval"] ?? "null") == null) {
-                    button.textContent = "@localizer["SendAuthCode"]";
+                    button.textContent = "@localizer["SendToken"]";
                     button.disabled = false;
                 } else {
                     function countdown() {
