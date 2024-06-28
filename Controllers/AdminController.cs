@@ -8,11 +8,14 @@ namespace SocialEmpires.Controllers
     public partial class AdminController : Controller
     {
         private readonly ConfigFileService _configFileService;
+        private readonly PlayerSaveService _playerSaveService;
 
         public AdminController(
-            ConfigFileService configFileService)
+            ConfigFileService configFileService,
+            PlayerSaveService playerSaveService)
         {
             _configFileService = configFileService;
+            _playerSaveService = playerSaveService;
         }
 
         [HttpGet]

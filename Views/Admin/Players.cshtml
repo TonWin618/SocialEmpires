@@ -1,18 +1,16 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@using SocialEmpires.Services
+﻿@using SocialEmpires.Models.PlayerSaves;
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
 @using SocialEmpires.Utils
-@attribute [Authorize(Roles = "Admin")]
-@inject PlayerSaveService playerSaveService
-@inject ConfigFileService configFileService
+@using static SocialEmpires.Controllers.AdminController
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";
-    ViewData["Title"] = localizer["PlayerSave"];
-    var pageIndex = ViewData["PageIndex"] as int? ?? 0;
-    var pageSize = ViewData["PageSize"] as int? ?? 0;
-    var (pageCount, playerSaves) = await playerSaveService.GetAllPlayerSavesAsync(pageIndex,pageSize);
+    ViewData["Title"] = localizer["Playerplayer.Save"];
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<Player>;
 }
 
 <div>
@@ -31,34 +29,16 @@
         </thead>
         <tbody>
             @{
-                foreach (var save in playerSaves)
+                foreach (var player in pageData)
                 {
                     <tr>
-                        <td>[@save.DefaultMap.Level] @save.PlayerInfo.MapNames.First()</td>
-                        <td><p style="font-size:12px;">@save.Pid</p></td>
-                        <td>c:@save.PlayerInfo.Cash g:@save.DefaultMap.Coins s:@save.DefaultMap.Stone w:@save.DefaultMap.Wood f:@save.DefaultMap.Food</td>
-                        <td>@(save.PlayerInfo.CompletedTutorial == 1 ? localizer["Completed"] : "---")</td>
-                        <td>@save.DefaultMap.Expansions.Count()</td>
-                        <td>@DateTimeOffset.FromUnixTimeSeconds(save.PlayerInfo.LastLoggedIn).ToString("g")</td>
-                        <td>@{
-                                var sb = new StringBuilder();
-                                var itemGroups = save.DefaultMap.Items.GroupBy(_ => _.Id);
-                                foreach(var group in itemGroups)
-                                {
-                                    var id = group.Key;
-                                    if ((id > 500 && id < 900) || (id > 2000 && id < 3000))
-                                    {
-                                        var item = configFileService.GetItem(id.ToString());
-                                        if(item == null)
-                                        {
-                                            continue;
-                                        }
-                                        sb.Append($"{item.Name}*{group.Count()}, ");
-                                    }
-                                }
-                                @sb.ToString();
-                            }
-                        </td>
+                        <td>[@player.Save.DefaultMap.Level] @player.Save.PlayerInfo.MapNames.First()</td>
+                        <td><p style="font-size:12px;">@player.Save.Pid</p></td>
+                        <td>c:@player.Save.PlayerInfo.Cash g:@player.Save.DefaultMap.Coins s:@player.Save.DefaultMap.Stone w:@player.Save.DefaultMap.Wood f:@player.Save.DefaultMap.Food</td>
+                        <td>@(player.Save.PlayerInfo.CompletedTutorial == 1 ? localizer["Completed"] : "---")</td>
+                        <td>@player.Save.DefaultMap.Expansions.Count()</td>
+                        <td>@DateTimeOffset.FromUnixTimeSeconds(player.Save.PlayerInfo.LastLoggedIn).ToString("g")</td>
+                        <td>@player.UnitSummary</td>
                         <td>
                             <button>Item</button>
                             <button>Map</button>
