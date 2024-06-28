@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Models.Configs;
+﻿using Microsoft.Extensions.Options;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -7,10 +8,11 @@ namespace SocialEmpires.Services
 {
     public class ConfigFileService
     {
-        private const string enConfigFile = "Assets/config/game_config_en.json";
-        private const string zhConfigFile = "Assets/config/game_config_zh.json";
+        private const string enConfigFile = "game_config_en.json";
+        private const string zhConfigFile = "game_config_zh.json";
 
         private readonly ILogger<ConfigFileService> _logger;
+        private readonly FileDirectoriesOptions _options;
         private readonly JsonSerializerOptions jsonSerializerOptions;
         private readonly JsonNode _config;
 
@@ -20,8 +22,11 @@ namespace SocialEmpires.Services
         public List<ExpansionPrice> ExpansionPrices { get; private set; }
         public JsonElement Globals { get; private set; }
 
-        public ConfigFileService(ILogger<ConfigFileService> logger)
+        public ConfigFileService(
+            IOptions<FileDirectoriesOptions> options, 
+            ILogger<ConfigFileService> logger)
         {
+            _options = options.Value;
             _logger = logger;
 
             jsonSerializerOptions = new JsonSerializerOptions()
@@ -31,16 +36,11 @@ namespace SocialEmpires.Services
                 WriteIndented = true,
             };
 
-            using (var stream = File.OpenRead(zhConfigFile))
+            using (var stream = File.OpenRead(Path.Combine(_options.Configs, zhConfigFile)))
             {
                 _config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
             }
 
-            Load();
-        }
-
-        public void Load()
-        {
             Items = Load<Item>("items");
             Missions = Load<Mission>("missions");
             Levels = Load<Level>("levels");
@@ -64,7 +64,7 @@ namespace SocialEmpires.Services
         {
             var jsonString = JsonSerializer.Serialize(Items, jsonSerializerOptions);
             _config["items"] = JsonNode.Parse(jsonString);
-            await File.WriteAllTextAsync(zhConfigFile, _config.ToJsonString(jsonSerializerOptions));
+            await File.WriteAllTextAsync(Path.Combine(_options.Configs, zhConfigFile), _config.ToJsonString(jsonSerializerOptions));
         }
 
         public Item? GetItem(int id)

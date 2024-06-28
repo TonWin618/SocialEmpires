@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Models;
+using SocialEmpires.Models.PlayerSaves;
 using SocialEmpires.Utils;
 
 namespace SocialEmpires.Services

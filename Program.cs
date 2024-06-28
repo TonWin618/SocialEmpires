@@ -1,19 +1,41 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Models;
 using SocialEmpires.Services;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var services = builder.Services;
+var config = builder.Configuration;
 
+services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
+
+//services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
+services.AddControllersWithViews();
+
+services.AddDbContext<AppDbContext>(options =>
+{
+    var connectionString = config["DbConnectionString"];
+    options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure(3));
+});
+
+services.AddAutoMapper(options =>
+{
+    options.AddProfile(typeof(AutoMapperProfile));
+});
+
+services.AddHttpContextAccessor();
+
+services.AddScoped<CommandService>();
+services.AddScoped<ConfigFileService>();
+services.AddScoped<PlayerSaveService>();
+
+#region Localization
 services.AddRazorPages()
     .AddViewLocalization(options => options.ResourcesPath = "Resources");
-
-services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
 
 var supportedCultures = new[]
 {
@@ -25,21 +47,14 @@ services.Configure<RequestLocalizationOptions>(options =>
 {
     options.DefaultRequestCulture = new RequestCulture("zh");
     options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
 });
 
 services.AddLocalization(
     options => options.ResourcesPath = "Resources");
+#endregion
 
-services.AddDbContext<AppDbContext>(options =>
-{
-    var dbstr = "Data Source = Models/data.db";
-    options
-    .UseSqlite(dbstr, sqliteOptionsAction =>
-    {
-        sqliteOptionsAction.MigrationsAssembly(typeof(Program).Assembly.GetName().Name);
-    });
-});
-
+#region Identity
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     // Password settings.
@@ -47,17 +62,6 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
-    options.Password.RequiredLength = 6;
-    options.Password.RequiredUniqueChars = 1;
-
-    // Lockout settings.
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
-    options.Lockout.AllowedForNewUsers = true;
-
-    // Sign in settings.
-    options.SignIn.RequireConfirmedPhoneNumber = false;
-    options.SignIn.RequireConfirmedEmail = false;
 
     // Token provider settings.
     options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultPhoneProvider;
@@ -76,35 +80,29 @@ services.ConfigureApplicationCookie(cookie =>
     cookie.AccessDeniedPath = "/AccessDenied";
     cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
+#endregion
 
-services.AddAutoMapper(options =>
-{
-    options.AddProfile(typeof(AutoMapperProfile));
-});
-
-services.AddScoped<CommandService>();
-services.AddSingleton<ConfigFileService>();
-services.AddScoped<PlayerSaveService>();
+#region Email Sender
+services.AddScoped<IEmailSender, AzureEmailSender>();
+services.Configure<AzureEmailSenderOptions>(config.GetSection("AzureEmailSender"));
+#endregion
 
 var app = builder.Build();
 
 app.UseRequestLocalization();
-
 app.UseAuthentication();
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-
 app.UseStaticFiles();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapRazorPages();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Game}/{action=Index}");
 
 app.Run();

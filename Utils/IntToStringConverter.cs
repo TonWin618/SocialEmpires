@@ -7,7 +7,7 @@ namespace SocialEmpires.Utils
     {
         public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            string value = reader.GetString();
+            var value = reader.GetString() ?? throw new FormatException();
             return int.Parse(value);
         }
 

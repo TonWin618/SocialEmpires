@@ -1,24 +1,24 @@
-﻿namespace SocialEmpires.Models
+﻿namespace SocialEmpires.Models.PlayerSaves
 {
     public class PlayerState
     {
-        public string Pid { get; set; }
+        public string Pid { get; set; } = null!;
 
-        public List<int> Gifts { get; set; }
+        public List<int> Gifts { get; set; } = null!;
 
-        public Dictionary<string, int> NeighborAssists { get; set; }
+        public Dictionary<string, int> NeighborAssists { get; set; } = null!;
 
-        public List<int> CompletedMissions { get; set; }
+        public List<int> CompletedMissions { get; set; } = null!;
 
-        public List<int> RewardedMissions { get; set; }
+        public List<int> RewardedMissions { get; set; } = null!;
 
         public int BonusNextId { get; set; }
 
         public long TimestampLastBonus { get; set; }
 
-        public List<int> AttacksSent { get; set; }
+        public List<int> AttacksSent { get; set; } = null!;
 
-        public Dictionary<string, int> UnlockedEarlyBuildings { get; set; }
+        public Dictionary<string, int> UnlockedEarlyBuildings { get; set; } = null!;
 
         public int Potion { get; set; }
 
@@ -26,24 +26,24 @@
 
         public long KompuLastTimeStamp { get; set; }
 
-        public List<int> KompuSteps { get; set; }
+        public List<int> KompuSteps { get; set; } = null!;
 
-        public List<int> KompuCompleted { get; set; }
+        public List<int> KompuCompleted { get; set; } = null!;
 
-        public List<int> LastUpgrades { get; set; }
+        public List<int> LastUpgrades { get; set; } = null!;
 
-        public Dictionary<string, int> UnlockedSkins { get; set; }
+        public Dictionary<string, int> UnlockedSkins { get; set; } = null!;
         public int UnlockedQuestIndex { get; set; }
 
-        public Dictionary<string, int> QuestsRank { get; set; }
+        public Dictionary<string, int> QuestsRank { get; set; } = null!;
 
-        public Dictionary<string, int> Magics { get; set; }
+        public Dictionary<string, int> Magics { get; set; } = null!;
 
         public int Mana { get; set; }
 
-        public List<int> BoughtUnits { get; set; }
+        public List<int> BoughtUnits { get; set; } = null!;
 
-        public List<int> UnitCollectionsCompleted { get; set; }
+        public List<int> UnitCollectionsCompleted { get; set; } = null!;
 
         //dragon
         public int DragonNumber { get; set; }
@@ -68,15 +68,15 @@
         public long TimeStampDartsReset { get; set; }
         public long TimeStampDartsNewFree { get; set; }
 
-        public List<int> DartsBalloonsShot { get; set; }
+        public List<int> DartsBalloonsShot { get; set; } = null!;
         public int DartsRandomSeed { get; set; }
         public bool DartsHasFree { get; set; }
         public bool DartsGotExtra { get; set; }
 
-        public List<int> CountTimePacket { get; set; }
-        public List<int> InfoShowed { get; set; }
-        public Dictionary<string, int> Teams { get; set; }
-        public Dictionary<string, int> ArrayAnimals { get; set; }
+        public List<int> CountTimePacket { get; set; } = null!;
+        public List<int> InfoShowed { get; set; } = null!;
+        public Dictionary<string, int> Teams { get; set; } = null!;
+        public Dictionary<string, int> ArrayAnimals { get; set; } = null!;
         public int Strategy { get; set; }
 
         private PlayerState()

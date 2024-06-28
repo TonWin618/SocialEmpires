@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace SocialEmpires.Models
+namespace SocialEmpires.Models.PlayerSaves
 {
     public record class PlayerSave
     {
-        public string Pid { get; set; }
+        public string Pid { get; set; } = null!;
 
-        public PlayerInfo PlayerInfo { get; set; }
+        public PlayerInfo PlayerInfo { get; set; } = null!;
 
-        public List<EmpireMap> Maps { get; set; }
+        public List<EmpireMap> Maps { get; set; } = null!;
 
-        public PlayerState PrivateState { get; set; }
+        public PlayerState PrivateState { get; set; } = null!;
 
         [JsonIgnore]
         [NotMapped]

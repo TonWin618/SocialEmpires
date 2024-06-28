@@ -1,38 +1,39 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SocialEmpires.Models;
+using SocialEmpires.Infrastructure.EmailSender;
 
 namespace SocialEmpires.Controllers
 {
-    [ApiController]
     public class IdentityController : Controller
     {
-        private readonly AppDbContext _appDbContext;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<IdentityController> _logger;
+        private string[] LoginMethods { get; set; } = ["EmailAndPassword", "EmailAndToken"];
 
-        public IdentityController(
-            AppDbContext appDbContext,
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager,
-            ILogger<IdentityController> logger)
+        public IdentityController(ILogger<IdentityController> logger)
         {
-            _appDbContext = appDbContext;
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
             _logger = logger;
         }
 
-        [HttpPost("api/initialize")]
-        public async Task<IActionResult> Initialize(
-            [FromForm] string email,
-            [FromForm] string password)
+        #region Initialize
+        [HttpGet]
+        public IActionResult Initialize()
         {
+            return View();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Initialize(
+            string email,
+            string password,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] RoleManager<IdentityRole> _roleManager)
+        {
+            if(email == null || password == null)
+            {
+                return View("Initialize");
+            }
+
             if (_roleManager.Roles.Any(_ => _.Name == "Admin"))
             {
                 return Redirect("/");
@@ -50,97 +51,268 @@ namespace SocialEmpires.Controllers
             await _userManager.AddToRoleAsync(user, "User");
             await _userManager.AddToRoleAsync(user, "Admin");
 
-            return Redirect("/Login");
+            return View("Login");
         }
+        #endregion
 
-        [HttpPost("api/register")]
-        [Authorize]
-        public async Task<IActionResult> RegisterByEmailAndPassword(
-            [FromForm] string password,
-            [FromForm] string code)
+        #region Login
+        [HttpGet]
+        public IActionResult Login(string? method)
         {
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
-            if (user == null)
+            if (!LoginMethods.Contains(method)) 
             {
-                return Redirect("/Login");
+                method = LoginMethods.First();
             }
-
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (!result.Succeeded)
-            {
-                TempData["ErrorMessage"] = "ConfirmEmailFailed";
-                return Redirect("/Register");
-            }
-
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var resetPasswordResult = await _userManager.ResetPasswordAsync(user, token, password);
-            if (!resetPasswordResult.Succeeded)
-            {
-                TempData["ErrorMessage"] = "PasswordSetFailed";
-                return Redirect("/Register");
-            }
-
-            await _userManager.AddToRoleAsync(user, "User");
-
-            return Redirect("/");
+            ViewData["LoginMethod"] = method;
+            return View();
         }
 
-        [HttpPost("api/login")]
+        [HttpPost]
         public async Task<IActionResult> LoginByEmailAndPassword(
-            [FromForm] string email,
-            [FromForm] string password)
+            string email,
+            string password,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager)
         {
+            ViewData["Email"] = email;
+            ViewData["LoginMethod"] = "EmailAndPassword";
+
+            if (email == null)
+            {
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Login");
+            }
+
+            if (password == null)
+            {
+                ViewData["ErrorMessage"] = "PasswordIsRequired";
+                return View("Login");
+            }
+
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                TempData["ErrorMessage"] = "UserNotFound";
-                return Redirect("/Login");
+                ViewData["ErrorMessage"] = "UserNotFound";
+                return View("Login");
             }
 
             var result = await _signInManager.PasswordSignInAsync(user, password, true, false);
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return Redirect("/");
+                ViewData["ErrorMessage"] = "InvalidPassword";
+                return View("Login");
+            }
+            return Redirect("/");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginByEmailAndToken(
+            string email,
+            string token,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            ViewData["Email"] = email;
+            ViewData["Token"] = token;
+
+            if (email == null)
+            {
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Login");
+            }
+
+            if (token == null)
+            {
+                ViewData["ErrorMessage"] = "TokenIsRequired";
+                return View("Login");
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "UserNotFound";
+                return View("Login");
+            }
+
+            if (!(await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, token)))
+            {
+                ViewData["ErrorMessage"] = "InvalidToken";
+                return View("Login");
+            }
+
+            await _signInManager.SignInAsync(user, true);
+            return Redirect("/");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendLoginTokenEmail(
+            string email,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager,
+            [FromServices] IEmailSender _emailSender)
+        {
+            ViewData["Email"] = email;
+            ViewData["LoginMethod"] = "EmailAndToken";
+
+            if (email == null)
+            {
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Login");
+            }
+
+            IdentityUser? user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "UserNotFound";
+                return View("Login");
+            }
+
+            if (!user.EmailConfirmed)
+            {
+                ViewData["ErrorMessage"] = "EmailNotConfirmed";
+                return View("Login");
+            }
+
+            var token = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider);
+
+            await _emailSender.SendAsync(
+                email,
+                "[Social Empires] Verification code for login",
+                $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+
+            ViewData["SendingInterval"] = 60;
+
+            return View("Login");
+        }
+        #endregion
+
+        #region Register
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Register(
+            string password,
+            string token,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            ViewData["Token"] = token;
+            ViewData["Password"] = password;
+
+            if (token == null)
+            {
+                ViewData["ErrorMessage"] = "TokenIsRequired";
+                return View("Register");
+            }
+
+            if (password == null)
+            {
+                ViewData["ErrorMessage"] = "PasswordIsRequired";
+                return View("Register");
+            }
+
+            if (HttpContext?.User?.Identity?.Name == null)
+            {
+                return View("Register");
+            }
+
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            if (user == null)
+            {
+                return View("Register");
+            }
+
+            var validatePasswordResult = await _userManager.PasswordValidators
+                .First()
+                .ValidateAsync(_userManager, user, password);
+
+            if (!validatePasswordResult.Succeeded)
+            {
+                ViewData["ErrorMessage"] = "PasswordSetFailed";
+                return View("Register");
+            }
+
+            var emailConfrimResult = await _userManager.ConfirmEmailAsync(user, token);
+            if (!emailConfrimResult.Succeeded)
+            {
+                ViewData["ErrorMessage"] = "InvalidToken";
+                return View("Register");
+            }
+
+            await _userManager.ResetPasswordAsync(
+                user, 
+                await _userManager.GeneratePasswordResetTokenAsync(user), 
+                password);
+
+            await _userManager.AddToRoleAsync(user, "User");
+            await _userManager.SetTwoFactorEnabledAsync(user, true);
+
+            await _signInManager.SignOutAsync();
+
+            ViewData["Email"] = user.Email;
+            return View("Login");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendEmailConfirmationEmail(
+            string email,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager,
+            [FromServices] IEmailSender _emailSender)
+        {
+            ViewData["Email"] = email;
+
+            if (email == null)
+            {
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Register");
+            }
+
+            IdentityUser? user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                user = new IdentityUser()
+                {
+                    Email = email
+                };
+                user.UserName = user.Id.ToString();
+                var result = await _userManager.CreateAsync(user, Guid.NewGuid().ToString());
+                if (!result.Succeeded)
+                {
+                    ViewData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
+                    return View("Register");
+                }
+
+                await _signInManager.SignInAsync(user, isPersistent: true);
+                return View("Register");
             }
             else
             {
-                ViewData["ErrorMessage"] = "InvalidPassword";
-                return Redirect("/Login");
-            }
-        }
-
-        [HttpPost("api/sendEmailConfirmationEmail")]
-        public async Task<IActionResult> SendEmailConfirmationEmail(
-            [FromForm] string email)
-        {
-            if (HttpContext.User.Identity.Name != null)
-            {
-                var loginUser = await _userManager.FindByIdAsync(HttpContext.User.Identity.Name);
-                if (loginUser.EmailConfirmed)
+                if (user.EmailConfirmed)
                 {
-                    return Redirect("/Privacy");
+                    ViewData["ErrorMessage"] = "UserExisted";
+                    return View("Login");
                 }
+
+                await _signInManager.SignInAsync(user, isPersistent: true);
+
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                await _emailSender.SendAsync(
+                    email,
+                    "[Social Empires] Verification code for register",
+                    $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+
+                ViewData["SendingInterval"] = 60;
+                return View("Register");
             }
-
-            var user = new IdentityUser()
-            {
-                Email = email
-            };
-            user.UserName = user.Id.ToString();
-            var result = await _userManager.CreateAsync(user, Guid.NewGuid().ToString());
-
-            if (!result.Succeeded)
-            {
-                TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
-                return Redirect("/Register");
-            }
-
-            await _signInManager.SignInAsync(user, isPersistent: true);
-
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            _logger.LogInformation($"Confirmation token for {user.Id}: {token}");
-            TempData["SendingInterval"] = 60;
-            return Redirect("/Register");
         }
+
+        #endregion
     }
 }

@@ -1,31 +1,31 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace SocialEmpires.Models;
+namespace SocialEmpires.Models.PlayerSaves;
 
 public class PlayerInfo
 {
     /// <summary>
     /// player id
     /// </summary>
-    public string Pid { get; set; }
+    public string Pid { get; set; } = null!;
 
     /// <summary>
     /// player name
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// player avatar
     /// </summary>
-    public string Pic { get; set; }
+    public string Pic { get; set; } = null!;
 
     public int Cash { get; set; }
     public int CompletedTutorial { get; set; }
 
     public int DefaultMap { get; set; }
-    public List<string> MapNames { get; set; }
-    public List<int> MapSizes { get; set; }
+    public List<string> MapNames { get; set; } = null!;
+    public List<int> MapSizes { get; set; } = null!;
 
     public int WorldId { get; set; }
     public long LastLoggedIn { get; set; }

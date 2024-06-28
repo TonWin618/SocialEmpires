@@ -265,5 +265,60 @@ namespace SocialEmpires.Models.Configs
         /// </summary>
         public string? IphoneAdjustments { get; set; }
         #endregion
+
+        public Item(string id, string inStore, string name, string type, string cost, string costType, int xp, string? groups, string trains, string upgradesTo, string displayOrder, string activation, string expiration, string collect, string collectType, string collectXp, string categoryId, string subcategoryId, string subcatFunctional, string minLevel, string width, string height, string maxFrame, string giftable, string imgName, string elevation, string unitCapacity, string attack, string defense, string life, string velocity, string attackRange, string attackInterval, string newItem, string population, string giftLevel, string costUnitCash, string race, string flying, string protect, string potion, string achievement, string? achievementDesc, string unitsLimit, string? storeGroups, string storeLevel, string size, string showOnMobile, string showOnMobileStore, string onlyMobile, string? iphoneAdjustments)
+        {
+            Id = id;
+            InStore = inStore;
+            Name = name;
+            Type = type;
+            Cost = cost;
+            CostType = costType;
+            Xp = xp;
+            Groups = groups;
+            Trains = trains;
+            UpgradesTo = upgradesTo;
+            DisplayOrder = displayOrder;
+            Activation = activation;
+            Expiration = expiration;
+            Collect = collect;
+            CollectType = collectType;
+            CollectXp = collectXp;
+            CategoryId = categoryId;
+            SubcategoryId = subcategoryId;
+            SubcatFunctional = subcatFunctional;
+            MinLevel = minLevel;
+            Width = width;
+            Height = height;
+            MaxFrame = maxFrame;
+            Giftable = giftable;
+            ImgName = imgName;
+            Elevation = elevation;
+            UnitCapacity = unitCapacity;
+            Attack = attack;
+            Defense = defense;
+            Life = life;
+            Velocity = velocity;
+            AttackRange = attackRange;
+            AttackInterval = attackInterval;
+            NewItem = newItem;
+            Population = population;
+            GiftLevel = giftLevel;
+            CostUnitCash = costUnitCash;
+            Race = race;
+            Flying = flying;
+            Protect = protect;
+            Potion = potion;
+            Achievement = achievement;
+            AchievementDesc = achievementDesc;
+            UnitsLimit = unitsLimit;
+            StoreGroups = storeGroups;
+            StoreLevel = storeLevel;
+            Size = size;
+            ShowOnMobile = showOnMobile;
+            ShowOnMobileStore = showOnMobileStore;
+            OnlyMobile = onlyMobile;
+            IphoneAdjustments = iphoneAdjustments;
+        }
     }
 }

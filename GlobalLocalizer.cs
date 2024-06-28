@@ -1,4 +1,7 @@
-﻿public class GlobalLocalizer
+﻿namespace SocialEmpires
 {
+    public class GlobalLocalizer
+    {
 
+    }
 }

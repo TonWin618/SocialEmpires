@@ -1,0 +1,141 @@
+﻿@using SocialEmpires.Models.Configs
+@using SocialEmpires.Services
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Authorization
+@using SocialEmpires.Utils
+@attribute [Authorize(Roles = "Admin")]
+@inject ConfigFileService configFileService
+@inject IViewLocalizer localizer
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = localizer["Items"];
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<Item>;
+}
+
+<table width="100%" class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>@localizer["Id"]</th>
+            <th>@localizer["Name"]</th>
+            <th>@localizer["Cost"]</th>
+            <th>@localizer["Trains"]</th>
+            <th>@localizer["Category"]</th>
+            <th>@localizer["Properties"] (l/v/a/i/r)</th>
+            <th>@localizer["Others"]</th>
+            <th>@localizer["Operation"]</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (pageData == null)
+            {
+                return;
+            }
+            foreach (var item in pageData)
+            {
+                <tr>
+                    <td>
+                        <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/>
+                    </td>
+                    <td>@($"[{item.Type}] {item.Id}")</td>
+                    <td>@item.Name</td>
+                    <td>@item.CostType @item.Cost</td>
+                    <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
+                    <td>@item.CategoryId : @item.SubcategoryId</td>
+                    <td>@($"{item.Life.ToString().PadLeft(5, '_')} | {item.Velocity.ToString().PadLeft(2, '_')} | {item.Attack.ToString().PadLeft(4, '_')} | {item.AttackInterval.ToString().PadLeft(3, '_')} | {item.AttackRange.ToString().PadLeft(3, '_')}")</td>
+                    <td>
+                        @(item.Flying == "1" ? "■Fly" : "")
+                        @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
+                        @(item.OnlyMobile == "1" ? $"■Mobile" : "")
+                        @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
+                        @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" onclick="openItemDetail(@item.Id)">@localizer["Edit"]</button>
+                        <div class="btn-group" role="group">
+                            <form asp-action="ShelveItem" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-warning" disabled="@(item.InStore!="0")">@localizer["Shelve"]</button>
+                            </form>
+                            <form asp-action="UnshelveItem" asp-route-id="@item.Id">
+                                <button type="submit" class="btn btn-warning" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
+        }
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div id="itemDetailDiv">
+    <button onclick="closeItemDetail()">X</button>
+    <div>
+        <iframe id="itemDetailFrame" onload="resizeIframe(this)">
+        </iframe>
+    </div>
+</div>
+
+<script>
+    function openItemDetail(id) {
+        document.getElementById("itemDetailDiv").style.display = "block";
+        document.getElementById("itemDetailFrame").src = `/admin/item?id=${id}`;
+    }
+
+    function closeItemDetail() {
+        document.getElementById("itemDetailDiv").style.display = "none";
+    }
+
+    function resizeIframe(iframe) {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+        iframe.style.width = iframe.contentWindow.document.body.scrollWidth + 'px';
+    }
+
+    closeItemDetail();
+</script>
+
+<style>
+    #itemDetailDiv {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 34%;
+        top: 5%;
+        width: 42%;
+        height: 90%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background:#ffffff;
+        border:2px solid black;
+    }
+
+    #itemDetailFrame{
+    }
+</style>
