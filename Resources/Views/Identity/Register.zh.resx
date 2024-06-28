@@ -138,4 +138,7 @@
   <data name="Token" xml:space="preserve">
     <value>验证码</value>
   </data>
+  <data name="GoToLogin" xml:space="preserve">
+    <value>直接登陆</value>
+  </data>
 </root>

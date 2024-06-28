@@ -138,4 +138,7 @@
   <data name="Token" xml:space="preserve">
     <value>Verification code</value>
   </data>
+  <data name="GoToLogin" xml:space="preserve">
+    <value>Go to log in</value>
+  </data>
 </root>

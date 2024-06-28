@@ -17,17 +17,21 @@
                 <label>@localizer["Token"]</label>
                 <input type="text" class="form-control" name="code" value="@ViewData["Token"]" />
             </div>
+            @if (ViewData["ErrorMessage"] != null)
+            {
+                <p>@localizer[ViewData["ErrorMessage"].ToString()]</p>
+            }
             <div class="form-group">
                 <label>@localizer["Password"]</label>
                 <input type="password" class="form-control" name="password" />
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">@localizer["Register"]</button>
         </form>
-        @if (ViewData["ErrorMessage"] != null)
-        {
-            <p>@localizer[ViewData["ErrorMessage"].ToString()]</p>
-        }
+        <div style="text-align:right;margin-top:10px">
+            <a class="link-underline-light" asp-action="Login">@localizer["GoToLogin"]</a>
+        </div>
     </div>
+
 
     <script>
         var button = document.getElementById("SendEmailButton");
