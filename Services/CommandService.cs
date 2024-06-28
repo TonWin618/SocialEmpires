@@ -31,6 +31,7 @@ namespace SocialEmpires.Services
         {
             foreach (var command in commands)
             {
+                _logger.LogInformation($"[{userId}][{command.Cmd}]{JsonSerializer.Serialize(command.Args)}");
                 await HandleCommand(userId, command.Cmd, command.Args);
             }
         }
@@ -211,9 +212,32 @@ namespace SocialEmpires.Services
             {
                 HandleActivateDragonCommand(save, args);
             }
+            else if(cmd == CommandNames.ACTIVATE)
+            {
+                HandleActiveCommand(save, args);
+            }
             else
             {
                 _logger.LogWarning($"Unknown command: {cmd}");
+            }
+        }
+
+        private void HandleActiveCommand(PlayerSave save, JsonElement[] args)
+        {
+            var itemX = args[0].GetInt32();
+            var itemY = args[1].GetInt32();
+            var townId = args[2].GetInt32();
+            var itemId = args[3].GetInt32();
+            var time = args[4].GetInt32();
+
+            var item = save.Maps[townId].Items.FirstOrDefault(_ => _.X == itemX && _.Y == itemY);
+            if (item.Attributes.ContainsKey("cp"))
+            {
+                item.Attributes["cp"] = time;
+            }
+            else
+            {
+                item.Attributes.Add("cp", time);
             }
         }
 
@@ -420,28 +444,19 @@ namespace SocialEmpires.Services
 
         private void HandleAdminAddAnimalCommand(PlayerSave save, JsonElement[] args)
         {
-            var subcatFunc = args[0].GetString();
+            var subcatFunc = args[0].GetInt32().ToString();
             var toBeAdded = args[1].GetInt32();
 
-            var itemsDictSubcatFunctionalToIndex = _configFileService.Items
-                .Select((item, index) => new { item.SubcatFunctional, index })
-                .ToDictionary(x => x.SubcatFunctional, x => x.index);
-
-            Item? item = null;
-
-            if (itemsDictSubcatFunctionalToIndex.TryGetValue(subcatFunc, out int index))
-            {
-                item = index >= 0 && index < _configFileService.Items.Count ? _configFileService.Items[index] : null;
-            }
-
-            _logger.LogInformation($"Added {toBeAdded} {item.Name}");
-
             var oAnimals = save.PrivateState.ArrayAnimals;
-            if (!oAnimals.ContainsKey(subcatFunc))
+            
+            if (oAnimals.ContainsKey(subcatFunc))
             {
-                oAnimals[subcatFunc] = 0;
+                oAnimals[subcatFunc] = toBeAdded + oAnimals[subcatFunc];
             }
-            oAnimals[subcatFunc] += toBeAdded;
+            else
+            {
+                oAnimals.Add(subcatFunc, toBeAdded);
+            }
         }
 
         private void HandleWinBonusCommand(PlayerSave save, JsonElement[] args)

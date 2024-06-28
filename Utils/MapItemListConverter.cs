@@ -29,7 +29,8 @@ namespace SocialEmpires.Utils
                 {
                     foreach (var attribute in item.Attributes)
                     {
-                        JsonSerializer.Serialize(writer, attribute, options);
+                        writer.WritePropertyName(attribute.Key);
+                        writer.WriteNumberValue(attribute.Value);
                     }
                 }
                 writer.WriteEndObject();

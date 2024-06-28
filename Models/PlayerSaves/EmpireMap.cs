@@ -122,9 +122,9 @@ namespace SocialEmpires.Models
         public long Timestamp { get; set; }
         public int Level { get; set; }
         public List<int>? Units { get; set; }
-        public object[]? Attributes { get; set; }
+        public Dictionary<string, int>? Attributes { get; set; }
 
-        public MapItem(int id, int x, int y, int orientation, long timestamp, int level, List<int>? units = null, object[]? attributes = null)
+        public MapItem(int id, int x, int y, int orientation, long timestamp, int level, List<int>? units = null, Dictionary<string, int>? attributes = null)
         {
             Id = id;
             X = x;
@@ -132,8 +132,8 @@ namespace SocialEmpires.Models
             Orientation = orientation;
             Timestamp = timestamp;
             Level = level;
-            Units = units;
-            Attributes = attributes;
+            Units = units ?? new();
+            Attributes = attributes ?? new Dictionary<string, int>();
         }
 
         public bool Equals(MapItem? other)
