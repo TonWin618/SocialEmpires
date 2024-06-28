@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace SocialEmpires.Models
+namespace SocialEmpires.Models.PlayerSaves
 {
     public class EmpireMap
     {
@@ -148,8 +148,8 @@ namespace SocialEmpires.Models
                        Orientation == other.Orientation &&
                        Timestamp == other.Timestamp &&
                        Level == other.Level &&
-                       (Units == other.Units || (Units != null && other.Units != null && Units.SequenceEqual(other.Units))) &&
-                       (Attributes == other.Attributes || (Attributes != null && other.Attributes != null && Attributes.SequenceEqual(other.Attributes)));
+                       (Units == other.Units || Units != null && other.Units != null && Units.SequenceEqual(other.Units)) &&
+                       (Attributes == other.Attributes || Attributes != null && other.Attributes != null && Attributes.SequenceEqual(other.Attributes));
         }
 
         public override bool Equals(object? obj) => Equals(obj as MapItem);
