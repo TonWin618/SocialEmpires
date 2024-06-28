@@ -29,6 +29,11 @@ namespace SocialEmpires.Controllers
             [FromServices] UserManager<IdentityUser> _userManager,
             [FromServices] RoleManager<IdentityRole> _roleManager)
         {
+            if(email == null || password == null)
+            {
+                return View("Initialize");
+            }
+
             if (_roleManager.Roles.Any(_ => _.Name == "Admin"))
             {
                 return Redirect("/");
@@ -192,12 +197,24 @@ namespace SocialEmpires.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(
             string password,
-            string code,
+            string token,
             [FromServices] UserManager<IdentityUser> _userManager,
             [FromServices] SignInManager<IdentityUser> _signInManager)
         {
-            ViewData["Code"] = code;
+            ViewData["Token"] = token;
             ViewData["Password"] = password;
+
+            if (token == null)
+            {
+                ViewData["ErrorMessage"] = "TokenIsRequired";
+                return View("Register");
+            }
+
+            if (password == null)
+            {
+                ViewData["ErrorMessage"] = "PasswordIsRequired";
+                return View("Register");
+            }
 
             if (HttpContext?.User?.Identity?.Name == null)
             {
@@ -220,7 +237,7 @@ namespace SocialEmpires.Controllers
                 return View("Register");
             }
 
-            var emailConfrimResult = await _userManager.ConfirmEmailAsync(user, code);
+            var emailConfrimResult = await _userManager.ConfirmEmailAsync(user, token);
             if (!emailConfrimResult.Succeeded)
             {
                 ViewData["ErrorMessage"] = "InvalidToken";

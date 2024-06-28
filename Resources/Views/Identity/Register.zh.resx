@@ -141,4 +141,10 @@
   <data name="GoToLogin" xml:space="preserve">
     <value>直接登陆</value>
   </data>
+  <data name="PasswordIsRequired" xml:space="preserve">
+    <value>请输入密码</value>
+  </data>
+  <data name="TokenIsRequired" xml:space="preserve">
+    <value>请输入验证码</value>
+  </data>
 </root>

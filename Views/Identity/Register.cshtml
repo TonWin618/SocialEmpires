@@ -15,7 +15,7 @@
         <form asp-action="Register" method="post">
             <div class="form-group">
                 <label>@localizer["Token"]</label>
-                <input type="text" class="form-control" name="code" value="@ViewData["Token"]" />
+                <input type="text" class="form-control" name="token" value="@ViewData["Token"]" />
             </div>
             @if (ViewData["ErrorMessage"] != null)
             {
