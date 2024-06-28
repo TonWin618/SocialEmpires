@@ -5,17 +5,17 @@
 }
 <body>
     <div style="max-width:400px;margin:auto;">
-        <form action="api/sendEmailConfirmationEmail" method="post">
-            <label>@localizer["Email Address"]</label>
+        <form asp-action="SendEmailConfirmationEmail" method="post">
+            <label>@localizer["EmailAddress"]</label>
             <div class="input-group">
-                <input type="email" class="form-control" name="email" />
+                <input type="email" class="form-control" name="email" value="@ViewData["Email"]"/>
                 <button id="SendEmailButton" class="btn btn-primary" type="submit" disabled>@localizer["SendAuthCode"]</button>
             </div>
         </form>
-        <form action="api/register" method="post">
+        <form asp-action="Register" method="post">
             <div class="form-group">
                 <label>@localizer["Code"]</label>
-                <input type="text" class="form-control" name="code" />
+                <input type="text" class="form-control" name="code" value="@ViewData["Code"]" />
             </div>
             <div class="form-group">
                 <label>@localizer["Password"]</label>
@@ -23,16 +23,16 @@
             </div>
             <button type="submit" class="btn btn-primary" style="width:100%;margin-top:20px;">@localizer["Register"]</button>
         </form>
-        @if (TempData["ErrorMessage"] != null)
+        @if (ViewData["ErrorMessage"] != null)
         {
-            <p>@localizer[TempData["ErrorMessage"].ToString()]</p>
+            <p>@localizer[ViewData["ErrorMessage"].ToString()]</p>
         }
     </div>
 
     <script>
         var button = document.getElementById("SendEmailButton");
 
-        if (@(TempData["SendingInterval"]??"null") == null) {
+        if (@(ViewData["SendingInterval"]??"null") == null) {
             button.textContent = "@localizer["SendAuthCode"]";
             button.disabled = false;
         }else{
@@ -47,7 +47,7 @@
                     clearInterval(timer);
                 }
             }
-            var countdownValue = @(TempData["SendingInterval"]??0);
+            var countdownValue = @(ViewData["SendingInterval"]??0);
             var timer = setInterval(countdown, 1000);
         }
     </script>

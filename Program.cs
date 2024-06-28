@@ -13,7 +13,8 @@ var config = builder.Configuration;
 
 services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
 
-services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
+//services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
+services.AddControllersWithViews();
 
 services.AddDbContext<AppDbContext>(options =>
 {
@@ -98,7 +99,10 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+
 app.MapControllers();
-app.MapRazorPages();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Game}/{action=Index}");
 
 app.Run();

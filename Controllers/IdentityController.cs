@@ -5,20 +5,27 @@ using SocialEmpires.Infrastructure.EmailSender;
 
 namespace SocialEmpires.Controllers
 {
-    [ApiController]
     public class IdentityController : Controller
     {
         private readonly ILogger<IdentityController> _logger;
+        private string[] LoginMethods { get; set; } = ["EmailAndPassword", "EmailAndToken"];
 
         public IdentityController(ILogger<IdentityController> logger)
         {
             _logger = logger;
         }
 
-        [HttpPost("api/initialize")]
+        #region Initialize
+        [HttpGet]
+        public IActionResult Initialize()
+        {
+            return View();
+        }
+        
+        [HttpPost]
         public async Task<IActionResult> Initialize(
-            [FromForm] string email,
-            [FromForm] string password,
+            string email,
+            string password,
             [FromServices] UserManager<IdentityUser> _userManager,
             [FromServices] RoleManager<IdentityRole> _roleManager)
         {
@@ -39,29 +46,168 @@ namespace SocialEmpires.Controllers
             await _userManager.AddToRoleAsync(user, "User");
             await _userManager.AddToRoleAsync(user, "Admin");
 
-            return Redirect("/Login");
+            return View("Login");
+        }
+        #endregion
+
+        #region Login
+        [HttpGet]
+        public IActionResult Login(string? method)
+        {
+            if (!LoginMethods.Contains(method)) 
+            {
+                method = LoginMethods.First();
+            }
+            ViewData["LoginMethod"] = method;
+            return View();
         }
 
-        [Authorize]
-        [HttpPost("api/register")]
-        public async Task<IActionResult> RegisterByEmailAndPassword(
-            [FromForm] string password,
-            [FromForm] string code,
+        [HttpPost]
+        public async Task<IActionResult> LoginByEmailAndPassword(
+            string email,
+            string password,
             [FromServices] UserManager<IdentityUser> _userManager,
             [FromServices] SignInManager<IdentityUser> _signInManager)
         {
-            TempData["Code"] = code;
-            TempData["Password"] = password;
+            ViewData["Email"] = email;
+            ViewData["LoginMethod"] = "EmailAndPassword";
+
+            if (email == null)
+            {
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Login");
+            }
+
+            if (password == null)
+            {
+                ViewData["ErrorMessage"] = "PasswordIsRequired";
+                return View("Login");
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "UserNotFound";
+                return View("Login");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user, password, true, false);
+            if (!result.Succeeded)
+            {
+                ViewData["ErrorMessage"] = "InvalidPassword";
+                return View("Login");
+            }
+            return Redirect("/");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginByEmailAndToken(
+            string email,
+            string token,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            ViewData["Email"] = email;
+            ViewData["Token"] = token;
+
+            if (email == null)
+            {
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Login");
+            }
+
+            if (token == null)
+            {
+                ViewData["ErrorMessage"] = "TokenIsRequired";
+                return View("Login");
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "UserNotFound";
+                return View("Login");
+            }
+
+            if (!(await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, token)))
+            {
+                ViewData["ErrorMessage"] = "InvalidAuthCode";
+                return View("Login");
+            }
+
+            await _signInManager.SignInAsync(user, true);
+            return Redirect("/");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendLoginTokenEmail(
+            string email,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager,
+            [FromServices] IEmailSender _emailSender)
+        {
+            ViewData["Email"] = email;
+            ViewData["LoginMethod"] = "EmailAndToken";
+
+            if (email == null)
+            {
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Login");
+            }
+
+            IdentityUser? user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "UserNotFound";
+                return View("Login");
+            }
+
+            if (!user.EmailConfirmed)
+            {
+                ViewData["ErrorMessage"] = "EmailNotConfirmed";
+                return View("Login");
+            }
+
+            var token = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider);
+
+            await _emailSender.SendAsync(
+                email,
+                "[Social Empires] Verification code for login",
+                $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+
+            ViewData["SendingInterval"] = 60;
+
+            return View("Login");
+        }
+        #endregion
+
+        #region Register
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Register(
+            string password,
+            string code,
+            [FromServices] UserManager<IdentityUser> _userManager,
+            [FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            ViewData["Code"] = code;
+            ViewData["Password"] = password;
 
             if (HttpContext?.User?.Identity?.Name == null)
             {
-                return Redirect("/Register");
+                return View("Register");
             }
 
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             if (user == null)
             {
-                return Redirect("/Register");
+                return View("Register");
             }
 
             var validatePasswordResult = await _userManager.PasswordValidators
@@ -70,15 +216,15 @@ namespace SocialEmpires.Controllers
 
             if (!validatePasswordResult.Succeeded)
             {
-                TempData["ErrorMessage"] = "PasswordSetFailed";
-                return Redirect("/Register");
+                ViewData["ErrorMessage"] = "PasswordSetFailed";
+                return View("Register");
             }
 
             var emailConfrimResult = await _userManager.ConfirmEmailAsync(user, code);
             if (!emailConfrimResult.Succeeded)
             {
-                TempData["ErrorMessage"] = "InvalidAuthCode";
-                return Redirect("/Register");
+                ViewData["ErrorMessage"] = "InvalidAuthCode";
+                return View("Register");
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -89,102 +235,23 @@ namespace SocialEmpires.Controllers
 
             await _signInManager.SignOutAsync();
 
-            return Redirect("/Login");
+            ViewData["Email"] = user.Email;
+            return View("Login");
         }
 
-        [HttpPost("api/loginByEmailAndPassword")]
-        public async Task<IActionResult> LoginByEmailAndPassword(
-            [FromForm] string email,
-            [FromForm] string password,
-            [FromServices] UserManager<IdentityUser> _userManager,
-            [FromServices] SignInManager<IdentityUser> _signInManager)
-        {
-            TempData["Email"] = email;
-
-            if (email == null)
-            {
-                TempData["ErrorMessage"] = "EmailIsRequired";
-                return Redirect("/Login");
-            }
-
-            if (password == null)
-            {
-                TempData["ErrorMessage"] = "PasswordIsRequired";
-                return Redirect("/Login");
-            }
-
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                TempData["ErrorMessage"] = "UserNotFound";
-                return Redirect("/Login");
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(user, password, true, false);
-            if (result.Succeeded)
-            {
-                return Redirect("/");
-            }
-            else
-            {
-                ViewData["ErrorMessage"] = "InvalidPassword";
-                return Redirect("/Login");
-            }
-        }
-
-        [HttpPost("api/loginByEmailAndToken")]
-        public async Task<IActionResult> LoginByEmailAndToken(
-            [FromForm] string email,
-            [FromForm] string token,
-            [FromServices] UserManager<IdentityUser> _userManager,
-            [FromServices] SignInManager<IdentityUser> _signInManager)
-        {
-            TempData["Email"] = email;
-            TempData["Token"] = token;
-
-            if (email == null)
-            {
-                TempData["ErrorMessage"] = "EmailIsRequired";
-                return Redirect("/TokenLogin");
-            }
-
-            if (token == null)
-            {
-                TempData["ErrorMessage"] = "TokenIsRequired";
-                return Redirect("/TokenLogin");
-            }
-
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                TempData["ErrorMessage"] = "UserNotFound";
-                return Redirect("/TokenLogin");
-            }
-            
-            var result = await _userManager.VerifyTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider, token);
-            if (result)
-            {
-                await _signInManager.SignInAsync(user, true);
-                return Redirect("/");
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "InvalidAuthCode";
-                return Redirect("/TokenLogin");
-            }
-        }
-
-        [HttpPost("api/sendEmailConfirmationEmail")]
+        [HttpPost]
         public async Task<IActionResult> SendEmailConfirmationEmail(
-            [FromForm] string email,
+            string email,
             [FromServices] UserManager<IdentityUser> _userManager,
             [FromServices] SignInManager<IdentityUser> _signInManager,
             [FromServices] IEmailSender _emailSender)
         {
+            ViewData["Email"] = email;
+
             if (email == null)
             {
-                TempData["ErrorMessage"] = "EmailIsRequired";
-                return Redirect("/Register");
+                ViewData["ErrorMessage"] = "EmailIsRequired";
+                return View("Register");
             }
 
             IdentityUser? user = await _userManager.FindByEmailAsync(email);
@@ -198,19 +265,19 @@ namespace SocialEmpires.Controllers
                 var result = await _userManager.CreateAsync(user, Guid.NewGuid().ToString());
                 if (!result.Succeeded)
                 {
-                    TempData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
-                    return Redirect("/Register");
+                    ViewData["ErrorMessage"] = string.Join('\n', result.Errors.Select(_ => _.Description));
+                    return View("Register");
                 }
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                return Redirect("/Register");
+                return View("Register");
             }
             else
             {
                 if (user.EmailConfirmed)
                 {
-                    TempData["ErrorMessage"] = "UserExisted";
-                    return Redirect("/Login");
+                    ViewData["ErrorMessage"] = "UserExisted";
+                    return View("Login");
                 }
 
                 await _signInManager.SignInAsync(user, isPersistent: true);
@@ -223,48 +290,11 @@ namespace SocialEmpires.Controllers
                     "[Social Empires] Verification code for register",
                     $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
 
-                TempData["SendingInterval"] = 60;
-                return Redirect("/Register");
+                ViewData["SendingInterval"] = 60;
+                return View("Register");
             }
         }
 
-        [HttpPost("api/sendLoginTokenEmail")]
-        public async Task<IActionResult> SendLoginTokenEmail(
-            [FromForm] string email,
-            [FromServices] UserManager<IdentityUser> _userManager,
-            [FromServices] SignInManager<IdentityUser> _signInManager,
-            [FromServices] IEmailSender _emailSender)
-        {
-            if (email == null) 
-            {
-                TempData["ErrorMessage"] = "EmailIsRequired";
-                return Redirect("/TokenLogin");
-            }
-            TempData["Email"] = email;
-
-            IdentityUser? user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                TempData["ErrorMessage"] = "UserNotFound";
-                return Redirect("/TokenLogin");
-            }
-
-            if (!user.EmailConfirmed)
-            {
-                TempData["ErrorMessage"] = "EmailNotConfirmed";
-                return Redirect("/TokenLogin");
-            }
-
-            var token = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultPhoneProvider);
-
-            await _emailSender.SendAsync(
-                email,
-                "[Social Empires] Verification code for login",
-                $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
-
-            TempData["SendingInterval"] = 60;
-
-            return Redirect("/TokenLogin");
-        }
+        #endregion
     }
 }

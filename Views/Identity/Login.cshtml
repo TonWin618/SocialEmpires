@@ -2,34 +2,96 @@
 @inject IViewLocalizer localizer
 @{
     ViewData["Title"] = localizer["Login"];
+    var loginMethod = ViewData["LoginMethod"] as string;
 }
 
 <div style="max-width:400px;margin:auto;">
-    <form action="api/loginByEmailAndPassword" method="post">
-        <div class="form-group">
-            <label>@localizer["EmailAddress"]</label>
-            <input type="email" class="form-control" name="email" value="@TempData["Email"]" />
-        </div>
-        <div class="form-group">
-            <label>@localizer["Password"]</label>
-            <input type="password" class="form-control" name="password" />
-        </div>
-        <div class="form-group">
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <p>@localizer[TempData["ErrorMessage"]?.ToString()!]</p>
-            }
-        </div>
-        <div style="display:flex;justify-content:space-between;margin-top:10px;text-align:center;">
-            <div>
-                <input class="form-check-input" type="checkbox" value="" name="rememberMe" checked>
-                <label class="form-check-label" for="flexCheckChecked">@localizer["RememberMe"]</label>
-            </div>
-            <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="/TokenLogin">@localizer["LoginWithToken"]</a>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:10px;">@localizer["Login"]</button>
-    </form>
+    @{
+        if(loginMethod == "EmailAndToken")
+        {
+            <form asp-action="SendLoginTokenEmail" method="post">
+                <label>@localizer["EmailAddress"]</label>
+                <div class="input-group">
+                    <input type="email" class="form-control" name="email" value="@ViewData["Email"]" />
+                    <button id="SendEmailButton" class="btn btn-primary" type="submit" disabled>@localizer["SendAuthCode"]</button>
+                </div>
+            </form>
+            <form asp-action="LoginByEmailAndToken" method="post">
+                <div class="form-group" style="display:none">
+                    <label>@localizer["EmailAddress"]</label>
+                    <input type="email" class="form-control" name="email" value="@ViewData["Email"]" />
+                </div>
+                <div class="form-group">
+                    <label>@localizer["AuthCode"]</label>
+                    <input type="text" class="form-control" name="token" value="@ViewData["Token"]" />
+                </div>
+                <div class="form-group">
+                    @if (ViewData["ErrorMessage"] != null)
+                    {
+                        <p>@localizer[ViewData["ErrorMessage"]?.ToString()!]</p>
+                    }
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px;text-align:center;">
+                    <div>
+                        <input class="form-check-input" type="checkbox" value="" name="rememberMe" checked>
+                        <label class="form-check-label" for="flexCheckChecked">@localizer["RememberMe"]</label>
+                    </div>
+                    <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" asp-action="Login" asp-route-method="EmailAndPassword">@localizer["LoginByEmailAndPassword"]</a>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:10px;">@localizer["Login"]</button>
+            </form>
+            <script>
+                var button = document.getElementById("SendEmailButton");
+
+                if (@(ViewData["SendingInterval"] ?? "null") == null) {
+                    button.textContent = "@localizer["SendAuthCode"]";
+                    button.disabled = false;
+                } else {
+                    function countdown() {
+                        if (countdownValue > 0) {
+                            countdownValue--;
+                            button.textContent = "Wait " + countdownValue + "s";
+                        }
+                        else {
+                            button.disabled = false;
+                            button.textContent = "Send";
+                            clearInterval(timer);
+                        }
+                    }
+                    var countdownValue = @(ViewData["SendingInterval"] ?? 0);
+                    var timer = setInterval(countdown, 1000);
+                }
+            </script>
+        }
+        else
+        {
+            <form asp-action="LoginByEmailAndPassword" method="post">
+                <div class="form-group">
+                    <label>@localizer["EmailAddress"]</label>
+                    <input type="email" class="form-control" name="email" value="@ViewData["Email"]" />
+                </div>
+                <div class="form-group">
+                    <label>@localizer["Password"]</label>
+                    <input type="password" class="form-control" name="password" />
+                </div>
+                <div class="form-group">
+                    @if (ViewData["ErrorMessage"] != null)
+                    {
+                        <p>@localizer[ViewData["ErrorMessage"]?.ToString()!]</p>
+                    }
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px;text-align:center;">
+                    <div>
+                        <input class="form-check-input" type="checkbox" value="" name="rememberMe" checked>
+                        <label class="form-check-label" for="flexCheckChecked">@localizer["RememberMe"]</label>
+                    </div>
+                    <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" asp-action="Login" asp-route-method="EmailAndToken">@localizer["LoginByEmailAndToken"]</a>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;margin-top:10px;">@localizer["Login"]</button>
+            </form>
+        }
+    }
     <div style="text-align:right;margin-top:10px">
-        <a class="link-underline-light" href="/Register">@localizer["RegisterNow"]</a>
+        <a class="link-underline-light" asp-action="Register">@localizer["RegisterNow"]</a>
     </div>
 </div>
