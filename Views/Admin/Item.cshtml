@@ -1,13 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Models.Configs
 @using SocialEmpires.Services
 @attribute [Authorize(Roles = "Admin")]
 @inject ConfigFileService configFileService
 @inject IViewLocalizer localizer
 @{
     Layout = null;
-    var id = @ViewData["Id"] as string;
-    var item = configFileService.GetItem(id);
+    var item = ViewData["Item"] as Item;
     if(item == null)
     {
         return;
@@ -15,7 +15,7 @@
 }
 
 <div style="background-color:#FFFFFF;width:100%;">
-    <form action="/api/admin/config/items/@item.Id" method="post">
+    <form asp-action="UpdateItem" method="post">
         <div class="section">
             <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="60" height="60" />
             <div>
