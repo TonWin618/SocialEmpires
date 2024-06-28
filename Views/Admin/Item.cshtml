@@ -6,7 +6,7 @@
 @inject IViewLocalizer localizer
 @{
     Layout = null;
-    var id = Request.Query["id"][0] ?? "1";
+    var id = @ViewData["Id"] as string;
     var item = configFileService.GetItem(id);
     if(item == null)
     {

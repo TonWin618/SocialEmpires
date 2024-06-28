@@ -12,7 +12,7 @@
                     &staticUrl=http://localhost:5146/default01.static.socialpointgames.com/static/socialempires/&brk=0
                     &dynamicUrl=http://localhost:5146/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/&brk=0
                     &skiphash12341=notnull&brk=0
-                    &fb_sig_user=@(HttpContext.User.Identity.Name)&brk=0
+                    &fb_sig_user=@ViewData["UserId"]&brk=0
                     &user_key=123456789&brk=0
                     &language=en&brk=0
                     &accessToken=AAABbZAm0wdMUBALsOrR0Ho68CLjaOT8SV3vftKg9mbo1zZColaW5FljRVaLxPGxXXnm1M98mTZCAttcQ4GHwvSyXfsyxYmvKMH8Hmn5iliSPnjvIsZA6&brk=0
@@ -20,7 +20,7 @@
                     &lastLoggedIn=1349266517&brk=0
                     &dailyBonus=0&brk=0
                     &friendsInfo=[]&brk=0
-                    &serverTime=@(DateTimeOffset.Now.ToUnixTimeMilliseconds())&brk=0
+                    &serverTime=@ViewData["DateTime"]&brk=0
                     &forceSyncError=1&brk=0
                     &forceAttackReload=0&brk=0
                     &forceQuestReload=0&brk=0'>

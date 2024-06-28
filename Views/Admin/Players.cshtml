@@ -10,8 +10,8 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["PlayerSave"];
-    var pageIndex = int.Parse(Request.Query["pageIndex"].FirstOrDefault() ?? "1");
-    var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
+    var pageIndex = ViewData["PageIndex"] as int? ?? 0;
+    var pageSize = ViewData["PageSize"] as int? ?? 0;
     var (pageCount, playerSaves) = await playerSaveService.GetAllPlayerSavesAsync(pageIndex,pageSize);
 }
 

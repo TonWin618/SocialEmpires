@@ -9,7 +9,7 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["EmpireMap"];
-    var id = Request.Query["id"][0];
+    var id = @ViewData["Id"] as string;
     if(id == null)
     {
         return;

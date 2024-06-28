@@ -8,11 +8,11 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["Items"];
-    var pageIndex = int.Parse(Request.Query["pageIndex"].FirstOrDefault() ?? "1");
-    var pageSize = int.Parse(Request.Query["pageSize"].FirstOrDefault() ?? "20");
+    var pageIndex = ViewData["PageIndex"] as int? ?? 0;
+    var pageSize = ViewData["PageSize"] as int? ?? 0;
     var (pageCount,data) = configFileService.GetItems(pageIndex, pageSize);
 }
-    
+
 <table width="100%" class="table table-striped">
     <thead>
         <tr>
