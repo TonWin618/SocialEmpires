@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.PlayerSaves;
 using System.Text;
 
@@ -28,6 +29,28 @@ namespace SocialEmpires.Controllers
             return View();
         }
         public record Player(PlayerSave Save, string UnitSummary);
+
+        [HttpGet]
+        public async Task<IActionResult> EmpireMap(string playerId)
+        {
+            var player = await _playerSaveService.GetPlayerSaveAsync(playerId);
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            var mapGridItems = new List<MapGridItem>();
+            foreach (var item in player.DefaultMap.Items)
+            {
+                var info = _configFileService.GetItem(item.Id);
+                mapGridItems.Add(new MapGridItem(item.X, item.Y, item.Id, info.ImgName, info.Width, info.Height));
+            }
+
+            ViewData["MapGridItems"] = mapGridItems;
+
+            return View();
+        }
+        public record MapGridItem(int X, int Y, int Id, string Image, string Width, string Height);
 
         [HttpPost]
         public async Task ChangeCash(string playerId, [FromBody] int amount)

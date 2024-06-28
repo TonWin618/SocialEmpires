@@ -1,32 +1,20 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@using SocialEmpires.Services
-@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
-@attribute [Authorize(Roles = "Admin")]
-@inject PlayerSaveService playerSaveService
-@inject ConfigFileService configFileService
+@using SocialEmpires.Models.PlayerSaves
+@using static SocialEmpires.Controllers.AdminController
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["EmpireMap"];
-    var id = @ViewData["Id"] as string;
-    if(id == null)
-    {
-        return;
-    }
-    var save = await playerSaveService.GetPlayerSaveAsync(id);
+    var mapGridItems = ViewData["MapGridItems"] as IEnumerable<MapGridItem>;
 }
 
 <div style="background-color:#FFFFFF;width:100%;">
     @{
-        if(save == null)
+        var mapGrid = new MapGridItem[100, 100];
+        foreach (var item in mapGridItems)
         {
-            return;
-        }
-        var map = new int[100,100];
-        foreach(var item in save.DefaultMap.Items)
-        {
-            map[item.Y, item.X] = item.Id;
+            mapGrid[item.Y, item.X] = item;
         }
         
         for(int x = 20; x < 80; x++)
@@ -38,12 +26,11 @@
                     {
                         <div style="width:20px;height:20px;font-size:10px;border:1px,solid;text-align:right;position:relative;">
                             @{
-                                if (map[x, y] != 0)
+                                if (mapGrid[x, y] != null)
                                 {
-                                    var itemInfo = configFileService.GetItem(map[x, y].ToString())!;
-                                    <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(itemInfo.ImgName).jpg" 
-                                    width="@(int.Parse(itemInfo.Width) * 20)"
-                                    height="@(int.Parse(itemInfo.Height) * 20)"
+                                    <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(mapGrid[x, y].Image).jpg"
+                                         width="@(int.Parse(mapGrid[x, y].Width) * 20)"
+                                         height="@(int.Parse(mapGrid[x, y].Height) * 20)"
                                     style="z-index:1;position:absolute;bottom:50%;right:100%"/>
                                 }
                             }
