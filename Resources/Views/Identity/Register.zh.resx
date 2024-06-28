@@ -147,4 +147,10 @@
   <data name="TokenIsRequired" xml:space="preserve">
     <value>请输入验证码</value>
   </data>
+  <data name="Wait" xml:space="preserve">
+    <value>等待</value>
+  </data>
+  <data name="EmailIsRequired" xml:space="preserve">
+    <value>请输入邮箱地址</value>
+  </data>
 </root>

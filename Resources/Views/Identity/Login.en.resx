@@ -162,4 +162,10 @@
   <data name="SendToken" xml:space="preserve">
     <value>Send Verification Code</value>
   </data>
+  <data name="Wait" xml:space="preserve">
+    <value>Wait</value>
+  </data>
+  <data name="UserExisted" xml:space="preserve">
+    <value>The email has already registered</value>
+  </data>
 </root>

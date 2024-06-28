@@ -50,11 +50,11 @@
                     function countdown() {
                         if (countdownValue > 0) {
                             countdownValue--;
-                            button.textContent = "Wait " + countdownValue + "s";
+                            button.textContent = "@localizer["Wait"]" + countdownValue + "s";
                         }
                         else {
                             button.disabled = false;
-                            button.textContent = "Send";
+                            button.textContent = "@localizer["SendToken"]";
                             clearInterval(timer);
                         }
                     }

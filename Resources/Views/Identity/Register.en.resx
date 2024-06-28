@@ -147,4 +147,10 @@
   <data name="TokenIsRequired" xml:space="preserve">
     <value>Please enter verification code</value>
   </data>
+  <data name="Wait" xml:space="preserve">
+    <value>Wait</value>
+  </data>
+  <data name="EmailIsRequired" xml:space="preserve">
+    <value>Please enter the email address</value>
+  </data>
 </root>

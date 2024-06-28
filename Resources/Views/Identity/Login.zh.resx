@@ -162,4 +162,10 @@
   <data name="SendToken" xml:space="preserve">
     <value>发送验证码</value>
   </data>
+  <data name="Wait" xml:space="preserve">
+    <value>等待</value>
+  </data>
+  <data name="UserExisted" xml:space="preserve">
+    <value>该邮箱已被注册</value>
+  </data>
 </root>

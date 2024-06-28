@@ -244,8 +244,10 @@ namespace SocialEmpires.Controllers
                 return View("Register");
             }
 
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _userManager.ResetPasswordAsync(user, token, password);
+            await _userManager.ResetPasswordAsync(
+                user, 
+                await _userManager.GeneratePasswordResetTokenAsync(user), 
+                password);
 
             await _userManager.AddToRoleAsync(user, "User");
             await _userManager.SetTwoFactorEnabledAsync(user, true);
@@ -300,7 +302,6 @@ namespace SocialEmpires.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: true);
 
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                _logger.LogInformation("Confirmation token for {user.Id}: {token}", user.Id, token);
 
                 await _emailSender.SendAsync(
                     email,
