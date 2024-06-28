@@ -1,4 +1,4 @@
-﻿namespace SocialEmpires.Models
+﻿namespace SocialEmpires.Models.PlayerSaves
 {
     public class PlayerState
     {

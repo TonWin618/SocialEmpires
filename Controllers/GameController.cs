@@ -131,8 +131,15 @@ namespace SocialEmpires.Controllers
             public int FirstNumber { get; set; }
         }
 
-        private PhysicalFileResult SendFromLocal(string relativePath)
+        private ActionResult SendFromLocal(string relativePath)
         {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+
+            if (!Path.Exists(path))
+            {
+                return NotFound();
+            }
+
             var contentType = Path.GetExtension(relativePath) switch
             {
                 "swf" => "application/x-shockwave-falsh",
@@ -142,10 +149,8 @@ namespace SocialEmpires.Controllers
                 "jpg" => "image/jpeg",
                 _ => "application/octet-stream"
             };
-
-            return PhysicalFile(
-                Path.Combine(Directory.GetCurrentDirectory(), relativePath),
-                contentType);
+            
+            return PhysicalFile(path, contentType);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SocialEmpires.Models;
+﻿using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
