@@ -13,8 +13,7 @@ var config = builder.Configuration;
 
 services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
 
-//services.AddControllers(op => op.Filters.Add<UnitOfWorkFilter>());
-services.AddControllersWithViews();
+services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
 
 services.AddDbContext<AppDbContext>(options =>
 {
