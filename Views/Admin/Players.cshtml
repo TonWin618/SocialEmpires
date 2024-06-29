@@ -40,8 +40,9 @@
                         <td>@DateTimeOffset.FromUnixTimeSeconds(player.Save.PlayerInfo.LastLoggedIn).ToString("g")</td>
                         <td>@player.UnitSummary</td>
                         <td>
-                            <button>Item</button>
-                            <button>Map</button>
+                            <button>
+                                <a asp-action="EmpireMap" asp-route-playerId="@player.Save.Pid">Map</a>
+                            </button>
                         </td>
                     </tr>
                 }
