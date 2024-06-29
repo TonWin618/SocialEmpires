@@ -68,7 +68,7 @@ namespace SocialEmpires.Models.PlayerSaves
                 Pid = playerId,
                 Id = 0,
                 Expansions = [13],
-                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
                 Coins = 250,
                 Xp = 4,
                 Level = 1,
