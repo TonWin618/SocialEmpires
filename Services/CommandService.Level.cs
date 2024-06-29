@@ -28,6 +28,7 @@ namespace SocialEmpires.Services
             var currentXp = map.Xp;
             var level = _configFileService.Levels[Math.Max(0, newLevel - 1)];
             var minExpectedXp = level.ExpRequired;
+            //TODO: Apply reward.
             map.Xp = Math.Max(minExpectedXp, currentXp);
         }
     }

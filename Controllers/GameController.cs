@@ -79,6 +79,7 @@ namespace SocialEmpires.Controllers
         public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language,
             [FromServices] PlayerSaveService _playerSaveService)
         {
+            //TODO: switch user
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
             if (save == null)
             {
