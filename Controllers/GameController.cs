@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace SocialEmpires.Controllers
 {
     [Authorize(Roles = "User")]
-    public class GameController : ControllerBase
+    public class GameController : Controller
     {
         private readonly FileDirectoriesOptions _options;
 
@@ -21,6 +21,12 @@ namespace SocialEmpires.Controllers
             _options = options.Value;
         }
 
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpGet("CreatePlayerSaveForTest")]
         public async Task<ActionResult> CreatePlayerSaveForTest([FromServices] PlayerSaveService _playerSaveService)
         {
@@ -29,7 +35,6 @@ namespace SocialEmpires.Controllers
 
             return Ok(id);
         }
-
 
         [HttpGet("/avatar/{userid}.png")]
         public ActionResult GetAvatar()
