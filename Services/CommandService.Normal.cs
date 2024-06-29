@@ -85,7 +85,7 @@ namespace SocialEmpires.Services
 
             if (dontModifyResources == 0)
             {
-                ApplyCollectAsync(save, id, priceMultiplier);
+                ApplyCostAsync(save, id, priceMultiplier);
                 ApplyCollectXpAsync(save, id);
             }
             map.Items.Add(new MapItem(id, x, y, orientation, collectedAtTimestamp, level));
