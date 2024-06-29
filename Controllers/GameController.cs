@@ -24,6 +24,8 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
+            ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             return View();
         }
 
