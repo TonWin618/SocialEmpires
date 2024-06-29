@@ -130,7 +130,7 @@ namespace SocialEmpires.Services
             var item = map.Items.First(_ => _.X == x && _.Y == y);
             item.Timestamp = TimestampNow();
 
-            ApplyCollectAsync(save, id, resourceMultiplier);
+            ApplyCollectAsync(save, id, resourceMultiplier + (numUnitsContainedWhenHarvested - 1) * 0.2);
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
         }
 
