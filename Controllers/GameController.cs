@@ -98,6 +98,9 @@ namespace SocialEmpires.Controllers
             root.Add("privateState", JsonSerializer.SerializeToNode(
                 save.PrivateState,
                 camelCaseJsonoptions));
+            root.Add("processed_errors", 0);
+            root.Add("result", "ok");
+            root.Add("timestamp", DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
             return new JsonResult(root);
         }
