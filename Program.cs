@@ -75,9 +75,9 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
 services.ConfigureApplicationCookie(cookie =>
 {
-    cookie.LoginPath = "/Login";
-    cookie.LogoutPath = "/Logout";
-    cookie.AccessDeniedPath = "/AccessDenied";
+    cookie.LoginPath = "/Identity/Login";
+    cookie.LogoutPath = "/Identity/Logout";
+    cookie.AccessDeniedPath = "/Identity/AccessDenied";
     cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
 #endregion
