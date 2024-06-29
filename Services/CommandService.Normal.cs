@@ -126,9 +126,10 @@ namespace SocialEmpires.Services
             var resourceMultiplier = args[5].GetInt32();
             var cashToSubtract = args[6].GetInt32();
 
-            _logger.LogInformation($"Collect {id}");
-
             var map = save.Maps[townId];
+            var item = map.Items.First(_ => _.X == x && _.Y == y);
+            item.Timestamp = TimestampNow();
+
             ApplyCollectAsync(save, id, resourceMultiplier);
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
         }
