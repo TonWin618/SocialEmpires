@@ -63,6 +63,11 @@ namespace SocialEmpires.Services
                 return;
             }
             item.Timestamp = TimestampNow();
+
+            if (item.Attributes!.ContainsKey("cp"))
+            {
+                item.Attributes["cp"] = collectPeriod;
+            }
             item.Attributes!.Add("cp",collectPeriod);
         }
 
