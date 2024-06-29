@@ -44,7 +44,7 @@ namespace SocialEmpires.Services
 
             _logger.LogInformation("Expansion {landId} purchased", landId);
 
-            var map = save.DefaultMap;
+            var map = save.Maps[townId];
             var expansions = map.Expansions;
 
             if (expansions.Contains(landId))
