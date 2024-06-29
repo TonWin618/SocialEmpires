@@ -68,7 +68,10 @@ namespace SocialEmpires.Services
             {
                 item.Attributes["cp"] = collectPeriod;
             }
-            item.Attributes!.Add("cp",collectPeriod);
+            else
+            {
+                item.Attributes!.Add("cp", collectPeriod);
+            }
         }
 
         private void HandlePopUnitCommand(PlayerSave save, JsonElement[] args)
