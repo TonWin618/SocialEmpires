@@ -27,6 +27,7 @@ namespace SocialEmpires.Services
         {
             foreach (var command in commands)
             {
+                _logger.LogInformation($"[{userId}][{command.Cmd}]{JsonSerializer.Serialize(command.Args)}");
                 await HandleCommand(userId, command.Cmd, command.Args);
             }
         }
