@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 namespace SocialEmpires.Controllers
 {
     [Authorize(Roles = "User")]
-    public class GameController : ControllerBase
+    public class GameController : Controller
     {
         private readonly FileDirectoriesOptions _options;
 
@@ -21,6 +21,14 @@ namespace SocialEmpires.Controllers
             _options = options.Value;
         }
 
+        [HttpGet]
+        public IActionResult Index()
+        {
+            ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
+            ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            return View();
+        }
+
         [HttpGet("CreatePlayerSaveForTest")]
         public async Task<ActionResult> CreatePlayerSaveForTest([FromServices] PlayerSaveService _playerSaveService)
         {
@@ -29,7 +37,6 @@ namespace SocialEmpires.Controllers
 
             return Ok(id);
         }
-
 
         [HttpGet("/avatar/{userid}.png")]
         public ActionResult GetAvatar()
@@ -70,8 +77,14 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
         public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language,
+            [FromForm]string? user,
             [FromServices] PlayerSaveService _playerSaveService)
         {
+            if (user != null && user.StartsWith("100000"))
+            {
+                return SendFromLocal(Path.Combine(_options.Maps, $"{user}.json"));
+            }
+
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
             if (save == null)
             {
@@ -91,6 +104,9 @@ namespace SocialEmpires.Controllers
             root.Add("privateState", JsonSerializer.SerializeToNode(
                 save.PrivateState,
                 camelCaseJsonoptions));
+            root.Add("processed_errors", 0);
+            root.Add("result", "ok");
+            root.Add("timestamp", DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
             return new JsonResult(root);
         }

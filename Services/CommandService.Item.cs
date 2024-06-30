@@ -49,6 +49,31 @@ namespace SocialEmpires.Services
             }
         }
 
+        private void HandleActivateCommand(PlayerSave save, JsonElement[] args)
+        {
+            var buildingX = args[0].GetInt32();
+            var buildingY = args[1].GetInt32();
+            var townId = args[2].GetInt32();
+            var buildingId = args[3].GetInt32();
+            var collectPeriod = args[4].GetInt32();
+
+            var item = save.Maps[townId].Items.First(_ => _.X == buildingX && _.Y == buildingY);
+            if (item == null) 
+            {
+                return;
+            }
+            item.Timestamp = TimestampNow();
+
+            if (item.Attributes!.ContainsKey("cp"))
+            {
+                item.Attributes["cp"] = collectPeriod;
+            }
+            else
+            {
+                item.Attributes!.Add("cp", collectPeriod);
+            }
+        }
+
         private void HandlePopUnitCommand(PlayerSave save, JsonElement[] args)
         {
             var buildingX = args[0].GetInt32();

@@ -24,7 +24,7 @@
             out int pageCount)
         {
             pageCount = (int)Math.Ceiling((double)query.Count() / pageSize);
-            return query.Skip(pageIndex * pageSize).Take(pageSize);
+            return query.Skip((pageIndex - 1) * pageSize).Take(pageSize);
         }
     }
 }

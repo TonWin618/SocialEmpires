@@ -7,7 +7,7 @@ namespace SocialEmpires.Services
     {
         private void HandleStartQuestCommand(PlayerSave save, JsonElement[] args)
         {
-            var questId = args[0].GetInt32();
+            var questId = args[0].GetString();
             var townId = args[1].GetInt32();
             _logger.LogInformation("Start quest {questId}", questId);
             // Additional logic for starting the quest can be added here if needed
@@ -24,7 +24,7 @@ namespace SocialEmpires.Services
             var win = data.GetProperty("win").GetInt32() == 1;
             var durationSec = data.GetProperty("duration").GetInt32();
             var voluntaryEnd = data.GetProperty("voluntary_end").GetInt32() == 1;
-            var questId = data.GetProperty("quest_id").GetInt32();
+            var questId = int.Parse(data.GetProperty("quest_id").GetString());
             var itemRewards = data.TryGetProperty("item_rewards", out var itemRewardsProperty) ?
                 itemRewardsProperty.EnumerateArray().ToArray() : null;
             var activatorsLeft = data.TryGetProperty("activators_left", out var activatorsLeftProperty) ?

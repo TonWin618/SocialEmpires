@@ -168,6 +168,9 @@ namespace SocialEmpires.Services
                 case CommandNames.ACTIVATE_DRAGON:
                     HandleActivateDragonCommand(save, args);
                     break;
+                case CommandNames.ACTIVATE:
+                    HandleActivateCommand(save, args);
+                    break;
                 default:
                     _logger.LogWarning("Unknown command: {cmd}", cmd);
                     break;
@@ -213,7 +216,7 @@ namespace SocialEmpires.Services
                 return;
             }
             var cost = multiplier * int.Parse(item.Cost);
-
+            //TODO: cost food when buy unit by gold
             switch (item.CostType)
             {
                 case CostType.Wood:

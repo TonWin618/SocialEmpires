@@ -85,7 +85,7 @@ namespace SocialEmpires.Services
 
             if (dontModifyResources == 0)
             {
-                ApplyCollectAsync(save, id, priceMultiplier);
+                ApplyCostAsync(save, id, priceMultiplier);
                 ApplyCollectXpAsync(save, id);
             }
             map.Items.Add(new MapItem(id, x, y, orientation, collectedAtTimestamp, level));
@@ -126,10 +126,11 @@ namespace SocialEmpires.Services
             var resourceMultiplier = args[5].GetInt32();
             var cashToSubtract = args[6].GetInt32();
 
-            _logger.LogInformation($"Collect {id}");
-
             var map = save.Maps[townId];
-            ApplyCollectAsync(save, id, resourceMultiplier);
+            var item = map.Items.First(_ => _.X == x && _.Y == y);
+            item.Timestamp = TimestampNow();
+
+            ApplyCollectAsync(save, id, resourceMultiplier + (numUnitsContainedWhenHarvested - 1) * 0.2);
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
         }
 
