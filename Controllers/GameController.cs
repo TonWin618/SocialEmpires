@@ -77,9 +77,14 @@ namespace SocialEmpires.Controllers
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]
         public async Task<IActionResult> GetPlayerInfo(string userid, string user_key, string spdebug, string language,
+            [FromForm]string? user,
             [FromServices] PlayerSaveService _playerSaveService)
         {
-            //TODO: switch user
+            if (user != null && user.StartsWith("100000"))
+            {
+                return SendFromLocal(Path.Combine(_options.Maps, $"{user}.json"));
+            }
+
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
             if (save == null)
             {
