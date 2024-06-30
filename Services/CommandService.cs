@@ -216,7 +216,7 @@ namespace SocialEmpires.Services
                 return;
             }
             var cost = multiplier * int.Parse(item.Cost);
-
+            //TODO: cost food when buy unit by gold
             switch (item.CostType)
             {
                 case CostType.Wood:
