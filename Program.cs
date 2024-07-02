@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using SocialEmpires.Hubs;
 using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Models;
 using SocialEmpires.Services;
@@ -10,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 var config = builder.Configuration;
+
+services.AddSignalR();
 
 services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
 
@@ -99,6 +102,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
+app.MapHub<BulletinHub>("/BulletinHub");
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",
