@@ -38,18 +38,9 @@
         </ul>
     </div>
 </div>
-<div>
-    <textarea id="tiny"></textarea>
-</div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script>
-    tinymce.init({
-        selector: 'textarea#tiny',
-        promotion: false,
-        branding: false
-    });
-
     var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
     document.getElementById("publishButton").disabled = true;
 

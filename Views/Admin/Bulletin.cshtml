@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Text
+@using SocialEmpires.Models.PlayerSaves
+@inject IViewLocalizer localizer
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = localizer["Bulletin"];
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-6">
+        <form asp-action="PublishBulletin" method="post">
+            <div>
+                <textarea id="tiny" name="htmlContent"></textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">@localizer["Publish"]</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <ul id="bulletinBoard" style="height:contain;">
+        </ul>
+    </div>
+</div>
+
+<script src="~/js/tinymce/tinymce.min.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    tinymce.init({
+        selector: 'textarea#tiny',
+        promotion: false,
+        branding: false
+    });
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
+    document.getElementById("publishButton").disabled = true;
+
+    connection.on("ReceiveBulletin", function (bulletin) {
+        console.log(bulletin);
+        var bulletinObj = JSON.parse(bulletin);
+        console.log(bulletinObj);
+        var li = document.createElement("li");
+        var texts = bulletinObj.Content.map(function (segment) { return segment.Text });
+        li.textContent = texts.join();
+        document.getElementById("bulletinBoard").append(li);
+    });
+</script>
