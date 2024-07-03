@@ -9,6 +9,14 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "tinymce@7.2.0",
+      "destination": "wwwroot/js/tinymce/",
+      "files": [
+        "tinymce.min.js"
+      ]
     }
   ]
 }
