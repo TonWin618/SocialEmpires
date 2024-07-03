@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using SocialEmpires.Models.Bulletins;
+using System.Text.Json;
 
 namespace SocialEmpires.Controllers
 {
@@ -11,8 +14,10 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
-        public IActionResult PublishBulletin([FromForm]string htmlContent)
+        public async Task<IActionResult> PublishBulletin([FromForm]string htmlContent)
         {
+            var bulletin = new Bulletin(UserId, htmlContent);
+            await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletin)); 
             return Redirect(Request.Headers.Referer);
         }
     }

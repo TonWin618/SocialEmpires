@@ -7,50 +7,45 @@
 <div class="row justify-content-md-center">
     <div class="col col-lg-2">
     </div>
-    <div class="col-md-auto">
-        <div style="text-align:center;display:flex;">
-            <object>
-                <embed src="http://localhost:5146/default01.static.socialpointgames.com/static/socialempires/flash/SELoader.swf?swftoload=http://localhost:5146/default01.static.socialpointgames.com/static/socialempires/flash/SocialEmpires0926bsec.swf"
-                       allowFullScreen="true" bgcolor="#669C2C" quality=high WIDTH="760" HEIGHT="600" NAME="se" ALIGN=""
-                       TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"
-                       flashvars='spdebug=notnull&brk=0
-                    &staticUrl=http://localhost:5146/default01.static.socialpointgames.com/static/socialempires/&brk=0
-                    &dynamicUrl=http://localhost:5146/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/&brk=0
-                    &skiphash12341=notnull&brk=0
-                    &fb_sig_user=@ViewData["UserId"]&brk=0
-                    &user_key=123456789&brk=0
-                    &language=en&brk=0
-                    &accessToken=AAABbZAm0wdMUBALsOrR0Ho68CLjaOT8SV3vftKg9mbo1zZColaW5FljRVaLxPGxXXnm1M98mTZCAttcQ4GHwvSyXfsyxYmvKMH8Hmn5iliSPnjvIsZA6&brk=0
-                    &sex=m&brk=0
-                    &lastLoggedIn=1349266517&brk=0
-                    &dailyBonus=0&brk=0
-                    &friendsInfo=[]&brk=0
-                    &serverTime=@ViewData["DateTime"]&brk=0
-                    &forceSyncError=1&brk=0
-                    &forceAttackReload=0&brk=0
-                    &forceQuestReload=0&brk=0' />
-            </object>
-        </div>
+    <div class="col-md-auto justify-content-md-center">
+        <object>
+            <embed src="http://localhost:5146/default01.static.socialpointgames.com/static/socialempires/flash/SELoader.swf?swftoload=http://localhost:5146/default01.static.socialpointgames.com/static/socialempires/flash/SocialEmpires0926bsec.swf"
+                    allowFullScreen="true" bgcolor="#669C2C" quality=high WIDTH="760" HEIGHT="600" NAME="se" ALIGN=""
+                    TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"
+                    flashvars='spdebug=notnull&brk=0
+                &staticUrl=http://localhost:5146/default01.static.socialpointgames.com/static/socialempires/&brk=0
+                &dynamicUrl=http://localhost:5146/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/&brk=0
+                &skiphash12341=notnull&brk=0
+                &fb_sig_user=@ViewData["UserId"]&brk=0
+                &user_key=123456789&brk=0
+                &language=en&brk=0
+                &accessToken=AAABbZAm0wdMUBALsOrR0Ho68CLjaOT8SV3vftKg9mbo1zZColaW5FljRVaLxPGxXXnm1M98mTZCAttcQ4GHwvSyXfsyxYmvKMH8Hmn5iliSPnjvIsZA6&brk=0
+                &sex=m&brk=0
+                &lastLoggedIn=1349266517&brk=0
+                &dailyBonus=0&brk=0
+                &friendsInfo=[]&brk=0
+                &serverTime=@ViewData["DateTime"]&brk=0
+                &forceSyncError=1&brk=0
+                &forceAttackReload=0&brk=0
+                &forceQuestReload=0&brk=0' />
+        </object>
     </div>
-    <div class="col col-lg-2" style="overflow-y: scroll;">
-        <ul id="bulletinBoard" style="height:contain;">
-
-        </ul>
+    <div id="bulletinBoard" class="col col-lg-2">
     </div>
 </div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script>
     var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
-    document.getElementById("publishButton").disabled = true;
 
     connection.on("ReceiveBulletin", function (bulletin) {
-        console.log(bulletin);
         var bulletinObj = JSON.parse(bulletin);
-        console.log(bulletinObj);
-        var li = document.createElement("li");
-        var texts = bulletinObj.Content.map(function (segment) { return segment.Text });
-        li.textContent = texts.join();
-        document.getElementById("bulletinBoard").append(li);
+        bulletinBoard = document.getElementById("bulletinBoard")
+        bulletinBoard.innerHTML += bulletinObj.HtmlContent;
+    });
+
+    connection.start().then()
+    .catch(function (err) {
+        console.error(err.toString());
     });
 </script>

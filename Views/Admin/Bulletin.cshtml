@@ -8,19 +8,21 @@
 }
 
 <div class="row justify-content-md-center">
-    <div class="col-md-6">
+    <div class="col-8">
         <form asp-action="PublishBulletin" method="post">
             <div>
                 <textarea id="tiny" name="htmlContent"></textarea>
             </div>
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">@localizer["Publish"]</button>
+            <div class="d-flex justify-content-end align-items-center mt-3">
+                <div class="d-flex justify-content-end align-items-center">
+                    <input type="number" class="form-control" id="days" placeholder="0">@localizer["Days"]
+                    <input type="number" class="form-control" id="hours" placeholder="0">@localizer["Hours"]
+                    <input type="number" class="form-control" id="minutes" placeholder="0">@localizer["Minutes"]
+                    <input type="number" class="form-control" id="seconds" placeholder="0">@localizer["Seconds"]
+                </div>
+                <button id="publishButton" type="submit" class="btn btn-primary ms-5">@localizer["Publish"]</button>
             </div>
         </form>
-    </div>
-    <div class="col-md-6">
-        <ul id="bulletinBoard" style="height:contain;">
-        </ul>
     </div>
 </div>
 
@@ -33,19 +35,16 @@
         selector: 'textarea#tiny',
         promotion: false,
         branding: false,
-        language: browserLanguage.replace("-", "_")
+        language: browserLanguage.replace("-", "_"),
+        menubar: false,
+        toolbar: 'styleselect | bold italic underline fontsize | forecolor backcolor | blocks alignleft aligncenter bullist numlist outdent indent | hr',
+        forced_root_block: 'div'
     });
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
-    document.getElementById("publishButton").disabled = true;
 
-    connection.on("ReceiveBulletin", function (bulletin) {
-        console.log(bulletin);
-        var bulletinObj = JSON.parse(bulletin);
-        console.log(bulletinObj);
-        var li = document.createElement("li");
-        var texts = bulletinObj.Content.map(function (segment) { return segment.Text });
-        li.textContent = texts.join();
-        document.getElementById("bulletinBoard").append(li);
-    });
+    connection.start().then()
+        .catch(function (err) {
+            console.error(err.toString());
+        });
 </script>
