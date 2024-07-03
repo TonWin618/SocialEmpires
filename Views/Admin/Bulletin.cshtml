@@ -27,10 +27,13 @@
 <script src="~/js/tinymce/tinymce.min.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script>
+    const browserLanguage = navigator.language || navigator.userLanguage;
+
     tinymce.init({
         selector: 'textarea#tiny',
         promotion: false,
-        branding: false
+        branding: false,
+        language: browserLanguage.replace("-", "_")
     });
 
     var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
