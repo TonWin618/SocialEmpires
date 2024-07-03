@@ -37,7 +37,6 @@ namespace SocialEmpires.Services
             }
 
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashUsed, 0);
-            _logger.LogInformation($"Used {cashUsed} cash to buy super offer pack!");
         }
 
         private void HandleMoveCommandAsync(PlayerSave save, JsonElement[] args)
@@ -50,8 +49,6 @@ namespace SocialEmpires.Services
             var frame = args[5].GetInt32(); // You may need to handle this parameter according to your requirements
             var townId = args[6].GetInt32();
             var reason = args[7].GetString(); // "Unitat", "moveTo", "colisio", "MouseUsed"
-
-            _logger.LogInformation($"Move {id} from ({ix},{iy}) to ({newx},{newy})");
 
             var map = save.Maps[townId]; // Assuming save.Maps is a dictionary with townId as key
             foreach (var item in map.Items)
@@ -77,7 +74,6 @@ namespace SocialEmpires.Services
             var priceMultiplier = args[6].GetInt32();
             var type = args[7].GetString();
 
-            _logger.LogInformation($"Add {id} at ({x},{y})");
             var collectedAtTimestamp = TimestampNow();
             var level = 0; // TODO 
             var orientation = 0;
@@ -98,8 +94,6 @@ namespace SocialEmpires.Services
             var id = args[2].GetInt32();
             var townId = args[3].GetInt32();
             var type = args[4].GetString();
-
-            _logger.LogInformation($"Kill {id} from ({x},{y}).");
 
             var map = save.Maps[townId];
             var items = map.Items;

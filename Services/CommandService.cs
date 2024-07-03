@@ -43,7 +43,6 @@ namespace SocialEmpires.Services
             switch (cmd)
             {
                 case CommandNames.GAME_STATUS:
-                    _logger.LogInformation("{message}", string.Join('|', args));
                     break;
                 case CommandNames.BUY:
                     HandleBuyCommandAsync(save, args);

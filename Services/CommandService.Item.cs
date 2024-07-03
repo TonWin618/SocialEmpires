@@ -16,8 +16,6 @@ namespace SocialEmpires.Services
             var dontModifyResources = args[4].GetInt32();
             var reason = args[5].GetString();
 
-            _logger.LogInformation($"Remove {id} from ({x},{y}). Reason: {reason}");
-
             var map = save.Maps[townId];
             var items = map.Items;
 
@@ -92,8 +90,6 @@ namespace SocialEmpires.Services
                 unitY = args[5].GetInt32();
                 unitFrame = args[6].GetInt32();
             }
-
-            _logger.LogInformation($"Pop {unitId} from ({buildingX},{buildingY}).");
 
             var map = save.Maps[townId];
 
@@ -186,7 +182,6 @@ namespace SocialEmpires.Services
         {
             var itemId = args[0].GetInt32();
             var townId = args[1].GetInt32();
-            _logger.LogInformation($"Gift {itemId} sold on town: {townId}");
 
             var gifts = save.PrivateState.Gifts;
             gifts[itemId]--;
@@ -211,7 +206,6 @@ namespace SocialEmpires.Services
             var y = args[1].GetInt32();
             var townId = args[2].GetInt32();
             var itemId = args[3].GetInt32();
-            _logger.LogInformation($"Store {itemId} from ({x},{y})");
 
             var map = save.Maps[townId];
             var items = map.Items;

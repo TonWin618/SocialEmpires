@@ -1,4 +1,5 @@
 ﻿using SocialEmpires.Models;
+using SocialEmpires.Models.Enums;
 using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
@@ -13,8 +14,6 @@ namespace SocialEmpires.Services
             var hero = args[2].GetInt32();
             var claimId = args[3].GetInt32();
             var cash = args[4].GetInt32();
-
-            _logger.LogInformation("Claiming Win Bonus");
 
             var map = save.Maps[townId];
 
@@ -43,14 +42,13 @@ namespace SocialEmpires.Services
 
             var privateState = save.PrivateState;
             privateState.BonusNextId = claimId + 1;
-            privateState.TimestampLastBonus = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+            privateState.TimestampLastBonus = TimestampNow();
         }
 
         private void HandleSetStrategyCommand(PlayerSave save, JsonElement[] args)
         {
             var strategyType = args[0].GetInt32();
             save.PrivateState.Strategy = strategyType;
-            _logger.LogInformation($"Set defense strategy type to {strategyType}");
         }
 
         private void HandleResurrectHeroCommand(PlayerSave save, JsonElement[] args)
@@ -60,8 +58,6 @@ namespace SocialEmpires.Services
             var y = args[2].GetInt32();
             var townId = args[3].GetInt32();
             bool usedPotion = args.Length > 4 && Convert.ToString(args[4]) == "1";
-
-            _logger.LogInformation($"Resurrect {unitId} from graveyard");
 
             if (usedPotion)
             {
@@ -83,8 +79,6 @@ namespace SocialEmpires.Services
 
         private void HandleGraveyardBuyPotionsCommand(PlayerSave save)
         {
-            _logger.LogInformation("Graveyard buy potion");
-
             var graveyardPotions = _configFileService.Globals.GetProperty("GRAVEYARD_POTIONS");
             var amount = graveyardPotions.GetProperty("amount").GetInt32();
             var priceCash = graveyardPotions.GetProperty("price").GetProperty("c").GetInt32();

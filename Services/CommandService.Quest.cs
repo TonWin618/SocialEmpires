@@ -9,7 +9,7 @@ namespace SocialEmpires.Services
         {
             var questId = args[0].GetString();
             var townId = args[1].GetInt32();
-            _logger.LogInformation("Start quest {questId}", questId);
+
             // Additional logic for starting the quest can be added here if needed
         }
 
@@ -42,16 +42,12 @@ namespace SocialEmpires.Services
             // privateState.QuestsRank = TODO;
             // map.QuestTimes[questId] = TODO;
             // map.LastQuestTimes[questId] = TODO;
-
-            _logger.LogInformation("Ended quest {questId}.", questId);
         }
 
         private void HandleRewardMissionCommand(PlayerSave save, JsonElement[] args)
         {
             var townId = args[0].GetInt32();
             var missionId = args[1].GetInt32();
-
-            _logger.LogInformation("Reward mission {missionId}", missionId);
 
             var missions = _configFileService.Missions
                 .FirstOrDefault(_ => _.Id == missionId);
@@ -64,8 +60,6 @@ namespace SocialEmpires.Services
         {
             var missionId = args[0].GetInt32();
             var skippedWithCash = args[1].GetInt32();
-
-            _logger.LogInformation("Complete mission {missionId}", missionId);
 
             if (skippedWithCash == 1)
             {
@@ -84,7 +78,6 @@ namespace SocialEmpires.Services
             if (tutorialStep >= 31)
             {
                 save.PlayerInfo.CompletedTutorial = 1;
-                _logger.LogInformation("Complete tutorial");
             }
         }
     }
