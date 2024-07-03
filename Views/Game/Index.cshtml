@@ -6,9 +6,6 @@
 
 <div class="row justify-content-md-center">
     <div class="col col-lg-2">
-        <div>Message</div>
-        <div><input type="text" id="bulletinBoard" /></div>
-        <input type="button" id="publishButton" value="Publish" />
     </div>
     <div class="col-md-auto">
         <div style="text-align:center;display:flex;">
@@ -41,9 +38,18 @@
         </ul>
     </div>
 </div>
+<div>
+    <textarea id="tiny"></textarea>
+</div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script>
+    tinymce.init({
+        selector: 'textarea#tiny',
+        promotion: false,
+        branding: false
+    });
+
     var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
     document.getElementById("publishButton").disabled = true;
 
@@ -55,19 +61,5 @@
         var texts = bulletinObj.Content.map(function (segment) { return segment.Text });
         li.textContent = texts.join();
         document.getElementById("bulletinBoard").append(li);
-    });
-
-    connection.start().then(function () {
-        document.getElementById("publishButton").disabled = false;
-    }).catch(function (err) {
-        console.error(err.toString());
-    });
-
-    document.getElementById("publishButton").addEventListener("click", function (event) {
-        var message = document.getElementById("bulletinBoard").value;
-        connection.invoke("PublishBulletin", message).catch(function (err) {
-            console.error(err.toString());
-        });
-        event.preventDefault();
     });
 </script>
