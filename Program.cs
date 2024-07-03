@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Hubs;
 using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Models;
+using SocialEmpires.Models.Settings;
 using SocialEmpires.Services;
 using System.Globalization;
 
@@ -15,6 +16,7 @@ var config = builder.Configuration;
 services.AddSignalR();
 
 services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
+services.Configure<FlashGameConfigOptions>(config.GetSection("FlashGameConfig"));
 
 services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
 
