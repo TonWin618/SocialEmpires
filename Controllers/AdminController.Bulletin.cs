@@ -20,12 +20,13 @@ namespace SocialEmpires.Controllers
         [HttpPost]
         public async Task<IActionResult> PublishBulletin(
             [FromForm] string htmlContent,
+            [FromForm] string language,
             [FromForm] int days,
             [FromForm] int hours, 
             [FromForm] int minutes, 
             [FromForm] int seconds)
         {
-            var bulletin = new Bulletin(UserId, htmlContent, "zh", new TimeSpan(days, hours, minutes, seconds));
+            var bulletin = new Bulletin(UserId, htmlContent, language, new TimeSpan(days, hours, minutes, seconds));
             await _appDbContext.AddAsync(bulletin);
             await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletin)); 
             return Redirect(Request.Headers.Referer);
