@@ -1,8 +1,8 @@
-﻿namespace SocialEmpires.Models.Settings
+﻿namespace SocialEmpires.Models.Options
 {
     public class FlashGameConfigOptions
     {
-        public string BaseUrl {  get; set; }
+        public string BaseUrl { get; set; }
 
         public FlashGameConfigOptions()
         {
