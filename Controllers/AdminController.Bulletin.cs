@@ -21,7 +21,7 @@ namespace SocialEmpires.Controllers
             [FromForm] int minutes, 
             [FromForm] int seconds)
         {
-            var bulletin = new Bulletin(UserId, htmlContent, new TimeSpan(days, hours, minutes, seconds));
+            var bulletin = new Bulletin(UserId, htmlContent, Request.Headers.AcceptLanguage, new TimeSpan(days, hours, minutes, seconds));
             await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletin)); 
             return Redirect(Request.Headers.Referer);
         }

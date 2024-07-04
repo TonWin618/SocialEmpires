@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SocialEmpires.Models.Bulletins;
 using SocialEmpires.Models.PlayerSaves;
 using SocialEmpires.Utils;
 using System.Text.Json;
@@ -17,6 +18,8 @@ namespace SocialEmpires.Models
         public DbSet<PlayerState> PlayerStates { get; set; }
 
         public DbSet<PlayerInfo> PlayerInfos { get; set; }
+
+        public DbSet<Bulletin> Bulletins { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -92,6 +95,8 @@ namespace SocialEmpires.Models
                 .Metadata.SetValueComparer(dictionaryComparer);
 
             builder.Entity<PlayerInfo>().HasKey(x => x.Pid);
+
+            builder.Entity<Bulletin>().HasKey(x => x.Id);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
