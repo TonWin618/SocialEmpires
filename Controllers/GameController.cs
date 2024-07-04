@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SocialEmpires.Models.Options;
@@ -66,7 +67,7 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public ActionResult GetGameConfig()
         {
-            if (HttpContext.Request.Headers.AcceptLanguage.Contains("zh"))
+            if (Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == "zh")
             {
                 return SendFromLocal(Path.Combine(_options.Configs, "game_config_zh.json"));
             }

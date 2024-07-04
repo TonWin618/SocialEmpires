@@ -51,6 +51,17 @@
                                     <a class="nav-link text-dark" asp-area="" asp-page="/">@userName</a>
                                 </li>
                             }
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @localizer["Language"]
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/Language/SetLanguage?culture=zh">简体中文</a></li>
+                                        <li><a class="dropdown-item" href="/Language/SetLanguage?culture=en">English</a></li>
+                                    </ul>
+                                </div>
+                            </li>
                         }
 
                     </ul>
