@@ -40,7 +40,8 @@ namespace SocialEmpires.Models.Bulletins
             Id = new Guid();
             PublisherId = publisherId;
             PublishedTime = DateTime.UtcNow;
-            
+            HtmlContent = new();
+            HtmlContent.Set(language, htmlContent);
             Type = type;
             ExpiryTime = expiryTime;
         }
