@@ -37,14 +37,24 @@
             </div>
         </form>
     </div>
+
     <div id="bulletinBoard" class="col-3">
-        @{
-            foreach (var bulletin in bulletins)
-            {
-                @Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.Zh))
-                @Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.En))
+        <ul class="list-group">
+            @{
+                foreach (var bulletin in bulletins)
+                {
+                    if(bulletin.HtmlContent.Zh != null)
+                    {
+                        <li class="list-group-item">@Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.Zh))</li>
+                    }
+                    else if (bulletin.HtmlContent.En != null)
+                    {
+                        <li class="list-group-item">@Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.En))</li>
+                    }
+                }
             }
-        }
+        </ul>
+        
     </div>
 </div>
 
