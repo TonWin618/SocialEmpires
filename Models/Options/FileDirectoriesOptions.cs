@@ -1,4 +1,4 @@
-﻿namespace SocialEmpires.Services
+﻿namespace SocialEmpires.Models.Options
 {
     public class FileDirectoriesOptions
     {
