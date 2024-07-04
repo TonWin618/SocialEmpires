@@ -10,6 +10,10 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Bulletin()
         {
+            ViewData["Bulletins"] = _appDbContext.Bulletins
+                .Where(_ => _.ExpiryTime > DateTime.UtcNow)
+                .OrderBy(_=>_.PublishedTime)
+                .ToList();
             return View();
         }
 
@@ -21,7 +25,8 @@ namespace SocialEmpires.Controllers
             [FromForm] int minutes, 
             [FromForm] int seconds)
         {
-            var bulletin = new Bulletin(UserId, htmlContent, Request.Headers.AcceptLanguage, new TimeSpan(days, hours, minutes, seconds));
+            var bulletin = new Bulletin(UserId, htmlContent, "zh", new TimeSpan(days, hours, minutes, seconds));
+            await _appDbContext.AddAsync(bulletin);
             await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletin)); 
             return Redirect(Request.Headers.Referer);
         }

@@ -1,10 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
+@using SocialEmpires.Models.Bulletins
 @using SocialEmpires.Models.PlayerSaves
+@using Ganss.Xss;
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["Bulletin"];
+    var sanitizer = new HtmlSanitizer();
+    var bulletins = ViewData["Bulletins"] as List<Bulletin>;
 }
 
 <div class="d-flex justify-content-center">
@@ -12,6 +16,8 @@
 </div>
 
 <div class="row justify-content-center">
+    <div class="col-1">
+    </div>
     <div class="col-8">
         <form asp-action="PublishBulletin" method="post">
             <div>
@@ -28,6 +34,14 @@
                 <button id="publishButton" type="submit" class="btn btn-primary ms-5">@localizer["Publish"]</button>
             </div>
         </form>
+    </div>
+    <div id="bulletinBoard" class="col-3">
+        @{
+            foreach (var bulletin in bulletins)
+            {
+               @Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.Zh))
+            }
+        }
     </div>
 </div>
 

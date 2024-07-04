@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SocialEmpires.Hubs;
+using SocialEmpires.Models;
 using SocialEmpires.Services;
 
 namespace SocialEmpires.Controllers
@@ -12,15 +13,18 @@ namespace SocialEmpires.Controllers
         private readonly ConfigFileService _configFileService;
         private readonly PlayerSaveService _playerSaveService;
         private readonly IHubContext<BulletinHub> _bulletinHubContext;
+        private readonly AppDbContext _appDbContext;
 
         public AdminController(
             ConfigFileService configFileService,
             PlayerSaveService playerSaveService,
-            IHubContext<BulletinHub> bulletinHubContext)
+            IHubContext<BulletinHub> bulletinHubContext,
+            AppDbContext appDbContext)
         {
             _configFileService = configFileService;
             _playerSaveService = playerSaveService;
             _bulletinHubContext = bulletinHubContext;
+            _appDbContext = appDbContext;
         }
 
         [HttpGet]
