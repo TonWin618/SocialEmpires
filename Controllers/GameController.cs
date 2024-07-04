@@ -18,9 +18,12 @@ namespace SocialEmpires.Controllers
         private JsonSerializerOptions camelCaseJsonoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         private JsonSerializerOptions snakeCaseoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 
+        private string RequestCultrue { get; }
+
         public GameController(IOptions<FileDirectoriesOptions> options)
         {
             _options = options.Value;
+            RequestCultrue = Request.Cookies[CookieRequestCultureProvider.DefaultCookieName]??"zh";
         }
 
         [HttpGet]
@@ -67,7 +70,7 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public ActionResult GetGameConfig()
         {
-            if (Request.Cookies[CookieRequestCultureProvider.DefaultCookieName] == "zh")
+            if (RequestCultrue == "zh")
             {
                 return SendFromLocal(Path.Combine(_options.Configs, "game_config_zh.json"));
             }
