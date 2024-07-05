@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Services;
 using System.Text.Json;
@@ -18,12 +19,9 @@ namespace SocialEmpires.Controllers
         private JsonSerializerOptions camelCaseJsonoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         private JsonSerializerOptions snakeCaseoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 
-        private string RequestCultrue { get; }
-
         public GameController(IOptions<FileDirectoriesOptions> options)
         {
             _options = options.Value;
-            RequestCultrue = Request.Cookies[CookieRequestCultureProvider.DefaultCookieName]??"zh";
         }
 
         [HttpGet]
@@ -172,6 +170,25 @@ namespace SocialEmpires.Controllers
             };
             
             return PhysicalFile(path, contentType);
+        }
+
+        private string RequestCultrue
+        {
+            get
+            {
+                var cookie = Request?.Cookies?[CookieRequestCultureProvider.DefaultCookieName];
+                if (cookie == null)
+                {
+                    return SupportLanguages.En;
+                }
+                var cultureResult = CookieRequestCultureProvider.ParseCookieValue(cookie);
+                var cultrue = cultureResult?.Cultures.FirstOrDefault().Value;
+                if (cultrue == null)
+                {
+                    return SupportLanguages.En;
+                }
+                return SupportLanguages.CapitalizeFirstLetter(cultrue);
+            }
         }
     }
 }
