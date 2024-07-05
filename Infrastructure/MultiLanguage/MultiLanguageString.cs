@@ -63,5 +63,10 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             ArgumentNullException.ThrowIfNull(nameof(Current));
             Set(Current!, content);
         }
+
+        public override string ToString()
+        {
+            return GetCurrent() ?? "";
+        }
     }
 }
