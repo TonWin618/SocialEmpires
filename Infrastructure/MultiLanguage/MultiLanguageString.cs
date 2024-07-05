@@ -16,12 +16,12 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
         public MultiLanguageString() { }
 
-        public MultiLanguageString(string language, string content)
+        public MultiLanguageString(string language, string? content)
         {
             Set(language, content);
         }
 
-        public string Get(string language)
+        public string? Get(string language)
         {
             SupportLanguages.ThrowIfUnsupported(language);
 
@@ -31,7 +31,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
                 SupportLanguages.En => En,
                 //Add more languages...
                 _ => null
-            } ?? "";
+            };
         }
 
         public string? GetCurrent()
@@ -45,7 +45,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             };
         }
 
-        public void Set(string language, string content)
+        public void Set(string language, string? content)
         {
             SupportLanguages.ThrowIfUnsupported(language);
 
@@ -58,7 +58,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             };
         }
 
-        public void SetCurrent(string content)
+        public void SetCurrent(string? content)
         {
             ArgumentNullException.ThrowIfNull(nameof(Current));
             Set(Current!, content);
