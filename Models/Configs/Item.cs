@@ -217,7 +217,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public MultiLanguageString? AchievementDesc { get; set; }
+        public MultiLanguageString AchievementDesc { get; set; }
 
         /// <summary>
         /// int 0 ~ 15
@@ -266,6 +266,11 @@ namespace SocialEmpires.Models.Configs
         /// </summary>
         public string? IphoneAdjustments { get; set; }
         #endregion
+
+        private Item()
+        {
+            //only for efcore
+        }
 
         public Item(
             string id, string inStore, string name, string type, string cost, string costType, int xp, 
