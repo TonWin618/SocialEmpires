@@ -16,8 +16,7 @@ namespace SocialEmpires.Models.Bulletins
         public DateTime ExpiryTime { get; private set; }
         
         public string Type { get; private set; }
-
-        [JsonConverter(typeof(MultiLanguageStringConverter))]
+        
         public MultiLanguageString HtmlContent { get; private set; }
         
         [NotMapped]
