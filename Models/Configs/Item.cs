@@ -267,11 +267,21 @@ namespace SocialEmpires.Models.Configs
         public string? IphoneAdjustments { get; set; }
         #endregion
 
-        public Item(string id, string inStore, string name, string type, string cost, string costType, int xp, string? groups, string trains, string upgradesTo, string displayOrder, string activation, string expiration, string collect, string collectType, string collectXp, string categoryId, string subcategoryId, string subcatFunctional, string minLevel, string width, string height, string maxFrame, string giftable, string imgName, string elevation, string unitCapacity, string attack, string defense, string life, string velocity, string attackRange, string attackInterval, string newItem, string population, string giftLevel, string costUnitCash, string race, string flying, string protect, string potion, string achievement, string? achievementDesc, string unitsLimit, string? storeGroups, string storeLevel, string size, string showOnMobile, string showOnMobileStore, string onlyMobile, string? iphoneAdjustments)
+        public Item(
+            string id, string inStore, string name, string type, string cost, string costType, int xp, 
+            string? groups, string trains, string upgradesTo, string displayOrder, string activation, 
+            string expiration, string collect, string collectType, string collectXp, string categoryId, 
+            string subcategoryId, string subcatFunctional, string minLevel, string width, string height, 
+            string maxFrame, string giftable, string imgName, string elevation, string unitCapacity, 
+            string attack, string defense, string life, string velocity, string attackRange, string attackInterval, 
+            string newItem, string population, string giftLevel, string costUnitCash, string race, string flying, 
+            string protect, string potion, string achievement, string? achievementDesc, string unitsLimit, 
+            string? storeGroups, string storeLevel, string size, string showOnMobile, string showOnMobileStore, 
+            string onlyMobile, string? iphoneAdjustments, string language)
         {
             Id = id;
             InStore = inStore;
-            Name = new();
+            Name = new(language, name);
             Type = type;
             Cost = cost;
             CostType = costType;
@@ -311,7 +321,7 @@ namespace SocialEmpires.Models.Configs
             Protect = protect;
             Potion = potion;
             Achievement = achievement;
-            AchievementDesc = achievementDesc;
+            AchievementDesc = new(language, achievementDesc);
             UnitsLimit = unitsLimit;
             StoreGroups = storeGroups;
             StoreLevel = storeLevel;
