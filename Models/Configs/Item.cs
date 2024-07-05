@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Utils;
+﻿using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Utils;
 using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Models.Configs
@@ -16,7 +17,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public string Name { get; set; }
+        public MultiLanguageString Name { get; set; }
 
         /// <summary>
         /// <see cref="Enums.ItemType"/>
@@ -216,7 +217,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public string? AchievementDesc { get; set; }
+        public MultiLanguageString? AchievementDesc { get; set; }
 
         /// <summary>
         /// int 0 ~ 15
@@ -270,7 +271,7 @@ namespace SocialEmpires.Models.Configs
         {
             Id = id;
             InStore = inStore;
-            Name = name;
+            Name = new();
             Type = type;
             Cost = cost;
             CostType = costType;
