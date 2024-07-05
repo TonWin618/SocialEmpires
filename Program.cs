@@ -49,7 +49,7 @@ var supportedCultures = new[]
 
 services.Configure<RequestLocalizationOptions>(options =>
 {
-    options.DefaultRequestCulture = new RequestCulture(SupportLanguages.Zh);
+    options.DefaultRequestCulture = new RequestCulture(SupportLanguages.Default);
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
     options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());

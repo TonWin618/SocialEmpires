@@ -179,13 +179,13 @@ namespace SocialEmpires.Controllers
                 var cookie = Request?.Cookies?[CookieRequestCultureProvider.DefaultCookieName];
                 if (cookie == null)
                 {
-                    return SupportLanguages.En;
+                    return SupportLanguages.Default;
                 }
                 var cultureResult = CookieRequestCultureProvider.ParseCookieValue(cookie);
                 var cultrue = cultureResult?.Cultures.FirstOrDefault().Value;
                 if (cultrue == null)
                 {
-                    return SupportLanguages.En;
+                    return SupportLanguages.Default;
                 }
                 return SupportLanguages.CapitalizeFirstLetter(cultrue);
             }

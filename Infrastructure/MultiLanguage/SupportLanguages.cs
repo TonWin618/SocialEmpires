@@ -4,6 +4,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 {
     public static class SupportLanguages
     {
+        public const string Default = En;
         public const string Zh = "Zh";
         public const string En = "En";
         //Add more languages...
