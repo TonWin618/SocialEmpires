@@ -27,6 +27,7 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.IsAdmin = HttpContext.User.IsInRole("Admin");
             ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
             ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             return View();
