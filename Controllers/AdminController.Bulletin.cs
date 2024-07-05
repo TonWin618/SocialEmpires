@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SocialEmpires.Models;
 using SocialEmpires.Models.Bulletins;
 using System.Text.Json;
 
@@ -11,8 +12,9 @@ namespace SocialEmpires.Controllers
         public IActionResult Bulletin()
         {
             ViewData["Bulletins"] = _appDbContext.Bulletins
+                .WithLanguage("Zh")
                 .Where(_ => _.ExpiryTime > DateTime.UtcNow)
-                .OrderBy(_=>_.PublishedTime)
+                .OrderBy(_ => _.PublishedTime)
                 .ToList();
             return View();
         }
