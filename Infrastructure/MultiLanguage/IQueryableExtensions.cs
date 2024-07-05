@@ -3,14 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace SocialEmpires.Models
+namespace SocialEmpires.Infrastructure.MultiLanguage
 {
     public static class IQueryableExtensions
     {
         private static ConcurrentDictionary<string, object> _cachedExpressions = new();
 
-        public static IQueryable<T> WithLanguage<T>(this IQueryable<T> query, string language) where T:class
+        public static IQueryable<T> WithLanguage<T>(this IQueryable<T> query, string language) where T : class
         {
+            SupportLanguages.ThrowIfUnsupported(language);
+
             Expression<Func<T, T>> selector;
             if (_cachedExpressions.TryGetValue(GenerateKey<T>(language), out var func))
             {
@@ -29,7 +31,7 @@ namespace SocialEmpires.Models
             return nameof(T) + '_' + language;
         }
 
-        private static Expression<Func<T, T>> BuildWithLanguageExpression<T>(string language) where T:class
+        private static Expression<Func<T, T>> BuildWithLanguageExpression<T>(string language) where T : class
         {
             Type type = typeof(T);
             var parameter = Expression.Parameter(type, "e");
@@ -43,10 +45,12 @@ namespace SocialEmpires.Models
             {
                 if (property.PropertyType == typeof(MultiLanguageString))
                 {
+                    var currentProperty = typeof(MultiLanguageString).GetProperty("Current");
                     var languageProperty = typeof(MultiLanguageString).GetProperty(language);
                     var multiLanguageStringInstance = Expression.MemberInit(
                         Expression.New(typeof(MultiLanguageString)),
-                        Expression.Bind(languageProperty, Expression.Property(Expression.Property(parameter, property.Name), language))
+                        Expression.Bind(languageProperty, Expression.Property(Expression.Property(parameter, property.Name), language)),
+                        Expression.Bind(currentProperty, Expression.Constant(language))
                     );
                     memberBindings.Add(Expression.Bind(property, multiLanguageStringInstance));
                 }

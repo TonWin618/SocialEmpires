@@ -1,4 +1,4 @@
-﻿using SocialEmpires.Utils;
+﻿using SocialEmpires.Infrastructure.MultiLanguage;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 using System.Text.Json.Serialization;
