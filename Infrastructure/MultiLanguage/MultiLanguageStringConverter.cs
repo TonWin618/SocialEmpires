@@ -24,6 +24,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
                 writer.WriteString(SupportLanguages.Zh, value.Zh);
                 writer.WriteString(SupportLanguages.En, value.En);
+                //Add more languages...
 
                 writer.WriteEndObject();
             }
