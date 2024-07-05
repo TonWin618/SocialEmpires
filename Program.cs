@@ -41,11 +41,11 @@ services.AddScoped<PlayerSaveService>();
 services.AddRazorPages()
     .AddViewLocalization(options => options.ResourcesPath = "Resources");
 
-var supportedCultures = new[]
+var supportedCultures = new List<CultureInfo>();
+foreach(var language in SupportLanguages.List)
 {
-    new CultureInfo(SupportLanguages.En),
-    new CultureInfo(SupportLanguages.Zh)
-};
+    supportedCultures.Add(new CultureInfo(language));
+}
 
 services.Configure<RequestLocalizationOptions>(options =>
 {

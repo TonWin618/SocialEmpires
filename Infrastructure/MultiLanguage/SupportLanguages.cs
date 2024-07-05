@@ -1,15 +1,20 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace SocialEmpires.Infrastructure.MultiLanguage
 {
     public static class SupportLanguages
     {
-        public const string Default = En;
-        public const string Zh = "Zh";
-        public const string En = "En";
-        //Add more languages...
+        static SupportLanguages()
+        {
+            List = typeof(MultiLanguageString).GetProperties()
+                .Where(p => !Attribute.IsDefined(p, typeof(NotMappedAttribute)))
+                .Select(p => p.Name).ToArray();
+        }
 
-        public static string[] List => [Zh, En];//Add more languages...
+        public static string Default => List.First();
+
+        public static string[] List { get; }
 
         public static bool Contains(string language)
         {

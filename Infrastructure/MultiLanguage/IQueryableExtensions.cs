@@ -16,7 +16,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             Expression<Func<T, T>> selector;
             if (_cachedExpressions.TryGetValue(GenerateKey<T>(language), out var func))
             {
-                selector = func as Expression<Func<T, T>>;
+                selector = (Expression<Func<T, T>>)func;
             }
             else
             {
@@ -45,8 +45,8 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             {
                 if (property.PropertyType == typeof(MultiLanguageString))
                 {
-                    var currentProperty = typeof(MultiLanguageString).GetProperty("Current");
-                    var languageProperty = typeof(MultiLanguageString).GetProperty(language);
+                    var currentProperty = typeof(MultiLanguageString).GetProperty("Current")!;
+                    var languageProperty = typeof(MultiLanguageString).GetProperty(language)!;
                     var multiLanguageStringInstance = Expression.MemberInit(
                         Expression.New(typeof(MultiLanguageString)),
                         Expression.Bind(languageProperty, Expression.Property(Expression.Property(parameter, property.Name), language)),

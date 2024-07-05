@@ -3,11 +3,11 @@ using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Infrastructure.MultiLanguage
 {
-    [JsonConverter(typeof(MultiLanguageStringConverter))]
     [ComplexType]
     public class MultiLanguageString
     {
         [NotMapped]
+        [JsonIgnore]
         public string? Current { get; init; }
 
         public string? En { get; private set; }
@@ -27,19 +27,8 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
             return language switch
             {
-                SupportLanguages.Zh => Zh,
-                SupportLanguages.En => En,
-                //Add more languages...
-                _ => null
-            };
-        }
-
-        public string? GetCurrent()
-        {
-            return Current switch
-            {
-                SupportLanguages.Zh => Zh,
-                SupportLanguages.En => En,
+                nameof(Zh) => Zh,
+                nameof(En) => En,
                 //Add more languages...
                 _ => null
             };
@@ -51,14 +40,19 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
             _ = language switch
             {
-                SupportLanguages.Zh => Zh = content,
-                SupportLanguages.En => En = content,
+                nameof(Zh) => Zh = content,
+                nameof(En) => En = content,
                 //Add more languages...
                 _ => null
             };
         }
 
-        public void SetCurrent(string? content)
+        public string? Get()
+        {
+            return Current == null ? null : Get(Current);
+        }
+
+        public void Set(string? content)
         {
             ArgumentNullException.ThrowIfNull(nameof(Current));
             Set(Current!, content);
@@ -66,7 +60,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
         public override string ToString()
         {
-            return GetCurrent() ?? "";
+            return Get() ?? "";
         }
     }
 }
