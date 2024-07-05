@@ -267,7 +267,7 @@ namespace SocialEmpires.Models.Configs
         public string? IphoneAdjustments { get; set; }
         #endregion
 
-        private Item()
+        public Item()
         {
             //only for efcore
         }

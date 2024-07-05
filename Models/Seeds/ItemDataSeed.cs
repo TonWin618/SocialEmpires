@@ -1,10 +1,11 @@
 ﻿using SocialEmpires.Models.Configs;
+using SocialEmpires.Services;
 
 namespace SocialEmpires.Models.Seeds
 {
     public static class ItemDataSeed
     {
-        public static void Initialize(IServiceProvider serviceProvider, IEnumerable<Item> items)
+        public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var DbContext = serviceProvider.GetRequiredService<AppDbContext>())
             {
@@ -13,8 +14,10 @@ namespace SocialEmpires.Models.Seeds
                     return;
                 }
 
-                DbContext.AddRange(items);
+                var configFileService = serviceProvider.GetRequiredService<ConfigFileService>();
+                var items = configFileService.Items;
 
+                DbContext.AddRange(items);
                 DbContext.SaveChanges();
             }
         }
