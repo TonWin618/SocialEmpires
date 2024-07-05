@@ -5,8 +5,15 @@ namespace SocialEmpires.Models
     [ComplexType]
     public class MultiLanguageString
     {
-        public string? En { get; set; }
-        public string? Zh { get; set; }
+        public string? En { get; private set; }
+        public string? Zh { get; private set; }
+
+        public MultiLanguageString() { }
+
+        public MultiLanguageString(string language, string content) 
+        {
+            Set(language, content);
+        }
 
         public string Get(string language)
         {
