@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Hubs;
 using SocialEmpires.Infrastructure.EmailSender;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Services;
@@ -42,13 +43,13 @@ services.AddRazorPages()
 
 var supportedCultures = new[]
 {
-    new CultureInfo("en"),
-    new CultureInfo("zh")
+    new CultureInfo(SupportLanguages.En),
+    new CultureInfo(SupportLanguages.Zh)
 };
 
 services.Configure<RequestLocalizationOptions>(options =>
 {
-    options.DefaultRequestCulture = new RequestCulture("zh");
+    options.DefaultRequestCulture = new RequestCulture(SupportLanguages.Zh);
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
     options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());

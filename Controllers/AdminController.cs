@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SocialEmpires.Hubs;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Services;
 
@@ -25,6 +27,8 @@ namespace SocialEmpires.Controllers
             _playerSaveService = playerSaveService;
             _bulletinHubContext = bulletinHubContext;
             _appDbContext = appDbContext;
+
+
         }
 
         [HttpGet]
@@ -40,5 +44,24 @@ namespace SocialEmpires.Controllers
         public record PageResult<T>(int PageIndex, int PageSize, int PageCount, int DataCount, IEnumerable<T>? Data);
 
         private string UserId => HttpContext.User.Identity.Name;
+
+        private string RequestCultrue 
+        {
+            get
+            {
+                var cookie = Request?.Cookies?[CookieRequestCultureProvider.DefaultCookieName];
+                if(cookie == null)
+                {
+                    return SupportLanguages.En;
+                }
+                var cultureResult = CookieRequestCultureProvider.ParseCookieValue(cookie);
+                var cultrue = cultureResult?.Cultures.FirstOrDefault().Value;
+                if(cultrue == null)
+                {
+                    return SupportLanguages.En;
+                }
+                return SupportLanguages.CapitalizeFirstLetter(cultrue);
+            }
+        }
     }
 }

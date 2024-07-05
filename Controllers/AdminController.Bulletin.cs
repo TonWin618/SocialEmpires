@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Bulletins;
 using System.Text.Json;
 
@@ -11,6 +13,7 @@ namespace SocialEmpires.Controllers
         public IActionResult Bulletin()
         {
             var bulletins = _appDbContext.Bulletins
+                .WithLanguage(RequestCultrue)
                 .Where(_ => _.ExpiryTime > DateTime.UtcNow)
                 .OrderBy(_ => _.PublishedTime)
                 .ToList();
