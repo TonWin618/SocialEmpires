@@ -123,4 +123,10 @@
   <data name="EmailConfirmEmailContent" xml:space="preserve">
     <value>Your verification code is  </value>
   </data>
+  <data name="LoginTokenEmailTitle" xml:space="preserve">
+    <value>[Social Empires] Verification code for login</value>
+  </data>
+  <data name="LoginTokenEmailContent" xml:space="preserve">
+    <value>Your verification code is </value>
+  </data>
 </root>

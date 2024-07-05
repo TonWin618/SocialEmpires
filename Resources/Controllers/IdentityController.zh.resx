@@ -123,4 +123,10 @@
   <data name="EmailConfirmEmailContent" xml:space="preserve">
     <value>您的验证码为  </value>
   </data>
+  <data name="LoginTokenEmailContent" xml:space="preserve">
+    <value>您的验证码为 </value>
+  </data>
+  <data name="LoginTokenEmailTitle" xml:space="preserve">
+    <value>【社群帝国】账号登录验证码</value>
+  </data>
 </root>

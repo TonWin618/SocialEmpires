@@ -184,8 +184,8 @@ namespace SocialEmpires.Controllers
 
             await _emailSender.SendAsync(
                 email,
-                $"{_localizer["EmailConfirmEmailTitle"]}",
-                $"<html><body><h4>{_localizer["EmailConfirmEmailContent"]} </h4><h1>{token}</h1><br/></body></html>");
+                $"{_localizer["LoginTokenEmailTitle"]}",
+                $"<html><body><h4>{_localizer["LoginTokenEmailContent"]} </h4><h1>{token}</h1><br/></body></html>");
 
             ViewData["SendingInterval"] = 60;
 
@@ -312,8 +312,8 @@ namespace SocialEmpires.Controllers
 
                 await _emailSender.SendAsync(
                     email,
-                    "[Social Empires] Verification code for register",
-                    $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+                    $"{_localizer["EmailConfirmEmailTitle"]}",
+                    $"<html><body><h4>{_localizer["EmailConfirmEmailContent"]} </h4><h1>{token}</h1><br/></body></html>");
 
                 ViewData["SendingInterval"] = 60;
                 return View("Register");
