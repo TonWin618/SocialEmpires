@@ -337,7 +337,7 @@ namespace SocialEmpires.Controllers
                 {
                     return SupportLanguages.Default;
                 }
-                return SupportLanguages.CapitalizeFirstLetter(cultrue);
+                return cultrue;
             }
         }
     }

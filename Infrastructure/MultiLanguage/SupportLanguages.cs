@@ -33,15 +33,5 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
                 throw new ArgumentException("unsupported language", language);
             }
         }
-
-        public static string CapitalizeFirstLetter(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return input;
-            }
-
-            return char.ToUpper(input[0], CultureInfo.InvariantCulture) + input.Substring(1);
-        }
     }
 }

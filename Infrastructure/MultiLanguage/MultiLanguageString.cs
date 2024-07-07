@@ -10,9 +10,11 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
         [JsonIgnore]
         public string? Current { get; init; }
 
-        public string? En { get; private set; }
-        public string? Zh { get; private set; }
+#pragma warning disable IDE1006 // Naming Styles
+        public string? en { get; private set; }
+        public string? zh { get; private set; }
         //Add more languages...
+#pragma warning restore IDE1006 // Naming Styles
 
         public MultiLanguageString() { }
 
@@ -27,8 +29,8 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
             return language switch
             {
-                nameof(Zh) => Zh,
-                nameof(En) => En,
+                nameof(zh) => zh,
+                nameof(en) => en,
                 //Add more languages...
                 _ => null
             };
@@ -40,8 +42,8 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
             _ = language switch
             {
-                nameof(Zh) => Zh = content,
-                nameof(En) => En = content,
+                nameof(zh) => zh = content,
+                nameof(en) => en = content,
                 //Add more languages...
                 _ => null
             };

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Bulletins;
@@ -34,7 +33,7 @@ namespace SocialEmpires.Controllers
         {
             var bulletin = new Bulletin(UserId, htmlContent, language, new TimeSpan(days, hours, minutes, seconds));
             await _appDbContext.AddAsync(bulletin);
-            await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletin)); 
+            await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletin));
             return Redirect(Request.Headers.Referer);
         }
     }

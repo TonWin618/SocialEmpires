@@ -43,13 +43,13 @@
             @{
                 foreach (var bulletin in bulletins)
                 {
-                    if(bulletin.HtmlContent.Zh != null)
+                    if(bulletin.HtmlContent.zh != null)
                     {
-                        <li class="list-group-item">@Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.Zh))</li>
+                        <li class="list-group-item">@Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.zh))</li>
                     }
-                    else if (bulletin.HtmlContent.En != null)
+                    else if (bulletin.HtmlContent.en != null)
                     {
-                        <li class="list-group-item">@Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.En))</li>
+                        <li class="list-group-item">@Html.Raw(sanitizer.Sanitize(bulletin.HtmlContent.en))</li>
                     }
                 }
             }

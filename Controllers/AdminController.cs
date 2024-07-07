@@ -45,7 +45,7 @@ namespace SocialEmpires.Controllers
 
         private string UserId => HttpContext.User.Identity.Name;
 
-        private string RequestCultrue 
+        private string RequestCultrue
         {
             get
             {
@@ -60,7 +60,7 @@ namespace SocialEmpires.Controllers
                 {
                     return SupportLanguages.Default;
                 }
-                return SupportLanguages.CapitalizeFirstLetter(cultrue);
+                return cultrue;
             }
         }
     }

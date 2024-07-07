@@ -18,7 +18,9 @@ services.AddSignalR();
 
 services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
 
-services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
+services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>())
+    .AddJsonOptions(options => options.JsonSerializerOptions.WithLanguage("zh"));
+//TODO: AddJsonOptions on action.
 
 services.AddDbContext<AppDbContext>(options =>
 {
