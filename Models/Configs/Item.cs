@@ -17,7 +17,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public MultiLanguageString Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// <see cref="Enums.ItemType"/>
@@ -217,7 +217,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public MultiLanguageString AchievementDesc { get; set; }
+        public string AchievementDesc { get; set; }
 
         /// <summary>
         /// int 0 ~ 15
@@ -280,13 +280,13 @@ namespace SocialEmpires.Models.Configs
             string maxFrame, string giftable, string imgName, string elevation, string unitCapacity, 
             string attack, string defense, string life, string velocity, string attackRange, string attackInterval, 
             string newItem, string population, string giftLevel, string costUnitCash, string race, string flying, 
-            string protect, string potion, string achievement, string? achievementDesc, string unitsLimit, 
+            string protect, string potion, string achievement, string achievementDesc, string unitsLimit, 
             string? storeGroups, string storeLevel, string size, string showOnMobile, string showOnMobileStore, 
             string onlyMobile, string? iphoneAdjustments, string language)
         {
             Id = id;
             InStore = inStore;
-            Name = new(language, name);
+            Name = name;
             Type = type;
             Cost = cost;
             CostType = costType;
@@ -326,7 +326,7 @@ namespace SocialEmpires.Models.Configs
             Protect = protect;
             Potion = potion;
             Achievement = achievement;
-            AchievementDesc = new(language, achievementDesc);
+            AchievementDesc = achievementDesc;
             UnitsLimit = unitsLimit;
             StoreGroups = storeGroups;
             StoreLevel = storeLevel;
