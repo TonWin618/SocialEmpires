@@ -23,7 +23,7 @@ namespace SocialEmpires.Models.Bulletins
         [JsonIgnore]
         public bool IsExpired => DateTime.UtcNow > ExpiryTime;
 
-        private Bulletin()
+        public Bulletin()
         {
             //only for efcore
         }
