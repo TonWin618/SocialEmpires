@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Services;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
@@ -69,7 +70,7 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public ActionResult GetGameConfig()
         {
-            if (RequestCultrue == "zh")
+            if (CultureInfo.CurrentCulture.Name == "zh")
             {
                 return SendFromLocal(Path.Combine(_options.Configs, "game_config_zh.json"));
             }
@@ -171,25 +172,6 @@ namespace SocialEmpires.Controllers
             };
             
             return PhysicalFile(path, contentType);
-        }
-
-        private string RequestCultrue
-        {
-            get
-            {
-                var cookie = Request?.Cookies?[CookieRequestCultureProvider.DefaultCookieName];
-                if (cookie == null)
-                {
-                    return SupportLanguages.Default;
-                }
-                var cultureResult = CookieRequestCultureProvider.ParseCookieValue(cookie);
-                var cultrue = cultureResult?.Cultures.FirstOrDefault().Value;
-                if (cultrue == null)
-                {
-                    return SupportLanguages.Default;
-                }
-                return cultrue;
-            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.SignalR;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Bulletins;
+using System.Globalization;
 using System.Text.Json;
 
 namespace SocialEmpires.Controllers
@@ -12,13 +13,13 @@ namespace SocialEmpires.Controllers
         public IActionResult Bulletin()
         {
             var bulletins = _appDbContext.Bulletins
-                .WithLanguage(RequestCultrue)
+                .WithLanguage(CultureInfo.CurrentCulture.Name)
                 .Where(_ => _.ExpiryTime > DateTime.UtcNow)
                 .OrderBy(_ => _.PublishedTime)
                 .ToList();
 
             ViewData["Bulletins"] = bulletins;
-             
+
             return View();
         }
 

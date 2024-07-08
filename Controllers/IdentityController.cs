@@ -321,24 +321,5 @@ namespace SocialEmpires.Controllers
         }
 
         #endregion
-
-        private string RequestCultrue
-        {
-            get
-            {
-                var cookie = Request?.Cookies?[CookieRequestCultureProvider.DefaultCookieName];
-                if (cookie == null)
-                {
-                    return SupportLanguages.Default;
-                }
-                var cultureResult = CookieRequestCultureProvider.ParseCookieValue(cookie);
-                var cultrue = cultureResult?.Cultures.FirstOrDefault().Value;
-                if (cultrue == null)
-                {
-                    return SupportLanguages.Default;
-                }
-                return cultrue;
-            }
-        }
     }
 }
