@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using SocialEmpires.Infrastructure.EmailSender;
-using SocialEmpires.Infrastructure.MultiLanguage;
 
 namespace SocialEmpires.Controllers
 {
@@ -321,5 +319,18 @@ namespace SocialEmpires.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> Logout([FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            await _signInManager.SignOutAsync();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied([FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            return View();
+        }
     }
 }
