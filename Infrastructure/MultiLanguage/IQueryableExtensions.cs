@@ -28,7 +28,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
         private static string GenerateKey<T>(string language)
         {
-            return nameof(T) + '_' + language;
+            return typeof(T).FullName + '_' + language;
         }
 
         private static Expression<Func<T, T>> BuildWithLanguageExpression<T>(string language) where T : class
