@@ -7,9 +7,9 @@ namespace SocialEmpires.Controllers
     public class TestController : Controller
     {
         [HttpPost]
-        public Bulletin MultiLanguageTest([MultiLanguage] Bulletin bulletin)
+        public IActionResult MultiLanguageTest([MultiLanguage] Bulletin bulletin)
         {
-            return bulletin;
+            return this.JsonWithLanguage(bulletin);
         }
     }
 }

@@ -49,13 +49,6 @@ services.AddRazorPages()
 services.AddLocalization(
     options => options.ResourcesPath = "Resources");
 
-//services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//});
-
-
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     // Password settings.
