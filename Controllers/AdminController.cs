@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using SocialEmpires.Hubs;
-using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Services;
 

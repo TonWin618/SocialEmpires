@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Services;
 using System.Globalization;
