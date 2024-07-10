@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Utils;
@@ -35,7 +36,7 @@ namespace SocialEmpires.Services
                 PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true,
-            };
+            }.WithLanguage("zh");
 
             using (var stream = File.OpenRead(Path.Combine(_options.Configs, zhConfigFile)))
             {

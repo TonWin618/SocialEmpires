@@ -64,9 +64,6 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
         public static implicit operator string(MultiLanguageString source)
             => source.ToString();
 
-        public static implicit operator MultiLanguageString(string source)
-            => ConvertFromString(source);
-
         public override string ToString()
         {
             return Get() ?? "";

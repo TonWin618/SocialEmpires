@@ -1,25 +1,20 @@
-﻿using SocialEmpires.Models.Configs;
-using SocialEmpires.Services;
+﻿using SocialEmpires.Services;
 
 namespace SocialEmpires.Models.Seeds
 {
     public static class ItemDataSeed
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public static void Initialize(ConfigFileService configFileService, AppDbContext dbContext)
         {
-            using (var DbContext = serviceProvider.GetRequiredService<AppDbContext>())
+            if(dbContext.Items.Any())
             {
-                if(DbContext.Items.Any())
-                {
-                    return;
-                }
-
-                var configFileService = serviceProvider.GetRequiredService<ConfigFileService>();
-                var items = configFileService.Items;
-
-                DbContext.AddRange(items);
-                DbContext.SaveChanges();
+                return;
             }
+
+            var items = configFileService.Items;
+
+            dbContext.AddRange(items);
+            dbContext.SaveChanges();
         }
     }
 }

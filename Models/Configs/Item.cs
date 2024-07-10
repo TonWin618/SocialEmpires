@@ -6,7 +6,8 @@ namespace SocialEmpires.Models.Configs
 {
     public class Item
     {
-        public string Id { get; set; }
+        [JsonConverter(typeof(IntToStringConverter))]
+        public int Id { get; set; }
 
         /// <summary>
         /// 0:
@@ -267,22 +268,26 @@ namespace SocialEmpires.Models.Configs
         public string? IphoneAdjustments { get; set; }
         #endregion
 
-        public Item()
+        private Item()
         {
             //only for efcore
         }
 
+        [JsonConstructor]
         public Item(
-            string id, string inStore, string name, string type, string cost, string costType, int xp, 
-            string? groups, string trains, string upgradesTo, string displayOrder, string activation, 
-            string expiration, string collect, string collectType, string collectXp, string categoryId, 
-            string subcategoryId, string subcatFunctional, string minLevel, string width, string height, 
-            string maxFrame, string giftable, string imgName, string elevation, string unitCapacity, 
+            string id, string inStore, MultiLanguageString name, string type, 
+            string cost, string costType, int xp, string? groups, 
+            string trains, string upgradesTo, string displayOrder, 
+            string activation, string expiration, 
+            string collect, string collectType, string collectXp, 
+            string categoryId, string subcategoryId, string subcatFunctional, 
+            string minLevel, string width, string height, string maxFrame, 
+            string giftable, string imgName, string elevation, string unitCapacity, 
             string attack, string defense, string life, string velocity, string attackRange, string attackInterval, 
             string newItem, string population, string giftLevel, string costUnitCash, string race, string flying, 
-            string protect, string potion, string achievement, string achievementDesc, string unitsLimit, 
-            string? storeGroups, string storeLevel, string size, string showOnMobile, string showOnMobileStore, 
-            string onlyMobile, string? iphoneAdjustments)
+            string protect, string potion, string achievement, MultiLanguageString achievementDesc, string unitsLimit, 
+            string? storeGroups, string storeLevel, string size, 
+            string showOnMobile, string showOnMobileStore, string onlyMobile, string? iphoneAdjustments)
         {
             Id = id;
             InStore = inStore;
