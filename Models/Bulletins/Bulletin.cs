@@ -23,10 +23,6 @@ namespace SocialEmpires.Models.Bulletins
         [JsonIgnore]
         public bool IsExpired => DateTime.UtcNow > ExpiryTime;
 
-        public Bulletin()
-        {
-            //only for efcore
-        }
         /// <summary>
         /// Expriy at expiryTime
         /// </summary>
@@ -79,6 +75,22 @@ namespace SocialEmpires.Models.Bulletins
         {
             HtmlContent.Set(language, htmlContent);
             return this;
+        }
+
+        private Bulletin()
+        {
+            //only for efcore
+        }
+
+        [JsonConstructor]
+        private Bulletin(Guid id, string publisherId, DateTime publishedTime, DateTime expiryTime, string type, MultiLanguageString htmlContent)
+        {
+            Id = id;
+            PublisherId = publisherId;
+            PublishedTime = publishedTime;
+            ExpiryTime = expiryTime;
+            Type = type;
+            HtmlContent = htmlContent;
         }
     }
 }
