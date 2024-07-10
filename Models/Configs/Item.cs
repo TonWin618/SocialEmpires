@@ -6,7 +6,6 @@ namespace SocialEmpires.Models.Configs
 {
     public class Item
     {
-        [JsonConverter(typeof(IntToStringConverter))]
         public int Id { get; set; }
 
         /// <summary>
@@ -35,7 +34,6 @@ namespace SocialEmpires.Models.Configs
         /// </summary>
         public string CostType { get; set; }
 
-        [JsonConverter(typeof(IntToStringConverter))]
         public int Xp { get; set; }
 
         public string? Groups { get; set; }

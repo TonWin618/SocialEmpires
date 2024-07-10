@@ -20,7 +20,8 @@ namespace SocialEmpires.Controllers
             [FromServices] ConfigFileService _configFileService,
             [FromServices] AppDbContext _appDbContext)
         {
-            ItemDataSeed.Initialize(_configFileService, _appDbContext);
+            var seed = new ItemDataSeed(_appDbContext);
+            seed.Initialize();
             return Ok();
         }
     }

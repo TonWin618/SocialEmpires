@@ -34,4 +34,14 @@
 	<None Include="Files\Configs\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="Models\Seeds\game_config_en.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Models\Seeds\game_config_en.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

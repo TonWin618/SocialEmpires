@@ -43,10 +43,10 @@ namespace SocialEmpires.Services
                 _config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
             }
 
-            Items = Load<Item>("items");
-            Missions = Load<Mission>("missions");
-            Levels = Load<Level>("levels");
-            ExpansionPrices = Load<ExpansionPrice>("expansion_prices");
+            //Items = Load<Item>("items");
+            //Missions = Load<Mission>("missions");
+            //Levels = Load<Level>("levels");
+            //ExpansionPrices = Load<ExpansionPrice>("expansion_prices");
         }
 
         private List<T> Load<T>(string key)
