@@ -29,19 +29,12 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             request.EnableBuffering();
             request.Body.Position = 0;
 
-            try
-            {
-                var result = await JsonSerializer.DeserializeAsync(
-                    request.Body, 
-                    bindingContext.ModelType,
-                    jsonSerializeroptions[CultureInfo.CurrentCulture.Name ?? SupportLanguages.Default]);
+            var result = await JsonSerializer.DeserializeAsync(
+                request.Body, 
+                bindingContext.ModelType,
+                jsonSerializeroptions[CultureInfo.CurrentCulture.Name ?? SupportLanguages.Default]);
 
-                bindingContext.Result = ModelBindingResult.Success(result);
-            }
-            catch (Exception ex) 
-            {
-                bindingContext.Result = ModelBindingResult.Failed();
-            }
+            bindingContext.Result = ModelBindingResult.Success(result);
         }
     }
 }
