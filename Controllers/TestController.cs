@@ -7,7 +7,7 @@ namespace SocialEmpires.Controllers
     public class TestController : Controller
     {
         [HttpPost]
-        public async Task<Bulletin> MultiLanguageTest([ModelBinder(BinderType = typeof(MultiLanguageJsonModelBinder))] Bulletin bulletin)
+        public Bulletin MultiLanguageTest([MultiLanguage] Bulletin bulletin)
         {
             return bulletin;
         }
