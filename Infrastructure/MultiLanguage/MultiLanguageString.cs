@@ -61,20 +61,20 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             Set(Current!, content);
         }
 
-        public static implicit operator string(MultiLanguageString origin)
-            => origin.ToString();
+        public static implicit operator string(MultiLanguageString source)
+            => source.ToString();
 
-        public static implicit operator MultiLanguageString(string origin)
-            => ConvertFromString(origin);
+        public static implicit operator MultiLanguageString(string source)
+            => ConvertFromString(source);
 
         public override string ToString()
         {
             return Get() ?? "";
         }
 
-        public static MultiLanguageString ConvertFromString(string origin)
+        public static MultiLanguageString ConvertFromString(string source)
         {
-            return new MultiLanguageString(CultureInfo.CurrentCulture.Name, origin);
+            return new MultiLanguageString(CultureInfo.CurrentCulture.Name, source);
         }
     }
 }
