@@ -282,7 +282,7 @@ namespace SocialEmpires.Models.Configs
             string newItem, string population, string giftLevel, string costUnitCash, string race, string flying, 
             string protect, string potion, string achievement, string achievementDesc, string unitsLimit, 
             string? storeGroups, string storeLevel, string size, string showOnMobile, string showOnMobileStore, 
-            string onlyMobile, string? iphoneAdjustments, string language)
+            string onlyMobile, string? iphoneAdjustments)
         {
             Id = id;
             InStore = inStore;

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Infrastructure.MultiLanguage
@@ -63,9 +64,17 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
         public static implicit operator string(MultiLanguageString origin)
             => origin.ToString();
 
+        public static implicit operator MultiLanguageString(string origin)
+            => ConvertFromString(origin);
+
         public override string ToString()
         {
             return Get() ?? "";
+        }
+
+        public static MultiLanguageString ConvertFromString(string origin)
+        {
+            return new MultiLanguageString(CultureInfo.CurrentCulture.Name, origin);
         }
     }
 }
