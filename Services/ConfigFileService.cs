@@ -76,7 +76,7 @@ namespace SocialEmpires.Services
 
         public Item? GetItem(string id)
         {
-            return Items?.FirstOrDefault(_ => _.Id == id);
+            return Items?.FirstOrDefault(_ => _.Id == int.Parse(id));
         }
 
         public (int pageCount, IEnumerable<Item>? items) GetItems(int pageIndex, int pageSize)

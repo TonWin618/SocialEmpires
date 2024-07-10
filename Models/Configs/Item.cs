@@ -275,7 +275,7 @@ namespace SocialEmpires.Models.Configs
 
         [JsonConstructor]
         public Item(
-            string id, string inStore, MultiLanguageString name, string type, 
+            int id, string inStore, MultiLanguageString name, string type, 
             string cost, string costType, int xp, string? groups, 
             string trains, string upgradesTo, string displayOrder, 
             string activation, string expiration, 
