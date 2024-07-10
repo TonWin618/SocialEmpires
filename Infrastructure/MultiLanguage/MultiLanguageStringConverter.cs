@@ -22,7 +22,6 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
 
             var result = new MultiLanguageString();
 
-            reader.Read();
             result.Set(_language, reader.GetString());
             return result;
         }
