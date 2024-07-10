@@ -60,6 +60,9 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             Set(Current!, content);
         }
 
+        public static implicit operator string(MultiLanguageString origin)
+            => origin.ToString();
+
         public override string ToString()
         {
             return Get() ?? "";

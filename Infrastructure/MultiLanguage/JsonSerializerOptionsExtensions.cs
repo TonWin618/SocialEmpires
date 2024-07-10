@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 
 namespace SocialEmpires.Infrastructure.MultiLanguage
 {
@@ -8,6 +9,13 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
         {
             SupportLanguages.ThrowIfUnsupported(language);
             options.Converters.Add(new MultiLanguageStringConverter(language));
+            return options;
+        }
+
+        public static JsonSerializerOptions WithLanguage(this JsonSerializerOptions options)
+        {
+            SupportLanguages.ThrowIfUnsupported(CultureInfo.CurrentCulture.Name);
+            options.Converters.Add(new MultiLanguageStringConverter(CultureInfo.CurrentCulture.Name));
             return options;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -24,6 +25,11 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
                 _cachedExpressions.TryAdd(GenerateKey<T>(language), selector);
             }
             return query.Select(selector);
+        }
+
+        public static IQueryable<T> WithLanguage<T>(this IQueryable<T> query) where T : class
+        {
+            return WithLanguage(query, CultureInfo.CurrentCulture.Name);
         }
 
         private static string GenerateKey<T>(string language)

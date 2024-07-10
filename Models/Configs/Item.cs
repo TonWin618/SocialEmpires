@@ -17,7 +17,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public string Name { get; set; }
+        public MultiLanguageString Name { get; set; }
 
         /// <summary>
         /// <see cref="Enums.ItemType"/>
@@ -217,7 +217,7 @@ namespace SocialEmpires.Models.Configs
         /// <summary>
         /// string
         /// </summary>
-        public string AchievementDesc { get; set; }
+        public MultiLanguageString AchievementDesc { get; set; }
 
         /// <summary>
         /// int 0 ~ 15

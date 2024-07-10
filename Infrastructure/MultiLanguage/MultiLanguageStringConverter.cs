@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Infrastructure.MultiLanguage
@@ -6,6 +7,10 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
     public class MultiLanguageStringConverter : JsonConverter<MultiLanguageString>
     {
         private readonly string _language;
+
+        public MultiLanguageStringConverter():this(CultureInfo.CurrentCulture.Name)
+        {
+        }
 
         public MultiLanguageStringConverter(string language)
         {
