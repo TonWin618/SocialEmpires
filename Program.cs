@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -30,14 +31,6 @@ services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
 });
 
-services.ConfigureApplicationCookie(cookie =>
-{
-    cookie.LoginPath = "/Identity/Login";
-    cookie.LogoutPath = "/Identity/Logout";
-    cookie.AccessDeniedPath = "/Identity/AccessDenied";
-    cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
-});
-
 //Services
 services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
 
@@ -55,6 +48,13 @@ services.AddRazorPages()
 
 services.AddLocalization(
     options => options.ResourcesPath = "Resources");
+
+//services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//});
+
 
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
@@ -74,6 +74,14 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AppDbContext>();
 
+services.ConfigureApplicationCookie(cookie =>
+{
+    cookie.LoginPath = "/Identity/Login";
+    cookie.LogoutPath = "/Identity/Logout";
+    cookie.AccessDeniedPath = "/Identity/AccessDenied";
+    cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
+});
+
 services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration["DbConnectionString"];
@@ -89,7 +97,6 @@ services.AddScoped<PlayerSaveService>();
 var app = builder.Build();
 
 //Use
-app.UseAuthorization();
 app.UseStaticFiles();
 if (!app.Environment.IsDevelopment())
 {
@@ -98,7 +105,9 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseRequestLocalization();
 app.UseRouting();
+
 app.UseAuthentication();
+app.UseAuthorization();
 
 //Map
 app.MapHub<BulletinHub>("/BulletinHub");
