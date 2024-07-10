@@ -10,43 +10,18 @@ using SocialEmpires.Services;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var services = builder.Services;
-var config = builder.Configuration;
 
-services.AddSignalR();
+//Configure
+services.Configure<FileDirectoriesOptions>(builder.Configuration.GetSection("FileDirectories"));
 
-services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
-
-services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
-
-services.AddDbContext<AppDbContext>(options =>
-{
-    var connectionString = config["DbConnectionString"];
-    options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure(3));
-});
-
-services.AddAutoMapper(options =>
-{
-    options.AddProfile(typeof(AutoMapperProfile));
-});
-
-services.AddHttpContextAccessor();
-
-services.AddScoped<CommandService>();
-services.AddScoped<ConfigFileService>();
-services.AddScoped<PlayerSaveService>();
-
-#region Localization
-services.AddRazorPages()
-    .AddViewLocalization(options => options.ResourcesPath = "Resources");
+services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("AzureEmailSender"));
 
 var supportedCultures = new List<CultureInfo>();
-foreach(var language in SupportLanguages.List)
+foreach (var language in SupportLanguages.List)
 {
     supportedCultures.Add(new CultureInfo(language));
 }
-
 services.Configure<RequestLocalizationOptions>(options =>
 {
     options.DefaultRequestCulture = new RequestCulture(SupportLanguages.Default);
@@ -55,11 +30,32 @@ services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
 });
 
+services.ConfigureApplicationCookie(cookie =>
+{
+    cookie.LoginPath = "/Identity/Login";
+    cookie.LogoutPath = "/Identity/Logout";
+    cookie.AccessDeniedPath = "/Identity/AccessDenied";
+    cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
+});
+
+//Services
+services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
+
+services.AddHttpContextAccessor();
+
+services.AddSignalR();
+
+services.AddAutoMapper(options =>
+{
+    options.AddProfile(typeof(AutoMapperProfile));
+});
+
+services.AddRazorPages()
+    .AddViewLocalization(options => options.ResourcesPath = "Resources");
+
 services.AddLocalization(
     options => options.ResourcesPath = "Resources");
-#endregion
 
-#region Identity
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     // Password settings.
@@ -78,33 +74,33 @@ services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AppDbContext>();
 
-services.ConfigureApplicationCookie(cookie =>
+services.AddDbContext<AppDbContext>(options =>
 {
-    cookie.LoginPath = "/Identity/Login";
-    cookie.LogoutPath = "/Identity/Logout";
-    cookie.AccessDeniedPath = "/Identity/AccessDenied";
-    cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
+    var connectionString = builder.Configuration["DbConnectionString"];
+    options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure(3));
 });
-#endregion
 
-#region Email Sender
 services.AddScoped<IEmailSender, AzureEmailSender>();
-services.Configure<AzureEmailSenderOptions>(config.GetSection("AzureEmailSender"));
-#endregion
+
+services.AddScoped<CommandService>();
+services.AddScoped<ConfigFileService>();
+services.AddScoped<PlayerSaveService>();
 
 var app = builder.Build();
 
-app.UseRequestLocalization();
-app.UseAuthentication();
+//Use
+app.UseAuthorization();
+app.UseStaticFiles();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-app.UseStaticFiles();
+app.UseRequestLocalization();
 app.UseRouting();
-app.UseAuthorization();
+app.UseAuthentication();
 
+//Map
 app.MapHub<BulletinHub>("/BulletinHub");
 app.MapControllers();
 app.MapControllerRoute(
