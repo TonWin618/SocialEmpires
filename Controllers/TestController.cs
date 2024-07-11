@@ -62,6 +62,9 @@ namespace SocialEmpires.Controllers
             var dartsItemSeed = new DartsItemDataSeed(_appDbContext);
             dartsItemSeed.Initialize();
 
+            var levelRankingRewardSeed = new LevelRankingRewardDataSeed(_appDbContext);
+            levelRankingRewardSeed.Initialize();
+
             return Ok();
         }
     }

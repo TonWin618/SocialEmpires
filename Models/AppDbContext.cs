@@ -12,43 +12,31 @@ namespace SocialEmpires.Models
 {
     public class AppDbContext : IdentityDbContext
     {
+        //Player
         public DbSet<PlayerSave> PlayerSaves { get; set; }
-
         public DbSet<EmpireMap> EmpireMaps { get; set; }
-
         public DbSet<PlayerState> PlayerStates { get; set; }
-
         public DbSet<PlayerInfo> PlayerInfos { get; set; }
 
+        //Bulletin
         public DbSet<Bulletin> Bulletins { get; set; }
 
+        //Config
         public DbSet<Item> Items { get; set; }
-
         public DbSet<Level> Levels { get; set; }
-
         public DbSet<Mission> Missions { get; set; }
-
         public DbSet<ExpansionPrice> ExpansionPrices { get; set; }
-
         public DbSet<FindableItem> FindableItems { get; set; }
-
         public DbSet<LocalizationString> LocalizationStrings { get; set; }
-
         public DbSet<NeighborAssist> NeighborAssists { get; set; }
-
         public DbSet<HonorLevel> HonorLevels { get; set; }
-
         public DbSet<OfferPack> OfferPacks { get; set; }
-
         public DbSet<Magic> Magics { get; set; }
-
         public DbSet<MapPrice> MapPrices {  get; set; }
-
         public DbSet<TownPrice> TownPrices { get; set; }
-
         public DbSet<SocialItem> SocialItems { get; set; }
-
         public DbSet<DartsItem> DartsItems { get; set; }
+        public DbSet<LevelRankingReward> LevelRankingRewards { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -162,6 +150,10 @@ namespace SocialEmpires.Models
 
             builder.Entity<DartsItem>().HasKey(x => x.Id);
             builder.Entity<DartsItem>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<LevelRankingReward>().HasKey(x => x.Id);
+            builder.Entity<LevelRankingReward>().Property(_ => _.Units)
+                .Metadata.SetValueComparer(dictionaryComparer);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
