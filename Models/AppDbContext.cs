@@ -40,6 +40,8 @@ namespace SocialEmpires.Models
 
         public DbSet<OfferPack> OfferPacks { get; set; }
 
+        public DbSet<Magic> Magics { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -139,6 +141,9 @@ namespace SocialEmpires.Models
 
             builder.Entity<OfferPack>().HasKey(x => x.Id);
             builder.Entity<OfferPack>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<Magic>().HasKey(x => x.Id);
+            builder.Entity<Magic>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

@@ -44,8 +44,11 @@ namespace SocialEmpires.Controllers
             var honorLevelSeed = new HonorLevelDataSeed(_appDbContext);
             honorLevelSeed.Initialize();
 
-            var offerPackSeed = new OfferPackDataSeed(_appDbContext);
-            offerPackSeed.Initialize();
+            //var offerPackSeed = new OfferPackDataSeed(_appDbContext);
+            //offerPackSeed.Initialize();
+
+            var magicSeed = new MagicDataSeed(_appDbContext);
+            magicSeed.Initialize();
 
             return Ok();
         }
