@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Configs;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Models.Seeds
 {
@@ -22,20 +20,6 @@ namespace SocialEmpires.Models.Seeds
                 return;
             }
 
-            var jsonSerializerOptions = new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true,
-            }.WithLanguage("en");
-
-            JsonNode config;
-            using (var stream = File.OpenRead("./Models/Seeds/game_config_en.json"))
-            {
-                config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
-            }
-            var itemDtos = JsonSerializer.Deserialize<List<ItemDto>>(config["items"], jsonSerializerOptions);
-
             var mapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<ItemDto, Item>()
@@ -43,10 +27,7 @@ namespace SocialEmpires.Models.Seeds
                     .ForMember(dest => dest.Xp, opt => opt.MapFrom(src => int.Parse(src.Xp)));
             }).CreateMapper();
 
-            var items = itemDtos!.Select(mapper.Map<Item>);
-
-            _appDbContext.AddRange(items);
-            _appDbContext.SaveChanges();
+            ConfigReadAndSaveUtil.ReadAndSave<Item, ItemDto>("items", _appDbContext, mapper);
         }
 
         private record ItemDto(string Id, string InStore, MultiLanguageString Name, string Type,

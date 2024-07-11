@@ -25,8 +25,6 @@ namespace SocialEmpires.Controllers
             _playerSaveService = playerSaveService;
             _bulletinHubContext = bulletinHubContext;
             _appDbContext = appDbContext;
-
-
         }
 
         [HttpGet]
