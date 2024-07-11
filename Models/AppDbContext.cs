@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Bulletins;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.PlayerSaves;
@@ -31,6 +32,8 @@ namespace SocialEmpires.Models
         public DbSet<ExpansionPrice> ExpansionPrices { get; set; }
 
         public DbSet<FindableItem> FindableItems { get; set; }
+
+        public DbSet<LocalizationString> LocalizationStrings { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -120,6 +123,9 @@ namespace SocialEmpires.Models
 
             builder.Entity<FindableItem>().HasKey(x => x.Id);
             builder.Entity<FindableItem>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<LocalizationString>().HasKey(x => x.Id);
+            builder.Entity<LocalizationString>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

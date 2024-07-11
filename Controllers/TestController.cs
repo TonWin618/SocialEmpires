@@ -35,6 +35,9 @@ namespace SocialEmpires.Controllers
             var findableItemSeed = new FindableItemDataSeed(_appDbContext);
             findableItemSeed.Initialize();
 
+            var localizationStringSeed = new LocalizationStringDataSeed(_appDbContext);
+            localizationStringSeed.Initialize();
+
             return Ok();
         }
     }
