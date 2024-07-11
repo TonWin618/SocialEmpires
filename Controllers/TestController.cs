@@ -65,6 +65,9 @@ namespace SocialEmpires.Controllers
             var levelRankingRewardSeed = new LevelRankingRewardDataSeed(_appDbContext);
             levelRankingRewardSeed.Initialize();
 
+            var choreSeed = new ChoreDataSeed(_appDbContext);
+            choreSeed.Initialize();
+
             return Ok();
         }
     }

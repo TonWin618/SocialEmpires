@@ -37,6 +37,7 @@ namespace SocialEmpires.Models
         public DbSet<SocialItem> SocialItems { get; set; }
         public DbSet<DartsItem> DartsItems { get; set; }
         public DbSet<LevelRankingReward> LevelRankingRewards { get; set; }
+        public DbSet<Chore> Chores {  get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -154,6 +155,8 @@ namespace SocialEmpires.Models
             builder.Entity<LevelRankingReward>().HasKey(x => x.Id);
             builder.Entity<LevelRankingReward>().Property(_ => _.Units)
                 .Metadata.SetValueComparer(dictionaryComparer);
+
+            builder.Entity<Chore>().HasKey(x => x.Id);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
