@@ -19,7 +19,7 @@ namespace SocialEmpires.Models.Seeds
             {
                 return;
             }
-            _appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Levels ON");
+
             var mapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<LevelDto, Level>()
@@ -35,7 +35,7 @@ namespace SocialEmpires.Models.Seeds
         private record LevelDto(string RewardType, int ExpRequired ,MultiLanguageString Name, int RewardAmount);
     }
 
-    public static class MappingCounter
+    internal static class MappingCounter
     {
         private static int _count = 0;
 

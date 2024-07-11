@@ -24,6 +24,8 @@ namespace SocialEmpires.Controllers
             itemSeed.Initialize();
             var levelSeed = new LevelDataSeed(_appDbContext);
             levelSeed.Initialize();
+            var missionSeed = new MissionDataSeed(_appDbContext);
+            missionSeed.Initialize();
             return Ok();
         }
     }
