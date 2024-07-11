@@ -24,6 +24,8 @@ namespace SocialEmpires.Models
 
         public DbSet<Item> Items { get; set; }
 
+        public DbSet<Level> Levels { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -102,6 +104,8 @@ namespace SocialEmpires.Models
             builder.Entity<Bulletin>().HasKey(x => x.Id);
 
             builder.Entity<Item>().HasKey(x => x.Id);
+
+            builder.Entity<Level>().HasKey(x => x.Id);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
