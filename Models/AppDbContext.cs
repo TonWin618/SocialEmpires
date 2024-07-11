@@ -46,6 +46,8 @@ namespace SocialEmpires.Models
 
         public DbSet<TownPrice> TownPrices { get; set; }
 
+        public DbSet<SocialItem> SocialItems { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -152,6 +154,9 @@ namespace SocialEmpires.Models
             builder.Entity<MapPrice>().HasKey(x => x.Id);
 
             builder.Entity<TownPrice>().HasKey(x => x.Id);
+
+            builder.Entity<SocialItem>().HasKey(x => x.Id);
+            builder.Entity<SocialItem>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
