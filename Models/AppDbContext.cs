@@ -30,6 +30,8 @@ namespace SocialEmpires.Models
 
         public DbSet<ExpansionPrice> ExpansionPrices { get; set; }
 
+        public DbSet<FindableItem> FindableItems { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -116,6 +118,8 @@ namespace SocialEmpires.Models
 
             builder.Entity<ExpansionPrice>().HasKey(x => x.Id);
 
+            builder.Entity<FindableItem>().HasKey(x => x.Id);
+            builder.Entity<FindableItem>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

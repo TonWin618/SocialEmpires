@@ -22,12 +22,19 @@ namespace SocialEmpires.Controllers
         {
             var itemSeed = new ItemDataSeed(_appDbContext);
             itemSeed.Initialize();
+
             var levelSeed = new LevelDataSeed(_appDbContext);
             levelSeed.Initialize();
+
             var missionSeed = new MissionDataSeed(_appDbContext);
             missionSeed.Initialize();
+
             var expansionPriceSeed = new ExpansionPriceDataSeed(_appDbContext);
             expansionPriceSeed.Initialize();
+
+            var findableItemSeed = new FindableItemDataSeed(_appDbContext);
+            findableItemSeed.Initialize();
+
             return Ok();
         }
     }
