@@ -33,7 +33,7 @@ namespace SocialEmpires.Models.Seeds
             MultiLanguageString Name,
             MultiLanguageString Description,
             int Mana,
-            List<int> Area,
+            string Area,
             int Level,
             int Gold,
             int Cash,
