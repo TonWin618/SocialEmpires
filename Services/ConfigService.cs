@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Utils;
@@ -10,13 +12,8 @@ namespace SocialEmpires.Services
 {
     public class ConfigService
     {
-        private const string enConfigFile = "game_config_en.json";
-        private const string zhConfigFile = "game_config_zh.json";
-
+        private readonly AppDbContext _appDbContext;
         private readonly ILogger<ConfigService> _logger;
-        private readonly FileDirectoriesOptions _options;
-        private readonly JsonSerializerOptions jsonSerializerOptions;
-        private readonly JsonNode _config;
 
         public List<Item> Items { get; private set; }
         public List<Mission> Missions { get; private set; }
@@ -25,48 +22,17 @@ namespace SocialEmpires.Services
         public JsonElement Globals { get; private set; }
 
         public ConfigService(
-            IOptions<FileDirectoriesOptions> options, 
+            AppDbContext appDbContext,
             ILogger<ConfigService> logger)
         {
-            _options = options.Value;
+            _appDbContext = appDbContext;
             _logger = logger;
-
-            jsonSerializerOptions = new JsonSerializerOptions()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true,
-            }.WithLanguage("zh");
-
-            using (var stream = File.OpenRead(Path.Combine(_options.Configs, zhConfigFile)))
-            {
-                _config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
-            }
-
-            //Items = Load<Item>("items");
-            //Missions = Load<Mission>("missions");
-            //Levels = Load<Level>("levels");
-            //ExpansionPrices = Load<ExpansionPrice>("expansion_prices");
+            Load();
         }
 
-        private List<T> Load<T>(string key)
+        public void Load()
         {
-            var result = JsonSerializer.Deserialize<List<T>>(
-                    _config[key],
-                    jsonSerializerOptions);
-            if (result == null)
-            {
-                _logger.LogError($"Error reading JSON game configuration file with Key [{key}].");
-                throw new InvalidOperationException();
-            }
-            return result;
-        }
-
-        public async Task Save()
-        {
-            var jsonString = JsonSerializer.Serialize(Items, jsonSerializerOptions);
-            _config["items"] = JsonNode.Parse(jsonString);
-            await File.WriteAllTextAsync(Path.Combine(_options.Configs, zhConfigFile), _config.ToJsonString(jsonSerializerOptions));
+            Items = _appDbContext.Items.WithLanguage("en").ToList();
         }
 
         public Item? GetItem(int id)

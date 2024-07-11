@@ -36,7 +36,7 @@ namespace SocialEmpires.Controllers
                 return NotFound();
             }
             item.InStore = "1";
-            await _configFileService.Save();
+            //await _configFileService.Save();
             return Redirect(Request.Headers.Referer);
         }
 
@@ -49,7 +49,7 @@ namespace SocialEmpires.Controllers
                 return NotFound();
             }
             item.InStore = "0";
-            await _configFileService.Save();
+            //await _configFileService.Save();
             return Redirect(Request.Headers.Referer);
         }
 
@@ -60,7 +60,7 @@ namespace SocialEmpires.Controllers
         {
             var item = _configFileService.Items.FirstOrDefault(_ => _.Id == updatedItem.Id);
             _mapper.Map(updatedItem, item);
-            await _configFileService.Save();
+            //await _configFileService.Save();
             return Redirect(Request.Headers.Referer);
         }
     }
