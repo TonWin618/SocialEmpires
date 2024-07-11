@@ -50,6 +50,9 @@ namespace SocialEmpires.Controllers
             var magicSeed = new MagicDataSeed(_appDbContext);
             magicSeed.Initialize();
 
+            var mapPriceSeed = new MapPriceDataSeed(_appDbContext);
+            mapPriceSeed.Initialize();
+
             return Ok();
         }
     }

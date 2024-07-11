@@ -42,6 +42,8 @@ namespace SocialEmpires.Models
 
         public DbSet<Magic> Magics { get; set; }
 
+        public DbSet<MapPrice> MapPrices {  get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -144,6 +146,8 @@ namespace SocialEmpires.Models
 
             builder.Entity<Magic>().HasKey(x => x.Id);
             builder.Entity<Magic>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<MapPrice>().HasKey(x => x.Id);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
