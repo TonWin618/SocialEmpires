@@ -35,6 +35,8 @@ namespace SocialEmpires.Models
 
         public DbSet<LocalizationString> LocalizationStrings { get; set; }
 
+        public DbSet<NeighborAssist> NeighborAssists { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -126,6 +128,8 @@ namespace SocialEmpires.Models
 
             builder.Entity<LocalizationString>().HasKey(x => x.Id);
             builder.Entity<LocalizationString>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<NeighborAssist>().HasKey(x => x.Id);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

@@ -38,6 +38,9 @@ namespace SocialEmpires.Controllers
             var localizationStringSeed = new LocalizationStringDataSeed(_appDbContext);
             localizationStringSeed.Initialize();
 
+            var neighborAssistSeed = new NeighborAssistDataSeed(_appDbContext);
+            neighborAssistSeed.Initialize();
+
             return Ok();
         }
     }
