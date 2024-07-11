@@ -59,6 +59,9 @@ namespace SocialEmpires.Controllers
             var socialItemSeed = new SocialItemDataSeed(_appDbContext);
             socialItemSeed.Initialize();
 
+            var dartsItemSeed = new DartsItemDataSeed(_appDbContext);
+            dartsItemSeed.Initialize();
+
             return Ok();
         }
     }

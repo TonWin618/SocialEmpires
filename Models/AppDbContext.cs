@@ -48,6 +48,8 @@ namespace SocialEmpires.Models
 
         public DbSet<SocialItem> SocialItems { get; set; }
 
+        public DbSet<DartsItem> DartsItems { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -157,6 +159,9 @@ namespace SocialEmpires.Models
 
             builder.Entity<SocialItem>().HasKey(x => x.Id);
             builder.Entity<SocialItem>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<DartsItem>().HasKey(x => x.Id);
+            builder.Entity<DartsItem>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
