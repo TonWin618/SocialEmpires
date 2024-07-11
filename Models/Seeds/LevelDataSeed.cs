@@ -32,8 +32,10 @@ namespace SocialEmpires.Models.Seeds
             ConfigReadAndSaveUtil.ReadAndSave<Level, LevelDto>("levels", _appDbContext, mapper);
         }
 
-        private record LevelDto(string RewardType, int ExpRequired ,MultiLanguageString Name, int RewardAmount);
+        private record LevelDto(string RewardType, int ExpRequired, MultiLanguageString Name, int RewardAmount);
     }
+
+    
 
     internal static class MappingCounter
     {

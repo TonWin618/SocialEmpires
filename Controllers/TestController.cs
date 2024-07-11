@@ -26,6 +26,8 @@ namespace SocialEmpires.Controllers
             levelSeed.Initialize();
             var missionSeed = new MissionDataSeed(_appDbContext);
             missionSeed.Initialize();
+            var expansionPriceSeed = new ExpansionPriceDataSeed(_appDbContext);
+            expansionPriceSeed.Initialize();
             return Ok();
         }
     }

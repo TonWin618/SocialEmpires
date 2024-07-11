@@ -28,6 +28,8 @@ namespace SocialEmpires.Models
 
         public DbSet<Mission> Missions { get; set; }
 
+        public DbSet<ExpansionPrice> ExpansionPrices { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -111,6 +113,8 @@ namespace SocialEmpires.Models
 
             builder.Entity<Mission>().HasKey(x => x.Id);
             builder.Entity<Mission>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<ExpansionPrice>().HasKey(x => x.Id);
 
         }
 
