@@ -53,6 +53,9 @@ namespace SocialEmpires.Controllers
             var mapPriceSeed = new MapPriceDataSeed(_appDbContext);
             mapPriceSeed.Initialize();
 
+            var townPriceSeed = new TownPriceDataSeed(_appDbContext);
+            townPriceSeed.Initialize();
+
             return Ok();
         }
     }
