@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Bulletins;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.PlayerSaves;
@@ -38,6 +37,8 @@ namespace SocialEmpires.Models
         public DbSet<NeighborAssist> NeighborAssists { get; set; }
 
         public DbSet<HonorLevel> HonorLevels { get; set; }
+
+        public DbSet<OfferPack> OfferPacks { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -135,6 +136,9 @@ namespace SocialEmpires.Models
 
             builder.Entity<HonorLevel>().HasKey(x => x.Id);
             builder.Entity<HonorLevel>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<OfferPack>().HasKey(x => x.Id);
+            builder.Entity<OfferPack>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
