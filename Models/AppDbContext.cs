@@ -37,6 +37,8 @@ namespace SocialEmpires.Models
 
         public DbSet<NeighborAssist> NeighborAssists { get; set; }
 
+        public DbSet<HonorLevel> HonorLevels { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -130,6 +132,9 @@ namespace SocialEmpires.Models
             builder.Entity<LocalizationString>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<NeighborAssist>().HasKey(x => x.Id);
+
+            builder.Entity<HonorLevel>().HasKey(x => x.Id);
+            builder.Entity<HonorLevel>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

@@ -41,6 +41,9 @@ namespace SocialEmpires.Controllers
             var neighborAssistSeed = new NeighborAssistDataSeed(_appDbContext);
             neighborAssistSeed.Initialize();
 
+            var honorLevelSeed = new HonorLevelDataSeed(_appDbContext);
+            honorLevelSeed.Initialize();
+
             return Ok();
         }
     }
