@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using SocialEmpires.Utils
 @attribute [Authorize(Roles = "Admin")]
-@inject ConfigFileService configFileService
+@inject ConfigService configFileService
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";

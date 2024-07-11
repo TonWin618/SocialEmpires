@@ -17,7 +17,7 @@ namespace SocialEmpires.Controllers
 
         [HttpGet]
         public IActionResult DataSeed(
-            [FromServices] ConfigFileService _configFileService,
+            [FromServices] ConfigService _configFileService,
             [FromServices] AppDbContext _appDbContext)
         {
             var itemSeed = new ItemDataSeed(_appDbContext);

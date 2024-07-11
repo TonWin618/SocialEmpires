@@ -9,12 +9,12 @@ namespace SocialEmpires.Services
 
     public partial class CommandService
     {
-        private readonly ConfigFileService _configFileService;
+        private readonly ConfigService _configFileService;
         private readonly PlayerSaveService _playerSaveService;
         private readonly ILogger<CommandService> _logger;
 
         public CommandService(
-            ConfigFileService configFileService,
+            ConfigService configFileService,
             PlayerSaveService playerSaveService,
             ILogger<CommandService> logger)
         {

@@ -10,13 +10,13 @@ namespace SocialEmpires.Controllers
     [Authorize(Roles = "Admin")]
     public partial class AdminController : Controller
     {
-        private readonly ConfigFileService _configFileService;
+        private readonly ConfigService _configFileService;
         private readonly PlayerSaveService _playerSaveService;
         private readonly IHubContext<BulletinHub> _bulletinHubContext;
         private readonly AppDbContext _appDbContext;
 
         public AdminController(
-            ConfigFileService configFileService,
+            ConfigService configFileService,
             PlayerSaveService playerSaveService,
             IHubContext<BulletinHub> bulletinHubContext,
             AppDbContext appDbContext)

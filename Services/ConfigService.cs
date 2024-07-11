@@ -8,12 +8,12 @@ using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Services
 {
-    public class ConfigFileService
+    public class ConfigService
     {
         private const string enConfigFile = "game_config_en.json";
         private const string zhConfigFile = "game_config_zh.json";
 
-        private readonly ILogger<ConfigFileService> _logger;
+        private readonly ILogger<ConfigService> _logger;
         private readonly FileDirectoriesOptions _options;
         private readonly JsonSerializerOptions jsonSerializerOptions;
         private readonly JsonNode _config;
@@ -24,9 +24,9 @@ namespace SocialEmpires.Services
         public List<ExpansionPrice> ExpansionPrices { get; private set; }
         public JsonElement Globals { get; private set; }
 
-        public ConfigFileService(
+        public ConfigService(
             IOptions<FileDirectoriesOptions> options, 
-            ILogger<ConfigFileService> logger)
+            ILogger<ConfigService> logger)
         {
             _options = options.Value;
             _logger = logger;

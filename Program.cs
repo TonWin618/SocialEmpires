@@ -83,7 +83,7 @@ services.AddDbContext<AppDbContext>(options =>
 services.AddScoped<IEmailSender, AzureEmailSender>();
 
 services.AddScoped<CommandService>();
-services.AddScoped<ConfigFileService>();
+services.AddScoped<ConfigService>();
 services.AddScoped<PlayerSaveService>();
 
 var app = builder.Build();
