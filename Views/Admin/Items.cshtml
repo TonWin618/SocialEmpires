@@ -48,20 +48,20 @@
                     <td>@item.CategoryId : @item.SubcategoryId</td>
                     <td>@($"{item.Life.ToString().PadLeft(5, '_')} | {item.Velocity.ToString().PadLeft(2, '_')} | {item.Attack.ToString().PadLeft(4, '_')} | {item.AttackInterval.ToString().PadLeft(3, '_')} | {item.AttackRange.ToString().PadLeft(3, '_')}")</td>
                     <td>
-                        @(item.Flying == "1" ? "■Fly" : "")
-                        @(item.UnitsLimit != "0" ? $"■Limit{item.UnitsLimit}" : "")
+                        @(item.Flying ? "■Fly" : "")
+                        @(item.UnitsLimit != 0 ? $"■Limit{item.UnitsLimit}" : "")
                         @(item.OnlyMobile == "1" ? $"■Mobile" : "")
-                        @(item.Collect != "0" ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
+                        @(item.Collect != 0 ? $"■Collect {item.CollectType}{item.Collect} xp{item.CollectXp}" : "")
                         @(item.UpgradesTo != "0" ? $"■Upgrade{item.UpgradesTo}" : "")
                     </td>
                     <td>
                         <button class="btn btn-primary" onclick="openItemDetail(@item.Id)">@localizer["Edit"]</button>
                         <div class="btn-group" role="group">
                             <form asp-action="ShelveItem" asp-route-id="@item.Id">
-                                <button type="submit" class="btn btn-warning" disabled="@(item.InStore!="0")">@localizer["Shelve"]</button>
+                                <button type="submit" class="btn btn-warning" disabled="@(item.InStore)">@localizer["Shelve"]</button>
                             </form>
                             <form asp-action="UnshelveItem" asp-route-id="@item.Id">
-                                <button type="submit" class="btn btn-warning" disabled="@(item.InStore=="0")">@localizer["Unshelve"]</button>
+                                <button type="submit" class="btn btn-warning" disabled="@(item.InStore)">@localizer["Unshelve"]</button>
                             </form>
                         </div>
                     </td>

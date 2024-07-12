@@ -183,7 +183,7 @@ namespace SocialEmpires.Services
             {
                 return;
             }
-            var collect = int.Parse(item.Collect) * multiplier;
+            var collect = item.Collect * multiplier;
             switch (item.CollectType)
             {
                 case CostType.Wood:
@@ -203,7 +203,7 @@ namespace SocialEmpires.Services
                     break;
             }
 
-            var collectXp = int.Parse(item.CollectXp);
+            var collectXp = item.CollectXp;
             save.DefaultMap.Xp += collectXp;
         }
 
@@ -214,7 +214,7 @@ namespace SocialEmpires.Services
             {
                 return;
             }
-            var cost = multiplier * int.Parse(item.Cost);
+            var cost = multiplier * item.Cost;
             //TODO: cost food when buy unit by gold
             switch (item.CostType)
             {
@@ -243,7 +243,7 @@ namespace SocialEmpires.Services
             {
                 return;
             }
-            var collectXp = int.Parse(item.CollectXp);
+            var collectXp = item.CollectXp;
             save.DefaultMap.Xp += collectXp;
         }
 

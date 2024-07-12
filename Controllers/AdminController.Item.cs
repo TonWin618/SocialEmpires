@@ -35,7 +35,7 @@ namespace SocialEmpires.Controllers
             {
                 return NotFound();
             }
-            item.InStore = "1";
+            item.InStore = true;
             //await _configFileService.Save();
             return Redirect(Request.Headers.Referer);
         }
@@ -48,7 +48,7 @@ namespace SocialEmpires.Controllers
             {
                 return NotFound();
             }
-            item.InStore = "0";
+            item.InStore = false;
             //await _configFileService.Save();
             return Redirect(Request.Headers.Referer);
         }

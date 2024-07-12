@@ -7,7 +7,7 @@ namespace SocialEmpires
     {
         public AutoMapperProfile()
         {
-            CreateMap<Item, Item>();
+            //CreateMap<Item, Item>();
         }
     }
 }

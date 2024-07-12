@@ -29,8 +29,8 @@
                                 if (mapGrid[x, y] != null)
                                 {
                                     <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(mapGrid[x, y].Image).jpg"
-                                         width="@(int.Parse(mapGrid[x, y].Width) * 20)"
-                                         height="@(int.Parse(mapGrid[x, y].Height) * 20)"
+                                         width="@(mapGrid[x, y].Width * 20)"
+                                         height="@(mapGrid[x, y].Height * 20)"
                                     style="z-index:1;position:absolute;bottom:50%;right:100%"/>
                                 }
                             }

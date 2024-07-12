@@ -14,7 +14,7 @@ namespace SocialEmpires.Dtos
             CreateMap<LevelDto, Level>()
                 .ForMember(
                     dest => dest.ToLevel,
-                    opt => { opt.MapFrom(src => MappingCount); })
+                    opt => opt.MapFrom(src => MappingCount))
                 .AfterMap((src, dest) => MappingCount++)
                 .ReverseMap(); 
         }
