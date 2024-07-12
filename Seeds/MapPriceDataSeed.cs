@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Dtos;
 
 namespace SocialEmpires.Seeds
 {
@@ -27,11 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<MapPrice, MapPriceDto>("map_prices", _appDbContext, mapper);
         }
-
-        public record MapPriceDto(
-            int Coins,
-            int Cash,
-            int Level
-        );
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -28,12 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<NeighborAssist, NeighborAssistDto>("neighbor_assists", _appDbContext, mapper);
         }
-
-        public record NeighborAssistDto(
-            Reward Reward,
-            int Rnd,
-            MultiLanguageString Task,
-            MultiLanguageString Action,
-            MultiLanguageString Notification);
     }
 }

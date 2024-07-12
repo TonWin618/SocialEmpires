@@ -2,6 +2,7 @@
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Dtos;
 
 namespace SocialEmpires.Seeds
 {
@@ -28,7 +29,4 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<FindableItem, FindableItemDto>("findable_items", _appDbContext, mapper);
         }
-
-        public record FindableItemDto(int Id, MultiLanguageString Title, MultiLanguageString Description, int Coins);
-    }
 }

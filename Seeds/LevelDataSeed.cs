@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -31,8 +31,6 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<Level, LevelDto>("levels", _appDbContext, mapper);
         }
-
-        private record LevelDto(string RewardType, int ExpRequired, MultiLanguageString Name, int RewardAmount);
     }
 
 

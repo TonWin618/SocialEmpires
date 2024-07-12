@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -28,11 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<HonorLevel, HonorLevelDto>("honor_levels", _appDbContext, mapper);
         }
-
-        public record HonorLevelDto(
-            int Id,
-            int Points,
-            MultiLanguageString Rank
-        );
     }
 }

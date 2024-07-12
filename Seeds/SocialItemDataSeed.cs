@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -29,7 +29,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<SocialItem, SocialItemDto>("social_items", _appDbContext, mapper);
         }
-
-        public record SocialItemDto(int Id, int WorkerCost, MultiLanguageString Workers);
     }
 }

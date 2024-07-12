@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Dtos;
 
 namespace SocialEmpires.Seeds
 {
@@ -27,12 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<DartsItem, DartsItemDto>("darts_items", _appDbContext, mapper);
         }
-
-        public record DartsItemDto(
-            int Id,
-            string StartDate,
-            List<int> Items,
-            int ExtraItem
-        );
     }
 }

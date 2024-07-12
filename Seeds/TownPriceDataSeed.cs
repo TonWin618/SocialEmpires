@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Dtos;
 
 namespace SocialEmpires.Seeds
 {
@@ -27,11 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<TownPrice, TownPriceDto>("town_prices", _appDbContext, mapper);
         }
-
-        public record TownPriceDto(
-            int Coins,
-            int Cash,
-            int Level
-        );
     }
 }

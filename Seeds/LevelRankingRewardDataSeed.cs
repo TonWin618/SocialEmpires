@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Dtos;
 
 namespace SocialEmpires.Seeds
 {
@@ -27,11 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<LevelRankingReward, LevelRankingRewardDto>("level_ranking_reward", _appDbContext, mapper);
         }
-
-        public record LevelRankingRewardDto(
-            int Level,
-            int Cash,
-            Dictionary<string, int> Units
-        );
     }
 }

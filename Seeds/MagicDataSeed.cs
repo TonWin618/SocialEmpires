@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -28,18 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<Magic, MagicDto>("magics", _appDbContext, mapper);
         }
-
-        public record MagicDto(
-            int Id,
-            MultiLanguageString Name,
-            MultiLanguageString Description,
-            int Mana,
-            string Area,
-            int Level,
-            int Gold,
-            int Cash,
-            string ImgName,
-            int Target
-        );
     }
 }

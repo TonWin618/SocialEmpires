@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -28,20 +29,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<OfferPack, OfferPackDto>("offer_packs", _appDbContext, mapper);
         }
-
-        public record OfferPackDto(
-            int Id,
-            int Position,
-            int CostCash,
-            int Gold,
-            int Stone,
-            int Food,
-            int Wood,
-            int Xp,
-            List<int> Items,
-            int Mana,
-            int Enabled,
-            int PackType
-        );
     }
 }

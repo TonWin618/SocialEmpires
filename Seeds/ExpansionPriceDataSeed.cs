@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Dtos;
 
 namespace SocialEmpires.Seeds
 {
@@ -27,7 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<ExpansionPrice, ExpansionPriceDto>("expansion_prices", _appDbContext, mapper);
         }
-
-        private record ExpansionPriceDto(int Coins, int Neighbors, int Cash);
     }
 }

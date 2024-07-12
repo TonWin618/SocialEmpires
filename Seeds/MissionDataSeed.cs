@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -28,7 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<Mission, MissionDto>("missions", _appDbContext, mapper);
         }
-
-        private record MissionDto(MultiLanguageString Description, string Hint, int Reward, int Id, MultiLanguageString Title);
     }
 }

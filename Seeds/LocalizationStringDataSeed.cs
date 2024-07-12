@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Dtos;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
@@ -28,7 +28,5 @@ namespace SocialEmpires.Seeds
 
             ConfigReadAndSaveUtil.ReadAndSave<LocalizationString, LocalizationStringDto>("localization_strings", _appDbContext, mapper);
         }
-
-        private record LocalizationStringDto(int Id, MultiLanguageString Name, MultiLanguageString Text);
     }
 }
