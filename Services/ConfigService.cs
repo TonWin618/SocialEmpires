@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using SocialEmpires.Infrastructure.MultiLanguage;
+﻿using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
-using SocialEmpires.Models.Options;
 using SocialEmpires.Utils;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Services
 {
@@ -32,7 +28,13 @@ namespace SocialEmpires.Services
 
         public void Load()
         {
-            Items = _appDbContext.Items.WithLanguage("en").ToList();
+            var language = "en"; //TODO: 
+            Items = _appDbContext.Items.WithLanguage(language).ToList();
+            Missions = _appDbContext.Missions.WithLanguage(language).ToList();
+            Levels = _appDbContext.Levels.WithLanguage(language).ToList();
+            ExpansionPrices = _appDbContext.ExpansionPrices.WithLanguage(language).ToList();
+
+            Globals = JsonDocument.Parse(_appDbContext.Chores.First().Globals).RootElement;
         }
 
         public Item? GetItem(int id)
