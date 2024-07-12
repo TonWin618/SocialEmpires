@@ -3,7 +3,7 @@ using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Models.Seeds
 {
-    public class DartsItemDataSeed
+    public class DartsItemDataSeed: IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 

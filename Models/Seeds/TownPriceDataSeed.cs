@@ -3,7 +3,7 @@ using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Models.Seeds
 {
-    public class TownPriceDataSeed
+    public class TownPriceDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 

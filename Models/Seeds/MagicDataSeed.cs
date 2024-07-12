@@ -4,7 +4,7 @@ using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Models.Seeds
 {
-    public class MagicDataSeed
+    public class MagicDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 

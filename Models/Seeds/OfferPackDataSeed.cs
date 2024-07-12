@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using SocialEmpires.Models.Configs;
-using SocialEmpires.Utils;
-using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Models.Seeds
 {
-    public class OfferPackDataSeed
+    public class OfferPackDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 

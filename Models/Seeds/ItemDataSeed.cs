@@ -4,7 +4,7 @@ using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Models.Seeds
 {
-    public class ItemDataSeed
+    public class ItemDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 

@@ -3,7 +3,7 @@ using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Models.Seeds
 {
-    public class LevelRankingRewardDataSeed
+    public class LevelRankingRewardDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 

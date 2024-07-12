@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Models.Seeds
 {
-    public class MissionDataSeed
+    public class MissionDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 
