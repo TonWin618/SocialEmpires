@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using SocialEmpires;
 using SocialEmpires.Hubs;
 using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Options;
+using SocialEmpires.Seeds;
 using SocialEmpires.Services;
 using System.Globalization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -40,7 +41,7 @@ services.AddSignalR();
 
 services.AddAutoMapper(options =>
 {
-    options.AddProfile(typeof(AutoMapperProfile));
+    options.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
 });
 
 services.AddRazorPages()
@@ -87,7 +88,26 @@ services.AddScoped<CommandService>();
 services.AddScoped<ConfigService>();
 services.AddScoped<PlayerSaveService>();
 
+var seedTypes = Assembly.GetExecutingAssembly()
+    .GetTypes()
+    .Where(t => string.Equals(t.Namespace, typeof(IDataSeed).Namespace) && t.IsClass && t.IsAssignableTo(typeof(IDataSeed)))
+    .ToList();
+
+foreach (var seed in seedTypes)
+{
+    services.AddTransient(typeof(IDataSeed), seed);
+}
+
 var app = builder.Build();
+
+using(var scope = app.Services.CreateScope())
+{
+    var dataSeeds = scope.ServiceProvider.GetServices<IDataSeed>();
+    foreach (var dataSeed in dataSeeds)
+    {
+        dataSeed.Initialize();
+    }
+}
 
 //Use
 app.UseStaticFiles();
