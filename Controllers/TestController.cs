@@ -2,7 +2,7 @@
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Bulletins;
-using SocialEmpires.Models.Seeds;
+using SocialEmpires.Seeds;
 using SocialEmpires.Services;
 
 namespace SocialEmpires.Controllers

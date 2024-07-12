@@ -1,9 +1,10 @@
 ﻿using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace SocialEmpires.Models.Seeds
+namespace SocialEmpires.Seeds
 {
     public class ChoreDataSeed
     {

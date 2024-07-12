@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
-namespace SocialEmpires.Models.Seeds
+namespace SocialEmpires.Seeds
 {
     public class NeighborAssistDataSeed : IDataSeed
     {
@@ -29,10 +30,10 @@ namespace SocialEmpires.Models.Seeds
         }
 
         public record NeighborAssistDto(
-            Reward Reward, 
-            int Rnd, 
-            MultiLanguageString Task, 
-            MultiLanguageString Action, 
+            Reward Reward,
+            int Rnd,
+            MultiLanguageString Task,
+            MultiLanguageString Action,
             MultiLanguageString Notification);
     }
 }

@@ -1,33 +1,34 @@
 ﻿using AutoMapper;
+using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
-namespace SocialEmpires.Models.Seeds
+namespace SocialEmpires.Seeds
 {
-    public class TownPriceDataSeed : IDataSeed
+    public class MapPriceDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 
-        public TownPriceDataSeed(AppDbContext appContext)
+        public MapPriceDataSeed(AppDbContext appContext)
         {
             _appDbContext = appContext;
         }
 
         public void Initialize()
         {
-            if (_appDbContext.TownPrices.Any())
+            if (_appDbContext.MapPrices.Any())
             {
                 return;
             }
 
             var mapper = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<TownPriceDto, TownPrice>();
+                cfg.CreateMap<MapPriceDto, MapPrice>();
             }).CreateMapper();
 
-            ConfigReadAndSaveUtil.ReadAndSave<TownPrice, TownPriceDto>("town_prices", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<MapPrice, MapPriceDto>("map_prices", _appDbContext, mapper);
         }
 
-        public record TownPriceDto(
+        public record MapPriceDto(
             int Coins,
             int Cash,
             int Level

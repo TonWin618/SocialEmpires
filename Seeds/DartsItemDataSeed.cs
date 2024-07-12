@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
+using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
-namespace SocialEmpires.Models.Seeds
+namespace SocialEmpires.Seeds
 {
-    public class DartsItemDataSeed: IDataSeed
+    public class DartsItemDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
 

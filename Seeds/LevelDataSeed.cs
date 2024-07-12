@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 
-namespace SocialEmpires.Models.Seeds
+namespace SocialEmpires.Seeds
 {
     public class LevelDataSeed : IDataSeed
     {
@@ -23,9 +24,9 @@ namespace SocialEmpires.Models.Seeds
             {
                 cfg.CreateMap<LevelDto, Level>()
                 .ForMember(
-                    dest => dest.ToLevel, 
-                    opt=> { opt.MapFrom(src => MappingCounter.Count + 1); })
-                .AfterMap((src,dest) => MappingCounter.Increment());
+                    dest => dest.ToLevel,
+                    opt => { opt.MapFrom(src => MappingCounter.Count + 1); })
+                .AfterMap((src, dest) => MappingCounter.Increment());
             }).CreateMapper();
 
             ConfigReadAndSaveUtil.ReadAndSave<Level, LevelDto>("levels", _appDbContext, mapper);
@@ -34,7 +35,7 @@ namespace SocialEmpires.Models.Seeds
         private record LevelDto(string RewardType, int ExpRequired, MultiLanguageString Name, int RewardAmount);
     }
 
-    
+
 
     internal static class MappingCounter
     {

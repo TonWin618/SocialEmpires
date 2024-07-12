@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace SocialEmpires.Models.Seeds
+namespace SocialEmpires.Seeds
 {
     public static class ConfigReadAndSaveUtil
     {
@@ -21,7 +22,7 @@ namespace SocialEmpires.Models.Seeds
             {
                 config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
             }
-            var dtos = JsonSerializer.Deserialize<List<TDto>>(config[key], jsonSerializerOptions);
+            var dtos = config[key].Deserialize<List<TDto>>(jsonSerializerOptions);
 
             var entities = dtos!.Select(mapper.Map<TDto, TEntity>).ToArray();
 

@@ -1,4 +1,4 @@
-﻿namespace SocialEmpires.Models.Seeds
+﻿namespace SocialEmpires.Seeds
 {
     public interface IDataSeed
     {
