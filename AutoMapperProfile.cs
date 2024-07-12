@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SocialEmpires.Models.Configs;
 
-namespace SocialEmpires.Models
+namespace SocialEmpires
 {
     public class AutoMapperProfile : Profile
     {

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using SocialEmpires;
 using SocialEmpires.Hubs;
 using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Infrastructure.MultiLanguage;
