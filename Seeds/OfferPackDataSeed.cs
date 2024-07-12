@@ -23,7 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            //ConfigReadAndSaveUtil.ReadAndSave<OfferPack, OfferPackDto>("offer_packs", _appDbContext, _mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<OfferPack, OfferPackDto>("offer_packs", _appDbContext, _mapper);
         }
     }
 }

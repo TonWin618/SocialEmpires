@@ -80,10 +80,8 @@ namespace SocialEmpires.Models
             builder.Entity<EmpireMap>()
                 .Property(_ => _.Items)
                 .HasConversion(
-                v => JsonSerializer.Serialize(
-                    v, jsonSerializeOptions),
-                v => JsonSerializer.Deserialize<List<MapItem>>(
-                    v, jsonSerializeOptions)!,
+                v => JsonSerializer.Serialize(v, jsonSerializeOptions),
+                v => JsonSerializer.Deserialize<List<MapItem>>(v, jsonSerializeOptions)!,
                 new ValueComparer<List<MapItem>>(
                     (list1, list2) => list1.NullRespectingSequenceEqual(list2),
                     list => list.Aggregate(0, (hash, item) => HashCode.Combine(hash, item.GetHashCode())),
@@ -138,6 +136,19 @@ namespace SocialEmpires.Models
 
             builder.Entity<OfferPack>().HasKey(x => x.Id);
             builder.Entity<OfferPack>().Property(x => x.Id).ValueGeneratedNever();
+
+            var OfferPackJsonSerializeOptions = new JsonSerializerOptions();
+            OfferPackJsonSerializeOptions.Converters.Add(new IntListOrIntListListConverter());
+            builder.Entity<OfferPack>()
+                .Property(x => x.Items)
+                .HasConversion(
+                v => JsonSerializer.Serialize(v, OfferPackJsonSerializeOptions),
+                v => JsonSerializer.Deserialize<List<object>>(v, OfferPackJsonSerializeOptions)!,
+                new ValueComparer<List<object>>(
+                    (list1, list2) => list1.NullRespectingSequenceEqual(list2),
+                    list => list.Aggregate(0, (hash, item) => HashCode.Combine(hash, item.GetHashCode())),
+                    list => new List<object>(list))
+                );
 
             builder.Entity<Magic>().HasKey(x => x.Id);
             builder.Entity<Magic>().Property(x => x.Id).ValueGeneratedNever();

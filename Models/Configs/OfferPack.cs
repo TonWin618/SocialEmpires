@@ -14,7 +14,7 @@ namespace SocialEmpires.Models.Configs
         public int Food { get; set; }
         public int Wood { get; set; }
         public int Xp { get; set; }
-        public List<int> Items { get; set; }
+        public List<object> Items { get; set; }
         public int Mana { get; set; }
         public bool Enabled { get; set; }
         public int PackType { get; set; }
