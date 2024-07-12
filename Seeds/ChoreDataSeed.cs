@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Infrastructure.MultiLanguage;
+﻿using AutoMapper;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 using System.Text.Json;
@@ -6,13 +7,15 @@ using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Seeds
 {
-    public class ChoreDataSeed
+    public class ChoreDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public ChoreDataSeed(AppDbContext appContext)
+        public ChoreDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()

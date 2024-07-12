@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class LocalizationStringDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public LocalizationStringDataSeed(AppDbContext appContext)
+        public LocalizationStringDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,12 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<LocalizationStringDto, LocalizationString>();
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<LocalizationString, LocalizationStringDto>("localization_strings", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<LocalizationString, LocalizationStringDto>("localization_strings", _appDbContext, _mapper);
         }
     }
 }

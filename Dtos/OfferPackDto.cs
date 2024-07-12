@@ -1,4 +1,7 @@
-﻿namespace SocialEmpires.Dtos
+﻿using AutoMapper;
+using SocialEmpires.Models.Configs;
+
+namespace SocialEmpires.Dtos
 {
     public record OfferPackDto(
             int Id,
@@ -14,4 +17,11 @@
             int Enabled,
             int PackType
         );
+    public class OfferPackProfile : Profile
+    {
+        public OfferPackProfile()
+        {
+            CreateMap<OfferPackDto, OfferPack>().ReverseMap(); ;
+        }
+    }
 }

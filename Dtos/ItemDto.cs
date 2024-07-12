@@ -1,4 +1,6 @@
-﻿using SocialEmpires.Infrastructure.MultiLanguage;
+﻿using AutoMapper;
+using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Dtos
 {
@@ -54,4 +56,15 @@ namespace SocialEmpires.Dtos
         string ShowOnMobileStore, 
         string OnlyMobile, 
         string? IphoneAdjustments);
+
+    public class ItemProfile : Profile
+    {
+        public ItemProfile()
+        {
+            CreateMap<ItemDto, Item>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => int.Parse(src.Id)))
+                .ForMember(dest => dest.Xp, opt => opt.MapFrom(src => int.Parse(src.Xp)))
+                .ReverseMap();
+        }
+    }
 }

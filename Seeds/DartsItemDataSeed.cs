@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class DartsItemDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public DartsItemDataSeed(AppDbContext appContext)
+        public DartsItemDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,12 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<DartsItemDto, DartsItem>();
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<DartsItem, DartsItemDto>("darts_items", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<DartsItem, DartsItemDto>("darts_items", _appDbContext, _mapper);
         }
     }
 }

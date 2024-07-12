@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class OfferPackDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public OfferPackDataSeed(AppDbContext appContext)
+        public OfferPackDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,13 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<OfferPackDto, OfferPack>()
-                .ForMember(dest => dest.Enabled, opt => opt.MapFrom(src => src.Enabled == 1));
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<OfferPack, OfferPackDto>("offer_packs", _appDbContext, mapper);
+            //ConfigReadAndSaveUtil.ReadAndSave<OfferPack, OfferPackDto>("offer_packs", _appDbContext, _mapper);
         }
     }
 }

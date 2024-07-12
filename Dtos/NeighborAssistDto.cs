@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Infrastructure.MultiLanguage;
+﻿using AutoMapper;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Dtos
@@ -9,4 +10,12 @@ namespace SocialEmpires.Dtos
             MultiLanguageString Task,
             MultiLanguageString Action,
             MultiLanguageString Notification);
+
+    public class NeighborAssistProfile : Profile
+    {
+        public NeighborAssistProfile()
+        {
+            CreateMap<NeighborAssistDto, NeighborAssist>().ReverseMap(); ;
+        }
+    }
 }

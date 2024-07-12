@@ -1,4 +1,7 @@
-﻿namespace SocialEmpires.Dtos
+﻿using AutoMapper;
+using SocialEmpires.Models.Configs;
+
+namespace SocialEmpires.Dtos
 {
     public record DartsItemDto(
             int Id,
@@ -6,4 +9,12 @@
             List<int> Items,
             int ExtraItem
         );
+
+    public class DartsItemProfile: Profile
+    {
+        public DartsItemProfile() 
+        {
+            CreateMap<DartsItemDto, DartsItem>().ReverseMap(); ;
+        }
+    }
 }

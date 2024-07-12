@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class MagicDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public MagicDataSeed(AppDbContext appContext)
+        public MagicDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,12 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<MagicDto, Magic>();
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<Magic, MagicDto>("magics", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<Magic, MagicDto>("magics", _appDbContext, _mapper);
         }
     }
 }

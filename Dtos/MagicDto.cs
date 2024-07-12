@@ -1,4 +1,6 @@
-﻿using SocialEmpires.Infrastructure.MultiLanguage;
+﻿using AutoMapper;
+using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Dtos
 {
@@ -14,4 +16,12 @@ namespace SocialEmpires.Dtos
             string ImgName,
             int Target
         );
+
+    public class MagicProfile : Profile
+    {
+        public MagicProfile()
+        {
+            CreateMap<MagicDto, Magic>().ReverseMap(); ;
+        }
+    }
 }

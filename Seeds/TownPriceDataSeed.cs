@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class TownPriceDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public TownPriceDataSeed(AppDbContext appContext)
+        public TownPriceDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,12 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<TownPriceDto, TownPrice>();
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<TownPrice, TownPriceDto>("town_prices", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<TownPrice, TownPriceDto>("town_prices", _appDbContext, _mapper);
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Infrastructure.MultiLanguage;
-using SocialEmpires.Models;
 using SocialEmpires.Models.Bulletins;
-using SocialEmpires.Seeds;
-using SocialEmpires.Services;
 
 namespace SocialEmpires.Controllers
 {
@@ -13,62 +10,6 @@ namespace SocialEmpires.Controllers
         public IActionResult MultiLanguageTest([MultiLanguage] Bulletin bulletin)
         {
             return this.JsonWithLanguage(bulletin);
-        }
-
-        [HttpGet]
-        public IActionResult DataSeed(
-            [FromServices] ConfigService _configFileService,
-            [FromServices] AppDbContext _appDbContext)
-        {
-            var itemSeed = new ItemDataSeed(_appDbContext);
-            itemSeed.Initialize();
-
-            var levelSeed = new LevelDataSeed(_appDbContext);
-            levelSeed.Initialize();
-
-            var missionSeed = new MissionDataSeed(_appDbContext);
-            missionSeed.Initialize();
-
-            var expansionPriceSeed = new ExpansionPriceDataSeed(_appDbContext);
-            expansionPriceSeed.Initialize();
-
-            var findableItemSeed = new FindableItemDataSeed(_appDbContext);
-            findableItemSeed.Initialize();
-
-            var localizationStringSeed = new LocalizationStringDataSeed(_appDbContext);
-            localizationStringSeed.Initialize();
-
-            var neighborAssistSeed = new NeighborAssistDataSeed(_appDbContext);
-            neighborAssistSeed.Initialize();
-
-            var honorLevelSeed = new HonorLevelDataSeed(_appDbContext);
-            honorLevelSeed.Initialize();
-
-            //var offerPackSeed = new OfferPackDataSeed(_appDbContext);
-            //offerPackSeed.Initialize();
-
-            var magicSeed = new MagicDataSeed(_appDbContext);
-            magicSeed.Initialize();
-
-            var mapPriceSeed = new MapPriceDataSeed(_appDbContext);
-            mapPriceSeed.Initialize();
-
-            var townPriceSeed = new TownPriceDataSeed(_appDbContext);
-            townPriceSeed.Initialize();
-
-            var socialItemSeed = new SocialItemDataSeed(_appDbContext);
-            socialItemSeed.Initialize();
-
-            var dartsItemSeed = new DartsItemDataSeed(_appDbContext);
-            dartsItemSeed.Initialize();
-
-            var levelRankingRewardSeed = new LevelRankingRewardDataSeed(_appDbContext);
-            levelRankingRewardSeed.Initialize();
-
-            var choreSeed = new ChoreDataSeed(_appDbContext);
-            choreSeed.Initialize();
-
-            return Ok();
         }
     }
 }

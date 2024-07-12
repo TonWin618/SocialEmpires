@@ -1,4 +1,6 @@
-﻿using SocialEmpires.Infrastructure.MultiLanguage;
+﻿using AutoMapper;
+using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Dtos
 {
@@ -7,4 +9,12 @@ namespace SocialEmpires.Dtos
             int Points,
             MultiLanguageString Rank
         );
+
+    public class HonorLevelProfile : Profile
+    {
+        public HonorLevelProfile()
+        {
+            CreateMap<HonorLevelDto, HonorLevel>().ReverseMap(); ;
+        }
+    }
 }

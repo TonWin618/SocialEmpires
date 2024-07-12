@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class ExpansionPriceDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public ExpansionPriceDataSeed(AppDbContext appContext)
+        public ExpansionPriceDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,12 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<ExpansionPriceDto, ExpansionPrice>();
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<ExpansionPrice, ExpansionPriceDto>("expansion_prices", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<ExpansionPrice, ExpansionPriceDto>("expansion_prices", _appDbContext, _mapper);
         }
     }
 }

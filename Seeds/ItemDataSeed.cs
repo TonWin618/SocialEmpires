@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class ItemDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public ItemDataSeed(AppDbContext appContext)
+        public ItemDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,14 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<ItemDto, Item>()
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(src => int.Parse(src.Id)))
-                    .ForMember(dest => dest.Xp, opt => opt.MapFrom(src => int.Parse(src.Xp)));
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<Item, ItemDto>("items", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<Item, ItemDto>("items", _appDbContext, _mapper);
         }
     }
 }

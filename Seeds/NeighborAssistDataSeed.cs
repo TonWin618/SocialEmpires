@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class NeighborAssistDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public NeighborAssistDataSeed(AppDbContext appContext)
+        public NeighborAssistDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,12 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<NeighborAssistDto, NeighborAssist>();
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<NeighborAssist, NeighborAssistDto>("neighbor_assists", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<NeighborAssist, NeighborAssistDto>("neighbor_assists", _appDbContext, _mapper);
         }
     }
 }

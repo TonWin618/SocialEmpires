@@ -8,10 +8,12 @@ namespace SocialEmpires.Seeds
     public class MissionDataSeed : IDataSeed
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public MissionDataSeed(AppDbContext appContext)
+        public MissionDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
+            _mapper = mapper;
         }
 
         public void Initialize()
@@ -21,12 +23,7 @@ namespace SocialEmpires.Seeds
                 return;
             }
 
-            var mapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<MissionDto, Mission>();
-            }).CreateMapper();
-
-            ConfigReadAndSaveUtil.ReadAndSave<Mission, MissionDto>("missions", _appDbContext, mapper);
+            ConfigReadAndSaveUtil.ReadAndSave<Mission, MissionDto>("missions", _appDbContext, _mapper);
         }
     }
 }
