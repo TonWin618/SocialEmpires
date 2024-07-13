@@ -33,7 +33,7 @@ namespace SocialEmpires.Seeds
             }.WithLanguage("en");
 
             JsonNode config;
-            using (var stream = File.OpenRead("./Models/Seeds/game_config_en.json"))
+            using (var stream = File.OpenRead("./Seeds/game_config_en.json"))
             {
                 config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
             }
