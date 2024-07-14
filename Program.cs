@@ -16,7 +16,7 @@ var services = builder.Services;
 
 //Configure
 services.Configure<FileDirectoriesOptions>(builder.Configuration.GetSection("FileDirectories"));
-
+services.Configure<FlashGameConfigOptions>(builder.Configuration.GetSection("FlashGameConfig"));
 services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("AzureEmailSender"));
 
 var supportedCultures = new List<CultureInfo>();
