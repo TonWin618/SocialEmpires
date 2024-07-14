@@ -3,7 +3,7 @@
 @using SocialEmpires.Models.Configs
 @using SocialEmpires.Services
 @attribute [Authorize(Roles = "Admin")]
-@inject ConfigFileService configFileService
+@inject ConfigService configFileService
 @inject IViewLocalizer localizer
 @{
     Layout = null;

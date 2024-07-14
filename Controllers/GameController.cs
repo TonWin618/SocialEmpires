@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using SocialEmpires.Dtos;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Services;
 using System.Text.Json;
@@ -13,18 +17,28 @@ namespace SocialEmpires.Controllers
     public class GameController : Controller
     {
         private readonly FileDirectoriesOptions _options;
+        private readonly ConfigService _configService;
+        private readonly IMapper _mapper;
+        private readonly IMemoryCache _cache;
 
         private JsonSerializerOptions camelCaseJsonoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         private JsonSerializerOptions snakeCaseoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
-
-        public GameController(IOptions<FileDirectoriesOptions> options)
+        public GameController(
+            IOptions<FileDirectoriesOptions> options, 
+            ConfigService configService, 
+            IMapper mapper,
+            IMemoryCache cache)
         {
             _options = options.Value;
+            _configService = configService;
+            _mapper = mapper;
+            _cache = cache;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.IsAdmin = HttpContext.User.IsInRole("Admin");
             ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
             ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             return View();
@@ -64,16 +78,77 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
-        public ActionResult GetGameConfig()
+        public async Task<ActionResult> GetGameConfig()
         {
-            if (HttpContext.Request.Headers.AcceptLanguage.Contains("zh"))
+            var result = await _cache.GetOrCreateAsync<JsonObject>("game_config_en", item =>
             {
-                return SendFromLocal(Path.Combine(_options.Configs, "game_config_zh.json"));
-            }
-            else
-            {
-                return SendFromLocal(Path.Combine(_options.Configs, "game_config_en.json"));
-            }
+                var lowerSnakeCaseoptions = new JsonSerializerOptions()
+                { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower }
+                .WithLanguage("en");
+
+                var upperSnakeCaseoptions = new JsonSerializerOptions()
+                { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseUpper }
+                .WithLanguage("en");
+
+                var root = new JsonObject();
+
+                var localizationStringDtos = _mapper.Map<List<LocalizationStringDto>>(_configService.LocalizationStrings);
+                root.Add("localization_strings", JsonSerializer.SerializeToNode(localizationStringDtos, lowerSnakeCaseoptions));
+
+                root.Add("categories", JsonSerializer.SerializeToNode(_configService.Categories, lowerSnakeCaseoptions));
+
+                var itemDtos = _mapper.Map<List<ItemDto>>(_configService.Items);
+                root.Add("items", JsonSerializer.SerializeToNode(itemDtos, lowerSnakeCaseoptions));
+
+                var expansionPricesDtos = _mapper.Map<List<ExpansionPriceDto>>(_configService.ExpansionPrices);
+                root.Add("expansion_prices", JsonSerializer.SerializeToNode(expansionPricesDtos, lowerSnakeCaseoptions));
+
+                var levelsDtos = _mapper.Map<List<LevelDto>>(_configService.Levels);
+                root.Add("levels", JsonSerializer.SerializeToNode(levelsDtos, lowerSnakeCaseoptions));
+
+                var honorLevelsDtos = _mapper.Map<List<HonorLevelDto>>(_configService.HonorLevels);
+                root.Add("honor_levels", JsonSerializer.SerializeToNode(honorLevelsDtos, lowerSnakeCaseoptions));
+
+                var neighborAssistsDtos = _mapper.Map<List<NeighborAssistDto>>(_configService.NeighborAssists);
+                root.Add("neighbor_assists", JsonSerializer.SerializeToNode(neighborAssistsDtos, lowerSnakeCaseoptions));
+
+                var townPricesDtos = _mapper.Map<List<TownPriceDto>>(_configService.TownPrices);
+                root.Add("town_prices", JsonSerializer.SerializeToNode(townPricesDtos, lowerSnakeCaseoptions));
+
+                var mapPricesDtos = _mapper.Map<List<MapPriceDto>>(_configService.MapPrices);
+                root.Add("map_prices", JsonSerializer.SerializeToNode(mapPricesDtos, lowerSnakeCaseoptions));
+
+                var findableItemsDtos = _mapper.Map<List<FindableItemDto>>(_configService.FindableItems);
+                root.Add("findable_items", JsonSerializer.SerializeToNode(findableItemsDtos, lowerSnakeCaseoptions));
+
+                var missionsDtos = _mapper.Map<List<MissionDto>>(_configService.Missions);
+                root.Add("missions", JsonSerializer.SerializeToNode(missionsDtos, lowerSnakeCaseoptions));
+
+                var offerPacksDtos = _mapper.Map<List<OfferPackDto>>(_configService.OfferPacks);
+                root.Add("offer_packs", JsonSerializer.SerializeToNode(offerPacksDtos, lowerSnakeCaseoptions));
+
+                root.Add("images", JsonSerializer.SerializeToNode(_configService.Images, lowerSnakeCaseoptions));
+
+                var socialItemsDtos = _mapper.Map<List<SocialItemDto>>(_configService.SocialItems);
+                root.Add("social_items", JsonSerializer.SerializeToNode(socialItemsDtos, lowerSnakeCaseoptions));
+
+                root.Add("globals", JsonSerializer.SerializeToNode(_configService.Globals, upperSnakeCaseoptions));
+
+                var magicsDtos = _mapper.Map<List<MagicDto>>(_configService.Magics);
+                root.Add("magics", JsonSerializer.SerializeToNode(magicsDtos, lowerSnakeCaseoptions));
+
+                var levelRankingRewardDtos = _mapper.Map<List<LevelRankingRewardDto>>(_configService.LevelRankingReward);
+                root.Add("level_ranking_reward", JsonSerializer.SerializeToNode(levelRankingRewardDtos, lowerSnakeCaseoptions));
+
+                root.Add("tournament_type", JsonSerializer.SerializeToNode(_configService.TournamentType, lowerSnakeCaseoptions));
+
+                var dartsItemsDtos = _mapper.Map<List<DartsItemDto>>(_configService.DartsItems);
+                root.Add("darts_items", JsonSerializer.SerializeToNode(dartsItemsDtos, lowerSnakeCaseoptions));
+
+                return Task.FromResult(root);
+            });
+
+            return new JsonResult(result);
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_player_info.php")]

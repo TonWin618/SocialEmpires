@@ -50,7 +50,7 @@ namespace SocialEmpires.Controllers
 
             return View();
         }
-        public record MapGridItem(int X, int Y, int Id, string Image, string Width, string Height);
+        public record MapGridItem(int X, int Y, int Id, string Image, int Width, int Height);
 
         [HttpPost]
         public async Task ChangeCash(string playerId, [FromBody] int amount)

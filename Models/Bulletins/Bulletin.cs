@@ -1,23 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SocialEmpires.Infrastructure.MultiLanguage;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace SocialEmpires.Models.Bulletins
 {
     public class Bulletin
     {
-        public string PublisherId { get; set; }
+        public Guid Id { get; private set; }
 
-        public DateTime PublishedTime { get; set; }
+        public string PublisherId { get; private set; }
 
-        public DateTime? ExpiryTime { get; set; }
+        public DateTime PublishedTime { get; private set; }
 
-        public string Type { get; set; }
-
-        public string HtmlContent { get; set; }
-
+        public DateTime ExpiryTime { get; private set; }
+        
+        public string Type { get; private set; }
+        
+        public MultiLanguageString HtmlContent { get; private set; }
+        
         [NotMapped]
         [JsonIgnore]
-        public bool IsExpired => ExpiryTime == null || DateTime.UtcNow > ExpiryTime;
+        public bool IsExpired => DateTime.UtcNow > ExpiryTime;
 
         /// <summary>
         /// Expriy at expiryTime
@@ -26,11 +30,12 @@ namespace SocialEmpires.Models.Bulletins
         /// <param name="htmlContent"></param>
         /// <param name="expiryTime"></param>
         /// <param name="type"></param>
-        public Bulletin(string publisherId, string htmlContent, DateTime expiryTime, string type = BulletinTypeNames.Normal)
+        public Bulletin(string publisherId, string htmlContent, string language, DateTime expiryTime, string type = BulletinTypeNames.Normal)
         {
+            Id = new Guid();
             PublisherId = publisherId;
             PublishedTime = DateTime.UtcNow;
-            HtmlContent = htmlContent;
+            HtmlContent = new(language, htmlContent);
             Type = type;
             ExpiryTime = expiryTime;
         }
@@ -42,8 +47,8 @@ namespace SocialEmpires.Models.Bulletins
         /// <param name="htmlContent"></param>
         /// <param name="expiryTimeSpan"></param>
         /// <param name="type"></param>
-        public Bulletin(string publisherId, string htmlContent, TimeSpan expiryTimeSpan, string type = BulletinTypeNames.Normal) 
-            : this(publisherId, htmlContent, DateTime.UtcNow + expiryTimeSpan, type)
+        public Bulletin(string publisherId, string htmlContent, string language, TimeSpan expiryTimeSpan, string type = BulletinTypeNames.Normal) 
+            : this(publisherId, htmlContent, language, DateTime.UtcNow + expiryTimeSpan, type)
         {
 
         }
@@ -54,10 +59,38 @@ namespace SocialEmpires.Models.Bulletins
         /// <param name="publisherId"></param>
         /// <param name="htmlContent"></param>
         /// <param name="type"></param>
-        public Bulletin(string publisherId, string htmlContent, string type = BulletinTypeNames.Normal)
-            : this(publisherId, htmlContent, DateTime.UtcNow, type)
+        public Bulletin(string publisherId, string htmlContent, string language, string type = BulletinTypeNames.Normal)
+            : this(publisherId, htmlContent, language, DateTime.UtcNow, type)
         {
 
+        }
+
+        /// <summary>
+        /// Add html content
+        /// </summary>
+        /// <param name="language"></param>
+        /// <param name="htmlContent"></param>
+        /// <returns></returns>
+        public Bulletin AddHtmlContent(string language, string htmlContent)
+        {
+            HtmlContent.Set(language, htmlContent);
+            return this;
+        }
+
+        private Bulletin()
+        {
+            //only for efcore
+        }
+
+        [JsonConstructor]
+        private Bulletin(Guid id, string publisherId, DateTime publishedTime, DateTime expiryTime, string type, MultiLanguageString htmlContent)
+        {
+            Id = id;
+            PublisherId = publisherId;
+            PublishedTime = publishedTime;
+            ExpiryTime = expiryTime;
+            Type = type;
+            HtmlContent = htmlContent;
         }
     }
 }

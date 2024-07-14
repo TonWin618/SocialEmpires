@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using SocialEmpires.Infrastructure.EmailSender;
 
 namespace SocialEmpires.Controllers
@@ -9,10 +10,14 @@ namespace SocialEmpires.Controllers
     {
         private readonly ILogger<IdentityController> _logger;
         private string[] LoginMethods { get; set; } = ["EmailAndPassword", "EmailAndToken"];
+        private readonly IStringLocalizer<IdentityController> _localizer;
 
-        public IdentityController(ILogger<IdentityController> logger)
+        public IdentityController(
+            ILogger<IdentityController> logger,
+            IStringLocalizer<IdentityController> localizer)
         {
             _logger = logger;
+            _localizer = localizer;
         }
 
         #region Initialize
@@ -177,8 +182,8 @@ namespace SocialEmpires.Controllers
 
             await _emailSender.SendAsync(
                 email,
-                "[Social Empires] Verification code for login",
-                $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+                $"{_localizer["LoginTokenEmailTitle"]}",
+                $"<html><body><h4>{_localizer["LoginTokenEmailContent"]} </h4><h1>{token}</h1><br/></body></html>");
 
             ViewData["SendingInterval"] = 60;
 
@@ -305,8 +310,8 @@ namespace SocialEmpires.Controllers
 
                 await _emailSender.SendAsync(
                     email,
-                    "[Social Empires] Verification code for register",
-                    $"<html><body><h4>Your verification code is </h4><h1>{token}</h1><br/></body></html>");
+                    $"{_localizer["EmailConfirmEmailTitle"]}",
+                    $"<html><body><h4>{_localizer["EmailConfirmEmailContent"]} </h4><h1>{token}</h1><br/></body></html>");
 
                 ViewData["SendingInterval"] = 60;
                 return View("Register");
@@ -314,5 +319,18 @@ namespace SocialEmpires.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        public async Task<IActionResult> Logout([FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            await _signInManager.SignOutAsync();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied([FromServices] SignInManager<IdentityUser> _signInManager)
+        {
+            return View();
+        }
     }
 }

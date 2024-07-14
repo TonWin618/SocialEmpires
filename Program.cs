@@ -3,61 +3,55 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Hubs;
 using SocialEmpires.Infrastructure.EmailSender;
+using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Options;
+using SocialEmpires.Seeds;
 using SocialEmpires.Services;
 using System.Globalization;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var services = builder.Services;
-var config = builder.Configuration;
 
-services.AddSignalR();
+//Configure
+services.Configure<FileDirectoriesOptions>(builder.Configuration.GetSection("FileDirectories"));
 
-services.Configure<FileDirectoriesOptions>(config.GetSection("FileDirectories"));
+services.Configure<AzureEmailSenderOptions>(builder.Configuration.GetSection("AzureEmailSender"));
 
+var supportedCultures = new List<CultureInfo>();
+foreach (var language in SupportLanguages.List)
+{
+    supportedCultures.Add(new CultureInfo(language));
+}
+services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture(SupportLanguages.Default);
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+    options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
+});
+
+//Services
 services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
-
-services.AddDbContext<AppDbContext>(options =>
-{
-    var connectionString = config["DbConnectionString"];
-    options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure(3));
-});
-
-services.AddAutoMapper(options =>
-{
-    options.AddProfile(typeof(AutoMapperProfile));
-});
 
 services.AddHttpContextAccessor();
 
-services.AddScoped<CommandService>();
-services.AddScoped<ConfigFileService>();
-services.AddScoped<PlayerSaveService>();
+services.AddSignalR();
 
-#region Localization
+services.AddAutoMapper(options =>
+{
+    options.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
+});
+
+services.AddMemoryCache();
+
 services.AddRazorPages()
     .AddViewLocalization(options => options.ResourcesPath = "Resources");
 
-var supportedCultures = new[]
-{
-    new CultureInfo("en"),
-    new CultureInfo("zh")
-};
-
-services.Configure<RequestLocalizationOptions>(options =>
-{
-    options.DefaultRequestCulture = new RequestCulture("zh");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-});
-
 services.AddLocalization(
     options => options.ResourcesPath = "Resources");
-#endregion
 
-#region Identity
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     // Password settings.
@@ -83,26 +77,54 @@ services.ConfigureApplicationCookie(cookie =>
     cookie.AccessDeniedPath = "/Identity/AccessDenied";
     cookie.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
-#endregion
 
-#region Email Sender
+services.AddDbContext<AppDbContext>(options =>
+{
+    var connectionString = builder.Configuration["DbConnectionString"];
+    options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure(3));
+});
+
 services.AddScoped<IEmailSender, AzureEmailSender>();
-services.Configure<AzureEmailSenderOptions>(config.GetSection("AzureEmailSender"));
-#endregion
+
+services.AddScoped<CommandService>();
+services.AddScoped<ConfigService>();
+services.AddScoped<PlayerSaveService>();
+
+var seedTypes = Assembly.GetExecutingAssembly()
+    .GetTypes()
+    .Where(t => string.Equals(t.Namespace, typeof(IDataSeed).Namespace) && t.IsClass && t.IsAssignableTo(typeof(IDataSeed)))
+    .ToList();
+
+foreach (var seed in seedTypes)
+{
+    services.AddTransient(typeof(IDataSeed), seed);
+}
 
 var app = builder.Build();
 
-app.UseRequestLocalization();
-app.UseAuthentication();
+using(var scope = app.Services.CreateScope())
+{
+    var dataSeeds = scope.ServiceProvider.GetServices<IDataSeed>();
+    foreach (var dataSeed in dataSeeds)
+    {
+        dataSeed.Initialize();
+    }
+}
+
+//Use
+app.UseStaticFiles();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-app.UseStaticFiles();
+app.UseRequestLocalization();
 app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
+//Map
 app.MapHub<BulletinHub>("/BulletinHub");
 app.MapControllers();
 app.MapControllerRoute(

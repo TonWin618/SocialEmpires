@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SocialEmpires.Models.Bulletins;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.PlayerSaves;
 using SocialEmpires.Utils;
 using System.Text.Json;
@@ -10,13 +12,32 @@ namespace SocialEmpires.Models
 {
     public class AppDbContext : IdentityDbContext
     {
+        //Player
         public DbSet<PlayerSave> PlayerSaves { get; set; }
-
         public DbSet<EmpireMap> EmpireMaps { get; set; }
-
         public DbSet<PlayerState> PlayerStates { get; set; }
-
         public DbSet<PlayerInfo> PlayerInfos { get; set; }
+
+        //Bulletin
+        public DbSet<Bulletin> Bulletins { get; set; }
+
+        //Config
+        public DbSet<Item> Items { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<Mission> Missions { get; set; }
+        public DbSet<ExpansionPrice> ExpansionPrices { get; set; }
+        public DbSet<FindableItem> FindableItems { get; set; }
+        public DbSet<LocalizationString> LocalizationStrings { get; set; }
+        public DbSet<NeighborAssist> NeighborAssists { get; set; }
+        public DbSet<HonorLevel> HonorLevels { get; set; }
+        public DbSet<OfferPack> OfferPacks { get; set; }
+        public DbSet<Magic> Magics { get; set; }
+        public DbSet<MapPrice> MapPrices {  get; set; }
+        public DbSet<TownPrice> TownPrices { get; set; }
+        public DbSet<SocialItem> SocialItems { get; set; }
+        public DbSet<DartsItem> DartsItems { get; set; }
+        public DbSet<LevelRankingReward> LevelRankingRewards { get; set; }
+        public DbSet<Chore> Chores {  get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -59,10 +80,8 @@ namespace SocialEmpires.Models
             builder.Entity<EmpireMap>()
                 .Property(_ => _.Items)
                 .HasConversion(
-                v => JsonSerializer.Serialize(
-                    v, jsonSerializeOptions),
-                v => JsonSerializer.Deserialize<List<MapItem>>(
-                    v, jsonSerializeOptions)!,
+                v => JsonSerializer.Serialize(v, jsonSerializeOptions),
+                v => JsonSerializer.Deserialize<List<MapItem>>(v, jsonSerializeOptions)!,
                 new ValueComparer<List<MapItem>>(
                     (list1, list2) => list1.NullRespectingSequenceEqual(list2),
                     list => list.Aggregate(0, (hash, item) => HashCode.Combine(hash, item.GetHashCode())),
@@ -92,6 +111,63 @@ namespace SocialEmpires.Models
                 .Metadata.SetValueComparer(dictionaryComparer);
 
             builder.Entity<PlayerInfo>().HasKey(x => x.Pid);
+
+            builder.Entity<Bulletin>().HasKey(x => x.Id);
+
+            builder.Entity<Item>().HasKey(x => x.Id);
+
+            builder.Entity<Level>().HasKey(x => x.Id);
+
+            builder.Entity<Mission>().HasKey(x => x.Id);
+            builder.Entity<Mission>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<ExpansionPrice>().HasKey(x => x.Id);
+
+            builder.Entity<FindableItem>().HasKey(x => x.Id);
+            builder.Entity<FindableItem>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<LocalizationString>().HasKey(x => x.Id);
+            builder.Entity<LocalizationString>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<NeighborAssist>().HasKey(x => x.Id);
+
+            builder.Entity<HonorLevel>().HasKey(x => x.Id);
+            builder.Entity<HonorLevel>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<OfferPack>().HasKey(x => x.Id);
+            builder.Entity<OfferPack>().Property(x => x.Id).ValueGeneratedNever();
+
+            var OfferPackJsonSerializeOptions = new JsonSerializerOptions();
+            OfferPackJsonSerializeOptions.Converters.Add(new IntListOrIntListListConverter());
+            builder.Entity<OfferPack>()
+                .Property(x => x.Items)
+                .HasConversion(
+                v => JsonSerializer.Serialize(v, OfferPackJsonSerializeOptions),
+                v => JsonSerializer.Deserialize<List<object>>(v, OfferPackJsonSerializeOptions)!,
+                new ValueComparer<List<object>>(
+                    (list1, list2) => list1.NullRespectingSequenceEqual(list2),
+                    list => list.Aggregate(0, (hash, item) => HashCode.Combine(hash, item.GetHashCode())),
+                    list => new List<object>(list))
+                );
+
+            builder.Entity<Magic>().HasKey(x => x.Id);
+            builder.Entity<Magic>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<MapPrice>().HasKey(x => x.Id);
+
+            builder.Entity<TownPrice>().HasKey(x => x.Id);
+
+            builder.Entity<SocialItem>().HasKey(x => x.Id);
+            builder.Entity<SocialItem>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<DartsItem>().HasKey(x => x.Id);
+            builder.Entity<DartsItem>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<LevelRankingReward>().HasKey(x => x.Id);
+            builder.Entity<LevelRankingReward>().Property(_ => _.Units)
+                .Metadata.SetValueComparer(dictionaryComparer);
+
+            builder.Entity<Chore>().HasKey(x => x.Id);
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
