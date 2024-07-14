@@ -44,6 +44,8 @@ services.AddAutoMapper(options =>
     options.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
 });
 
+services.AddMemoryCache();
+
 services.AddRazorPages()
     .AddViewLocalization(options => options.ResourcesPath = "Resources");
 
