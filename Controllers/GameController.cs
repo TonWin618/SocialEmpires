@@ -16,7 +16,8 @@ namespace SocialEmpires.Controllers
     [Authorize(Roles = "User")]
     public class GameController : Controller
     {
-        private readonly FileDirectoriesOptions _options;
+        private readonly FlashGameConfigOptions _flashGameConfigOptions;
+        private readonly FileDirectoriesOptions _fileDirectoriesOptions;
         private readonly ConfigService _configService;
         private readonly IMapper _mapper;
         private readonly IMemoryCache _cache;
@@ -24,12 +25,14 @@ namespace SocialEmpires.Controllers
         private JsonSerializerOptions camelCaseJsonoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         private JsonSerializerOptions snakeCaseoptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
         public GameController(
-            IOptions<FileDirectoriesOptions> options, 
+            IOptions<FlashGameConfigOptions> flashGameConfigOptions,
+            IOptions<FileDirectoriesOptions> fileDirectoriesOptions, 
             ConfigService configService, 
             IMapper mapper,
             IMemoryCache cache)
         {
-            _options = options.Value;
+            _flashGameConfigOptions = flashGameConfigOptions.Value;
+            _fileDirectoriesOptions = fileDirectoriesOptions.Value;
             _configService = configService;
             _mapper = mapper;
             _cache = cache;
@@ -39,6 +42,7 @@ namespace SocialEmpires.Controllers
         public IActionResult Index()
         {
             ViewBag.IsAdmin = HttpContext.User.IsInRole("Admin");
+            ViewData["BaseUrl"] = _flashGameConfigOptions.BaseUrl;
             ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
             ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             return View();
@@ -56,19 +60,19 @@ namespace SocialEmpires.Controllers
         [HttpGet("/avatar/{userid}.png")]
         public ActionResult GetAvatar()
         {
-            return SendFromLocal(Path.Combine(_options.Uploads, "Avatars/example.png"));
+            return SendFromLocal(Path.Combine(_fileDirectoriesOptions.Uploads, "Avatars/example.png"));
         }
 
         [HttpGet("crossdomain.xml")]
         public ActionResult GetCrossdomainXml()
         {
-            return SendFromLocal(Path.Combine(_options.Assets, "crossdomain.xml"));
+            return SendFromLocal(Path.Combine(_fileDirectoriesOptions.Assets, "crossdomain.xml"));
         }
 
         [HttpGet("/default01.static.socialpointgames.com/static/socialempires/{*path}")]
         public ActionResult GetStaticAssets(string path)
         {
-            return SendFromLocal(Path.Combine(_options.Assets, path));
+            return SendFromLocal(Path.Combine(_fileDirectoriesOptions.Assets, path));
         }
 
         [HttpPost("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/track_game_status.php")]
@@ -158,7 +162,7 @@ namespace SocialEmpires.Controllers
         {
             if (user != null && user.StartsWith("100000"))
             {
-                return SendFromLocal(Path.Combine(_options.Maps, $"{user}.json"));
+                return SendFromLocal(Path.Combine(_fileDirectoriesOptions.Maps, $"{user}.json"));
             }
 
             var save = await _playerSaveService.GetPlayerSaveAsync(userid);
