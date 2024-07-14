@@ -101,12 +101,13 @@ namespace SocialEmpires.Controllers
                 return View("Login");
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user, password, true, false);
-            if (!result.Succeeded)
+            var result = await _userManager.CheckPasswordAsync(user, password);
+            if (!result)
             {
                 ViewData["ErrorMessage"] = "InvalidPassword";
                 return View("Login");
             }
+            await _signInManager.SignInAsync(user, true);
             return Redirect("/");
         }
 
