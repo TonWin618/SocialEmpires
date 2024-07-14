@@ -61,7 +61,7 @@
                                 <button type="submit" class="btn btn-warning" disabled="@(item.InStore)">@localizer["Shelve"]</button>
                             </form>
                             <form asp-action="UnshelveItem" asp-route-id="@item.Id">
-                                <button type="submit" class="btn btn-warning" disabled="@(item.InStore)">@localizer["Unshelve"]</button>
+                                <button type="submit" class="btn btn-warning" disabled="@(!item.InStore)">@localizer["Unshelve"]</button>
                             </form>
                         </div>
                     </td>
