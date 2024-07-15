@@ -42,11 +42,11 @@ namespace SocialEmpires.Services
         {
             var currency = args[0].GetString();
 
-            if (currency == "c")
+            if ((ResourceType)currency!.First() == ResourceType.Cash)
             {
                 save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 50, 0);
             }
-            else if (currency == "g")
+            else if ((ResourceType)currency!.First() == ResourceType.Gold)
             {
                 var map = save.Maps[0];
                 map.Coins = Math.Max(map.Coins - 100000, 0);
