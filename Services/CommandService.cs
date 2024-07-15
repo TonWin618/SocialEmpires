@@ -306,6 +306,11 @@ namespace SocialEmpires.Services
             }
         }
 
+        private void AddXp(PlayerSave save, int quantity)
+        {
+            save.DefaultMap.Xp += quantity;
+        }
+
         private static long TimestampNow()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeSeconds();
