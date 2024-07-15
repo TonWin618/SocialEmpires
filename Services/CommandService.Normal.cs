@@ -1,4 +1,4 @@
-﻿using SocialEmpires.Models;
+﻿using SocialEmpires.Models.Enums;
 using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
@@ -35,7 +35,7 @@ namespace SocialEmpires.Services
                 }
                 gifts[itemId] += 1;
             }
-
+            DeductResource(save, ResourceType.Cash, cashUsed);
             save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashUsed, 0);
         }
 
@@ -102,10 +102,7 @@ namespace SocialEmpires.Services
             var itemToRemove = items.FirstOrDefault(item => item.Id == id && item.X == x && item.Y == y);
             if (itemToRemove != null)
             {
-                // Apply XP collection
                 ApplyCollectXp(save, id);
-
-                // Remove the item from the map
                 items.Remove(itemToRemove);
             }
         }
@@ -116,7 +113,7 @@ namespace SocialEmpires.Services
             var y = args[1].GetInt32();
             var townId = args[2].GetInt32();
             var id = args[3].GetInt32();
-            var numUnitsContainedWhenHarvested = args[4].GetInt32(); // Assuming this affects multiplier logic elsewhere
+            var numUnitsContainedWhenHarvested = args[4].GetInt32();
             var resourceMultiplier = args[5].GetInt32();
             var cashToSubtract = args[6].GetInt32();
 
@@ -125,20 +122,14 @@ namespace SocialEmpires.Services
             item.Timestamp = TimestampNow();
 
             ApplyCollectAsync(save, id, resourceMultiplier + (numUnitsContainedWhenHarvested - 1) * 0.2);
-            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
+            DeductResource(save, ResourceType.Cash, cashToSubtract);
         }
 
         private void HandleExchangeCashCommand(PlayerSave save, JsonElement[] args)
         {
             var townId = args[0].GetInt32();
-            _logger.LogInformation("Exchange cash -> coins.");
-            if (save.PlayerInfo.Cash - 5 < 0)
-            {
-                //TODO: 
-                _logger.LogInformation($"{save.Pid}: an exception occurred during the processing of the ExchangeCash command.");
-            }
-            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 5, 0); // Assuming a function for editing resources is used elsewhere
-            save.Maps[townId].Coins += 2500;
+            DeductResource(save, ResourceType.Cash, 5);
+            AddResource(save, ResourceType.Gold, 2500);
         }
     }
 }
