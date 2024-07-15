@@ -43,27 +43,26 @@ namespace SocialEmpires.Services
 
         public void Load()
         {
-            var language = "en"; //TODO: 
-            LocalizationStrings = _appDbContext.LocalizationStrings.WithLanguage(language).ToList();
+            LocalizationStrings = _appDbContext.LocalizationStrings.ToList();
             Categories = JsonDocument.Parse(_appDbContext.Chores.First().Categories.en).RootElement;
-            Items = _appDbContext.Items.WithLanguage(language).ToList();
-            ExpansionPrices = _appDbContext.ExpansionPrices.WithLanguage(language).ToList();
-            Levels = _appDbContext.Levels.WithLanguage(language).ToList();
-            HonorLevels = _appDbContext.HonorLevels.WithLanguage(language).ToList();
-            NeighborAssists = _appDbContext.NeighborAssists.WithLanguage(language).ToList();
-            TownPrices = _appDbContext.TownPrices.WithLanguage(language).ToList();
-            MapPrices = _appDbContext.MapPrices.WithLanguage(language).ToList();
-            FindableItems = _appDbContext.FindableItems.WithLanguage(language).ToList();
-            Missions = _appDbContext.Missions.WithLanguage(language).ToList();
-            OfferPacks = _appDbContext.OfferPacks.WithLanguage(language).ToList();
+            Items = _appDbContext.Items.ToList();
+            ExpansionPrices = _appDbContext.ExpansionPrices.ToList();
+            Levels = _appDbContext.Levels.ToList();
+            HonorLevels = _appDbContext.HonorLevels.ToList();
+            NeighborAssists = _appDbContext.NeighborAssists.ToList();
+            TownPrices = _appDbContext.TownPrices.ToList();
+            MapPrices = _appDbContext.MapPrices.ToList();
+            FindableItems = _appDbContext.FindableItems.ToList();
+            Missions = _appDbContext.Missions.ToList();
+            OfferPacks = _appDbContext.OfferPacks.ToList();
             Images = JsonDocument.Parse(_appDbContext.Chores.First().Images).RootElement;
-            SocialItems = _appDbContext.SocialItems.WithLanguage(language).ToList();
+            SocialItems = _appDbContext.SocialItems.ToList();
             Globals = JsonDocument.Parse(_appDbContext.Chores.First().Globals).RootElement;
-            Magics = _appDbContext.Magics.WithLanguage(language).ToList();
+            Magics = _appDbContext.Magics.ToList();
             UnitsCollectionsCategories = JsonDocument.Parse(_appDbContext.Chores.First().UnitsCollectionsCategories).RootElement;
-            LevelRankingReward = _appDbContext.LevelRankingRewards.WithLanguage(language).ToList();
+            LevelRankingReward = _appDbContext.LevelRankingRewards.ToList();
             TournamentType = JsonDocument.Parse(_appDbContext.Chores.First().TournamentType).RootElement;
-            DartsItems = _appDbContext.DartsItems.WithLanguage(language).ToList();
+            DartsItems = _appDbContext.DartsItems.ToList();
         }
 
         public Item? GetItem(int id)
