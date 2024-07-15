@@ -184,24 +184,8 @@ namespace SocialEmpires.Services
                 return;
             }
             var collect = item.Collect * multiplier;
-            switch (item.CollectType)
-            {
-                case CostType.Wood:
-                    save.DefaultMap.Wood += (int)collect;
-                    break;
-                case CostType.Gold:
-                    save.DefaultMap.Coins += (int)collect;
-                    break;
-                case CostType.Cash:
-                    save.PlayerInfo.Cash += (int)collect;
-                    break;
-                case CostType.Stone:
-                    save.DefaultMap.Stone += (int)collect;
-                    break;
-                case CostType.Food:
-                    save.DefaultMap.Food += (int)collect;
-                    break;
-            }
+            //TODO: deduct wood when collect from farmland
+            AddResource(save, (ResourceType)item.CollectType.First(), (int)collect);
 
             var collectXp = item.CollectXp;
             save.DefaultMap.Xp += collectXp;
@@ -214,26 +198,10 @@ namespace SocialEmpires.Services
             {
                 return;
             }
+
             var cost = multiplier * item.Cost;
             //TODO: cost food when buy unit by gold
-            switch (item.CostType)
-            {
-                case CostType.Wood:
-                    save.DefaultMap.Wood = Math.Max(save.DefaultMap.Wood - (int)cost, 0);
-                    break;
-                case CostType.Gold:
-                    save.DefaultMap.Coins = Math.Max(save.DefaultMap.Coins - (int)cost, 0);
-                    break;
-                case CostType.Cash:
-                    save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - (int)cost, 0);
-                    break;
-                case CostType.Stone:
-                    save.DefaultMap.Stone = Math.Max(save.DefaultMap.Stone - (int)cost, 0);
-                    break;
-                case CostType.Food:
-                    save.DefaultMap.Food = Math.Max(save.DefaultMap.Food - (int)cost, 0);
-                    break;
-            }
+            DeductResource(save, (ResourceType)item.CostType.First(), (int)cost);
         }
 
         private void ApplyCollectXp(PlayerSave save, int id)
@@ -245,6 +213,97 @@ namespace SocialEmpires.Services
             }
             var collectXp = item.CollectXp;
             save.DefaultMap.Xp += collectXp;
+        }
+
+        private void DeductResource(PlayerSave save, ResourceType costType, int quantity)
+        {
+            if(quantity < 0)
+            {
+                _logger.LogWarning("quantity must be greater than or equal to 0. ");
+                return;
+            }
+
+            switch (costType)
+            {
+                case ResourceType.Wood:
+                    if(save.DefaultMap.Wood >= quantity)
+                    {
+                        save.DefaultMap.Wood -= quantity;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Don't have enough wood. ");
+                    }
+                    break;
+                case ResourceType.Gold:
+                    if (save.DefaultMap.Coins >= quantity)
+                    {
+                        save.DefaultMap.Coins -= quantity;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Don't have enough gold. ");
+                    }
+                    break;
+                case ResourceType.Cash:
+                    if (save.PlayerInfo.Cash >= quantity)
+                    {
+                        save.PlayerInfo.Cash -= quantity;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Don't have enough cash. ");
+                    }
+                    break;
+                case ResourceType.Stone:
+                    if (save.DefaultMap.Stone >= quantity)
+                    {
+                        save.DefaultMap.Stone -= quantity;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Don't have enough stone. ");
+                    }
+                    break;
+                case ResourceType.Food:
+                    if (save.DefaultMap.Food >= quantity)
+                    {
+                        save.DefaultMap.Food -= quantity;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Don't have enough food. ");
+                    }
+                    break;
+            }
+        }
+
+        private void AddResource(PlayerSave save, ResourceType costType, int quantity)
+        {
+            if (quantity < 0)
+            {
+                _logger.LogWarning("quantity must be greater than or equal to 0. ");
+                return;
+            }
+
+            switch (costType)
+            {
+                case ResourceType.Wood:
+                    save.DefaultMap.Wood += quantity;
+                    break;
+                case ResourceType.Gold:
+                    save.DefaultMap.Coins += quantity;
+                    break;
+                case ResourceType.Cash:
+                    save.PlayerInfo.Cash += quantity;
+                    break;
+                case ResourceType.Stone:
+                    save.DefaultMap.Stone += quantity;
+                    break;
+                case ResourceType.Food:
+                    save.DefaultMap.Food += quantity;
+                    break;
+            }
         }
 
         private static long TimestampNow()
