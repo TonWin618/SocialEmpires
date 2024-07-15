@@ -207,7 +207,7 @@ namespace SocialEmpires.Services
             save.DefaultMap.Xp += collectXp;
         }
 
-        private void ApplyCostAsync(PlayerSave save, int id, double multiplier)
+        private void ApplyCost(PlayerSave save, int id, double multiplier)
         {
             var item = _configFileService.GetItem(id);
             if (item == null)
@@ -236,7 +236,7 @@ namespace SocialEmpires.Services
             }
         }
 
-        private void ApplyCollectXpAsync(PlayerSave save, int id)
+        private void ApplyCollectXp(PlayerSave save, int id)
         {
             var item = _configFileService.GetItem(id);
             if (item == null)

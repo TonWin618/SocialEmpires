@@ -81,8 +81,8 @@ namespace SocialEmpires.Services
 
             if (dontModifyResources == 0)
             {
-                ApplyCostAsync(save, id, priceMultiplier);
-                ApplyCollectXpAsync(save, id);
+                ApplyCost(save, id, priceMultiplier);
+                ApplyCollectXp(save, id);
             }
             map.Items.Add(new MapItem(id, x, y, orientation, collectedAtTimestamp, level));
         }
@@ -103,7 +103,7 @@ namespace SocialEmpires.Services
             if (itemToRemove != null)
             {
                 // Apply XP collection
-                ApplyCollectXpAsync(save, id);
+                ApplyCollectXp(save, id);
 
                 // Remove the item from the map
                 items.Remove(itemToRemove);

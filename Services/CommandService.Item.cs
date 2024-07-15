@@ -35,7 +35,7 @@ namespace SocialEmpires.Services
 
                 if (costType != CostType.Cash)
                 {
-                    ApplyCostAsync(save, id, priceMultiplier);
+                    ApplyCost(save, id, priceMultiplier);
                 }
             }
 
@@ -196,7 +196,7 @@ namespace SocialEmpires.Services
             var priceMultiplier = -0.05;
             if (_configFileService.GetItem(itemId).CostType != CostType.Cash)
             {
-                ApplyCostAsync(save, itemId, priceMultiplier);
+                ApplyCost(save, itemId, priceMultiplier);
             }
         }
 
