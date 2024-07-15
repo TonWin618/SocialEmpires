@@ -35,12 +35,11 @@ namespace SocialEmpires.Services
 
             if (currency == "c")
             {
-                save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 50, 0);
+                DeductResource(save, Models.Enums.ResourceType.Cash, 50);
             }
             else if (currency == "g")
             {
-                var map = save.Maps[0];
-                map.Coins = Math.Max(map.Coins - 100000, 0);
+                DeductResource(save, Models.Enums.ResourceType.Gold, 100000);
             }
 
             var privateState = save.PrivateState;
@@ -52,7 +51,8 @@ namespace SocialEmpires.Services
         {
             var price = args[0].GetInt32();
 
-            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - price, 0);
+            DeductResource(save, Models.Enums.ResourceType.Cash, price);
+
             save.PrivateState.TimeStampTakeCareMonster = -1; // Remove timer
         }
     }
