@@ -9,11 +9,11 @@
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";
-    ViewData["Title"] = localizer["OfferPacks"];
+    ViewData["Title"] = localizer["DartsItems"];
     var pageIndex = (int)ViewData["PageIndex"]!;
     var pageSize = (int)ViewData["PageSize"]!;
     var pageCount = (int)ViewData["PageCount"]!;
-    var pageData = ViewData["PageData"] as IEnumerable<OfferPack>;
+    var pageData = ViewData["PageData"] as IEnumerable<DartsItem>;
 
     var jsonOptions = new JsonSerializerOptions();
     jsonOptions.Converters.Add(new IntListOrIntListListConverter());
@@ -24,12 +24,9 @@
         <thead>
             <tr>
                 <th>@localizer["Id"]</th>
-                <th>@localizer["Position"]</th>
-                <th>@localizer["CostCash"]</th>
-                <th>@localizer["Resource"]</th>
+                <th>@localizer["StartDate"]</th>
                 <th>@localizer["Items"]</th>
-                <th>@localizer["PackType"]</th>
-                <th>@localizer["Enabled"]</th>
+                <th>@localizer["ExtraItem"]</th>
             </tr>
         </thead>
         <tbody>
@@ -38,12 +35,9 @@
                 {
                     <tr>
                         <td>@offerPack.Id</td>
-                        <td>@offerPack.Position</td>
-                        <td>@offerPack.CostCash</td>
-                        <td>@($"g:{offerPack.Gold}, s:{offerPack.Stone}, f:{offerPack.Food}, w:{offerPack.Wood}, xp:{offerPack.Xp}")</td>
-                        <td>@JsonSerializer.Serialize(offerPack.Items, jsonOptions)</td>
-                        <td>@offerPack.PackType</td>
-                        <td>@offerPack.Enabled</td>
+                        <td>@offerPack.StartDate</td>
+                        <td>@string.Join(", ", offerPack.Items)</td>
+                        <td>@offerPack.ExtraItem</td>
                     </tr>
                 }
             }
