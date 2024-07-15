@@ -7,6 +7,7 @@ using SocialEmpires.Dtos;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Services;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
@@ -84,15 +85,15 @@ namespace SocialEmpires.Controllers
         [HttpGet("/dynamic.flash1.dev.socialpoint.es/appsfb/socialempiresdev/srvempires/get_game_config.php")]
         public async Task<ActionResult> GetGameConfig()
         {
-            var result = await _cache.GetOrCreateAsync<JsonObject>("game_config_en", item =>
+            var result = await _cache.GetOrCreateAsync($"game_config_{CultureInfo.CurrentCulture.Name}", item =>
             {
                 var lowerSnakeCaseoptions = new JsonSerializerOptions()
                 { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower }
-                .WithLanguage("en");
+                .WithLanguage();
 
                 var upperSnakeCaseoptions = new JsonSerializerOptions()
                 { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseUpper }
-                .WithLanguage("en");
+                .WithLanguage();
 
                 var root = new JsonObject();
 

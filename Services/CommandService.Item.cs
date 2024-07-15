@@ -1,5 +1,4 @@
-﻿using SocialEmpires.Models;
-using SocialEmpires.Models.Enums;
+﻿using SocialEmpires.Models.Enums;
 using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
@@ -33,9 +32,9 @@ namespace SocialEmpires.Services
                 var item = _configFileService.GetItem(id);
                 var costType = item.CostType;
 
-                if (costType != CostType.Cash)
+                if ((ResourceType)costType.First() != ResourceType.Cash)
                 {
-                    ApplyCostAsync(save, id, priceMultiplier);
+                    ApplyCost(save, id, priceMultiplier);
                 }
             }
 
@@ -194,9 +193,14 @@ namespace SocialEmpires.Services
 
             // Apply cost if applicable (assuming apply_cost_async is used elsewhere)
             var priceMultiplier = -0.05;
-            if (_configFileService.GetItem(itemId).CostType != CostType.Cash)
+            var item = _configFileService.GetItem(itemId);
+            if (item == null) 
             {
-                ApplyCostAsync(save, itemId, priceMultiplier);
+                throw new Exception("item not found");
+            }
+            if ((ResourceType)item.CostType.First() != ResourceType.Cash)
+            {
+                ApplyCost(save, itemId, priceMultiplier);
             }
         }
 

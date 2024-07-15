@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Models.PlayerSaves;
+﻿using SocialEmpires.Models.Enums;
+using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
 namespace SocialEmpires.Services
@@ -18,7 +19,7 @@ namespace SocialEmpires.Services
             {
                 pState.RiderNumber = 0;
                 pState.RiderStepNumber = 0;
-                pState.RiderTimeStamp = -1; // Remove timer
+                pState.RiderTimeStamp = -1;
             }
         }
 
@@ -26,15 +27,14 @@ namespace SocialEmpires.Services
         {
             var pState = save.PrivateState;
             pState.RiderStepNumber += 1;
-            pState.RiderTimeStamp = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+            pState.RiderTimeStamp = TimestampNow();
         }
 
         private void HandleRiderBuyStepCashCommand(PlayerSave save, JsonElement[] args)
         {
             var price = args[0].GetInt32();
-
-            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - price, 0);
-            save.PrivateState.RiderTimeStamp = -1; // Remove timer
+            DeductResource(save, ResourceType.Cash, price);
+            save.PrivateState.RiderTimeStamp = -1;
         }
     }
 }

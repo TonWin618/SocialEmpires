@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Infrastructure.MultiLanguage
+@using SocialEmpires.Models.Configs
+@using SocialEmpires.Services
+@using SocialEmpires.Utils
+@using System.Text.Json
+@attribute [Authorize(Roles = "Admin")]
+@inject IViewLocalizer localizer
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = localizer["DartsItems"];
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<DartsItem>;
+
+    var jsonOptions = new JsonSerializerOptions();
+    jsonOptions.Converters.Add(new IntListOrIntListListConverter());
+}
+
+<div>
+    <table width="100%" class="table table-striped  table-sm">
+        <thead>
+            <tr>
+                <th>@localizer["Id"]</th>
+                <th>@localizer["StartDate"]</th>
+                <th>@localizer["Items"]</th>
+                <th>@localizer["ExtraItem"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var offerPack in pageData)
+                {
+                    <tr>
+                        <td>@offerPack.Id</td>
+                        <td>@offerPack.StartDate</td>
+                        <td>@string.Join(", ", offerPack.Items)</td>
+                        <td>@offerPack.ExtraItem</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
+        }
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

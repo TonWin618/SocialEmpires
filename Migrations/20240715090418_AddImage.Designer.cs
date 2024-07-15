@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialEmpires.Models;
 
@@ -12,9 +13,11 @@ using SocialEmpires.Models;
 namespace SocialEmpires.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240715090418_AddImage")]
+    partial class AddImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -996,115 +999,6 @@ namespace SocialEmpires.Migrations
                     b.ToTable("SubCategories");
                 });
 
-            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentOpponent", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Team")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TournamentTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Xp")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TournamentTypeId");
-
-                    b.ToTable("TournamentOpponents");
-                });
-
-            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentPrize", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("G")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TournamentTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("U")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TournamentTypeId");
-
-                    b.ToTable("TournamentPrices");
-                });
-
-            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentType", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Cost")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<long>("MapId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("MinLevel")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumPlayers")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResourceType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WeeklyTournaments")
-                        .HasColumnType("int");
-
-                    b.ComplexProperty<Dictionary<string, object>>("Name", "SocialEmpires.Models.Configs.TournamentType.Name#MultiLanguageString", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("en")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("zh")
-                                .HasColumnType("nvarchar(max)");
-                        });
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TournamentTypes");
-                });
-
             modelBuilder.Entity("SocialEmpires.Models.Configs.TownPrice", b =>
                 {
                     b.Property<int>("Id")
@@ -1531,20 +1425,6 @@ namespace SocialEmpires.Migrations
                         .HasForeignKey("CategoryId");
                 });
 
-            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentOpponent", b =>
-                {
-                    b.HasOne("SocialEmpires.Models.Configs.TournamentType", null)
-                        .WithMany("WeeklyOpponent")
-                        .HasForeignKey("TournamentTypeId");
-                });
-
-            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentPrize", b =>
-                {
-                    b.HasOne("SocialEmpires.Models.Configs.TournamentType", null)
-                        .WithMany("Prize")
-                        .HasForeignKey("TournamentTypeId");
-                });
-
             modelBuilder.Entity("SocialEmpires.Models.PlayerSaves.EmpireMap", b =>
                 {
                     b.HasOne("SocialEmpires.Models.PlayerSaves.PlayerSave", null)
@@ -1574,13 +1454,6 @@ namespace SocialEmpires.Migrations
             modelBuilder.Entity("SocialEmpires.Models.Configs.Category", b =>
                 {
                     b.Navigation("Sub");
-                });
-
-            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentType", b =>
-                {
-                    b.Navigation("Prize");
-
-                    b.Navigation("WeeklyOpponent");
                 });
 
             modelBuilder.Entity("SocialEmpires.Models.PlayerSaves.PlayerSave", b =>

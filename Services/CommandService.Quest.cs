@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Models.PlayerSaves;
+﻿using SocialEmpires.Models.Enums;
+using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
 namespace SocialEmpires.Services
@@ -32,8 +33,9 @@ namespace SocialEmpires.Services
             var difficulty = data.GetProperty("difficulty");
 
             var map = save.Maps[townId];
-            map.Coins += goldGained;
-            map.Xp += xpGained;
+
+            AddResource(save, ResourceType.Gold, goldGained);
+            AddXp(save, xpGained);
 
             var privateState = save.PrivateState;
             privateState.UnlockedQuestIndex = Math.Max(questId + 1, privateState.UnlockedQuestIndex);
@@ -52,6 +54,7 @@ namespace SocialEmpires.Services
             var missions = _configFileService.Missions
                 .FirstOrDefault(_ => _.Id == missionId);
 
+            AddResource(save, ResourceType.Gold, missions?.Reward ?? 0);
             save.Maps[townId].Coins += missions?.Reward ?? 0;
             save.PrivateState.RewardedMissions.Add(missionId);
         }
@@ -63,8 +66,8 @@ namespace SocialEmpires.Services
 
             if (skippedWithCash == 1)
             {
-                var cashToSubtract = 0; // TODO: Determine the value for cash subtraction
-                save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - cashToSubtract, 0);
+                // TODO: Determine the value for cash subtraction
+                DeductResource(save, ResourceType.Cash, 0);
             }
 
             save.PrivateState.CompletedMissions.Add(missionId);

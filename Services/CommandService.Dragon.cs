@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Models.PlayerSaves;
+﻿using SocialEmpires.Models.Enums;
+using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
 namespace SocialEmpires.Services
@@ -9,7 +10,7 @@ namespace SocialEmpires.Services
         {
             var pState = save.PrivateState;
             pState.StepNumber += 1;
-            pState.TimeStampTakeCare = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+            pState.TimeStampTakeCare = TimestampNow();
         }
 
         private void HandleNextDragonCommand(PlayerSave save)
@@ -17,15 +18,15 @@ namespace SocialEmpires.Services
             var pState = save.PrivateState;
             pState.StepNumber = 0;
             pState.DragonNumber += 1;
-            pState.TimeStampTakeCare = -1; // Remove timer
+            pState.TimeStampTakeCare = -1;
         }
 
         private void HandleDragonBuyStepCashCommand(PlayerSave save, JsonElement[] args)
         {
             var price = args[0].GetInt32();
 
-            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - price, 0);
-            save.PrivateState.TimeStampTakeCare = -1; // Remove timer
+            DeductResource(save, ResourceType.Cash, price);
+            save.PrivateState.TimeStampTakeCare = -1;
         }
 
         private void HandleDesactivateDragonCommand(PlayerSave save)
@@ -34,25 +35,25 @@ namespace SocialEmpires.Services
             pState.DragonNestActive = 0;
             pState.StepNumber = 0;
             pState.DragonNumber = 0;
-            pState.TimeStampTakeCare = -1; // Remove timer if any
+            pState.TimeStampTakeCare = -1;
         }
 
         private void HandleActivateDragonCommand(PlayerSave save, JsonElement[] args)
         {
             var currency = args[0].GetString();
 
-            if (currency == "c")
+            if ((ResourceType)currency!.First() == ResourceType.Cash)
             {
                 save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - 50, 0);
             }
-            else if (currency == "g")
+            else if ((ResourceType)currency!.First() == ResourceType.Gold)
             {
                 var map = save.Maps[0];
                 map.Coins = Math.Max(map.Coins - 100000, 0);
             }
 
             save.PrivateState.DragonNestActive = 1;
-            save.PrivateState.TimeStampTakeCare = -1; // Remove timer if any
+            save.PrivateState.TimeStampTakeCare = -1;
         }
     }
 }

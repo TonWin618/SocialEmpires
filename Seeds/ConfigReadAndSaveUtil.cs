@@ -33,5 +33,38 @@ namespace SocialEmpires.Seeds
             //appDbContext.AddRange(entities);
             appDbContext.SaveChanges();
         }
+
+        public static void ReadAndSaveObject<TEntity, TDto>(string key, AppDbContext appDbContext, IMapper mapper)
+        {
+            var jsonSerializerOptions = new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true,
+            }.WithLanguage("en");
+
+            JsonNode config;
+            using (var stream = File.OpenRead("./Seeds/game_config_en.json"))
+            {
+                config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
+            }
+
+            var entities = new List<TEntity>();
+            var objs = config[key].AsObject();
+
+            foreach(var obj in objs)
+            {
+                var dto = obj.Value.Deserialize<TDto>(jsonSerializerOptions);
+                var entity = mapper.Map<TDto, TEntity>(dto);
+                entities.Add(entity);
+            }
+
+            foreach (var entity in entities)
+            {
+                appDbContext.Add(entity);
+            }
+            //appDbContext.AddRange(entities);
+            appDbContext.SaveChanges();
+        }
     }
 }

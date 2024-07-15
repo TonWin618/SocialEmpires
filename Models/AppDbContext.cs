@@ -38,6 +38,14 @@ namespace SocialEmpires.Models
         public DbSet<DartsItem> DartsItems { get; set; }
         public DbSet<LevelRankingReward> LevelRankingRewards { get; set; }
         public DbSet<Chore> Chores {  get; set; }
+        public DbSet<UnitsCollectionsCategory> UnitsCollectionsCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<TournamentType> TournamentTypes { get; set; }
+        public DbSet<TournamentPrize> TournamentPrices { get; set; }
+        public DbSet<TournamentOpponent> TournamentOpponents { get; set; }
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -168,6 +176,28 @@ namespace SocialEmpires.Models
                 .Metadata.SetValueComparer(dictionaryComparer);
 
             builder.Entity<Chore>().HasKey(x => x.Id);
+
+            builder.Entity<UnitsCollectionsCategory>().HasKey(x => x.Id);
+            builder.Entity<UnitsCollectionsCategory>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<Category>().HasKey(x => x.Id);
+            builder.Entity<Category>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<SubCategory>().HasKey(x => x.Id);
+            builder.Entity<SubCategory>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<Image>().HasKey(x=>x.Key);
+            builder.Entity<Image>().Property(x => x.Key).ValueGeneratedNever();
+
+            builder.Entity<TournamentType>().HasKey(x => x.Id);
+            builder.Entity<TournamentType>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<TournamentPrize>().HasKey(x => x.Id);
+            builder.Entity<TournamentPrize>().Property(x => x.U).Metadata.SetValueComparer(dictionaryComparer);
+
+
+            builder.Entity<TournamentOpponent>().HasKey(x => x.Id);
+            builder.Entity<TournamentType>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
