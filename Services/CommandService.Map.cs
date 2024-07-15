@@ -1,4 +1,4 @@
-﻿using SocialEmpires.Models.Configs;
+﻿using SocialEmpires.Models.Enums;
 using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
@@ -53,13 +53,11 @@ namespace SocialEmpires.Services
 
             if (resource == "gold")
             {
-                var toSubtract = exp.Coins;
-                map.Coins = Math.Max(map.Coins - toSubtract, 0);
+                DeductResource(save, ResourceType.Gold, exp.Coins);
             }
             else if (resource == "cash")
             {
-                var toSubtract = exp.Cash;
-                save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - toSubtract, 0);
+                DeductResource(save, ResourceType.Cash, exp.Cash);
             }
 
             // Add expansion

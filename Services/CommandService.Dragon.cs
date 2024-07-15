@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Models.PlayerSaves;
+﻿using SocialEmpires.Models.Enums;
+using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
 namespace SocialEmpires.Services
@@ -24,7 +25,7 @@ namespace SocialEmpires.Services
         {
             var price = args[0].GetInt32();
 
-            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - price, 0);
+            DeductResource(save, ResourceType.Cash, price);
             save.PrivateState.TimeStampTakeCare = -1; // Remove timer
         }
 
