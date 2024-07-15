@@ -1,4 +1,5 @@
-﻿using SocialEmpires.Models.PlayerSaves;
+﻿using SocialEmpires.Models.Enums;
+using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
 
 namespace SocialEmpires.Services
@@ -17,14 +18,12 @@ namespace SocialEmpires.Services
 
             if (cash != 0)
             {
-                save.PlayerInfo.Cash += cash;
-                _logger.LogInformation($"Added {cash} Cash to player's balance");
+                AddResource(save, ResourceType.Cash, cash);
             }
 
             if (coins != 0)
             {
-                map.Coins += coins;
-                _logger.LogInformation($"Added {coins} Gold to player's balance");
+                AddResource(save, ResourceType.Gold, coins);
             }
 
             if (hero != 0)
@@ -81,7 +80,7 @@ namespace SocialEmpires.Services
             var amount = graveyardPotions.GetProperty("amount").GetInt32();
             var priceCash = graveyardPotions.GetProperty("price").GetProperty("c").GetInt32();
 
-            save.PlayerInfo.Cash = Math.Max(save.PlayerInfo.Cash - priceCash, 0);
+            DeductResource(save, ResourceType.Cash, priceCash);
             save.PrivateState.Potion += amount;
         }
     }
