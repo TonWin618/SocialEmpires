@@ -40,6 +40,8 @@ namespace SocialEmpires.Models
         public DbSet<Chore> Chores {  get; set; }
 
         public DbSet<UnitsCollectionsCategory> UnitsCollectionsCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -173,6 +175,12 @@ namespace SocialEmpires.Models
 
             builder.Entity<UnitsCollectionsCategory>().HasKey(x => x.Id);
             builder.Entity<UnitsCollectionsCategory>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<Category>().HasKey(x => x.Id);
+            builder.Entity<Category>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<SubCategory>().HasKey(x => x.Id);
+            builder.Entity<SubCategory>().Property(x => x.Id).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
