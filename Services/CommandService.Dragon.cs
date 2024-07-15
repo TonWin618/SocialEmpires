@@ -10,7 +10,7 @@ namespace SocialEmpires.Services
         {
             var pState = save.PrivateState;
             pState.StepNumber += 1;
-            pState.TimeStampTakeCare = TimestampNow(); // Assuming TimestampNow() returns the current timestamp
+            pState.TimeStampTakeCare = TimestampNow();
         }
 
         private void HandleNextDragonCommand(PlayerSave save)
@@ -18,7 +18,7 @@ namespace SocialEmpires.Services
             var pState = save.PrivateState;
             pState.StepNumber = 0;
             pState.DragonNumber += 1;
-            pState.TimeStampTakeCare = -1; // Remove timer
+            pState.TimeStampTakeCare = -1;
         }
 
         private void HandleDragonBuyStepCashCommand(PlayerSave save, JsonElement[] args)
@@ -26,7 +26,7 @@ namespace SocialEmpires.Services
             var price = args[0].GetInt32();
 
             DeductResource(save, ResourceType.Cash, price);
-            save.PrivateState.TimeStampTakeCare = -1; // Remove timer
+            save.PrivateState.TimeStampTakeCare = -1;
         }
 
         private void HandleDesactivateDragonCommand(PlayerSave save)
@@ -35,7 +35,7 @@ namespace SocialEmpires.Services
             pState.DragonNestActive = 0;
             pState.StepNumber = 0;
             pState.DragonNumber = 0;
-            pState.TimeStampTakeCare = -1; // Remove timer if any
+            pState.TimeStampTakeCare = -1;
         }
 
         private void HandleActivateDragonCommand(PlayerSave save, JsonElement[] args)
@@ -53,7 +53,7 @@ namespace SocialEmpires.Services
             }
 
             save.PrivateState.DragonNestActive = 1;
-            save.PrivateState.TimeStampTakeCare = -1; // Remove timer if any
+            save.PrivateState.TimeStampTakeCare = -1;
         }
     }
 }

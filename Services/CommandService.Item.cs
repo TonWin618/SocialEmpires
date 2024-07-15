@@ -32,7 +32,7 @@ namespace SocialEmpires.Services
                 var item = _configFileService.GetItem(id);
                 var costType = item.CostType;
 
-                if (costType != CostType.Cash)
+                if ((ResourceType)costType.First() != ResourceType.Cash)
                 {
                     ApplyCost(save, id, priceMultiplier);
                 }
@@ -193,7 +193,12 @@ namespace SocialEmpires.Services
 
             // Apply cost if applicable (assuming apply_cost_async is used elsewhere)
             var priceMultiplier = -0.05;
-            if (_configFileService.GetItem(itemId).CostType != CostType.Cash)
+            var item = _configFileService.GetItem(itemId);
+            if (item == null) 
+            {
+                throw new Exception("item not found");
+            }
+            if ((ResourceType)item.CostType.First() != ResourceType.Cash)
             {
                 ApplyCost(save, itemId, priceMultiplier);
             }
