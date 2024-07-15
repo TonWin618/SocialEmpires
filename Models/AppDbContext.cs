@@ -42,6 +42,7 @@ namespace SocialEmpires.Models
         public DbSet<UnitsCollectionsCategory> UnitsCollectionsCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -181,6 +182,9 @@ namespace SocialEmpires.Models
 
             builder.Entity<SubCategory>().HasKey(x => x.Id);
             builder.Entity<SubCategory>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<Image>().HasKey(x=>x.Key);
+            builder.Entity<Image>().Property(x => x.Key).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
