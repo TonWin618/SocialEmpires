@@ -1,8 +1,7 @@
-﻿using SocialEmpires.Infrastructure.MultiLanguage;
+﻿using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
-using System.Text.Json;
 
 namespace SocialEmpires.Services
 {
@@ -12,7 +11,6 @@ namespace SocialEmpires.Services
         private readonly ILogger<ConfigService> _logger;
 
         public List<LocalizationString> LocalizationStrings { get; private set; }
-        public JsonElement Categories { get; private set; }
         public List<Item> Items { get; private set; }
         public List<ExpansionPrice> ExpansionPrices { get; private set; }
         public List<HonorLevel> HonorLevels { get; private set; }
@@ -23,14 +21,15 @@ namespace SocialEmpires.Services
         public List<FindableItem> FindableItems { get; private set; }
         public List<Mission> Missions { get; private set; }
         public List<OfferPack> OfferPacks { get; private set; }
-        public JsonElement Images { get; private set; }
         public List<SocialItem> SocialItems { get; private set; }
-        public JsonElement Globals { get; private set; }
         public List<Magic> Magics { get; private set; }
-        public JsonElement UnitsCollectionsCategories { get; private set; }
         public List<LevelRankingReward> LevelRankingReward { get; private set; }
-        public JsonElement TournamentType { get; private set; }
         public List<DartsItem> DartsItems { get; private set; }
+        public List<GlobalSetting> GlobalSettings { get; private set; }
+        public List<TournamentType> TournamentTypes { get; private set; }
+        public List<Image> Images { get; private set; }
+        public List<Category> Categories { get; private set; }
+        public List<UnitsCollectionsCategory> UnitsCollectionsCategories { get; set; }
 
         public ConfigService(
             AppDbContext appDbContext,
@@ -38,13 +37,9 @@ namespace SocialEmpires.Services
         {
             _appDbContext = appDbContext;
             _logger = logger;
-            Load();
-        }
 
-        public void Load()
-        {
+            //load game config from database.
             LocalizationStrings = _appDbContext.LocalizationStrings.ToList();
-            Categories = JsonDocument.Parse(_appDbContext.Chores.First().Categories.en).RootElement;
             Items = _appDbContext.Items.ToList();
             ExpansionPrices = _appDbContext.ExpansionPrices.ToList();
             Levels = _appDbContext.Levels.ToList();
@@ -55,14 +50,16 @@ namespace SocialEmpires.Services
             FindableItems = _appDbContext.FindableItems.ToList();
             Missions = _appDbContext.Missions.ToList();
             OfferPacks = _appDbContext.OfferPacks.ToList();
-            Images = JsonDocument.Parse(_appDbContext.Chores.First().Images).RootElement;
             SocialItems = _appDbContext.SocialItems.ToList();
-            Globals = JsonDocument.Parse(_appDbContext.Chores.First().Globals).RootElement;
             Magics = _appDbContext.Magics.ToList();
-            UnitsCollectionsCategories = JsonDocument.Parse(_appDbContext.Chores.First().UnitsCollectionsCategories).RootElement;
             LevelRankingReward = _appDbContext.LevelRankingRewards.ToList();
-            TournamentType = JsonDocument.Parse(_appDbContext.Chores.First().TournamentType).RootElement;
             DartsItems = _appDbContext.DartsItems.ToList();
+
+            GlobalSettings = _appDbContext.GlobalSettings.ToList();
+            Categories = _appDbContext.Categories.Include(_ => _.Sub).ToList();
+            UnitsCollectionsCategories = _appDbContext.UnitsCollectionsCategories.ToList();
+            TournamentTypes = _appDbContext.TournamentTypes.Include(_ => _.WeeklyOpponent).Include(_=>_.Prize).ToList();
+            Images = _appDbContext.Images.ToList();
         }
 
         public Item? GetItem(int id)

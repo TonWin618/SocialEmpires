@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
-using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
-using SocialEmpires.Models.Configs;
-using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json;
+using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Seeds
 {
-    public class ChoreDataSeed : IDataSeed
+    public class GlobalSettingDataSeed :IDataSeed
     {
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
 
-        public ChoreDataSeed(AppDbContext appContext, IMapper mapper)
+        public GlobalSettingDataSeed(AppDbContext appContext, IMapper mapper)
         {
             _appDbContext = appContext;
             _mapper = mapper;
@@ -20,7 +20,7 @@ namespace SocialEmpires.Seeds
 
         public void Initialize()
         {
-            if (_appDbContext.Chores.Any())
+            if (_appDbContext.GlobalSettings.Any())
             {
                 return;
             }
@@ -38,15 +38,14 @@ namespace SocialEmpires.Seeds
                 config = JsonNode.Parse(stream) ?? throw new InvalidOperationException();
             }
 
-            var chore = new Chore();
+            var globalSettingEntities = new List<GlobalSetting>();
+            var globalSettings = config["globals"].AsObject();
+            foreach (var setting in globalSettings)
+            {
+                globalSettingEntities.Add(new GlobalSetting() { Key = setting.Key, Value = setting.Value.ToJsonString() });
+            }
 
-            chore.Categories = new("en", config["categories"].ToJsonString(jsonSerializerOptions));
-            chore.Images = config["images"].ToJsonString(jsonSerializerOptions);
-            chore.Globals = config["globals"].ToJsonString(jsonSerializerOptions);
-            chore.UnitsCollectionsCategories = config["units_collections_categories"].ToJsonString(jsonSerializerOptions);
-            chore.TournamentType = config["tournament_type"].ToJsonString(jsonSerializerOptions);
-
-            _appDbContext.Chores.Add(chore);
+            _appDbContext.AddRange(globalSettingEntities);
             _appDbContext.SaveChanges();
         }
     }
