@@ -32,26 +32,19 @@ services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
 });
 
-//Services
+//Package Services
 services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
-
 services.AddHttpContextAccessor();
-
 services.AddSignalR();
-
 services.AddAutoMapper(options =>
 {
     options.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
 });
-
 services.AddMemoryCache();
-
 services.AddRazorPages()
     .AddViewLocalization(options => options.ResourcesPath = "Resources");
-
 services.AddLocalization(
     options => options.ResourcesPath = "Resources");
-
 services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     // Password settings.
@@ -84,24 +77,23 @@ services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString, options => options.EnableRetryOnFailure(3));
 });
 
+//App Services
 services.AddScoped<IEmailSender, AzureEmailSender>();
-
 services.AddScoped<CommandService>();
 services.AddScoped<ConfigService>();
 services.AddScoped<PlayerSaveService>();
 
+//Data Seed
 var seedTypes = Assembly.GetExecutingAssembly()
     .GetTypes()
     .Where(t => string.Equals(t.Namespace, typeof(IDataSeed).Namespace) && t.IsClass && t.IsAssignableTo(typeof(IDataSeed)))
     .ToList();
-
 foreach (var seed in seedTypes)
 {
     services.AddTransient(typeof(IDataSeed), seed);
 }
 
 var app = builder.Build();
-
 using(var scope = app.Services.CreateScope())
 {
     var dataSeeds = scope.ServiceProvider.GetServices<IDataSeed>();
