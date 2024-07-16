@@ -13,5 +13,13 @@ namespace SocialEmpires.Controllers
             (ViewData["PageCount"], ViewData["PageData"]) = PageHelper.Page(pageIndex, pageSize, _configFileService.DartsItems);
             return View();
         }
+
+        [HttpPost]
+        public IActionResult DeleteDartsItem(int id)
+        {
+            var dartsItem = _appDbContext.DartsItems.Find(id);
+            _appDbContext.DartsItems.Remove(dartsItem);
+            return Redirect(Request.Headers.Referer);
+        }
     }
 }

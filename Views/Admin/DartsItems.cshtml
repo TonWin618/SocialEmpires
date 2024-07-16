@@ -27,6 +27,7 @@
                 <th>@localizer["StartDate"]</th>
                 <th>@localizer["Items"]</th>
                 <th>@localizer["ExtraItem"]</th>
+                <th>@localizer["Operation"]</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,13 @@
                         <td>@offerPack.StartDate</td>
                         <td>@string.Join(", ", offerPack.Items)</td>
                         <td>@offerPack.ExtraItem</td>
+                        <td>
+                            <form asp-action="DeleteDartsItem" asp-route-id="@offerPack.Id">
+                                <div class="btn-group" role="group">
+                                    <button type="submit" class="btn btn-danger">@localizer["Delete"]</button>
+                                </div>
+                            </form>
+                        </td>
                     </tr>
                 }
             }
