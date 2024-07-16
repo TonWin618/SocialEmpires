@@ -45,7 +45,7 @@ namespace SocialEmpires.Models
         public DbSet<TournamentType> TournamentTypes { get; set; }
         public DbSet<TournamentPrize> TournamentPrices { get; set; }
         public DbSet<TournamentOpponent> TournamentOpponents { get; set; }
-
+        public DbSet<GlobalSetting> GlobalSettings { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -144,7 +144,6 @@ namespace SocialEmpires.Models
 
             builder.Entity<OfferPack>().HasKey(x => x.Id);
             builder.Entity<OfferPack>().Property(x => x.Id).ValueGeneratedNever();
-
             var OfferPackJsonSerializeOptions = new JsonSerializerOptions();
             OfferPackJsonSerializeOptions.Converters.Add(new IntListOrIntListListConverter());
             builder.Entity<OfferPack>()
@@ -182,7 +181,6 @@ namespace SocialEmpires.Models
 
             builder.Entity<Category>().HasKey(x => x.Id);
             builder.Entity<Category>().Property(x => x.Id).ValueGeneratedNever();
-
             builder.Entity<SubCategory>().HasKey(x => x.Id);
             builder.Entity<SubCategory>().Property(x => x.Id).ValueGeneratedNever();
 
@@ -191,13 +189,13 @@ namespace SocialEmpires.Models
 
             builder.Entity<TournamentType>().HasKey(x => x.Id);
             builder.Entity<TournamentType>().Property(x => x.Id).ValueGeneratedNever();
-
             builder.Entity<TournamentPrize>().HasKey(x => x.Id);
             builder.Entity<TournamentPrize>().Property(x => x.U).Metadata.SetValueComparer(dictionaryComparer);
-
-
             builder.Entity<TournamentOpponent>().HasKey(x => x.Id);
             builder.Entity<TournamentType>().Property(x => x.Id).ValueGeneratedNever();
+
+            builder.Entity<GlobalSetting>().HasKey(x => x.Key);
+            builder.Entity<GlobalSetting>().Property(x => x.Key).ValueGeneratedNever();
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
