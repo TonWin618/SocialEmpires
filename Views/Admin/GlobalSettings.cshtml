@@ -1,17 +1,18 @@
 ﻿@using System.Text.Json
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text.Json.Nodes
+@using SocialEmpires.Models.Configs
 
 @inject IViewLocalizer localizer
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["GlobalSettings"];
-    var globals = ViewData["GlobalSettings"] as JsonNode;
+    var globals = ViewData["GlobalSettings"] as List<GlobalSetting>;
 }
 
 <div>
     @{
-        foreach(var element in globals.Root.AsObject())
+        foreach(var element in globals)
         {
             <form>
                 <div class="input-group mb-1">
