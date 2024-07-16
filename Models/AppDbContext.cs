@@ -142,7 +142,7 @@ namespace SocialEmpires.Models
             builder.Entity<HonorLevel>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<OfferPack>().HasKey(x => x.Id);
-            builder.Entity<OfferPack>().Property(x => x.Id).ValueGeneratedNever();
+
             var OfferPackJsonSerializeOptions = new JsonSerializerOptions();
             OfferPackJsonSerializeOptions.Converters.Add(new IntListOrIntListListConverter());
             builder.Entity<OfferPack>()
@@ -167,14 +167,12 @@ namespace SocialEmpires.Models
             builder.Entity<SocialItem>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<DartsItem>().HasKey(x => x.Id);
-            builder.Entity<DartsItem>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<LevelRankingReward>().HasKey(x => x.Id);
             builder.Entity<LevelRankingReward>().Property(_ => _.Units)
                 .Metadata.SetValueComparer(dictionaryComparer);
 
             builder.Entity<UnitsCollectionsCategory>().HasKey(x => x.Id);
-            builder.Entity<UnitsCollectionsCategory>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<Category>().HasKey(x => x.Id);
             builder.Entity<Category>().Property(x => x.Id).ValueGeneratedNever();

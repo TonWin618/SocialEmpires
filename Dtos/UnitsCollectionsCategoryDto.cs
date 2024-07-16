@@ -5,8 +5,6 @@ namespace SocialEmpires.Dtos
 {
     public record UnitsCollectionsCategoryDto
     {
-        public int Id { get; set; }
-
         public int CategoryId { get; set; }
 
         public int CategoryLangId { get; set; }
@@ -27,8 +25,7 @@ namespace SocialEmpires.Dtos
         public UnitsCollectionsCategoryProfile()
         {
             CreateMap<UnitsCollectionsCategoryDto, UnitsCollectionsCategory>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CategoryId))
-                .ReverseMap(); ;
+                .ReverseMap();
         }
     }
 }

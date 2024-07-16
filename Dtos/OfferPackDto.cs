@@ -6,7 +6,6 @@ using System.Text.Json.Serialization;
 namespace SocialEmpires.Dtos
 {
     public record OfferPackDto(
-            int Id,
             int Position,
             int CostCash,
             int Gold,
