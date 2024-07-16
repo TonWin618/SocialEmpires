@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
 
 namespace SocialEmpires.Controllers
@@ -15,10 +16,23 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteDartsItem(int id)
+        public async Task<IActionResult> DeleteDartsItem(int id)
         {
-            var dartsItem = _appDbContext.DartsItems.Find(id);
+            var dartsItem = await _appDbContext.DartsItems.FindAsync(id);
             _appDbContext.DartsItems.Remove(dartsItem);
+            return Redirect(Request.Headers.Referer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDartsItem(int item1, int item2, int item3, int item4, int item5, int item6, int extraItem)
+        {
+            var dartsItem = new DartsItem()
+            {
+                Items = [item1, item2, item3, item4, item5, item6],
+                ExtraItem = extraItem,
+                StartDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
+            };
+            await _appDbContext.AddAsync(dartsItem);
             return Redirect(Request.Headers.Referer);
         }
     }
