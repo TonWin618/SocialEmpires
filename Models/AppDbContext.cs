@@ -37,7 +37,6 @@ namespace SocialEmpires.Models
         public DbSet<SocialItem> SocialItems { get; set; }
         public DbSet<DartsItem> DartsItems { get; set; }
         public DbSet<LevelRankingReward> LevelRankingRewards { get; set; }
-        public DbSet<Chore> Chores {  get; set; }
         public DbSet<UnitsCollectionsCategory> UnitsCollectionsCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
@@ -173,8 +172,6 @@ namespace SocialEmpires.Models
             builder.Entity<LevelRankingReward>().HasKey(x => x.Id);
             builder.Entity<LevelRankingReward>().Property(_ => _.Units)
                 .Metadata.SetValueComparer(dictionaryComparer);
-
-            builder.Entity<Chore>().HasKey(x => x.Id);
 
             builder.Entity<UnitsCollectionsCategory>().HasKey(x => x.Id);
             builder.Entity<UnitsCollectionsCategory>().Property(x => x.Id).ValueGeneratedNever();

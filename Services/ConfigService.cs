@@ -40,7 +40,6 @@ namespace SocialEmpires.Services
 
             //load game config from database.
             LocalizationStrings = _appDbContext.LocalizationStrings.ToList();
-            
             Items = _appDbContext.Items.ToList();
             ExpansionPrices = _appDbContext.ExpansionPrices.ToList();
             Levels = _appDbContext.Levels.ToList();
@@ -51,7 +50,6 @@ namespace SocialEmpires.Services
             FindableItems = _appDbContext.FindableItems.ToList();
             Missions = _appDbContext.Missions.ToList();
             OfferPacks = _appDbContext.OfferPacks.ToList();
-            
             SocialItems = _appDbContext.SocialItems.ToList();
             Magics = _appDbContext.Magics.ToList();
             LevelRankingReward = _appDbContext.LevelRankingRewards.ToList();
