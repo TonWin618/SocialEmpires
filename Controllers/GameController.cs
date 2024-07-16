@@ -100,8 +100,6 @@ namespace SocialEmpires.Controllers
                 var localizationStringDtos = _mapper.Map<List<LocalizationStringDto>>(_configService.LocalizationStrings);
                 root.Add("localization_strings", JsonSerializer.SerializeToNode(localizationStringDtos, lowerSnakeCaseoptions));
 
-                root.Add("categories", JsonSerializer.SerializeToNode(_configService.Categories, lowerSnakeCaseoptions));
-
                 var itemDtos = _mapper.Map<List<ItemDto>>(_configService.Items);
                 root.Add("items", JsonSerializer.SerializeToNode(itemDtos, lowerSnakeCaseoptions));
 
@@ -132,12 +130,8 @@ namespace SocialEmpires.Controllers
                 var offerPacksDtos = _mapper.Map<List<OfferPackDto>>(_configService.OfferPacks);
                 root.Add("offer_packs", JsonSerializer.SerializeToNode(offerPacksDtos, lowerSnakeCaseoptions));
 
-                root.Add("images", JsonSerializer.SerializeToNode(_configService.Images, lowerSnakeCaseoptions));
-
                 var socialItemsDtos = _mapper.Map<List<SocialItemDto>>(_configService.SocialItems);
                 root.Add("social_items", JsonSerializer.SerializeToNode(socialItemsDtos, lowerSnakeCaseoptions));
-
-                root.Add("globals", JsonSerializer.SerializeToNode(_configService.Globals, upperSnakeCaseoptions));
 
                 var magicsDtos = _mapper.Map<List<MagicDto>>(_configService.Magics);
                 root.Add("magics", JsonSerializer.SerializeToNode(magicsDtos, lowerSnakeCaseoptions));
@@ -145,10 +139,43 @@ namespace SocialEmpires.Controllers
                 var levelRankingRewardDtos = _mapper.Map<List<LevelRankingRewardDto>>(_configService.LevelRankingReward);
                 root.Add("level_ranking_reward", JsonSerializer.SerializeToNode(levelRankingRewardDtos, lowerSnakeCaseoptions));
 
-                root.Add("tournament_type", JsonSerializer.SerializeToNode(_configService.TournamentType, lowerSnakeCaseoptions));
-
                 var dartsItemsDtos = _mapper.Map<List<DartsItemDto>>(_configService.DartsItems);
                 root.Add("darts_items", JsonSerializer.SerializeToNode(dartsItemsDtos, lowerSnakeCaseoptions));
+
+                var globals = new JsonObject();
+                foreach(var setting in _configService.GlobalSettings)
+                {
+                    globals.Add(setting.Key, JsonNode.Parse(setting.Value));
+                }
+                root.Add("globals", globals);
+
+                var categories = new JsonObject();
+                foreach(var category in _configService.Categories)
+                {
+                    categories.Add(category.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(category, lowerSnakeCaseoptions)));
+                }
+                root.Add("categories", categories);
+
+                var tournamentTypes = new JsonObject();
+                foreach (var tournamentType in _configService.TournamentTypes)
+                {
+                    tournamentTypes.Add(tournamentType.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(tournamentType, lowerSnakeCaseoptions)));
+                }
+                root.Add("tournament_type", tournamentTypes);
+
+                var images = new JsonObject();
+                foreach (var image in _configService.Images)
+                {
+                    images.Add(image.Key, image.Value);
+                }
+                root.Add("images", JsonSerializer.SerializeToNode(_configService.Images, lowerSnakeCaseoptions));
+
+                var unitsCollectionCategories = new JsonObject();
+                foreach (var unitsCollectionCategory in _configService.UnitsCollectionsCategories)
+                {
+                    unitsCollectionCategories.Add(unitsCollectionCategory.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(unitsCollectionCategory, lowerSnakeCaseoptions)));
+                }
+                root.Add("units_collection_categories", JsonSerializer.SerializeToNode(_configService.Categories, lowerSnakeCaseoptions));
 
                 return Task.FromResult(root);
             });

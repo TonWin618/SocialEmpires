@@ -8,7 +8,7 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult GlobalSettings()
         {
-            ViewData["GlobalSettings"] = JsonNode.Parse(_configFileService.Globals.ToString());
+            ViewData["GlobalSettings"] = JsonNode.Parse(_configFileService.GlobalSettings.ToString());
             return View();
         }
     }

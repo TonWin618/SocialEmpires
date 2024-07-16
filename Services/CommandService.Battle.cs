@@ -1,6 +1,7 @@
 ﻿using SocialEmpires.Models.Enums;
 using SocialEmpires.Models.PlayerSaves;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Services
 {
@@ -76,9 +77,9 @@ namespace SocialEmpires.Services
 
         private void HandleGraveyardBuyPotionsCommand(PlayerSave save)
         {
-            var graveyardPotions = _configFileService.Globals.GetProperty("GRAVEYARD_POTIONS");
-            var amount = graveyardPotions.GetProperty("amount").GetInt32();
-            var priceCash = graveyardPotions.GetProperty("price").GetProperty("c").GetInt32();
+            var graveyardPotions = JsonNode.Parse(_configFileService.GlobalSettings.First(_ => _.Key == "GRAVEYARD_POTIONS").Value);
+            var amount = (int)graveyardPotions["amount"];
+            var priceCash = (int)graveyardPotions["price"]["c"];
 
             DeductResource(save, ResourceType.Cash, priceCash);
             save.PrivateState.Potion += amount;
