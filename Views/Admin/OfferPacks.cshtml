@@ -23,13 +23,14 @@
     <table width="100%" class="table table-striped  table-sm">
         <thead>
             <tr>
+                <th>@localizer["Image"]</th>
                 <th>@localizer["Id"]</th>
                 <th>@localizer["Position"]</th>
-                <th>@localizer["CostCash"]</th>
+                <th>@localizer["Type"]</th>
+                <th>@localizer["Price"]</th>
                 <th>@localizer["Resource"]</th>
-                <th>@localizer["Items"]</th>
-                <th>@localizer["PackType"]</th>
-                <th>@localizer["Enabled"]</th>
+                <th width="200px">@localizer["Items"]</th>
+                <th>@localizer["Operation"]</th>
             </tr>
         </thead>
         <tbody>
@@ -37,13 +38,32 @@
                 foreach (var offerPack in pageData)
                 {
                     <tr>
+                        <td>
+                            <img src="/default01.static.socialpointgames.com/static/socialempires/images_new/en/offer_pack_@(offerPack.Id).png" width="226" height="38" />
+                        </td>
                         <td>@offerPack.Id</td>
                         <td>@offerPack.Position</td>
-                        <td>@offerPack.CostCash</td>
-                        <td>@($"g:{offerPack.Gold}, s:{offerPack.Stone}, f:{offerPack.Food}, w:{offerPack.Wood}, xp:{offerPack.Xp}")</td>
-                        <td>@JsonSerializer.Serialize(offerPack.Items, jsonOptions)</td>
                         <td>@offerPack.PackType</td>
-                        <td>@offerPack.Enabled</td>
+                        <td>@offerPack.CostCash</td>
+                        <td>
+                            <div class="overflow-auto">
+                                 @($"g:{offerPack.Gold} s:{offerPack.Stone} f:{offerPack.Food} w:{offerPack.Wood} xp:{offerPack.Xp}")
+                            </div>
+                        </td>
+                        <td>@JsonSerializer.Serialize(offerPack.Items, jsonOptions).Replace("],[", " ||| ").Replace('[', ' ').Replace(']', ' ').Replace(',', ' ')</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form asp-action="EnableOfferPack" asp-route-id="@offerPack.Id">
+                                    <button type="submit" class="btn btn-warning" disabled="@(offerPack.Enabled)">@localizer["Enable"]</button>
+                                </form>
+                                <form asp-action="DisableOfferPack" asp-route-id="@offerPack.Id">
+                                    <button type="submit" class="btn btn-warning" disabled="@(!offerPack.Enabled)">@localizer["Disable"]</button>
+                                </form>
+                                <form asp-action="DeleteOfferPack" asp-route-id="@offerPack.Id">
+                                    <button type="submit" class="btn btn-danger">@localizer["Delete"]</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                 }
             }
