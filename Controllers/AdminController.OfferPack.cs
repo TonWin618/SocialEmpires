@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
+using System.Text.Json;
 
 namespace SocialEmpires.Controllers
 {
@@ -35,6 +37,30 @@ namespace SocialEmpires.Controllers
         {
             var offerPack = await _appDbContext.OfferPacks.FindAsync(id);
             _appDbContext.Remove(offerPack);
+            return Redirect(Request.Headers.Referer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOfferPack(int packType, int position, int mana, int costCash, int gold, int stone, int wood, int food, int xp, string items)
+        {
+            var jsonOptions = new JsonSerializerOptions();
+
+            jsonOptions.Converters.Add(new IntListOrIntListListConverter());
+            var offerPack = new OfferPack()
+            {
+                Position = position,
+                CostCash = costCash,
+                Gold = gold,
+                Stone = stone,
+                Food = food,
+                Wood = wood,
+                Xp = xp,
+                Items = JsonSerializer.Deserialize<List<object>>(items),
+                Enabled = true,
+                PackType = packType,
+            };
+            await _appDbContext.AddAsync(offerPack);
+
             return Redirect(Request.Headers.Referer);
         }
     }
