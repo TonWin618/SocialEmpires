@@ -7,7 +7,7 @@ using SocialEmpires.Services;
 
 namespace SocialEmpires.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Manager")]
     public partial class AdminController : Controller
     {
         private readonly ConfigService _configFileService;

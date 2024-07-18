@@ -44,6 +44,7 @@ namespace SocialEmpires.Controllers
                 return Redirect("/");
             }
             await _roleManager.CreateAsync(new IdentityRole("User"));
+            await _roleManager.CreateAsync(new IdentityRole("Manager"));
             await _roleManager.CreateAsync(new IdentityRole("Admin"));
 
             var user = new IdentityUser()
@@ -54,6 +55,7 @@ namespace SocialEmpires.Controllers
             await _userManager.CreateAsync(user, password);
 
             await _userManager.AddToRoleAsync(user, "User");
+            await _userManager.AddToRoleAsync(user, "Manager");
             await _userManager.AddToRoleAsync(user, "Admin");
 
             return View("Login");

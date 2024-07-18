@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Controllers
@@ -13,6 +14,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateGlobalSetting(string key, string value)
         {
             var setting = await _appDbContext.GlobalSettings.FindAsync(key);
