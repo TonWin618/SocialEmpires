@@ -104,7 +104,7 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form asp-action="AddOfferPack">
+        <form asp-action="AddOfferPack" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["NewOfferPacks"]</h1>
@@ -153,6 +153,11 @@
                     <div class="mb-1">
                         <label class="form-label">@localizer["Items"]</label>
                         <textarea class="form-control" placeholder="[500,501,502,503] or [[500,501],[502,503]]" name="items"></textarea>
+                    </div>
+
+                    <div class="mb-1">
+                        <label class="form-label">@localizer["Image"]</label>
+                        <input class="form-control" type="file" name="image">
                     </div>
                 </div>
                 <div class="modal-footer">

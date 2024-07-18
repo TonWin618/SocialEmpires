@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Models.Options;
 using SocialEmpires.Utils;
 using System.Text.Json;
 
@@ -43,7 +45,10 @@ namespace SocialEmpires.Controllers
         [HttpPost]
         public async Task<IActionResult> AddOfferPack(
             int packType, int position, int costCash, 
-            int gold, int stone, int wood, int food, int xp, int mana, string items)
+            int gold, int stone, int wood, int food, int xp, int mana, string items,
+            IFormFile image, 
+            [FromServices] IWebHostEnvironment environment, 
+            [FromServices] IOptions<FileDirectoriesOptions> options)
         {
             var jsonOptions = new JsonSerializerOptions();
             jsonOptions.Converters.Add(new IntListOrIntListListConverter());
@@ -62,7 +67,17 @@ namespace SocialEmpires.Controllers
                 Enabled = true,
                 PackType = packType,
             };
-            await _appDbContext.AddAsync(offerPack);
+            var offerPackEntry = await _appDbContext.AddAsync(offerPack);
+            _appDbContext.SaveChanges();
+
+            if (image != null)
+            {
+                var filePath = Path.Combine(environment.ContentRootPath, options.Value.Assets, "images_new", "en", $"offer_pack_{offerPackEntry.Entity.Id}.png");
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(stream);
+                }
+            }
 
             return Redirect(Request.Headers.Referer);
         }
