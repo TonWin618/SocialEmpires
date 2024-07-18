@@ -42,7 +42,7 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsAdmin = HttpContext.User.IsInRole("Admin");
+            ViewBag.IsAdmin = HttpContext.User.IsInRole("Manager");
             ViewData["BaseUrl"] = _flashGameConfigOptions.BaseUrl;
             ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
             ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();

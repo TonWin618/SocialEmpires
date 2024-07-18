@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.SignalR;
-using SocialEmpires.Models.Bulletins;
-using System.Text.Json;
+﻿using Microsoft.AspNetCore.SignalR;
 
 namespace SocialEmpires.Hubs
 {
