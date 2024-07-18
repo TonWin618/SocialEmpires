@@ -14,11 +14,11 @@
     @{
         foreach(var element in globals)
         {
-            <form>
+            <form asp-action="UpdateGlobalSetting" asp-route-key="@element.Key">
                 <div class="input-group mb-1">
                     <span class="input-group-text">@element.Key</span>
-                    <input class="form-control form-control-sm" type="text" value="@element.Value">
-                    <button type="submit" class="btn btn-primary">Apply</button>
+                    <input class="form-control form-control-sm" type="text" name="value" value="@element.Value">
+                    <button type="submit" class="btn btn-primary">@localizer["Apply"]</button>
                 </div>
             </form>
         }

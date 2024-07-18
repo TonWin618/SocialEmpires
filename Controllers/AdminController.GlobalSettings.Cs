@@ -11,5 +11,16 @@ namespace SocialEmpires.Controllers
             ViewData["GlobalSettings"] = _configFileService.GlobalSettings;
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateGlobalSetting(string key, string value)
+        {
+            var setting = await _appDbContext.GlobalSettings.FindAsync(key);
+            if (setting != null)
+            {
+                setting.Value = value;
+            }
+            return Redirect(Request.Headers.Referer);
+        }
     }
 }
