@@ -42,8 +42,8 @@ namespace SocialEmpires.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddOfferPack(
-            int packType, int position, int mana, int costCash, 
-            int gold, int stone, int wood, int food, int xp, string items)
+            int packType, int position, int costCash, 
+            int gold, int stone, int wood, int food, int xp, int mana, string items)
         {
             var jsonOptions = new JsonSerializerOptions();
             jsonOptions.Converters.Add(new IntListOrIntListListConverter());
@@ -57,6 +57,7 @@ namespace SocialEmpires.Controllers
                 Food = food,
                 Wood = wood,
                 Xp = xp,
+                Mana = mana,
                 Items = JsonSerializer.Deserialize<List<object>>(items, jsonOptions),
                 Enabled = true,
                 PackType = packType,
