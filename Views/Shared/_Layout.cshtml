@@ -44,24 +44,26 @@
                             if (userName == null)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Identity" asp-action="Login">@localizer["Log in"]</a>
+                                    <a class="nav-link text-dark" asp-controller="Identity" asp-action="Login">@localizer["Login"]</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Identity" asp-action="Register">@localizer["Sign in"]</a>
+                                    <a class="nav-link text-dark" asp-controller="Identity" asp-action="Register">@localizer["Signin"]</a>
                                 </li>
                             }
                             else
                             {
-                                <li class="nav-item">
-                                    <img class="img-circle avatar" src="/avatar/example.png" />
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="" asp-action="">@userName</a>
-                                </li>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        @userName
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/Identity/Logout">@localizer["Logout"]</a></li>
+                                    </ul>
+                                </div>
                             }
                             <li>
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn btn-secondary btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         @localizer["Language"]
                                     </button>
                                     <ul class="dropdown-menu">
