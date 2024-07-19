@@ -62,39 +62,20 @@ namespace SocialEmpires.Dtos
         public ItemProfile()
         {
             CreateMap<ItemDto, Item>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => int.Parse(src.Id)))
                 .ForMember(dest => dest.InStore, opt => opt.MapFrom(src => src.InStore == "1"))
-                .ForMember(dest => dest.Cost, opt => opt.MapFrom(src => int.Parse(src.Cost)))
-                .ForMember(dest => dest.Xp, opt => opt.MapFrom(src => int.Parse(src.Xp)))
-                .ForMember(dest => dest.DisplayOrder, opt => opt.MapFrom(src => int.Parse(src.DisplayOrder)))
-                .ForMember(dest => dest.Activation, opt => opt.MapFrom(src => float.Parse(src.Activation)))
-                .ForMember(dest => dest.Expiration, opt => opt.MapFrom(src => int.Parse(src.Expiration)))
-                .ForMember(dest => dest.Collect, opt => opt.MapFrom(src => int.Parse(src.Collect)))
-                .ForMember(dest => dest.CollectXp, opt => opt.MapFrom(src => int.Parse(src.CollectXp)))
-                .ForMember(dest => dest.MinLevel, opt => opt.MapFrom(src => int.Parse(src.MinLevel)))
-                .ForMember(dest => dest.Width, opt => opt.MapFrom(src => int.Parse(src.Width)))
-                .ForMember(dest => dest.Height, opt => opt.MapFrom(src => int.Parse(src.Height)))
                 .ForMember(dest => dest.Giftable, opt => opt.MapFrom(src => src.Giftable == "1"))
-                .ForMember(dest => dest.Elevation, opt => opt.MapFrom(src => int.Parse(src.Elevation)))
-                .ForMember(dest => dest.UnitCapacity, opt => opt.MapFrom(src => int.Parse(src.UnitCapacity)))
-                .ForMember(dest => dest.Attack, opt => opt.MapFrom(src => int.Parse(src.Attack)))
-                .ForMember(dest => dest.Defense, opt => opt.MapFrom(src => int.Parse(src.Defense)))
-                .ForMember(dest => dest.Life, opt => opt.MapFrom(src => int.Parse(src.Life)))
-                .ForMember(dest => dest.Velocity, opt => opt.MapFrom(src => int.Parse(src.Velocity)))
-                .ForMember(dest => dest.AttackRange, opt => opt.MapFrom(src => int.Parse(src.AttackRange)))
-                .ForMember(dest => dest.AttackInterval, opt => opt.MapFrom(src => int.Parse(src.AttackInterval)))
                 .ForMember(dest => dest.NewItem, opt => opt.MapFrom(src => src.NewItem == "1"))
-                .ForMember(dest => dest.Population, opt => opt.MapFrom(src => int.Parse(src.Population)))
-                .ForMember(dest => dest.GiftLevel, opt => opt.MapFrom(src => int.Parse(src.GiftLevel)))
-                .ForMember(dest => dest.CostUnitCash, opt => opt.MapFrom(src => int.Parse(src.CostUnitCash)))
                 .ForMember(dest => dest.Flying, opt => opt.MapFrom(src => src.Flying == "1"))
                 .ForMember(dest => dest.Protect, opt => opt.MapFrom(src => src.Protect == "1"))
-                .ForMember(dest => dest.Potion, opt => opt.MapFrom(src => int.Parse(src.Potion)))
-                .ForMember(dest => dest.Achievement, opt => opt.MapFrom(src => src.Achievement == "1"))
-                .ForMember(dest => dest.UnitsLimit, opt => opt.MapFrom(src => int.Parse(src.UnitsLimit)))
-                .ForMember(dest => dest.StoreLevel, opt => opt.MapFrom(src => int.Parse(src.StoreLevel)))
-                .ForMember(dest => dest.Size, opt => opt.MapFrom(src => int.Parse(src.Size)))
-                .ReverseMap();
+                .ForMember(dest => dest.Achievement, opt => opt.MapFrom(src => src.Achievement == "1"));
+
+            CreateMap<Item, ItemDto>()
+                .ForMember(dest => dest.InStore, opt => opt.MapFrom(src => src.InStore == true ? "1" : "0"))
+                .ForMember(dest => dest.Giftable, opt => opt.MapFrom(src => src.Giftable == true ? "1" : "0"))
+                .ForMember(dest => dest.NewItem, opt => opt.MapFrom(src => src.NewItem == true ? "1" : "0"))
+                .ForMember(dest => dest.Flying, opt => opt.MapFrom(src => src.Flying == true ? "1" : "0"))
+                .ForMember(dest => dest.Protect, opt => opt.MapFrom(src => src.Protect == true ? "1" : "0"))
+                .ForMember(dest => dest.Achievement, opt => opt.MapFrom(src => src.Achievement == true ? "1" : "0"));
         }
     }
 }
