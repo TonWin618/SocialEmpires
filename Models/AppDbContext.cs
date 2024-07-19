@@ -122,6 +122,7 @@ namespace SocialEmpires.Models
             builder.Entity<Notification>().HasKey(x => x.Id);
 
             builder.Entity<Item>().HasKey(x => x.Id);
+            builder.Entity<Item>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<Level>().HasKey(x => x.Id);
 

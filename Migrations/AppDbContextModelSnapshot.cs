@@ -378,10 +378,7 @@ namespace SocialEmpires.Migrations
             modelBuilder.Entity("SocialEmpires.Models.Configs.Item", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Achievement")
                         .HasColumnType("bit");
