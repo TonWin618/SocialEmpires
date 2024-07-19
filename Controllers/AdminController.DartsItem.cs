@@ -20,7 +20,7 @@ namespace SocialEmpires.Controllers
         {
             var dartsItem = await _appDbContext.DartsItems.FindAsync(id);
             _appDbContext.DartsItems.Remove(dartsItem);
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace SocialEmpires.Controllers
                 StartDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
             };
             await _appDbContext.AddAsync(dartsItem);
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
     }
 }

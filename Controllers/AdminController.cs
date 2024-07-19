@@ -41,6 +41,6 @@ namespace SocialEmpires.Controllers
             return View();
         }
 
-        private string UserId => HttpContext.User.Identity.Name;
+        private string UserId => HttpContext.User.Identity!.Name!;
     }
 }

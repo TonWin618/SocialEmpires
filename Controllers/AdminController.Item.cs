@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Utils;
 
 namespace SocialEmpires.Controllers
 {
@@ -37,7 +38,7 @@ namespace SocialEmpires.Controllers
             }
             item.InStore = true;
             //await _configFileService.Save();
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
 
         [HttpPost]
@@ -50,7 +51,7 @@ namespace SocialEmpires.Controllers
             }
             item.InStore = false;
             //await _configFileService.Save();
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
 
         [HttpPost]
@@ -61,7 +62,7 @@ namespace SocialEmpires.Controllers
             var item = _configService.Items.FirstOrDefault(_ => _.Id == updatedItem.Id);
             _mapper.Map(updatedItem, item);
             //await _configFileService.Save();
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace SocialEmpires.Controllers
         {
             var offerPack = await _appDbContext.OfferPacks.FindAsync(id);
             offerPack.Enabled = true;
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
 
         [HttpPost]
@@ -31,7 +31,7 @@ namespace SocialEmpires.Controllers
         {
             var offerPack = await _appDbContext.OfferPacks.FindAsync(id);
             offerPack.Enabled = false;
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace SocialEmpires.Controllers
         {
             var offerPack = await _appDbContext.OfferPacks.FindAsync(id);
             _appDbContext.Remove(offerPack);
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
 
         [HttpPost]
@@ -79,7 +79,7 @@ namespace SocialEmpires.Controllers
                 }
             }
 
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
     }
 }

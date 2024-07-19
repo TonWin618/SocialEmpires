@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SocialEmpires.Utils;
 using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Controllers
@@ -22,7 +23,7 @@ namespace SocialEmpires.Controllers
             {
                 setting.Value = value;
             }
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
     }
 }

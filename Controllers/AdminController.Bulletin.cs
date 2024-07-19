@@ -5,6 +5,7 @@ using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Notifications;
 using System.Globalization;
 using System.Text.Json;
+using SocialEmpires.Utils;
 
 namespace SocialEmpires.Controllers
 {
@@ -41,7 +42,7 @@ namespace SocialEmpires.Controllers
             await _appDbContext.AddAsync(bulletin);
             var bulletinDto = _mapper.Map<NotificationDto>(bulletin);
             await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletinDto));
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
     }
 }

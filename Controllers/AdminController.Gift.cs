@@ -38,7 +38,7 @@ namespace SocialEmpires.Controllers
                 if (save == null)
                 {
                     ViewData["ErrorMessage"] = "UserNotFOUND";
-                    return Redirect(Request.Headers.Referer);
+                    return this.Redirect();
                 }
                 saves.Add(save);
             }
@@ -78,7 +78,7 @@ namespace SocialEmpires.Controllers
                 items = items.Split(',').Select(int.Parse).ToList(),
             });
 
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
     }
 }
