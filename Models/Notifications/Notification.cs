@@ -26,7 +26,7 @@ namespace SocialEmpires.Models.Notifications
         [JsonIgnore]
         public bool IsExpired => DateTime.UtcNow > ExpiryTime;
 
-        public static Notification CreateFromDebug(string userId, MultiLanguageString info, string language)
+        public static Notification CreateFromDebug(string userId, MultiLanguageString info)
         {
             return new Notification(
                 publisherId: null,
@@ -37,7 +37,7 @@ namespace SocialEmpires.Models.Notifications
                 );
         }
 
-        public static Notification CreateFromError(string userId, MultiLanguageString error, string language)
+        public static Notification CreateFromError(string userId, MultiLanguageString error)
         {
             return new Notification(
                 publisherId: null,
