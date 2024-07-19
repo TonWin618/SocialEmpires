@@ -48,10 +48,10 @@ namespace SocialEmpires.Models.Notifications
                 );
         }
 
-        public static Notification CreateFromGift(List<string> userIds, MultiLanguageString content, DateTime expiryTime)
+        public static Notification CreateFromGift(string publisherId, List<string> userIds, MultiLanguageString content, DateTime expiryTime)
         {
             return new Notification(
-                publisherId: null,
+                publisherId: publisherId,
                 receiverIds: userIds,
                 htmlContent: content,
                 expiryTime: expiryTime,
@@ -59,10 +59,10 @@ namespace SocialEmpires.Models.Notifications
                 );
         }
 
-        public static Notification CreateFromGift(List<string> userIds, MultiLanguageString content, TimeSpan expiryTimeSpan)
+        public static Notification CreateFromGift(string publisherId, List<string> userIds, MultiLanguageString content, TimeSpan expiryTimeSpan)
         {
             return new Notification(
-                publisherId: null,
+                publisherId: publisherId,
                 receiverIds: userIds,
                 htmlContent: content,
                 expiryTimeSpan: expiryTimeSpan,
@@ -73,7 +73,7 @@ namespace SocialEmpires.Models.Notifications
         public static Notification CreateFromBulletin(string publisherId, MultiLanguageString content, TimeSpan expiryTimeSpan)
         {
             return new Notification(
-                publisherId: null,
+                publisherId: publisherId,
                 receiverIds: [],
                 htmlContent: content,
                 expiryTimeSpan: expiryTimeSpan,

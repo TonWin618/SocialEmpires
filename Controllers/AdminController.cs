@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -16,19 +17,22 @@ namespace SocialEmpires.Controllers
         private readonly IHubContext<NotificationHub> _bulletinHubContext;
         private readonly AppDbContext _appDbContext;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
         public AdminController(
             ConfigService configFileService,
             PlayerSaveService playerSaveService,
             IHubContext<NotificationHub> bulletinHubContext,
             AppDbContext appDbContext,
-            IMapper mapper)
+            IMapper mapper,
+            IMediator mediator)
         {
             _configFileService = configFileService;
             _playerSaveService = playerSaveService;
             _bulletinHubContext = bulletinHubContext;
             _appDbContext = appDbContext;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]

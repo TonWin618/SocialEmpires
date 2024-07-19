@@ -21,6 +21,16 @@ namespace SocialEmpires.Services
             return playerSave;
         }
 
+        public async Task<List<PlayerSave>> GetAllPlayerSavesAsync()
+        {
+            var saves = await _appDbContext.PlayerSaves
+                .Include(_ => _.PlayerInfo)
+                .Include(_ => _.Maps)
+                .Include(_ => _.PrivateState)
+                .ToListAsync();
+            return saves;
+        }
+
         public async Task<(int pageCount, List<PlayerSave>)> GetAllPlayerSavesAsync(int pageIndex, int pageSize)
         {
             var saves = await _appDbContext.PlayerSaves
