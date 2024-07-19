@@ -13,8 +13,8 @@ using SocialEmpires.Models;
 namespace SocialEmpires.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240711062206_AddHonorLevel")]
-    partial class AddHonorLevel
+    [Migration("20240719184516_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -224,27 +224,12 @@ namespace SocialEmpires.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SocialEmpires.Models.Bulletins.Bulletin", b =>
+            modelBuilder.Entity("SocialEmpires.Models.Configs.Category", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("ExpiryTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PublishedTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PublisherId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ComplexProperty<Dictionary<string, object>>("HtmlContent", "SocialEmpires.Models.Bulletins.Bulletin.HtmlContent#MultiLanguageString", b1 =>
+                    b.ComplexProperty<Dictionary<string, object>>("Name", "SocialEmpires.Models.Configs.Category.Name#MultiLanguageString", b1 =>
                         {
                             b1.IsRequired();
 
@@ -257,7 +242,31 @@ namespace SocialEmpires.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bulletins");
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.DartsItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExtraItem")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Items")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DartsItems");
                 });
 
             modelBuilder.Entity("SocialEmpires.Models.Configs.ExpansionPrice", b =>
@@ -317,6 +326,20 @@ namespace SocialEmpires.Migrations
                     b.ToTable("FindableItems");
                 });
 
+            modelBuilder.Entity("SocialEmpires.Models.Configs.GlobalSetting", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("GlobalSettings");
+                });
+
             modelBuilder.Entity("SocialEmpires.Models.Configs.HonorLevel", b =>
                 {
                     b.Property<int>("Id")
@@ -341,6 +364,20 @@ namespace SocialEmpires.Migrations
                     b.ToTable("HonorLevels");
                 });
 
+            modelBuilder.Entity("SocialEmpires.Models.Configs.Image", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("SocialEmpires.Models.Configs.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -349,131 +386,108 @@ namespace SocialEmpires.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Achievement")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Achievement")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Activation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("Activation")
+                        .HasColumnType("real");
 
-                    b.Property<string>("Attack")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Attack")
+                        .HasColumnType("int");
 
-                    b.Property<string>("AttackInterval")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AttackInterval")
+                        .HasColumnType("int");
 
-                    b.Property<string>("AttackRange")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AttackRange")
+                        .HasColumnType("int");
 
                     b.Property<string>("CategoryId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Collect")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Collect")
+                        .HasColumnType("int");
 
                     b.Property<string>("CollectType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CollectXp")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CollectXp")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Cost")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Cost")
+                        .HasColumnType("int");
 
                     b.Property<string>("CostType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CostUnitCash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CostUnitCash")
+                        .HasColumnType("int");
 
                     b.Property<string>("Defense")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DisplayOrder")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Elevation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Elevation")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Expiration")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Expiration")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Flying")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Flying")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("GiftLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GiftLevel")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Giftable")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Giftable")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Groups")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Height")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImgName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("InStore")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("InStore")
+                        .HasColumnType("bit");
 
                     b.Property<string>("IphoneAdjustments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Life")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Life")
+                        .HasColumnType("int");
 
                     b.Property<string>("MaxFrame")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MinLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MinLevel")
+                        .HasColumnType("int");
 
-                    b.Property<string>("NewItem")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("NewItem")
+                        .HasColumnType("bit");
 
                     b.Property<string>("OnlyMobile")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Population")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Population")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Potion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Potion")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Protect")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Protect")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Race")
                         .IsRequired()
@@ -487,16 +501,14 @@ namespace SocialEmpires.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
 
                     b.Property<string>("StoreGroups")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StoreLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("StoreLevel")
+                        .HasColumnType("int");
 
                     b.Property<string>("SubcatFunctional")
                         .IsRequired()
@@ -514,25 +526,21 @@ namespace SocialEmpires.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UnitCapacity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UnitCapacity")
+                        .HasColumnType("int");
 
-                    b.Property<string>("UnitsLimit")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UnitsLimit")
+                        .HasColumnType("int");
 
                     b.Property<string>("UpgradesTo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Velocity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Velocity")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Width")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
 
                     b.Property<int>("Xp")
                         .HasColumnType("int");
@@ -601,6 +609,29 @@ namespace SocialEmpires.Migrations
                     b.ToTable("Levels");
                 });
 
+            modelBuilder.Entity("SocialEmpires.Models.Configs.LevelRankingReward", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cash")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Units")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LevelRankingRewards");
+                });
+
             modelBuilder.Entity("SocialEmpires.Models.Configs.LocalizationString", b =>
                 {
                     b.Property<int>("Id")
@@ -631,6 +662,83 @@ namespace SocialEmpires.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LocalizationStrings");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.Magic", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Area")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Cash")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gold")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImgName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Mana")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Target")
+                        .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Description", "SocialEmpires.Models.Configs.Magic.Description#MultiLanguageString", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("en")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("zh")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.ComplexProperty<Dictionary<string, object>>("Name", "SocialEmpires.Models.Configs.Magic.Name#MultiLanguageString", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("en")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("zh")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Magics");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.MapPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cash")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Coins")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MapPrices");
                 });
 
             modelBuilder.Entity("SocialEmpires.Models.Configs.Mission", b =>
@@ -733,6 +841,311 @@ namespace SocialEmpires.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("NeighborAssists");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.OfferPack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CostCash")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Food")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gold")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Items")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Mana")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PackType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stone")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Wood")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Xp")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OfferPacks");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.SocialItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkerCost")
+                        .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Workers", "SocialEmpires.Models.Configs.SocialItem.Workers#MultiLanguageString", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("en")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("zh")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SocialItems");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.SubCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Parent")
+                        .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Name", "SocialEmpires.Models.Configs.SubCategory.Name#MultiLanguageString", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("en")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("zh")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("SubCategories");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentOpponent", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Team")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TournamentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Xp")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TournamentTypeId");
+
+                    b.ToTable("TournamentOpponents");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentPrize", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("G")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TournamentTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("U")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TournamentTypeId");
+
+                    b.ToTable("TournamentPrices");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cost")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<long>("MapId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("MinLevel")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumPlayers")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Picture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResourceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WeeklyTournaments")
+                        .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("Name", "SocialEmpires.Models.Configs.TournamentType.Name#MultiLanguageString", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("en")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("zh")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TournamentTypes");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.TownPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Cash")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Coins")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TownPrices");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.UnitsCollectionsCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryLangId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Cost")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Costs")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rewards")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Units")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UnitsCollectionsCategories");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Notifications.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PublishedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PublisherId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceiverIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ComplexProperty<Dictionary<string, object>>("HtmlContent", "SocialEmpires.Models.Notifications.Notification.HtmlContent#MultiLanguageString", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<string>("en")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("zh")
+                                .HasColumnType("nvarchar(max)");
+                        });
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("SocialEmpires.Models.PlayerSaves.EmpireMap", b =>
@@ -1100,6 +1513,27 @@ namespace SocialEmpires.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SocialEmpires.Models.Configs.SubCategory", b =>
+                {
+                    b.HasOne("SocialEmpires.Models.Configs.Category", null)
+                        .WithMany("Sub")
+                        .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentOpponent", b =>
+                {
+                    b.HasOne("SocialEmpires.Models.Configs.TournamentType", null)
+                        .WithMany("WeeklyOpponent")
+                        .HasForeignKey("TournamentTypeId");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentPrize", b =>
+                {
+                    b.HasOne("SocialEmpires.Models.Configs.TournamentType", null)
+                        .WithMany("Prize")
+                        .HasForeignKey("TournamentTypeId");
+                });
+
             modelBuilder.Entity("SocialEmpires.Models.PlayerSaves.EmpireMap", b =>
                 {
                     b.HasOne("SocialEmpires.Models.PlayerSaves.PlayerSave", null)
@@ -1124,6 +1558,18 @@ namespace SocialEmpires.Migrations
                     b.Navigation("PlayerInfo");
 
                     b.Navigation("PrivateState");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.Category", b =>
+                {
+                    b.Navigation("Sub");
+                });
+
+            modelBuilder.Entity("SocialEmpires.Models.Configs.TournamentType", b =>
+                {
+                    b.Navigation("Prize");
+
+                    b.Navigation("WeeklyOpponent");
                 });
 
             modelBuilder.Entity("SocialEmpires.Models.PlayerSaves.PlayerSave", b =>
