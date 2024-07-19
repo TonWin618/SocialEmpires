@@ -5,7 +5,7 @@ using System.Text.Json.Nodes;
 
 namespace SocialEmpires.Controllers
 {
-    public partial class AdminController
+    public partial class ManagerController
     {
         [HttpGet]
         public IActionResult GlobalSettings()

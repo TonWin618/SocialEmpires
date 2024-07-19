@@ -7,7 +7,7 @@ using SocialEmpires.Utils;
 
 namespace SocialEmpires.Controllers
 {
-    public partial class AdminController
+    public partial class ManagerController
     {
         [HttpGet]
         public IActionResult Gift(int pageIndex = 1, int pageSize = 20)

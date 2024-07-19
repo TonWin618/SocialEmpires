@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer localizer
+@inject IStringLocalizer<GlobalLocalizer> global
+@inject IHttpContextAccessor accessor
+@{
+    ViewBag.IsUser = accessor?.HttpContext?.User.IsInRole("User") ?? false;
+    ViewBag.IsAdmin = accessor?.HttpContext?.User.IsInRole("Admin") ?? false;
+    ViewBag.IsManager = accessor?.HttpContext?.User.IsInRole("Manager") ?? false;
+    var userName = accessor?.HttpContext?.User?.Identity?.Name;
+}
+
+@{
+    if (userName == null)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Identity" asp-action="Login">@localizer["Login"]</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Identity" asp-action="Register">@localizer["Signin"]</a>
+        </li>
+    }
+    else
+    {
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                @userName
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/Identity/Logout">@localizer["Logout"]</a></li>
+            </ul>
+        </div>
+    }
+    <li>
+        <div class="dropdown">
+            <button class="btn btn-secondary btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                @localizer["Language"]
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/Language/SetLanguage?language=zh">简体中文</a></li>
+                <li><a class="dropdown-item" href="/Language/SetLanguage?language=en">English</a></li>
+                <!-- Add more languages -->
+            </ul>
+        </div>
+    </li>
+}

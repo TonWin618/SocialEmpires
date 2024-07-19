@@ -7,7 +7,7 @@ using System.Text;
 namespace SocialEmpires.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public partial class AdminController : Controller
+    public partial class ManagerController : Controller
     {
         [HttpGet]
         public async Task<IActionResult> Players(int pageIndex = 1, int pageSize = 20)

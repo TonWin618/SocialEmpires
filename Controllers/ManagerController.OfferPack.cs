@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace SocialEmpires.Controllers
 {
-    public partial class AdminController
+    public partial class ManagerController
     {
         [HttpGet]
         public IActionResult OfferPacks(int pageIndex = 1, int pageSize = 20)

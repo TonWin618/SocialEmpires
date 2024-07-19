@@ -8,7 +8,7 @@
 @attribute [Authorize(Roles = "Admin")]
 @inject IViewLocalizer localizer
 @{
-    Layout = "_AdminLayout";
+    Layout = "_ManagerLayout";
     ViewData["Title"] = localizer["DartsItems"];
     var pageIndex = (int)ViewData["PageIndex"]!;
     var pageSize = (int)ViewData["PageSize"]!;

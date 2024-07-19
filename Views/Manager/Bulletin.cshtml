@@ -5,7 +5,7 @@
 @using Ganss.Xss;
 @inject IViewLocalizer localizer
 @{
-    Layout = "_AdminLayout";
+    Layout = "_ManagerLayout";
     ViewData["Title"] = localizer["Bulletin"];
     var sanitizer = new HtmlSanitizer();
     var bulletins = ViewData["Bulletins"] as List<Notification>;

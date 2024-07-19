@@ -2,10 +2,10 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
 @using SocialEmpires.Utils
-@using static SocialEmpires.Controllers.AdminController
+@using static SocialEmpires.Controllers.ManagerController
 @inject IViewLocalizer localizer
 @{
-    Layout = "_AdminLayout";
+    Layout = "_ManagerLayout";
     ViewData["Title"] = localizer["Playerplayer.Save"];
     var pageIndex = (int)ViewData["PageIndex"]!;
     var pageSize = (int)ViewData["PageSize"]!;

@@ -5,7 +5,7 @@
 
 @inject IViewLocalizer localizer
 @{
-    Layout = "_AdminLayout";
+    Layout = "_ManagerLayout";
     ViewData["Title"] = localizer["GlobalSettings"];
     var globals = ViewData["GlobalSettings"] as List<GlobalSetting>;
 }

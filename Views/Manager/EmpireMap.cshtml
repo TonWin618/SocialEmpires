@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
 @using SocialEmpires.Models.PlayerSaves
-@using static SocialEmpires.Controllers.AdminController
+@using static SocialEmpires.Controllers.ManagerController
 @inject IViewLocalizer localizer
 @{
-    Layout = "_AdminLayout";
+    Layout = "_ManagerLayout";
     ViewData["Title"] = localizer["EmpireMap"];
     var mapGridItems = ViewData["MapGridItems"] as IEnumerable<MapGridItem>;
 }

@@ -5,10 +5,9 @@
 @using SocialEmpires.Services
 @using SocialEmpires.Utils
 @using System.Text.Json
-@attribute [Authorize(Roles = "Admin")]
 @inject IViewLocalizer localizer
 @{
-    Layout = "_AdminLayout";
+    Layout = "_ManagerLayout";
     ViewData["Title"] = localizer["OfferPacks"];
     var pageIndex = (int)ViewData["PageIndex"]!;
     var pageSize = (int)ViewData["PageSize"]!;

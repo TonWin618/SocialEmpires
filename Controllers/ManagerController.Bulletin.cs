@@ -9,7 +9,7 @@ using SocialEmpires.Utils;
 
 namespace SocialEmpires.Controllers
 {
-    public partial class AdminController
+    public partial class ManagerController
     {
         [HttpGet]
         public IActionResult Bulletin()
