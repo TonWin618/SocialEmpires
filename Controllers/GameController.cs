@@ -42,8 +42,6 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.UseAdmin = false;
-            ViewBag.UseManager = false;
             ViewData["BaseUrl"] = _flashGameConfigOptions.BaseUrl;
             ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
             ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();

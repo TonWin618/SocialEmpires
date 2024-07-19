@@ -38,8 +38,6 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.UseAdmin = false;
-            ViewBag.UseManager = true;
             return View();
         }
 

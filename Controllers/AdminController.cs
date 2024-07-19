@@ -9,8 +9,6 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.UseAdmin = true;
-            ViewBag.UseManager = false;
             return View();
         }
     }
