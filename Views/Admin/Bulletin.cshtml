@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using System.Text
-@using SocialEmpires.Models.Bulletins
+@using SocialEmpires.Models.Notifications
 @using SocialEmpires.Models.PlayerSaves
 @using Ganss.Xss;
 @inject IViewLocalizer localizer
@@ -8,7 +8,7 @@
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["Bulletin"];
     var sanitizer = new HtmlSanitizer();
-    var bulletins = ViewData["Bulletins"] as List<Bulletin>;
+    var bulletins = ViewData["Bulletins"] as List<Notification>;
 }
 
 <div class="d-flex justify-content-center">
@@ -73,7 +73,7 @@
         forced_root_block: 'div'
     });
 
-    var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
+    var connection = new signalR.HubConnectionBuilder().withUrl("/Notification").build();
 
     connection.start().then()
         .catch(function (err) {

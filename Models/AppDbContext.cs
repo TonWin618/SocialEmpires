@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SocialEmpires.Models.Bulletins;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Models.Notifications;
 using SocialEmpires.Models.PlayerSaves;
 using SocialEmpires.Utils;
 using System.Text.Json;
@@ -19,7 +19,7 @@ namespace SocialEmpires.Models
         public DbSet<PlayerInfo> PlayerInfos { get; set; }
 
         //Bulletin
-        public DbSet<Bulletin> Bulletins { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         //Config
         public DbSet<Item> Items { get; set; }
@@ -119,7 +119,7 @@ namespace SocialEmpires.Models
 
             builder.Entity<PlayerInfo>().HasKey(x => x.Pid);
 
-            builder.Entity<Bulletin>().HasKey(x => x.Id);
+            builder.Entity<Notification>().HasKey(x => x.Id);
 
             builder.Entity<Item>().HasKey(x => x.Id);
 

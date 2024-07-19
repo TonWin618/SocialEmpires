@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SocialEmpires.Dtos;
 using SocialEmpires.Infrastructure.MultiLanguage;
-using SocialEmpires.Models.Bulletins;
+using SocialEmpires.Models.Notifications;
 using System.Globalization;
 using System.Text.Json;
 
@@ -12,9 +13,9 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Bulletin()
         {
-            var bulletins = _appDbContext.Bulletins
+            var bulletins = _appDbContext.Notifications
+                .Where(_ => _.ExpiryTime > DateTime.UtcNow && _.Type == NotificationTypeNames.Bulletin)
                 .WithLanguage(CultureInfo.CurrentCulture.Name)
-                .Where(_ => _.ExpiryTime > DateTime.UtcNow)
                 .OrderBy(_ => _.PublishedTime)
                 .ToList();
 
@@ -32,9 +33,14 @@ namespace SocialEmpires.Controllers
             [FromForm] int minutes, 
             [FromForm] int seconds)
         {
-            var bulletin = new Bulletin(UserId, htmlContent, language, new TimeSpan(days, hours, minutes, seconds));
+            var bulletin = Notification.CreateFromBulletin(
+                UserId, 
+                new MultiLanguageString(language, htmlContent), 
+                new TimeSpan(days, hours, minutes, seconds));
+
             await _appDbContext.AddAsync(bulletin);
-            await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletin));
+            var bulletinDto = _mapper.Map<NotificationDto>(bulletin);
+            await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletinDto));
             return Redirect(Request.Headers.Referer);
         }
     }
