@@ -10,9 +10,9 @@ namespace SocialEmpires.Dtos
 
         public DateTime ExpiryTime { get; private set; }
 
-        public string Type { get; private set; }
+        public string Type { get; private set; } = null!;
 
-        public MultiLanguageString HtmlContent { get; private set; }
+        public MultiLanguageString HtmlContent { get; private set; } = null!;
     }
 
     public class NotificationProfile : Profile

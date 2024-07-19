@@ -8,16 +8,16 @@ namespace SocialEmpires.Dtos
     {
         public int Id { get; set; }
 
-        public MultiLanguageString Name { get; set; }
+        public MultiLanguageString Name { get; set; } = null!;
 
-        public List<SubCategoryDto> Sub { get; set; }
+        public List<SubCategoryDto> Sub { get; set; } = null!;
     }
 
     public class SubCategoryDto
     {
         public int Id { get; set; }
 
-        public MultiLanguageString Name { get; set; }
+        public MultiLanguageString Name { get; set; } = null!;
 
         public int Parent { get; set; }
     }

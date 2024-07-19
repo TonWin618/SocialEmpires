@@ -9,7 +9,7 @@ namespace SocialEmpires.Dtos
 
         public int CategoryLangId { get; set; }
 
-        public List<int> Units { get; set; }
+        public List<int> Units { get; set; } = null!;
 
         public int Rewards { get; set; }
 
