@@ -11,7 +11,7 @@ namespace SocialEmpires.Controllers
         {
             ViewData["PageIndex"] = pageIndex;
             ViewData["PageSize"] = pageSize;
-            (ViewData["PageCount"], ViewData["PageData"]) = PageHelper.Page(pageIndex, pageSize, _configFileService.DartsItems);
+            (ViewData["PageCount"], ViewData["PageData"]) = PageHelper.Page(pageIndex, pageSize, _configService.DartsItems);
             return View();
         }
 

@@ -11,14 +11,14 @@ namespace SocialEmpires.Controllers
         {
             ViewData["PageIndex"] = pageIndex;
             ViewData["PageSize"] = pageSize;
-            (ViewData["PageCount"], ViewData["PageData"]) = _configFileService.GetItems(pageIndex, pageSize);
+            (ViewData["PageCount"], ViewData["PageData"]) = _configService.GetItems(pageIndex, pageSize);
             return View();
         }
 
         [HttpGet]
         public IActionResult Item(int id)
         {
-            var item = _configFileService.GetItem(id);
+            var item = _configService.GetItem(id);
             ViewData["Item"] = item;
             if (item == null)
             {
@@ -30,7 +30,7 @@ namespace SocialEmpires.Controllers
         [HttpPost]
         public async Task<IActionResult> ShelveItem(string id, string pageIndex)
         {
-            var item = _configFileService.GetItem(id);
+            var item = _configService.GetItem(id);
             if (item == null)
             {
                 return NotFound();
@@ -43,7 +43,7 @@ namespace SocialEmpires.Controllers
         [HttpPost]
         public async Task<IActionResult> UnshelveItem(string id, string pageIndex)
         {
-            var item = _configFileService.GetItem(id);
+            var item = _configService.GetItem(id);
             if (item == null)
             {
                 return NotFound();
@@ -58,7 +58,7 @@ namespace SocialEmpires.Controllers
             [FromForm] Item updatedItem,
             [FromServices] IMapper _mapper)
         {
-            var item = _configFileService.Items.FirstOrDefault(_ => _.Id == updatedItem.Id);
+            var item = _configService.Items.FirstOrDefault(_ => _.Id == updatedItem.Id);
             _mapper.Map(updatedItem, item);
             //await _configFileService.Save();
             return Redirect(Request.Headers.Referer);

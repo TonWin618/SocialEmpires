@@ -42,7 +42,7 @@ namespace SocialEmpires.Controllers
             var mapGridItems = new List<MapGridItem>();
             foreach (var item in player.DefaultMap.Items)
             {
-                var info = _configFileService.GetItem(item.Id);
+                var info = _configService.GetItem(item.Id);
                 mapGridItems.Add(new MapGridItem(item.X, item.Y, item.Id, info.ImgName, info.Width, info.Height));
             }
 
@@ -72,7 +72,7 @@ namespace SocialEmpires.Controllers
                 var id = group.Key;
                 if ((id > 500 && id < 900) || (id > 2000 && id < 3000))
                 {
-                    var item = _configFileService.GetItem(id.ToString());
+                    var item = _configService.GetItem(id.ToString());
                     if (item == null)
                     {
                         continue;

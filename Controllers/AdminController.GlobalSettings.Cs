@@ -9,7 +9,7 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult GlobalSettings()
         {
-            ViewData["GlobalSettings"] = _configFileService.GlobalSettings;
+            ViewData["GlobalSettings"] = _configService.GlobalSettings;
             return View();
         }
 
