@@ -36,6 +36,7 @@ services.Configure<RequestLocalizationOptions>(options =>
 services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
 services.AddHttpContextAccessor();
 services.AddSignalR();
+services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 services.AddAutoMapper(options =>
 {
     options.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
