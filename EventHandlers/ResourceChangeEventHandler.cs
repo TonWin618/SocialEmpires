@@ -7,6 +7,7 @@ using SocialEmpires.Events;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Infrastructures.NotificationHub;
 using SocialEmpires.Models.Notifications;
+using System.Globalization;
 
 namespace SocialEmpires.EventHandlers
 {
@@ -31,6 +32,7 @@ namespace SocialEmpires.EventHandlers
             var content = new MultiLanguageString();
             foreach (var language in SupportLanguages.List)
             {
+                CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(language);
                 content.Set(
                     language, 
                     $"[{_localizer["Debug"]}]{_localizer["ResourceChanged"]}:{_localizer[notification.ResourceName]}{notification.Quantity}");
