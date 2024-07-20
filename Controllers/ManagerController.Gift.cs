@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SocialEmpires.Events;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Notifications;
@@ -50,32 +51,37 @@ namespace SocialEmpires.Controllers
                 save.DefaultMap.Wood += wood;
                 save.DefaultMap.Food += food;
                 save.DefaultMap.Stone += stone;
-                var itemIds = items.Split(',');
-                foreach (var itemIdString in itemIds) 
+                save.DefaultMap.Xp += xp;
+                if (!items.IsNullOrEmpty())
                 {
-                    var itemId = int.Parse(itemIdString);
-                    var length = save.PrivateState.Gifts.Count;
-                    if (length <= itemId)
+                    var itemIds = items.Split(',');
+                    foreach (var itemIdString in itemIds)
                     {
-                        for (var i = itemId - length + 1; i > 0; i--)
+                        var itemId = int.Parse(itemIdString);
+                        var length = save.PrivateState.Gifts.Count;
+                        if (length <= itemId)
                         {
-                            save.PrivateState.Gifts.Add(0);
+                            for (var i = itemId - length + 1; i > 0; i--)
+                            {
+                                save.PrivateState.Gifts.Add(0);
+                            }
                         }
+                        save.PrivateState.Gifts[itemId]++;
                     }
-                    save.PrivateState.Gifts[itemId]++;
                 }
             }
 
             await _mediator.Publish(new SendGiftEvent()
             {
                 PublisherId = UserId,
-                UserIds = saves.Select(_=>_.Pid).ToList(),
+                UserIds = saves.Select(_ => _.Pid).ToList(),
                 Cash = cash,
                 Gold = gold,
                 Wood = wood,
                 Food = food,
                 Stone = stone,
-                items = items.Split(',').Select(int.Parse).ToList(),
+                Xp = xp,
+                items = items == null ? [] : items.Split(',').Select(int.Parse).ToList()
             });
 
             return this.Redirect();
