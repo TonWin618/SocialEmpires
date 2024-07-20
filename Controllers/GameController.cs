@@ -167,14 +167,14 @@ namespace SocialEmpires.Controllers
                 {
                     images.Add(image.Key, image.Value);
                 }
-                root.Add("images", JsonSerializer.SerializeToNode(_configService.Images, lowerSnakeCaseoptions));
+                root.Add("images", JsonSerializer.SerializeToNode(images, lowerSnakeCaseoptions));
 
                 var unitsCollectionCategories = new JsonObject();
                 foreach (var unitsCollectionCategory in _configService.UnitsCollectionsCategories)
                 {
                     unitsCollectionCategories.Add(unitsCollectionCategory.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(unitsCollectionCategory, lowerSnakeCaseoptions)));
                 }
-                root.Add("units_collection_categories", JsonSerializer.SerializeToNode(_configService.Categories, lowerSnakeCaseoptions));
+                root.Add("units_collection_categories", JsonSerializer.SerializeToNode(unitsCollectionCategories, lowerSnakeCaseoptions));
 
                 return Task.FromResult(root);
             });
