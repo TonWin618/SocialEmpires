@@ -172,9 +172,10 @@ namespace SocialEmpires.Controllers
                 var unitsCollectionCategories = new JsonObject();
                 foreach (var unitsCollectionCategory in _configService.UnitsCollectionsCategories)
                 {
-                    unitsCollectionCategories.Add(unitsCollectionCategory.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(unitsCollectionCategory, lowerSnakeCaseoptions)));
+                    var unitsCollectionCategoryDto = _mapper.Map<UnitsCollectionsCategoryDto>(unitsCollectionCategory);
+                    unitsCollectionCategories.Add(unitsCollectionCategory.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(unitsCollectionCategoryDto, lowerSnakeCaseoptions)));
                 }
-                root.Add("units_collection_categories", JsonSerializer.SerializeToNode(unitsCollectionCategories, lowerSnakeCaseoptions));
+                root.Add("units_collections_categories", JsonSerializer.SerializeToNode(unitsCollectionCategories, lowerSnakeCaseoptions));
 
                 return Task.FromResult(root);
             });
