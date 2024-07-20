@@ -51,7 +51,7 @@ namespace SocialEmpires.Infrastructure.MultiLanguage
             {
                 if (property.PropertyType == typeof(MultiLanguageString))
                 {
-                    var currentProperty = typeof(MultiLanguageString).GetProperty("Current")!;
+                    var currentProperty = typeof(MultiLanguageString).GetProperty(nameof(MultiLanguageString.Current))!;
                     var languageProperty = typeof(MultiLanguageString).GetProperty(language)!;
                     var multiLanguageStringInstance = Expression.MemberInit(
                         Expression.New(typeof(MultiLanguageString)),

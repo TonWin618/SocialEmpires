@@ -6,7 +6,7 @@ using SocialEmpires.Infrastructure.EmailSender;
 
 namespace SocialEmpires.Controllers
 {
-    public class IdentityController : Controller
+    public partial class IdentityController : Controller
     {
         private readonly ILogger<IdentityController> _logger;
         private string[] LoginMethods { get; set; } = ["EmailAndPassword", "EmailAndToken"];
@@ -19,46 +19,6 @@ namespace SocialEmpires.Controllers
             _logger = logger;
             _localizer = localizer;
         }
-
-        #region Initialize
-        [HttpGet]
-        public IActionResult Initialize()
-        {
-            return View();
-        }
-        
-        [HttpPost]
-        public async Task<IActionResult> Initialize(
-            string email,
-            string password,
-            [FromServices] UserManager<IdentityUser> _userManager,
-            [FromServices] RoleManager<IdentityRole> _roleManager)
-        {
-            if(email == null || password == null)
-            {
-                return View("Initialize");
-            }
-
-            if (_roleManager.Roles.Any(_ => _.Name == "Admin"))
-            {
-                return Redirect("/");
-            }
-            await _roleManager.CreateAsync(new IdentityRole("User"));
-            await _roleManager.CreateAsync(new IdentityRole("Admin"));
-
-            var user = new IdentityUser()
-            {
-                Email = email
-            };
-            user.UserName = user.Id.ToString();
-            await _userManager.CreateAsync(user, password);
-
-            await _userManager.AddToRoleAsync(user, "User");
-            await _userManager.AddToRoleAsync(user, "Admin");
-
-            return View("Login");
-        }
-        #endregion
 
         #region Login
         [HttpGet]

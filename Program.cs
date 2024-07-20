@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using SocialEmpires.Hubs;
 using SocialEmpires.Infrastructure.EmailSender;
 using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Infrastructures.NotificationHub;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Options;
 using SocialEmpires.Seeds;
@@ -36,6 +36,7 @@ services.Configure<RequestLocalizationOptions>(options =>
 services.AddControllersWithViews(op => op.Filters.Add<UnitOfWorkFilter>());
 services.AddHttpContextAccessor();
 services.AddSignalR();
+services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 services.AddAutoMapper(options =>
 {
     options.AddMaps(AppDomain.CurrentDomain.GetAssemblies());
@@ -117,7 +118,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 //Map
-app.MapHub<BulletinHub>("/BulletinHub");
+app.MapHub<NotificationHub>("/Notification");
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",

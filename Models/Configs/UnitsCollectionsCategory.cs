@@ -1,4 +1,6 @@
-﻿namespace SocialEmpires.Models.Configs
+﻿using Microsoft.IdentityModel.Tokens;
+
+namespace SocialEmpires.Models.Configs
 {
     public class UnitsCollectionsCategory
     {
@@ -14,7 +16,26 @@
 
         public int Cost {  get; set; }
 
-        public List<int>? Costs { get; set; }
+        private List<int>? costs;
+        public List<int>? Costs {
+            get
+            {
+                return costs;
+            }
+            set 
+            {
+                //TODO: AutoMapper map behavior
+                //Prevent AutoMapper from converting null to an empty list.
+                if (value.IsNullOrEmpty())
+                {
+                    value = null;
+                }
+                else
+                {
+                    costs = value;
+                }
+            } 
+        }
 
         public int Position {  get; set; }
     }

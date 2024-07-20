@@ -9,13 +9,13 @@ namespace SocialEmpires.Dtos
     public class TournamentTypeDto
     {
         public int Id { get; set; }
-        public MultiLanguageString Name { get; set; }
-        public string ResourceType { get; set; }
+        public MultiLanguageString Name { get; set; } = null!;
+        public string ResourceType { get; set; } = null!;
         public int Cost { get; set; }
-        public List<TournamentPrizeDto> Prize { get; set; }
+        public List<TournamentPrizeDto> Prize { get; set; } = null!;
         public int NumPlayers { get; set; }
         public int Duration { get; set; }
-        public string Picture { get; set; }
+        public string Picture { get; set; } = null!;
         public int MinLevel { get; set; }
         public long MapId { get; set; }
         public int WeeklyTournaments { get; set; }
@@ -25,7 +25,6 @@ namespace SocialEmpires.Dtos
     public class TournamentPrizeDto
     {
         public int G { get; set; }
-        //[JsonConverter(typeof(StringIntDictionaryConverter))]
         public Dictionary<string, int> U { get; set; }
     }
 

@@ -10376,7 +10376,7 @@
         },
         {
             "id": "52",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Chichen Itza",
             "type": "b",
             "cost": "20",
@@ -10429,7 +10429,7 @@
         },
         {
             "id": "53",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Coliseum",
             "type": "b",
             "cost": "20",
@@ -10482,7 +10482,7 @@
         },
         {
             "id": "54",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Inca God",
             "type": "b",
             "cost": "20",
@@ -10535,7 +10535,7 @@
         },
         {
             "id": "55",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Sphinx",
             "type": "b",
             "cost": "20",
@@ -10588,7 +10588,7 @@
         },
         {
             "id": "56",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Machu Picchu",
             "type": "b",
             "cost": "35",
@@ -10641,7 +10641,7 @@
         },
         {
             "id": "57",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Chinese Wall",
             "type": "b",
             "cost": "35",
@@ -10694,7 +10694,7 @@
         },
         {
             "id": "58",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Petra",
             "type": "b",
             "cost": "35",
@@ -10747,7 +10747,7 @@
         },
         {
             "id": "59",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Taj Mahal",
             "type": "b",
             "cost": "35",
@@ -10800,7 +10800,7 @@
         },
         {
             "id": "60",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Iguazu Waterfalls",
             "type": "b",
             "cost": "60",
@@ -10853,7 +10853,7 @@
         },
         {
             "id": "61",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Parthenon",
             "type": "b",
             "cost": "60",
@@ -13238,7 +13238,7 @@
         },
         {
             "id": "106",
-            "in_store": "0",
+            "in_store": "1",
             "name": "Red Tree",
             "type": "b",
             "cost": "1",
@@ -13291,7 +13291,7 @@
         },
         {
             "id": "107",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Horror Tree",
             "type": "b",
             "cost": "390",
@@ -13397,7 +13397,7 @@
         },
         {
             "id": "109",
-            "in_store": "0",
+            "in_store": "1",
             "name": "Blue Flag",
             "type": "b",
             "cost": "1",
@@ -13503,7 +13503,7 @@
         },
         {
             "id": "111",
-            "in_store": "0",
+            "in_store": "1",
             "name": "Red Flag",
             "type": "b",
             "cost": "1",
@@ -14245,7 +14245,7 @@
         },
         {
             "id": "125",
-            "in_store": "0",
+            "in_store": "1",
             "name": "Soldier Statue",
             "type": "b",
             "cost": "1",
@@ -14351,7 +14351,7 @@
         },
         {
             "id": "127",
-            "in_store": "0",
+            "in_store": "1",
             "name": "Soldier Statue",
             "type": "b",
             "cost": "1",
@@ -15623,7 +15623,7 @@
         },
         {
             "id": "151",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Small Refuge",
             "type": "b",
             "cost": "400",
@@ -15676,7 +15676,7 @@
         },
         {
             "id": "152",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Large Refuge",
             "type": "b",
             "cost": "5",
@@ -15729,7 +15729,7 @@
         },
         {
             "id": "153",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Argentina Flag",
             "type": "b",
             "cost": "3",
@@ -15782,7 +15782,7 @@
         },
         {
             "id": "154",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Australia Flag",
             "type": "b",
             "cost": "3",
@@ -15835,7 +15835,7 @@
         },
         {
             "id": "155",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Belgium Flag",
             "type": "b",
             "cost": "3",
@@ -15888,7 +15888,7 @@
         },
         {
             "id": "156",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Bulgaria Flag",
             "type": "b",
             "cost": "3",
@@ -15941,7 +15941,7 @@
         },
         {
             "id": "157",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Canada Flag",
             "type": "b",
             "cost": "3",
@@ -15994,7 +15994,7 @@
         },
         {
             "id": "158",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Catalonia Flag",
             "type": "b",
             "cost": "3",
@@ -16047,7 +16047,7 @@
         },
         {
             "id": "159",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Switzerland Flag",
             "type": "b",
             "cost": "3",
@@ -16100,7 +16100,7 @@
         },
         {
             "id": "160",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Chile Flag",
             "type": "b",
             "cost": "3",
@@ -16153,7 +16153,7 @@
         },
         {
             "id": "161",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Colombia Flag",
             "type": "b",
             "cost": "3",
@@ -16206,7 +16206,7 @@
         },
         {
             "id": "162",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Germany Flag",
             "type": "b",
             "cost": "3",
@@ -16259,7 +16259,7 @@
         },
         {
             "id": "163",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Spain Flag",
             "type": "b",
             "cost": "3",
@@ -16312,7 +16312,7 @@
         },
         {
             "id": "164",
-            "in_store": "1",
+            "in_store": "0",
             "name": "FC Barcelona Flag",
             "type": "b",
             "cost": "3",
@@ -16365,7 +16365,7 @@
         },
         {
             "id": "165",
-            "in_store": "1",
+            "in_store": "0",
             "name": "France Flag",
             "type": "b",
             "cost": "3",
@@ -16418,7 +16418,7 @@
         },
         {
             "id": "166",
-            "in_store": "1",
+            "in_store": "0",
             "name": "UK Flag",
             "type": "b",
             "cost": "3",
@@ -16471,7 +16471,7 @@
         },
         {
             "id": "167",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Israel Flag",
             "type": "b",
             "cost": "3",
@@ -16524,7 +16524,7 @@
         },
         {
             "id": "168",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Italy Flag",
             "type": "b",
             "cost": "3",
@@ -16577,7 +16577,7 @@
         },
         {
             "id": "169",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Mexico Flag",
             "type": "b",
             "cost": "3",
@@ -16630,7 +16630,7 @@
         },
         {
             "id": "170",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Netherlands Flag",
             "type": "b",
             "cost": "3",
@@ -16683,7 +16683,7 @@
         },
         {
             "id": "171",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Philippines Flag",
             "type": "b",
             "cost": "3",
@@ -16736,7 +16736,7 @@
         },
         {
             "id": "172",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Portugal Flag",
             "type": "b",
             "cost": "3",
@@ -16789,7 +16789,7 @@
         },
         {
             "id": "173",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Sweden Flag",
             "type": "b",
             "cost": "3",
@@ -16842,7 +16842,7 @@
         },
         {
             "id": "174",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Turkey Flag",
             "type": "b",
             "cost": "3",
@@ -16895,7 +16895,7 @@
         },
         {
             "id": "175",
-            "in_store": "1",
+            "in_store": "0",
             "name": "USA Flag",
             "type": "b",
             "cost": "3",
@@ -18167,7 +18167,7 @@
         },
         {
             "id": "199",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Fire Tower",
             "type": "b",
             "cost": "9",
@@ -18962,7 +18962,7 @@
         },
         {
             "id": "214",
-            "in_store": "3",
+            "in_store": "0",
             "name": "Lightning Tower",
             "type": "b",
             "cost": "10",
@@ -21453,7 +21453,7 @@
         },
         {
             "id": "261",
-            "in_store": "3",
+            "in_store": "0",
             "name": "Saint Basil Basilica",
             "type": "b",
             "cost": "40",
@@ -21506,7 +21506,7 @@
         },
         {
             "id": "262",
-            "in_store": "3",
+            "in_store": "0",
             "name": "Alexandria Library",
             "type": "b",
             "cost": "70",
@@ -21559,7 +21559,7 @@
         },
         {
             "id": "263",
-            "in_store": "3",
+            "in_store": "0",
             "name": "Stonehenge",
             "type": "b",
             "cost": "60",
@@ -21612,7 +21612,7 @@
         },
         {
             "id": "264",
-            "in_store": "3",
+            "in_store": "0",
             "name": "Angkor",
             "type": "b",
             "cost": "60",
@@ -22990,7 +22990,7 @@
         },
         {
             "id": "290",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Farm I",
             "type": "b",
             "cost": "60",
@@ -23043,7 +23043,7 @@
         },
         {
             "id": "291",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Tower I",
             "type": "b",
             "cost": "125",
@@ -23096,7 +23096,7 @@
         },
         {
             "id": "292",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Wall I",
             "type": "b",
             "cost": "5",
@@ -23520,7 +23520,7 @@
         },
         {
             "id": "300",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Mill I",
             "type": "b",
             "cost": "100",
@@ -23573,7 +23573,7 @@
         },
         {
             "id": "301",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Mill II",
             "type": "b",
             "cost": "0",
@@ -23626,7 +23626,7 @@
         },
         {
             "id": "302",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Mill III",
             "type": "b",
             "cost": "1500",
@@ -23679,7 +23679,7 @@
         },
         {
             "id": "303",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Tower II",
             "type": "b",
             "cost": "250",
@@ -23732,7 +23732,7 @@
         },
         {
             "id": "304",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Tower III",
             "type": "b",
             "cost": "375",
@@ -23785,7 +23785,7 @@
         },
         {
             "id": "305",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Wall II",
             "type": "b",
             "cost": "15",
@@ -23838,7 +23838,7 @@
         },
         {
             "id": "306",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Wall III",
             "type": "b",
             "cost": "30",
@@ -23891,7 +23891,7 @@
         },
         {
             "id": "307",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll House I",
             "type": "b",
             "cost": "30",
@@ -23944,7 +23944,7 @@
         },
         {
             "id": "308",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll House II",
             "type": "b",
             "cost": "60",
@@ -23997,7 +23997,7 @@
         },
         {
             "id": "309",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll House III",
             "type": "b",
             "cost": "120",
@@ -24050,7 +24050,7 @@
         },
         {
             "id": "310",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Farm II",
             "type": "b",
             "cost": "120",
@@ -24103,7 +24103,7 @@
         },
         {
             "id": "311",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Farm III",
             "type": "b",
             "cost": "180",
@@ -24156,7 +24156,7 @@
         },
         {
             "id": "312",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Lumber Mill I",
             "type": "b",
             "cost": "50",
@@ -24209,7 +24209,7 @@
         },
         {
             "id": "313",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Lumber Mill II",
             "type": "b",
             "cost": "200",
@@ -24262,7 +24262,7 @@
         },
         {
             "id": "314",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Lumber Mill III",
             "type": "b",
             "cost": "6000",
@@ -24315,7 +24315,7 @@
         },
         {
             "id": "315",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Gold Mine I",
             "type": "b",
             "cost": "100",
@@ -24368,7 +24368,7 @@
         },
         {
             "id": "316",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Gold Mine II",
             "type": "b",
             "cost": "200",
@@ -24421,7 +24421,7 @@
         },
         {
             "id": "317",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Gold Mine III",
             "type": "b",
             "cost": "4500",
@@ -24474,7 +24474,7 @@
         },
         {
             "id": "318",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Stone Mine I",
             "type": "b",
             "cost": "100",
@@ -24527,7 +24527,7 @@
         },
         {
             "id": "319",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Stone Mine II",
             "type": "b",
             "cost": "200",
@@ -24580,7 +24580,7 @@
         },
         {
             "id": "320",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Stone Mine III",
             "type": "b",
             "cost": "7500",
@@ -24739,7 +24739,7 @@
         },
         {
             "id": "323",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Castle I",
             "type": "b",
             "cost": "15",
@@ -24792,7 +24792,7 @@
         },
         {
             "id": "324",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Castle II",
             "type": "b",
             "cost": "25",
@@ -24845,7 +24845,7 @@
         },
         {
             "id": "325",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Coliseum",
             "type": "b",
             "cost": "100",
@@ -24898,7 +24898,7 @@
         },
         {
             "id": "326",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks 3",
             "type": "b",
             "cost": "425",
@@ -24951,7 +24951,7 @@
         },
         {
             "id": "327",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks 6",
             "type": "b",
             "cost": "10000",
@@ -25004,7 +25004,7 @@
         },
         {
             "id": "328",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Archery 2",
             "type": "b",
             "cost": "500",
@@ -25057,7 +25057,7 @@
         },
         {
             "id": "329",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Archery 1",
             "type": "b",
             "cost": "150",
@@ -25110,7 +25110,7 @@
         },
         {
             "id": "330",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks 4",
             "type": "b",
             "cost": "650",
@@ -25163,7 +25163,7 @@
         },
         {
             "id": "331",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Boar Stable",
             "type": "b",
             "cost": "350",
@@ -25216,7 +25216,7 @@
         },
         {
             "id": "332",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks 5",
             "type": "b",
             "cost": "2750",
@@ -25269,7 +25269,7 @@
         },
         {
             "id": "333",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks 1",
             "type": "b",
             "cost": "125",
@@ -25322,7 +25322,7 @@
         },
         {
             "id": "334",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks 2",
             "type": "b",
             "cost": "300",
@@ -25375,7 +25375,7 @@
         },
         {
             "id": "335",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Market I",
             "type": "b",
             "cost": "350",
@@ -25428,7 +25428,7 @@
         },
         {
             "id": "336",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Workshop I",
             "type": "b",
             "cost": "200",
@@ -25481,7 +25481,7 @@
         },
         {
             "id": "337",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Workshop II",
             "type": "b",
             "cost": "400",
@@ -25534,7 +25534,7 @@
         },
         {
             "id": "338",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Workshop III",
             "type": "b",
             "cost": "600",
@@ -25587,7 +25587,7 @@
         },
         {
             "id": "339",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Workshop IV",
             "type": "b",
             "cost": "800",
@@ -25640,7 +25640,7 @@
         },
         {
             "id": "340",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Boar Ranch I",
             "type": "b",
             "cost": "60",
@@ -25693,7 +25693,7 @@
         },
         {
             "id": "341",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Boar Ranch II",
             "type": "b",
             "cost": "600",
@@ -25746,7 +25746,7 @@
         },
         {
             "id": "342",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Boar Ranch III",
             "type": "b",
             "cost": "5000",
@@ -25799,7 +25799,7 @@
         },
         {
             "id": "343",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Harbour",
             "type": "b",
             "cost": "300",
@@ -25852,7 +25852,7 @@
         },
         {
             "id": "344",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Zeppelin",
             "type": "b",
             "cost": "3000",
@@ -25905,7 +25905,7 @@
         },
         {
             "id": "345",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Market II",
             "type": "b",
             "cost": "500",
@@ -25958,7 +25958,7 @@
         },
         {
             "id": "346",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Market III",
             "type": "b",
             "cost": "10000",
@@ -26011,7 +26011,7 @@
         },
         {
             "id": "347",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Tower IV",
             "type": "b",
             "cost": "500",
@@ -26064,7 +26064,7 @@
         },
         {
             "id": "348",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Tower V",
             "type": "b",
             "cost": "625",
@@ -26117,7 +26117,7 @@
         },
         {
             "id": "349",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Eagles I",
             "type": "b",
             "cost": "100",
@@ -26170,7 +26170,7 @@
         },
         {
             "id": "350",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Eagles II",
             "type": "b",
             "cost": "1000",
@@ -26223,7 +26223,7 @@
         },
         {
             "id": "351",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Eagles III",
             "type": "b",
             "cost": "10000",
@@ -26276,7 +26276,7 @@
         },
         {
             "id": "352",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Allies Market",
             "type": "b",
             "cost": "350",
@@ -26329,7 +26329,7 @@
         },
         {
             "id": "353",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Statue",
             "type": "b",
             "cost": "20",
@@ -26382,7 +26382,7 @@
         },
         {
             "id": "354",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Statue",
             "type": "b",
             "cost": "300",
@@ -26435,7 +26435,7 @@
         },
         {
             "id": "355",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Statue",
             "type": "b",
             "cost": "500",
@@ -26488,7 +26488,7 @@
         },
         {
             "id": "356",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Bathroom",
             "type": "b",
             "cost": "700",
@@ -26806,7 +26806,7 @@
         },
         {
             "id": "362",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Voodoo Lounge",
             "type": "b",
             "cost": "400",
@@ -26859,7 +26859,7 @@
         },
         {
             "id": "363",
-            "in_store": "3",
+            "in_store": "0",
             "name": "Babylon Gardens",
             "type": "b",
             "cost": "70",
@@ -27336,7 +27336,7 @@
         },
         {
             "id": "372",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Rhino Stables",
             "type": "b",
             "cost": "600",
@@ -27389,7 +27389,7 @@
         },
         {
             "id": "373",
-            "in_store": "3",
+            "in_store": "1",
             "name": "Weather Machine",
             "type": "b",
             "cost": "3500",
@@ -27972,7 +27972,7 @@
         },
         {
             "id": "384",
-            "in_store": "3",
+            "in_store": "0",
             "name": "Ice Tower",
             "type": "b",
             "cost": "7",
@@ -28025,7 +28025,7 @@
         },
         {
             "id": "385",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks Drummer",
             "type": "b",
             "cost": "12",
@@ -28078,7 +28078,7 @@
         },
         {
             "id": "386",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Barracks Boulder",
             "type": "b",
             "cost": "14",
@@ -29615,7 +29615,7 @@
         },
         {
             "id": "415",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Mummy Pyramid",
             "type": "b",
             "cost": "16",
@@ -30357,7 +30357,7 @@
         },
         {
             "id": "429",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Water Tower",
             "type": "b",
             "cost": "6",
@@ -30410,7 +30410,7 @@
         },
         {
             "id": "430",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Neptune's Palace",
             "type": "b",
             "cost": "18",
@@ -31470,7 +31470,7 @@
         },
         {
             "id": "450",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Elf House",
             "type": "b",
             "cost": "2500",
@@ -31841,7 +31841,7 @@
         },
         {
             "id": "470",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Great Church",
             "type": "b",
             "cost": "9000",
@@ -31894,7 +31894,7 @@
         },
         {
             "id": "471",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Ent Barrack",
             "type": "b",
             "cost": "20",
@@ -32000,7 +32000,7 @@
         },
         {
             "id": "473",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Infernal Wall",
             "type": "b",
             "cost": "1",
@@ -32212,7 +32212,7 @@
         },
         {
             "id": "477",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Infernal Quarters",
             "type": "b",
             "cost": "12000",
@@ -32636,7 +32636,7 @@
         },
         {
             "id": "485",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Infernal Headquarters",
             "type": "b",
             "cost": "30",
@@ -34756,7 +34756,7 @@
         },
         {
             "id": "525",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Small Troll",
             "type": "u",
             "cost": "0",
@@ -34809,7 +34809,7 @@
         },
         {
             "id": "526",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Devious Troll",
             "type": "u",
             "cost": "0",
@@ -34862,7 +34862,7 @@
         },
         {
             "id": "527",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Big Troll",
             "type": "u",
             "cost": "0",
@@ -34915,7 +34915,7 @@
         },
         {
             "id": "528",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Battle Troll",
             "type": "u",
             "cost": "0",
@@ -34968,7 +34968,7 @@
         },
         {
             "id": "529",
-            "in_store": "2",
+            "in_store": "0",
             "name": "War Troll",
             "type": "u",
             "cost": "0",
@@ -35021,7 +35021,7 @@
         },
         {
             "id": "530",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Axethrower",
             "type": "u",
             "cost": "0",
@@ -35074,7 +35074,7 @@
         },
         {
             "id": "531",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Boar Rider",
             "type": "u",
             "cost": "0",
@@ -35922,7 +35922,7 @@
         },
         {
             "id": "547",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Ravager Troll",
             "type": "u",
             "cost": "0",
@@ -35975,7 +35975,7 @@
         },
         {
             "id": "548",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Octopus",
             "type": "u",
             "cost": "60",
@@ -36028,7 +36028,7 @@
         },
         {
             "id": "549",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Kraken",
             "type": "u",
             "cost": "60",
@@ -36505,7 +36505,7 @@
         },
         {
             "id": "558",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Skeleton",
             "type": "u",
             "cost": "50",
@@ -36558,7 +36558,7 @@
         },
         {
             "id": "559",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Skeleton",
             "type": "u",
             "cost": "400",
@@ -37618,7 +37618,7 @@
         },
         {
             "id": "579",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Zombie",
             "type": "u",
             "cost": "50",
@@ -37671,7 +37671,7 @@
         },
         {
             "id": "580",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Mr. Troll",
             "type": "u",
             "cost": "50",
@@ -37724,7 +37724,7 @@
         },
         {
             "id": "581",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Mrs. Troll",
             "type": "u",
             "cost": "50",
@@ -37936,7 +37936,7 @@
         },
         {
             "id": "585",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Ram",
             "type": "u",
             "cost": "100",
@@ -37989,7 +37989,7 @@
         },
         {
             "id": "586",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Scorpion",
             "type": "u",
             "cost": "200",
@@ -38042,7 +38042,7 @@
         },
         {
             "id": "587",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Catapult",
             "type": "u",
             "cost": "300",
@@ -38095,7 +38095,7 @@
         },
         {
             "id": "588",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Cannon",
             "type": "u",
             "cost": "750",
@@ -38148,7 +38148,7 @@
         },
         {
             "id": "589",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Troll Archer",
             "type": "u",
             "cost": "100",
@@ -38201,7 +38201,7 @@
         },
         {
             "id": "590",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Voodoo Healer",
             "type": "u",
             "cost": "500",
@@ -38254,7 +38254,7 @@
         },
         {
             "id": "591",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Brute Swordsman",
             "type": "u",
             "cost": "1300",
@@ -38307,7 +38307,7 @@
         },
         {
             "id": "592",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Brute Knight",
             "type": "u",
             "cost": "1000",
@@ -38360,7 +38360,7 @@
         },
         {
             "id": "593",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Small Troll",
             "type": "u",
             "cost": "40",
@@ -38413,7 +38413,7 @@
         },
         {
             "id": "594",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Devious Troll",
             "type": "u",
             "cost": "100",
@@ -38466,7 +38466,7 @@
         },
         {
             "id": "595",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Big Troll",
             "type": "u",
             "cost": "250",
@@ -38519,7 +38519,7 @@
         },
         {
             "id": "596",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Battle Troll",
             "type": "u",
             "cost": "400",
@@ -38572,7 +38572,7 @@
         },
         {
             "id": "597",
-            "in_store": "2",
+            "in_store": "0",
             "name": "War Troll",
             "type": "u",
             "cost": "900",
@@ -38625,7 +38625,7 @@
         },
         {
             "id": "598",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Axethrower",
             "type": "u",
             "cost": "200",
@@ -38678,7 +38678,7 @@
         },
         {
             "id": "599",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Boar Rider",
             "type": "u",
             "cost": "175",
@@ -38731,7 +38731,7 @@
         },
         {
             "id": "600",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Ravager Troll",
             "type": "u",
             "cost": "1200",
@@ -38784,7 +38784,7 @@
         },
         {
             "id": "601",
-            "in_store": "2",
+            "in_store": "0",
             "name": "Rhino Rider",
             "type": "u",
             "cost": "800",
@@ -49119,7 +49119,7 @@
         },
         {
             "id": "797",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Axe Skeleton",
             "type": "u",
             "cost": "2400",
@@ -58500,7 +58500,7 @@
         },
         {
             "id": "1217",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Celestial Barracks",
             "type": "b",
             "cost": "12500",
@@ -58659,7 +58659,7 @@
         },
         {
             "id": "1220",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Celestial Field",
             "type": "b",
             "cost": "1500",
@@ -58765,7 +58765,7 @@
         },
         {
             "id": "1222",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Mecha Barrack",
             "type": "b",
             "cost": "28",
@@ -59189,7 +59189,7 @@
         },
         {
             "id": "1230",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Legendary Castle",
             "type": "b",
             "cost": "80000",
@@ -59242,7 +59242,7 @@
         },
         {
             "id": "1231",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Magnificent Castle",
             "type": "b",
             "cost": "40000",
@@ -59295,7 +59295,7 @@
         },
         {
             "id": "1232",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Supreme Barracks",
             "type": "b",
             "cost": "32",
@@ -59348,7 +59348,7 @@
         },
         {
             "id": "1233",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Dragon Breeding Nest",
             "type": "b",
             "cost": "6000",
@@ -59401,7 +59401,7 @@
         },
         {
             "id": "1234",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Diamond Castle",
             "type": "b",
             "cost": "450",
@@ -60090,7 +60090,7 @@
         },
         {
             "id": "1247",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Zombie Barracks",
             "type": "b",
             "cost": "19000",
@@ -60514,7 +60514,7 @@
         },
         {
             "id": "1255",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Monsters Nest",
             "type": "b",
             "cost": "6000",
@@ -60832,7 +60832,7 @@
         },
         {
             "id": "1261",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Icarus Barracks",
             "type": "b",
             "cost": "13500",
@@ -61468,7 +61468,7 @@
         },
         {
             "id": "1273",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Lythos Barracks",
             "type": "b",
             "cost": "28",
@@ -61998,7 +61998,7 @@
         },
         {
             "id": "1283",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Survival arena",
             "type": "b",
             "cost": "2000",
@@ -62104,7 +62104,7 @@
         },
         {
             "id": "1286",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Hades Barrack",
             "type": "b",
             "cost": "32",
@@ -62422,7 +62422,7 @@
         },
         {
             "id": "1292",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Stratos Barracks",
             "type": "b",
             "cost": "30",
@@ -63323,7 +63323,7 @@
         },
         {
             "id": "1309",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Necro Priest Castle",
             "type": "b",
             "cost": "35",
@@ -63482,7 +63482,7 @@
         },
         {
             "id": "1312",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Dark Lord Barracks",
             "type": "b",
             "cost": "30",
@@ -64065,7 +64065,7 @@
         },
         {
             "id": "1323",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Necro Fork Barracks",
             "type": "b",
             "cost": "14000",
@@ -65867,7 +65867,7 @@
         },
         {
             "id": "1357",
-            "in_store": "0",
+            "in_store": "1",
             "name": "Dome Protection descartado",
             "type": "b",
             "cost": "100000",
@@ -66344,7 +66344,7 @@
         },
         {
             "id": "1366",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Ramses II Barracks",
             "type": "b",
             "cost": "30",
@@ -66450,7 +66450,7 @@
         },
         {
             "id": "1368",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Sarcophagus",
             "type": "b",
             "cost": "6000",
@@ -66662,7 +66662,7 @@
         },
         {
             "id": "1372",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Pharaohs Gold Mine",
             "type": "b",
             "cost": "5",
@@ -66768,7 +66768,7 @@
         },
         {
             "id": "1374",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Pharaohs Tower",
             "type": "b",
             "cost": "9",
@@ -66874,7 +66874,7 @@
         },
         {
             "id": "1376",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Pharaohs House",
             "type": "b",
             "cost": "2800",
@@ -67245,7 +67245,7 @@
         },
         {
             "id": "1383",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Tutankamon Barracks",
             "type": "b",
             "cost": "32",
@@ -67828,7 +67828,7 @@
         },
         {
             "id": "1394",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Supreme Dragon Temple",
             "type": "b",
             "cost": "6000",
@@ -67934,7 +67934,7 @@
         },
         {
             "id": "1396",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Scarab Rider Barracks",
             "type": "b",
             "cost": "28",
@@ -67987,7 +67987,7 @@
         },
         {
             "id": "1397",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Elf Swordman Barracks",
             "type": "b",
             "cost": "17000",
@@ -68040,7 +68040,7 @@
         },
         {
             "id": "1398",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Elf Archer Barracks",
             "type": "b",
             "cost": "18000",
@@ -68093,7 +68093,7 @@
         },
         {
             "id": "1399",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Elf Priest Barracks",
             "type": "b",
             "cost": "26",
@@ -68305,7 +68305,7 @@
         },
         {
             "id": "1403",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Emerald Sculpture",
             "type": "b",
             "cost": "4000",
@@ -68517,7 +68517,7 @@
         },
         {
             "id": "1407",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Imperial Elf Tower",
             "type": "b",
             "cost": "9",
@@ -68623,7 +68623,7 @@
         },
         {
             "id": "1409",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Imperial Elf House",
             "type": "b",
             "cost": "2800",
@@ -68941,7 +68941,7 @@
         },
         {
             "id": "1415",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Elf Gryphon Barracks",
             "type": "b",
             "cost": "30",
@@ -69206,7 +69206,7 @@
         },
         {
             "id": "1420",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Red Bull Rider Barracks",
             "type": "b",
             "cost": "32",
@@ -69471,7 +69471,7 @@
         },
         {
             "id": "1425",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Elven Eagle Rider Barracks",
             "type": "b",
             "cost": "32",
@@ -69895,7 +69895,7 @@
         },
         {
             "id": "1433",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Crusher Orc Barrack",
             "type": "b",
             "cost": "17000",
@@ -70372,7 +70372,7 @@
         },
         {
             "id": "1442",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Dark Orc Wall",
             "type": "b",
             "cost": "1",
@@ -71008,7 +71008,7 @@
         },
         {
             "id": "1454",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Golden Paladin Barracks",
             "type": "b",
             "cost": "32",
@@ -72121,7 +72121,7 @@
         },
         {
             "id": "1475",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Big Basher Orc Barrack",
             "type": "b",
             "cost": "36",
@@ -72545,7 +72545,7 @@
         },
         {
             "id": "1483",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Black Lizard Barrack",
             "type": "b",
             "cost": "36",
@@ -72651,7 +72651,7 @@
         },
         {
             "id": "1485",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Wyvern Rider Barracks",
             "type": "b",
             "cost": "36",
@@ -73075,7 +73075,7 @@
         },
         {
             "id": "1493",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Barrack Spearman Gladiator",
             "type": "b",
             "cost": "18000",
@@ -73234,7 +73234,7 @@
         },
         {
             "id": "1496",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Barrack Lizard Gladiator",
             "type": "b",
             "cost": "36",
@@ -73393,7 +73393,7 @@
         },
         {
             "id": "1499",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Gladiator Mill",
             "type": "b",
             "cost": "5",
@@ -73446,7 +73446,7 @@
         },
         {
             "id": "1500",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Gladiator Wall",
             "type": "b",
             "cost": "1",
@@ -73870,7 +73870,7 @@
         },
         {
             "id": "1508",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Mace Gladiator Barrack",
             "type": "b",
             "cost": "25000",
@@ -74135,7 +74135,7 @@
         },
         {
             "id": "1513",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Bull Gladiator Barrack",
             "type": "b",
             "cost": "36",
@@ -74188,7 +74188,7 @@
         },
         {
             "id": "1514",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Burning Tiger Barrack",
             "type": "b",
             "cost": "42",
@@ -74241,7 +74241,7 @@
         },
         {
             "id": "1515",
-            "in_store": "1",
+            "in_store": "0",
             "name": "T-Rex Barrack",
             "type": "b",
             "cost": "36",
@@ -74612,7 +74612,7 @@
         },
         {
             "id": "1522",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Caesar Gladiator Barrack",
             "type": "b",
             "cost": "45",
@@ -74824,7 +74824,7 @@
         },
         {
             "id": "1526",
-            "in_store": "1",
+            "in_store": "0",
             "name": "Punisher Knight Barrack",
             "type": "b",
             "cost": "32",
@@ -94283,2252 +94283,6 @@
             "mana": 0,
             "enabled": 1,
             "pack_type": 0
-        },
-        {
-            "id": 2,
-            "position": 21,
-            "cost_cash": 35,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 750,
-            "items": [
-                199,
-                199,
-                369,
-                369,
-                384,
-                384,
-                214,
-                214
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 0
-        },
-        {
-            "id": 3,
-            "position": 20,
-            "cost_cash": 25,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 500,
-            "items": [
-                152,
-                553,
-                554,
-                555,
-                556,
-                557
-            ],
-            "mana": 0,
-            "enabled": 1,
-            "pack_type": 0
-        },
-        {
-            "id": 4,
-            "position": 19,
-            "cost_cash": 30,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 625,
-            "items": [
-                241,
-                268,
-                388,
-                577,
-                578,
-                607
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 0
-        },
-        {
-            "id": 5,
-            "position": 18,
-            "cost_cash": 20,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 400,
-            "items": [
-                575,
-                575,
-                575,
-                575,
-                502,
-                502,
-                568,
-                568,
-                568,
-                568,
-                541,
-                541,
-                541,
-                541,
-                541,
-                540,
-                540,
-                540,
-                540,
-                540,
-                539,
-                539,
-                539,
-                539,
-                539
-            ],
-            "mana": 0,
-            "enabled": 1,
-            "pack_type": 0
-        },
-        {
-            "id": 6,
-            "position": 17,
-            "cost_cash": 50,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 900,
-            "items": [
-                608,
-                608,
-                608,
-                608,
-                608,
-                609,
-                609,
-                609,
-                609,
-                609,
-                610,
-                610,
-                610,
-                610,
-                610,
-                569,
-                569,
-                414
-            ],
-            "mana": 0,
-            "enabled": 1,
-            "pack_type": 0
-        },
-        {
-            "id": 7,
-            "position": 16,
-            "cost_cash": 60,
-            "gold": 25000,
-            "stone": 25000,
-            "food": 25000,
-            "wood": 25000,
-            "xp": 1000,
-            "items": [
-                618,
-                469
-            ],
-            "mana": 50,
-            "enabled": 1,
-            "pack_type": 0
-        },
-        {
-            "id": 8,
-            "position": 15,
-            "cost_cash": 100,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1500,
-            "items": [
-                630,
-                631
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 0
-        },
-        {
-            "id": 9,
-            "position": 14,
-            "cost_cash": 45,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 800,
-            "items": [
-                [
-                    469,
-                    35
-                ],
-                [
-                    56,
-                    70
-                ],
-                [
-                    414,
-                    90
-                ],
-                [
-                    642,
-                    100
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 1
-        },
-        {
-            "id": 10,
-            "position": 13,
-            "cost_cash": 45,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 800,
-            "items": [
-                [
-                    57,
-                    35
-                ],
-                [
-                    472,
-                    70
-                ],
-                [
-                    652,
-                    90
-                ],
-                [
-                    638,
-                    100
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 1
-        },
-        {
-            "id": 11,
-            "position": 12,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    60,
-                    35
-                ],
-                [
-                    662,
-                    70
-                ],
-                [
-                    660,
-                    90
-                ],
-                [
-                    651,
-                    100
-                ]
-            ],
-            "mana": 0,
-            "enabled": 1,
-            "pack_type": 1
-        },
-        {
-            "id": 12,
-            "position": 11,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    649,
-                    684,
-                    650
-                ],
-                [
-                    651,
-                    638,
-                    694,
-                    661,
-                    683
-                ],
-                [
-                    687,
-                    643,
-                    655,
-                    635,
-                    615,
-                    646,
-                    629
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 13,
-            "position": 10,
-            "cost_cash": 150,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1500,
-            "items": [
-                638,
-                651,
-                698,
-                710
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 0
-        },
-        {
-            "id": 14,
-            "position": 9,
-            "cost_cash": 200,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1500,
-            "items": [
-                638,
-                651,
-                698,
-                710
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 0
-        },
-        {
-            "id": 15,
-            "position": 8,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    649,
-                    695,
-                    684
-                ],
-                [
-                    709,
-                    710,
-                    698,
-                    712,
-                    707,
-                    706,
-                    660,
-                    612,
-                    641
-                ],
-                [
-                    679,
-                    623,
-                    687,
-                    621,
-                    643,
-                    629
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 16,
-            "position": 7,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    708,
-                    695,
-                    723
-                ],
-                [
-                    713,
-                    709,
-                    717,
-                    727,
-                    712,
-                    707,
-                    716,
-                    719,
-                    660
-                ],
-                [
-                    612,
-                    641,
-                    623,
-                    687,
-                    621,
-                    643
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 17,
-            "position": 6,
-            "cost_cash": 30,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    702,
-                    654,
-                    724,
-                    711
-                ],
-                [
-                    647,
-                    577,
-                    614,
-                    646,
-                    628
-                ],
-                [
-                    648,
-                    621,
-                    613,
-                    578,
-                    612
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 18,
-            "position": 5,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    708,
-                    695,
-                    723
-                ],
-                [
-                    713,
-                    709,
-                    717,
-                    727,
-                    712,
-                    707,
-                    716,
-                    719,
-                    660
-                ],
-                [
-                    612,
-                    641,
-                    623,
-                    687,
-                    621,
-                    643
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 19,
-            "position": 4,
-            "cost_cash": 30,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    702,
-                    654,
-                    724,
-                    711
-                ],
-                [
-                    647,
-                    577,
-                    614,
-                    646,
-                    628
-                ],
-                [
-                    648,
-                    621,
-                    613,
-                    578,
-                    612
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 20,
-            "position": 3,
-            "cost_cash": 125,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1500,
-            "items": [
-                550,
-                652,
-                683,
-                706,
-                712,
-                727
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 0
-        },
-        {
-            "id": 21,
-            "position": 2,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1500,
-            "items": [
-                550,
-                652,
-                683,
-                706,
-                712,
-                727
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 0
-        },
-        {
-            "id": 22,
-            "position": 1,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    723,
-                    714,
-                    744
-                ],
-                [
-                    722,
-                    745,
-                    741,
-                    727,
-                    712,
-                    707,
-                    716,
-                    719,
-                    660
-                ],
-                [
-                    612,
-                    641,
-                    623,
-                    687,
-                    621,
-                    643
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 23,
-            "position": 1,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    744,
-                    736,
-                    758
-                ],
-                [
-                    724,
-                    755,
-                    644,
-                    702,
-                    745,
-                    700,
-                    647,
-                    742
-                ],
-                [
-                    711,
-                    648,
-                    641,
-                    765,
-                    687,
-                    621,
-                    643
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 24,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    766,
-                    758,
-                    714
-                ],
-                [
-                    757,
-                    713,
-                    724
-                ],
-                [
-                    642,
-                    709,
-                    711
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 25,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    766,
-                    708,
-                    736
-                ],
-                [
-                    723,
-                    714,
-                    769
-                ],
-                [
-                    695,
-                    710,
-                    651
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 26,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    758,
-                    775,
-                    777
-                ],
-                [
-                    776,
-                    753,
-                    700,
-                    773,
-                    770,
-                    754,
-                    774,
-                    755
-                ],
-                [
-                    711,
-                    648,
-                    641,
-                    742,
-                    687,
-                    733,
-                    752
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 27,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    766,
-                    723,
-                    785
-                ],
-                [
-                    775,
-                    815,
-                    650,
-                    762,
-                    792,
-                    757,
-                    772,
-                    794
-                ],
-                [
-                    817,
-                    786,
-                    769,
-                    773,
-                    768,
-                    774,
-                    742
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 28,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    798,
-                    793,
-                    785
-                ],
-                [
-                    775,
-                    776,
-                    756,
-                    762,
-                    792,
-                    755,
-                    772,
-                    794
-                ],
-                [
-                    749,
-                    786,
-                    813,
-                    773,
-                    814,
-                    774,
-                    782
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 29,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    826,
-                    793,
-                    830
-                ],
-                [
-                    828,
-                    829,
-                    776,
-                    762,
-                    792,
-                    831,
-                    772,
-                    806
-                ],
-                [
-                    796,
-                    787,
-                    813,
-                    807,
-                    820,
-                    774,
-                    782
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 30,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    847,
-                    785,
-                    830
-                ],
-                [
-                    744,
-                    788,
-                    776,
-                    755,
-                    791,
-                    831,
-                    772,
-                    806
-                ],
-                [
-                    771,
-                    787,
-                    849,
-                    807,
-                    820,
-                    781,
-                    637
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 31,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    846,
-                    847,
-                    758
-                ],
-                [
-                    856,
-                    829,
-                    828,
-                    788,
-                    755,
-                    827,
-                    791,
-                    746
-                ],
-                [
-                    781,
-                    771,
-                    717,
-                    849,
-                    702,
-                    850,
-                    637
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 32,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    853,
-                    766,
-                    846
-                ],
-                [
-                    764,
-                    815,
-                    829,
-                    737,
-                    827,
-                    752,
-                    631,
-                    746
-                ],
-                [
-                    716,
-                    683,
-                    702,
-                    787,
-                    850,
-                    717,
-                    854
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 33,
-            "position": 1,
-            "cost_cash": 45,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 750,
-            "items": [
-                1360,
-                1361,
-                1358,
-                1359
-            ],
-            "mana": 0,
-            "enabled": 1,
-            "pack_type": 0
-        },
-        {
-            "id": 34,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    862,
-                    853,
-                    826
-                ],
-                [
-                    828,
-                    776,
-                    829,
-                    762,
-                    792,
-                    831,
-                    755,
-                    806
-                ],
-                [
-                    796,
-                    787,
-                    868,
-                    807,
-                    820,
-                    774,
-                    782
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 35,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    862,
-                    853,
-                    826
-                ],
-                [
-                    828,
-                    776,
-                    829,
-                    762,
-                    792,
-                    831,
-                    755,
-                    806
-                ],
-                [
-                    796,
-                    787,
-                    868,
-                    807,
-                    820,
-                    774,
-                    782
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 36,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    875,
-                    862,
-                    798
-                ],
-                [
-                    775,
-                    788,
-                    776,
-                    762,
-                    791,
-                    831,
-                    772,
-                    815
-                ],
-                [
-                    786,
-                    771,
-                    876,
-                    807,
-                    813,
-                    781,
-                    637
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 37,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    875,
-                    847,
-                    723
-                ],
-                [
-                    856,
-                    829,
-                    828,
-                    788,
-                    757,
-                    794,
-                    791,
-                    815
-                ],
-                [
-                    781,
-                    771,
-                    890,
-                    786,
-                    711,
-                    876,
-                    637
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 38,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    785,
-                    847,
-                    793
-                ],
-                [
-                    830,
-                    788,
-                    776,
-                    792,
-                    831,
-                    772,
-                    791,
-                    829
-                ],
-                [
-                    796,
-                    787,
-                    807,
-                    784,
-                    774,
-                    849,
-                    782
-                ]
-            ],
-            "mana": 0,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 39,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    798,
-                    847,
-                    766
-                ],
-                [
-                    830,
-                    884,
-                    778,
-                    792,
-                    831,
-                    879,
-                    745,
-                    896
-                ],
-                [
-                    765,
-                    770,
-                    807,
-                    769,
-                    801,
-                    814,
-                    789
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 40,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    758,
-                    798,
-                    826
-                ],
-                [
-                    1299,
-                    815,
-                    778,
-                    897,
-                    884,
-                    762,
-                    776,
-                    896
-                ],
-                [
-                    765,
-                    770,
-                    871,
-                    784,
-                    861,
-                    820,
-                    789
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 41,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    766,
-                    777,
-                    826
-                ],
-                [
-                    830,
-                    897,
-                    856,
-                    792,
-                    831,
-                    776,
-                    886,
-                    829
-                ],
-                [
-                    771,
-                    637,
-                    861,
-                    790,
-                    816,
-                    769,
-                    774
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 42,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    846,
-                    777,
-                    723
-                ],
-                [
-                    775,
-                    884,
-                    788,
-                    897,
-                    786,
-                    772,
-                    753,
-                    896
-                ],
-                [
-                    683,
-                    637,
-                    850,
-                    2035,
-                    725,
-                    869,
-                    774
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 43,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2013,
-                    847,
-                    846
-                ],
-                [
-                    830,
-                    2019,
-                    1299,
-                    788,
-                    776,
-                    801,
-                    772,
-                    667
-                ],
-                [
-                    683,
-                    2008,
-                    2014,
-                    765,
-                    849,
-                    770,
-                    810
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 44,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2013,
-                    862,
-                    785
-                ],
-                [
-                    2042,
-                    2022,
-                    1299,
-                    884,
-                    776,
-                    815,
-                    762,
-                    742
-                ],
-                [
-                    2008,
-                    796,
-                    871,
-                    868,
-                    765,
-                    769,
-                    537
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 45,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2016,
-                    847,
-                    777
-                ],
-                [
-                    2019,
-                    788,
-                    897,
-                    792,
-                    884,
-                    757,
-                    794,
-                    745
-                ],
-                [
-                    765,
-                    770,
-                    879,
-                    849,
-                    756,
-                    790,
-                    821
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 46,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2023,
-                    826,
-                    793
-                ],
-                [
-                    2022,
-                    2053,
-                    897,
-                    886,
-                    806,
-                    757,
-                    2008,
-                    745
-                ],
-                [
-                    762,
-                    2020,
-                    879,
-                    820,
-                    799,
-                    814,
-                    711
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 47,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2037,
-                    891,
-                    798
-                ],
-                [
-                    2059,
-                    2042,
-                    2053,
-                    772,
-                    2067,
-                    776,
-                    886,
-                    742
-                ],
-                [
-                    765,
-                    813,
-                    771,
-                    892,
-                    799,
-                    654,
-                    711
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 48,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2013,
-                    862,
-                    798
-                ],
-                [
-                    830,
-                    2073,
-                    2052,
-                    772,
-                    2067,
-                    2008,
-                    742,
-                    724
-                ],
-                [
-                    828,
-                    2014,
-                    796,
-                    868,
-                    810,
-                    654,
-                    774
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 49,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2016,
-                    891,
-                    847
-                ],
-                [
-                    2055,
-                    2042,
-                    2066,
-                    896,
-                    776,
-                    2059,
-                    886,
-                    753
-                ],
-                [
-                    757,
-                    2017,
-                    770,
-                    683,
-                    811,
-                    892,
-                    779
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 50,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2023,
-                    847,
-                    777
-                ],
-                [
-                    2060,
-                    2059,
-                    2066,
-                    2035,
-                    896,
-                    2053,
-                    886,
-                    831
-                ],
-                [
-                    772,
-                    2024,
-                    717,
-                    727,
-                    811,
-                    849,
-                    779
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 51,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2037,
-                    891,
-                    777
-                ],
-                [
-                    2055,
-                    830,
-                    2053,
-                    772,
-                    806,
-                    776,
-                    886,
-                    742
-                ],
-                [
-                    762,
-                    790,
-                    771,
-                    892,
-                    810,
-                    654,
-                    711
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 52,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2043,
-                    891,
-                    793
-                ],
-                [
-                    2099,
-                    2042,
-                    772,
-                    788,
-                    2067,
-                    757,
-                    742,
-                    717
-                ],
-                [
-                    762,
-                    814,
-                    683,
-                    892,
-                    756,
-                    709,
-                    821
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 53,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2013,
-                    2043,
-                    846
-                ],
-                [
-                    2056,
-                    2055,
-                    884,
-                    828,
-                    2067,
-                    757,
-                    2008,
-                    717
-                ],
-                [
-                    776,
-                    2014,
-                    2066,
-                    683,
-                    2044,
-                    709,
-                    642
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 54,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2039,
-                    2016,
-                    891
-                ],
-                [
-                    2099,
-                    897,
-                    2052,
-                    2055,
-                    772,
-                    886,
-                    880,
-                    724
-                ],
-                [
-                    828,
-                    2017,
-                    2066,
-                    796,
-                    2040,
-                    753,
-                    650
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 55,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2023,
-                    891,
-                    798
-                ],
-                [
-                    2099,
-                    2042,
-                    2052,
-                    2055,
-                    2059,
-                    886,
-                    880,
-                    829
-                ],
-                [
-                    831,
-                    2024,
-                    722,
-                    796,
-                    892,
-                    753,
-                    544
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 56,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2037,
-                    862,
-                    847
-                ],
-                [
-                    2114,
-                    897,
-                    884,
-                    792,
-                    2067,
-                    881,
-                    2011,
-                    724
-                ],
-                [
-                    762,
-                    868,
-                    2029,
-                    849,
-                    799,
-                    654,
-                    544
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 57,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2016,
-                    891,
-                    777
-                ],
-                [
-                    2102,
-                    2055,
-                    2114,
-                    2042,
-                    896,
-                    880,
-                    886,
-                    742
-                ],
-                [
-                    828,
-                    757,
-                    879,
-                    2017,
-                    796,
-                    892,
-                    650
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 58,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2039,
-                    846,
-                    785
-                ],
-                [
-                    2102,
-                    830,
-                    2042,
-                    815,
-                    896,
-                    2047,
-                    886,
-                    776
-                ],
-                [
-                    828,
-                    762,
-                    2008,
-                    2040,
-                    771,
-                    850,
-                    717
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 59,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2037,
-                    891,
-                    777
-                ],
-                [
-                    2101,
-                    2060,
-                    2053,
-                    772,
-                    2067,
-                    776,
-                    886,
-                    742
-                ],
-                [
-                    765,
-                    790,
-                    771,
-                    892,
-                    799,
-                    654,
-                    711
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 60,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2043,
-                    891,
-                    846
-                ],
-                [
-                    2099,
-                    2144,
-                    897,
-                    2055,
-                    772,
-                    2052,
-                    880,
-                    724
-                ],
-                [
-                    828,
-                    2044,
-                    2066,
-                    796,
-                    892,
-                    753,
-                    650
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 61,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2016,
-                    847,
-                    777
-                ],
-                [
-                    2019,
-                    788,
-                    897,
-                    792,
-                    884,
-                    757,
-                    794,
-                    745
-                ],
-                [
-                    765,
-                    770,
-                    879,
-                    849,
-                    756,
-                    790,
-                    821
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 62,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2023,
-                    826,
-                    793
-                ],
-                [
-                    2022,
-                    2053,
-                    897,
-                    886,
-                    806,
-                    757,
-                    2008,
-                    745
-                ],
-                [
-                    762,
-                    2020,
-                    879,
-                    820,
-                    799,
-                    814,
-                    711
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 63,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2037,
-                    891,
-                    798
-                ],
-                [
-                    2059,
-                    2042,
-                    2053,
-                    772,
-                    2067,
-                    776,
-                    886,
-                    742
-                ],
-                [
-                    765,
-                    813,
-                    771,
-                    892,
-                    799,
-                    654,
-                    711
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 64,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2013,
-                    862,
-                    798
-                ],
-                [
-                    830,
-                    2073,
-                    2052,
-                    772,
-                    2067,
-                    2008,
-                    742,
-                    724
-                ],
-                [
-                    828,
-                    2014,
-                    796,
-                    868,
-                    810,
-                    654,
-                    774
-                ]
-            ],
-            "mana": 5,
-            "enabled": 0,
-            "pack_type": 2
-        },
-        {
-            "id": 65,
-            "position": 0,
-            "cost_cash": 60,
-            "gold": 0,
-            "stone": 0,
-            "food": 0,
-            "wood": 0,
-            "xp": 1000,
-            "items": [
-                [
-                    2016,
-                    891,
-                    847
-                ],
-                [
-                    2055,
-                    2042,
-                    2066,
-                    896,
-                    776,
-                    2059,
-                    886,
-                    753
-                ],
-                [
-                    757,
-                    2017,
-                    770,
-                    683,
-                    811,
-                    892,
-                    779
-                ]
-            ],
-            "mana": 5,
-            "enabled": 1,
-            "pack_type": 2
         }
     ],
     "images": {
@@ -97507,44 +95261,44 @@
         "SPAWN_MENVSWOMEN_ADVERTISING": 1,
         "NEWS_ITEM": [
             {
-                "news_image": "new_bestciv3_5.jpg",
-                "news_store": "12.121.0"
-            },
-            {
-                "news_image": "new_punisherknight.jpg",
-                "news_store": "12.121.0"
-            },
-            {
-                "news_image": "new_gods2.jpg",
-                "news_store": "gods"
-            },
-            {
-                "news_image": "new_2hard.jpg",
-                "news_store": ""
-            },
-            {
-                "news_image": "new_hardgods.jpg",
-                "news_store": "godsquests"
-            },
-            {
-                "news_image": "new_decos.jpg",
-                "news_store": "2.45.0"
-            },
-            {
-                "news_image": "new_supreme.jpg",
-                "news_store": "1.13.0"
-            },
-            {
                 "news_image": "new_newmagics.jpg",
-                "news_store": "1.13.0"
-            },
-            {
-                "news_image": "new_hardcore.jpg",
                 "news_store": null
             },
             {
-                "news_image": "new_bahamut_riders.jpg",
-                "news_store": "1.13.0"
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
             }
         ],
         "DRAGONS": {
@@ -98048,160 +95802,98 @@
         "1": {
             "category_id": 1,
             "category_lang_id": 1055,
+            "cost": 1,
+            "costs": null,
+            "position": 5,
+            "rewards": 608,
             "units": [
                 509,
                 510,
                 511,
                 539,
                 608
-            ],
-            "rewards": 608,
-            "cost": 1,
-            "costs": null,
-            "position": 5
+            ]
         },
         "2": {
             "category_id": 2,
             "category_lang_id": 1056,
+            "cost": 1,
+            "costs": null,
+            "position": 10,
+            "rewards": 609,
             "units": [
                 516,
                 517,
                 518,
                 540,
                 609
-            ],
-            "rewards": 609,
-            "cost": 1,
-            "costs": null,
-            "position": 10
+            ]
         },
         "3": {
             "category_id": 3,
             "category_lang_id": 1057,
-            "units": [
-                572,
-                515,
-                573,
-                574
-            ],
-            "rewards": 574,
             "cost": 2,
             "costs": null,
-            "position": 15
+            "position": 15,
+            "rewards": 574,
+            "units": [
+                515,
+                572,
+                573,
+                574
+            ]
         },
         "4": {
             "category_id": 4,
             "category_lang_id": 1058,
+            "cost": 2,
+            "costs": null,
+            "position": 20,
+            "rewards": 610,
             "units": [
                 512,
                 513,
                 514,
                 541,
                 610
-            ],
-            "rewards": 610,
-            "cost": 2,
-            "costs": null,
-            "position": 20
+            ]
         },
         "5": {
             "category_id": 5,
             "category_lang_id": 1060,
-            "units": [
-                569,
-                570,
-                502,
-                576
-            ],
-            "rewards": 576,
             "cost": 3,
             "costs": null,
-            "position": 25
+            "position": 25,
+            "rewards": 576,
+            "units": [
+                502,
+                569,
+                570,
+                576
+            ]
         },
         "6": {
             "category_id": 6,
             "category_lang_id": 1090,
-            "units": [
-                603,
-                643,
-                687,
-                575
-            ],
-            "rewards": 575,
             "cost": 5,
             "costs": [
                 5,
+                5,
                 7,
-                9,
-                5
+                9
             ],
-            "position": 30
-        },
-        "7": {
-            "category_id": 7,
-            "category_lang_id": 1091,
+            "position": 30,
+            "rewards": 575,
             "units": [
-                635,
-                654,
-                615,
-                623
-            ],
-            "rewards": 623,
-            "cost": 15,
-            "costs": [
-                20,
-                25,
-                15,
-                15
-            ],
-            "position": 35
-        },
-        "33": {
-            "category_id": 33,
-            "category_lang_id": 1141,
-            "units": [
-                719,
-                721
-            ],
-            "rewards": 721,
-            "cost": 15,
-            "costs": [
-                15,
-                20
-            ],
-            "position": 40
-        },
-        "61": {
-            "category_id": 61,
-            "category_lang_id": 1431,
-            "units": [
-                872,
-                894,
-                886,
-                896,
-                883
-            ],
-            "rewards": 872,
-            "cost": 100,
-            "costs": [
-                260,
-                250,
-                240,
-                250,
-                245
-            ],
-            "position": 42
+                575,
+                603,
+                643,
+                687
+            ]
         },
         "8": {
             "category_id": 8,
             "category_lang_id": 1062,
-            "units": [
-                553,
-                652,
-                683,
-                706
-            ],
-            "rewards": 706,
             "cost": 10,
             "costs": [
                 10,
@@ -98209,37 +95901,18 @@
                 14,
                 16
             ],
-            "position": 45
-        },
-        "34": {
-            "category_id": 34,
-            "category_lang_id": 1142,
+            "position": 45,
+            "rewards": 706,
             "units": [
-                712,
-                727,
-                771,
-                796
-            ],
-            "rewards": 796,
-            "cost": 10,
-            "costs": [
-                18,
-                20,
-                22,
-                24
-            ],
-            "position": 50
+                553,
+                652,
+                683,
+                706
+            ]
         },
         "9": {
             "category_id": 9,
             "category_lang_id": 1063,
-            "units": [
-                507,
-                508,
-                560,
-                563
-            ],
-            "rewards": 563,
             "cost": 5,
             "costs": [
                 5,
@@ -98247,94 +95920,73 @@
                 5,
                 5
             ],
-            "position": 55
+            "position": 55,
+            "rewards": 563,
+            "units": [
+                507,
+                508,
+                560,
+                563
+            ]
         },
         "10": {
             "category_id": 10,
             "category_lang_id": 1065,
+            "cost": 5,
+            "costs": null,
+            "position": 60,
+            "rewards": 568,
             "units": [
                 519,
                 520,
                 521,
                 522,
                 568
-            ],
-            "rewards": 568,
-            "cost": 5,
-            "costs": null,
-            "position": 60
-        },
-        "11": {
-            "category_id": 11,
-            "category_lang_id": 1216,
-            "units": [
-                544,
-                631,
-                642,
-                537,
-                641
-            ],
-            "rewards": 641,
-            "cost": 25,
-            "costs": [
-                20,
-                25,
-                30,
-                25,
-                30
-            ],
-            "position": 65
+            ]
         },
         "12": {
             "category_id": 12,
             "category_lang_id": 1068,
+            "cost": 6,
+            "costs": null,
+            "position": 70,
+            "rewards": 554,
             "units": [
                 533,
                 534,
                 535,
                 554
-            ],
-            "rewards": 554,
-            "cost": 6,
-            "costs": null,
-            "position": 70
+            ]
         },
         "13": {
             "category_id": 13,
             "category_lang_id": 1069,
+            "cost": 9,
+            "costs": null,
+            "position": 75,
+            "rewards": 557,
             "units": [
                 555,
                 556,
                 557
-            ],
-            "rewards": 557,
-            "cost": 9,
-            "costs": null,
-            "position": 75
+            ]
         },
         "14": {
             "category_id": 14,
             "category_lang_id": 1092,
+            "cost": 25,
+            "costs": null,
+            "position": 80,
+            "rewards": 694,
             "units": [
                 660,
                 661,
                 694
-            ],
-            "rewards": 694,
-            "cost": 25,
-            "costs": null,
-            "position": 80
+            ]
         },
         "15": {
             "category_id": 15,
             "category_lang_id": 1070,
-            "units": [
-                525,
-                526,
-                527,
-                596
-            ],
-            "rewards": 596,
             "cost": 5,
             "costs": [
                 5,
@@ -98342,19 +95994,18 @@
                 7,
                 8
             ],
-            "position": 85
+            "position": 85,
+            "rewards": 596,
+            "units": [
+                525,
+                526,
+                527,
+                596
+            ]
         },
         "16": {
             "category_id": 16,
             "category_lang_id": 1071,
-            "units": [
-                529,
-                547,
-                530,
-                531,
-                589
-            ],
-            "rewards": 589,
             "cost": 10,
             "costs": [
                 10,
@@ -98362,794 +96013,50 @@
                 14,
                 14
             ],
-            "position": 90
+            "position": 90,
+            "rewards": 589,
+            "units": [
+                529,
+                530,
+                531,
+                547,
+                589
+            ]
         },
         "17": {
             "category_id": 17,
             "category_lang_id": 1072,
+            "cost": 15,
+            "costs": [
+                10,
+                16,
+                16,
+                16,
+                18
+            ],
+            "position": 95,
+            "rewards": 605,
             "units": [
                 590,
                 591,
                 592,
                 604,
                 605
-            ],
-            "rewards": 605,
-            "cost": 15,
-            "costs": [
-                10,
-                16,
-                18,
-                16,
-                16
-            ],
-            "position": 95
+            ]
         },
         "18": {
             "category_id": 18,
             "category_lang_id": 1073,
+            "cost": 10,
+            "costs": null,
+            "position": 100,
+            "rewards": 588,
             "units": [
                 585,
                 586,
                 587,
                 588
-            ],
-            "rewards": 588,
-            "cost": 10,
-            "costs": null,
-            "position": 100
-        },
-        "19": {
-            "category_id": 19,
-            "category_lang_id": 1074,
-            "units": [
-                606,
-                607
-            ],
-            "rewards": 607,
-            "cost": 10,
-            "costs": null,
-            "position": 105
-        },
-        "20": {
-            "category_id": 20,
-            "category_lang_id": 1075,
-            "units": [
-                577,
-                578
-            ],
-            "rewards": 578,
-            "cost": 10,
-            "costs": null,
-            "position": 110
-        },
-        "21": {
-            "category_id": 21,
-            "category_lang_id": 1076,
-            "units": [
-                612,
-                613,
-                614
-            ],
-            "rewards": 614,
-            "cost": 10,
-            "costs": null,
-            "position": 115
-        },
-        "22": {
-            "category_id": 22,
-            "category_lang_id": 1077,
-            "units": [
-                619,
-                620,
-                621,
-                622
-            ],
-            "rewards": 622,
-            "cost": 10,
-            "costs": null,
-            "position": 120
-        },
-        "23": {
-            "category_id": 23,
-            "category_lang_id": 1078,
-            "units": [
-                626,
-                627,
-                628,
-                629
-            ],
-            "rewards": 629,
-            "cost": 15,
-            "costs": [
-                15,
-                15,
-                18,
-                20
-            ],
-            "position": 125
-        },
-        "24": {
-            "category_id": 24,
-            "category_lang_id": 1079,
-            "units": [
-                632,
-                633,
-                634
-            ],
-            "rewards": 634,
-            "cost": 15,
-            "costs": [
-                18,
-                15,
-                15
-            ],
-            "position": 130
-        },
-        "25": {
-            "category_id": 25,
-            "category_lang_id": 1081,
-            "units": [
-                644,
-                645,
-                646,
-                647,
-                648
-            ],
-            "rewards": 648,
-            "cost": 30,
-            "costs": [
-                35,
-                30,
-                30,
-                40,
-                35
-            ],
-            "position": 135
-        },
-        "26": {
-            "category_id": 26,
-            "category_lang_id": 1082,
-            "units": [
-                699,
-                701,
-                702,
-                703,
-                700
-            ],
-            "rewards": 700,
-            "cost": 30,
-            "costs": [
-                35,
-                30,
-                40,
-                30,
-                35
-            ],
-            "position": 140
-        },
-        "27": {
-            "category_id": 27,
-            "category_lang_id": 1083,
-            "units": [
-                704,
-                705,
-                711,
-                715,
-                724
-            ],
-            "rewards": 724,
-            "cost": 30,
-            "costs": [
-                30,
-                30,
-                40,
-                35,
-                40
-            ],
-            "position": 145
-        },
-        "28": {
-            "category_id": 28,
-            "category_lang_id": 1084,
-            "units": [
-                649,
-                684,
-                695,
-                708,
-                723
-            ],
-            "rewards": 723,
-            "cost": 100,
-            "costs": [
-                100,
-                100,
-                110,
-                120,
-                130
-            ],
-            "position": 150
-        },
-        "39": {
-            "category_id": 39,
-            "category_lang_id": 1147,
-            "units": [
-                714,
-                736,
-                758,
-                766,
-                785
-            ],
-            "rewards": 766,
-            "cost": 100,
-            "costs": [
-                140,
-                150,
-                160,
-                170,
-                180
-            ],
-            "position": 155
-        },
-        "47": {
-            "category_id": 47,
-            "category_lang_id": 1243,
-            "units": [
-                777,
-                793,
-                798,
-                826,
-                830
-            ],
-            "rewards": 777,
-            "cost": 100,
-            "costs": [
-                190,
-                200,
-                210,
-                220,
-                230
-            ],
-            "position": 160
-        },
-        "55": {
-            "category_id": 55,
-            "category_lang_id": 1328,
-            "units": [
-                847,
-                846,
-                862
-            ],
-            "rewards": 847,
-            "cost": 240,
-            "costs": [
-                240,
-                240,
-                240
-            ],
-            "position": 165
-        },
-        "29": {
-            "category_id": 29,
-            "category_lang_id": 1064,
-            "units": [
-                638,
-                651,
-                698,
-                710,
-                725
-            ],
-            "rewards": 725,
-            "cost": 35,
-            "costs": [
-                35,
-                37,
-                39,
-                41,
-                43
-            ],
-            "position": 190
-        },
-        "46": {
-            "category_id": 46,
-            "category_lang_id": 1240,
-            "units": [
-                768,
-                769,
-                784,
-                790,
-                813
-            ],
-            "rewards": 769,
-            "cost": 35,
-            "costs": [
-                45,
-                47,
-                49,
-                51,
-                53
-            ],
-            "position": 195
-        },
-        "52": {
-            "category_id": 52,
-            "category_lang_id": 1296,
-            "units": [
-                814,
-                820,
-                849
-            ],
-            "rewards": 820,
-            "cost": 35,
-            "costs": [
-                55,
-                57,
-                59
-            ],
-            "position": 196
-        },
-        "30": {
-            "category_id": 30,
-            "category_lang_id": 1087,
-            "units": [
-                655,
-                662
-            ],
-            "rewards": 662,
-            "cost": 5,
-            "costs": null,
-            "position": 210
-        },
-        "31": {
-            "category_id": 31,
-            "category_lang_id": 1088,
-            "units": [
-                561,
-                562
-            ],
-            "rewards": 562,
-            "cost": 10,
-            "costs": null,
-            "position": 215
-        },
-        "32": {
-            "category_id": 32,
-            "category_lang_id": 1089,
-            "units": [
-                637,
-                653,
-                707,
-                650,
-                709
-            ],
-            "rewards": 709,
-            "cost": 75,
-            "costs": [
-                75,
-                80,
-                85,
-                85,
-                85
-            ],
-            "position": 220
-        },
-        "40": {
-            "category_id": 40,
-            "category_lang_id": 1148,
-            "units": [
-                716,
-                717,
-                741,
-                742,
-                745
-            ],
-            "rewards": 745,
-            "cost": 75,
-            "costs": [
-                75,
-                80,
-                85,
-                75,
-                85
-            ],
-            "position": 225
-        },
-        "44": {
-            "category_id": 44,
-            "category_lang_id": 1217,
-            "units": [
-                770,
-                776,
-                757,
-                772,
-                762,
-                782
-            ],
-            "rewards": 782,
-            "cost": 75,
-            "costs": [
-                75,
-                85,
-                85,
-                90,
-                85
-            ],
-            "position": 230
-        },
-        "57": {
-            "category_id": 57,
-            "category_lang_id": 1331,
-            "units": [
-                829,
-                831
-            ],
-            "rewards": 831,
-            "cost": 100,
-            "costs": [
-                100,
-                110
-            ],
-            "position": 231
-        },
-        "35": {
-            "category_id": 35,
-            "category_lang_id": 1143,
-            "units": [
-                729,
-                730,
-                731,
-                732,
-                733
-            ],
-            "rewards": 733,
-            "cost": 30,
-            "costs": [
-                30,
-                30,
-                30,
-                35,
-                30
-            ],
-            "position": 235
-        },
-        "36": {
-            "category_id": 36,
-            "category_lang_id": 1144,
-            "units": [
-                735,
-                738,
-                746
-            ],
-            "rewards": 746,
-            "cost": 30,
-            "costs": [
-                35,
-                35,
-                50
-            ],
-            "position": 240
-        },
-        "41": {
-            "category_id": 41,
-            "category_lang_id": 1149,
-            "units": [
-                713,
-                722,
-                737
-            ],
-            "rewards": 737,
-            "cost": 75,
-            "costs": [
-                75,
-                80,
-                85
-            ],
-            "position": 245
-        },
-        "37": {
-            "category_id": 37,
-            "category_lang_id": 1145,
-            "units": [
-                748,
-                749,
-                750,
-                751,
-                752
-            ],
-            "rewards": 752,
-            "cost": 40,
-            "costs": [
-                70,
-                50,
-                40,
-                40,
-                45
-            ],
-            "position": 250
-        },
-        "38": {
-            "category_id": 38,
-            "category_lang_id": 1146,
-            "units": [
-                755,
-                753,
-                754,
-                778,
-                828
-            ],
-            "rewards": 775,
-            "cost": 75,
-            "costs": [
-                85,
-                75,
-                75,
-                90,
-                95
-            ],
-            "position": 255
-        },
-        "42": {
-            "category_id": 42,
-            "category_lang_id": 1218,
-            "units": [
-                781,
-                773,
-                764,
-                765,
-                792
-            ],
-            "rewards": 792,
-            "cost": 75,
-            "costs": [
-                80,
-                75,
-                75,
-                85,
-                80
-            ],
-            "position": 260
-        },
-        "43": {
-            "category_id": 43,
-            "category_lang_id": 1219,
-            "units": [
-                759,
-                760,
-                761,
-                779,
-                774
-            ],
-            "rewards": 774,
-            "cost": 60,
-            "costs": null,
-            "position": 265
-        },
-        "45": {
-            "category_id": 45,
-            "category_lang_id": 1239,
-            "units": [
-                786,
-                787,
-                788,
-                789,
-                780,
-                778
-            ],
-            "rewards": 778,
-            "cost": 75,
-            "costs": [
-                85,
-                85,
-                80,
-                75,
-                75
-            ],
-            "position": 270
-        },
-        "48": {
-            "category_id": 48,
-            "category_lang_id": 1264,
-            "units": [
-                809,
-                808,
-                797,
-                802,
-                818
-            ],
-            "rewards": 795,
-            "cost": 60,
-            "costs": null,
-            "position": 275
-        },
-        "49": {
-            "category_id": 49,
-            "category_lang_id": 1265,
-            "units": [
-                811,
-                810,
-                799,
-                794,
-                801
-            ],
-            "rewards": 794,
-            "cost": 75,
-            "costs": [
-                75,
-                80,
-                75,
-                85,
-                80
-            ],
-            "position": 280
-        },
-        "50": {
-            "category_id": 50,
-            "category_lang_id": 1292,
-            "units": [
-                803,
-                805,
-                807,
-                812,
-                795
-            ],
-            "rewards": 807,
-            "cost": 75,
-            "costs": [
-                75,
-                80,
-                85,
-                85,
-                75
-            ],
-            "position": 285
-        },
-        "51": {
-            "category_id": 51,
-            "category_lang_id": 1293,
-            "units": [
-                815,
-                816,
-                817,
-                806,
-                821
-            ],
-            "rewards": 806,
-            "cost": 75,
-            "costs": [
-                85,
-                80,
-                75,
-                90,
-                75
-            ],
-            "position": 290
-        },
-        "54": {
-            "category_id": 54,
-            "category_lang_id": 1327,
-            "units": [
-                827,
-                825
-            ],
-            "rewards": 827,
-            "cost": 75,
-            "costs": [
-                85,
-                60
-            ],
-            "position": 295
-        },
-        "53": {
-            "category_id": 53,
-            "category_lang_id": 1330,
-            "units": [
-                744,
-                775,
-                856
-            ],
-            "rewards": 778,
-            "cost": 75,
-            "costs": [
-                80,
-                85,
-                90
-            ],
-            "position": 300
-        },
-        "58": {
-            "category_id": 58,
-            "category_lang_id": 1400,
-            "units": [
-                867,
-                866,
-                869,
-                897,
-                860
-            ],
-            "rewards": 867,
-            "cost": 90,
-            "costs": [
-                80,
-                90,
-                90,
-                100,
-                110
-            ],
-            "position": 310
-        },
-        "59": {
-            "category_id": 59,
-            "category_lang_id": 1401,
-            "units": [
-                879,
-                884
-            ],
-            "rewards": 884,
-            "cost": 120,
-            "costs": [
-                120,
-                130
-            ],
-            "position": 315
-        },
-        "62": {
-            "category_id": 62,
-            "category_lang_id": 1500,
-            "units": [
-                2005,
-                2006,
-                2007,
-                2008,
-                2009
-            ],
-            "rewards": 2009,
-            "cost": 100,
-            "costs": [
-                35,
-                35,
-                70,
-                90,
-                60
-            ],
-            "position": 320
-        },
-        "63": {
-            "category_id": 63,
-            "category_lang_id": 1502,
-            "units": [
-                2010,
-                2011,
-                2012,
-                2019,
-                2020
-            ],
-            "rewards": 2019,
-            "cost": 150,
-            "costs": [
-                70,
-                100,
-                55,
-                125,
-                90
-            ],
-            "position": 325
-        },
-        "64": {
-            "category_id": 64,
-            "category_lang_id": 1505,
-            "units": [
-                2021,
-                2022,
-                2036
-            ],
-            "rewards": 2022,
-            "cost": 150,
-            "costs": [
-                90,
-                125,
-                130
-            ],
-            "position": 330
+            ]
         }
     },
     "level_ranking_reward": [

@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+@{
+    Layout = "_ManagerLayout";
+    ViewData["Title"] = localizer["Manager"];
+}
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            @localizer["CurrentOnlinePlayers"]
+        </div>
+        <div class="col">
+            @localizer["DailyActivePlayers"]
+        </div>
+        <div class="col">
+            @localizer["TotalRegisteredPlayers"]
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            1 of 3
+        </div>
+        <div class="col">
+            2 of 3
+        </div>
+        <div class="col">
+            3 of 3
+        </div>
+    </div>
+</div>

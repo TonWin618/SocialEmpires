@@ -1,4 +1,6 @@
-﻿using SocialEmpires.Models.Enums;
+﻿using MediatR;
+using SocialEmpires.Events;
+using SocialEmpires.Models.Enums;
 using SocialEmpires.Models.PlayerSaves;
 using SocialEmpires.Services.Constants;
 using System.Text.Json;
@@ -12,15 +14,18 @@ namespace SocialEmpires.Services
         private readonly ConfigService _configFileService;
         private readonly PlayerSaveService _playerSaveService;
         private readonly ILogger<CommandService> _logger;
+        private IMediator _mediator;
 
         public CommandService(
             ConfigService configFileService,
             PlayerSaveService playerSaveService,
-            ILogger<CommandService> logger)
+            ILogger<CommandService> logger,
+            IMediator mediator)
         {
             _configFileService = configFileService;
             _playerSaveService = playerSaveService;
             _logger = logger;
+            _mediator = mediator;
         }
 
         public async Task HandleCommandsAsync(string userId, IEnumerable<Command> commands)
@@ -186,9 +191,8 @@ namespace SocialEmpires.Services
             var collect = item.Collect * multiplier;
             //TODO: deduct wood when collect from farmland
             AddResource(save, (ResourceType)item.CollectType.First(), (int)collect);
+            AddXp(save, item.CollectXp);
 
-            var collectXp = item.CollectXp;
-            save.DefaultMap.Xp += collectXp;
         }
 
         private void ApplyCost(PlayerSave save, int id, double multiplier)
@@ -211,8 +215,7 @@ namespace SocialEmpires.Services
             {
                 return;
             }
-            var collectXp = item.CollectXp;
-            save.DefaultMap.Xp += collectXp;
+            AddXp(save, item.CollectXp);
         }
 
         private void DeductResource(PlayerSave save, ResourceType costType, int quantity)
@@ -228,6 +231,7 @@ namespace SocialEmpires.Services
                 case ResourceType.Wood:
                     if(save.DefaultMap.Wood >= quantity)
                     {
+                        _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Wood), -quantity));
                         save.DefaultMap.Wood -= quantity;
                     }
                     else
@@ -238,6 +242,7 @@ namespace SocialEmpires.Services
                 case ResourceType.Gold:
                     if (save.DefaultMap.Coins >= quantity)
                     {
+                        _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Gold), -quantity));
                         save.DefaultMap.Coins -= quantity;
                     }
                     else
@@ -248,6 +253,7 @@ namespace SocialEmpires.Services
                 case ResourceType.Cash:
                     if (save.PlayerInfo.Cash >= quantity)
                     {
+                        _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Cash), -quantity));
                         save.PlayerInfo.Cash -= quantity;
                     }
                     else
@@ -258,6 +264,7 @@ namespace SocialEmpires.Services
                 case ResourceType.Stone:
                     if (save.DefaultMap.Stone >= quantity)
                     {
+                        _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Stone), -quantity));
                         save.DefaultMap.Stone -= quantity;
                     }
                     else
@@ -268,6 +275,7 @@ namespace SocialEmpires.Services
                 case ResourceType.Food:
                     if (save.DefaultMap.Food >= quantity)
                     {
+                        _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Food), -quantity));
                         save.DefaultMap.Food -= quantity;
                     }
                     else
@@ -289,18 +297,23 @@ namespace SocialEmpires.Services
             switch (costType)
             {
                 case ResourceType.Wood:
+                    _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Wood), quantity));
                     save.DefaultMap.Wood += quantity;
                     break;
                 case ResourceType.Gold:
+                    _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Gold), quantity));
                     save.DefaultMap.Coins += quantity;
                     break;
                 case ResourceType.Cash:
+                    _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Cash), quantity));
                     save.PlayerInfo.Cash += quantity;
                     break;
                 case ResourceType.Stone:
+                    _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Stone), quantity));
                     save.DefaultMap.Stone += quantity;
                     break;
                 case ResourceType.Food:
+                    _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Food), quantity));
                     save.DefaultMap.Food += quantity;
                     break;
             }
@@ -309,6 +322,7 @@ namespace SocialEmpires.Services
         private void AddXp(PlayerSave save, int quantity)
         {
             save.DefaultMap.Xp += quantity;
+            _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Cash), quantity));
         }
 
         private static long TimestampNow()

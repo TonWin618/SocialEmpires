@@ -42,7 +42,6 @@ namespace SocialEmpires.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.IsAdmin = HttpContext.User.IsInRole("Admin");
             ViewData["BaseUrl"] = _flashGameConfigOptions.BaseUrl;
             ViewData["UserId"] = HttpContext!.User!.Identity!.Name!;
             ViewData["DateTime"] = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -168,14 +167,15 @@ namespace SocialEmpires.Controllers
                 {
                     images.Add(image.Key, image.Value);
                 }
-                root.Add("images", JsonSerializer.SerializeToNode(_configService.Images, lowerSnakeCaseoptions));
+                root.Add("images", JsonSerializer.SerializeToNode(images, lowerSnakeCaseoptions));
 
                 var unitsCollectionCategories = new JsonObject();
                 foreach (var unitsCollectionCategory in _configService.UnitsCollectionsCategories)
                 {
-                    unitsCollectionCategories.Add(unitsCollectionCategory.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(unitsCollectionCategory, lowerSnakeCaseoptions)));
+                    var unitsCollectionCategoryDto = _mapper.Map<UnitsCollectionsCategoryDto>(unitsCollectionCategory);
+                    unitsCollectionCategories.Add(unitsCollectionCategory.Id.ToString(), JsonNode.Parse(JsonSerializer.Serialize(unitsCollectionCategoryDto, lowerSnakeCaseoptions)));
                 }
-                root.Add("units_collection_categories", JsonSerializer.SerializeToNode(_configService.Categories, lowerSnakeCaseoptions));
+                root.Add("units_collections_categories", JsonSerializer.SerializeToNode(unitsCollectionCategories, lowerSnakeCaseoptions));
 
                 return Task.FromResult(root);
             });

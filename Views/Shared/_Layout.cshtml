@@ -4,14 +4,16 @@
 @inject IStringLocalizer<GlobalLocalizer> global
 @inject IHttpContextAccessor accessor
 @{
-    var userName = accessor?.HttpContext?.User?.Identity?.Name;
+    ViewBag.IsUser = accessor?.HttpContext?.User.IsInRole("User") ?? false;
+    ViewBag.IsAdmin = accessor?.HttpContext?.User.IsInRole("Admin") ?? false;
+    ViewBag.IsManager = accessor?.HttpContext?.User.IsInRole("Manager") ?? false;
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @global["SocialEmpires"]</title>
+    <title>@($"{ViewData["Title"]} - {global["SocialEmpires"]}")</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SocialEmpires.styles.css" asp-append-version="true" />
@@ -27,11 +29,20 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Game" asp-action="Index">@localizer["Home"]</a>
-                        </li>
                         @{
-                            if (ViewBag.IsAdmin != null && ViewBag.IsAdmin)
+                            if (ViewBag.IsUser)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Game" asp-action="Index">@localizer["Game"]</a>
+                                </li>
+                            }
+                            if (ViewBag.IsManager)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Manager" asp-action="Index">@localizer["Manager"]</a>
+                                </li>
+                            }
+                            if (ViewBag.IsAdmin)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">@localizer["Admin"]</a>
@@ -40,39 +51,7 @@
                         }
                     </ul>
                     <ul class="navbar-nav">
-                        @{
-                            if (userName == null)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Identity" asp-action="Login">@localizer["Log in"]</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Identity" asp-action="Register">@localizer["Sign in"]</a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <img class="img-circle avatar" src="/avatar/example.png" />
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="" asp-action="">@userName</a>
-                                </li>
-                            }
-                            <li>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        @localizer["Language"]
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/Language/SetLanguage?language=zh">简体中文</a></li>
-                                        <li><a class="dropdown-item" href="/Language/SetLanguage?language=en">English</a></li>
-                                        <!-- Add more languages -->
-                                    </ul>
-                                </div>
-                            </li>
-                        }
-
+                        @{Html.RenderPartial("_User");}
                     </ul>
                 </div>
             </div>

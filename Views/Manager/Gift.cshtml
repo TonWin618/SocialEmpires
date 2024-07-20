@@ -1,0 +1,130 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Infrastructure.MultiLanguage
+@using SocialEmpires.Models.Configs
+@using SocialEmpires.Models.Notifications
+@using SocialEmpires.Services
+@using SocialEmpires.Utils
+@using System.Text.Json
+@inject IViewLocalizer localizer
+@{
+    Layout = "_ManagerLayout";
+    ViewData["Title"] = localizer["Gift"];
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<Notification>;
+
+    var jsonOptions = new JsonSerializerOptions();
+    jsonOptions.Converters.Add(new IntListOrIntListListConverter());
+}
+
+<div class="d-flex justify-content-between">
+    <div>
+        <p class="h3">@localizer["Gift"]</p>
+    </div>
+    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ @localizer["SendGift"]</button>
+</div>
+
+<div>
+    <table width="100%" class="table table-striped  table-sm">
+        <thead>
+            <tr>
+                <th>@localizer["PublisherId"]</th>
+                <th>@localizer["ReceiverIds"]</th>
+                <th>@localizer["HtmlContent"]</th>
+                <th>@localizer["PublishedTime"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var gift in pageData)
+                {
+                    <tr>
+                        <td>@gift.PublisherId</td>
+                        <td>@string.Join(", ", gift.ReceiverIds)</td>
+                        <td>@gift.HtmlContent</td>
+                        <td>@gift.PublishedTime</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
+        }
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-action="SendGift">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["SendGift"]</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-1">
+                        <label class="form-label">@localizer["Receiver"]</label>
+                        <textarea class="form-control" placeholder="ALL or uuid" name="receiver"></textarea>
+                    </div>
+                    <div class="mb-1">
+                        <label class="form-label">@localizer["Items"]</label>
+                        <textarea class="form-control" placeholder="500,501,502,503" name="items"></textarea>
+                    </div>
+
+                    <label class="form-label">@localizer["Resources"]</label>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Cash"]</span>
+                        <input class="form-control form-control-sm" type="text" name="cash" value="20">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Gold"]</span>
+                        <input class="form-control form-control-sm" type="text" name="gold" value="0">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Stone"]</span>
+                        <input class="form-control form-control-sm" type="text" name="stone" value="0">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Wood"]</span>
+                        <input class="form-control form-control-sm" type="text" name="wood" value="0">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Food"]</span>
+                        <input class="form-control form-control-sm" type="text" name="food" value="0">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Xp"]</span>
+                        <input class="form-control form-control-sm" type="text" name="xp" value="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@localizer["Close"]</button>
+                    <button type="submit" class="btn btn-primary">@localizer["Send"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

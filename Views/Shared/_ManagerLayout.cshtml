@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @global["Admin"] - @global["SocialEmpires"]</title>
+    <title>@ViewData["Title"] - @global["Manager"] - @global["SocialEmpires"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SocialEmpires.styles.css" asp-append-version="true" />
@@ -24,7 +24,28 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Manager" asp-action="Index">@localizer["Manager"]</a>
+                            <a class="nav-link text-dark" asp-action="Items">@localizer["Items"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="Players">@localizer["Players"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="Bulletin">@localizer["Bulletin"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="OfferPacks">@localizer["OfferPacks"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="DartsItems">@localizer["DartsItems"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="Gift">@localizer["Gift"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="GlobalSettings">@localizer["GlobalSettings"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-action="UnitCollections">@localizer["UnitCollections"]</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">

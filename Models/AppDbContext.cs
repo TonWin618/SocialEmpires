@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SocialEmpires.Models.Bulletins;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Models.Notifications;
 using SocialEmpires.Models.PlayerSaves;
 using SocialEmpires.Utils;
 using System.Text.Json;
@@ -19,7 +19,7 @@ namespace SocialEmpires.Models
         public DbSet<PlayerInfo> PlayerInfos { get; set; }
 
         //Bulletin
-        public DbSet<Bulletin> Bulletins { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         //Config
         public DbSet<Item> Items { get; set; }
@@ -119,9 +119,10 @@ namespace SocialEmpires.Models
 
             builder.Entity<PlayerInfo>().HasKey(x => x.Pid);
 
-            builder.Entity<Bulletin>().HasKey(x => x.Id);
+            builder.Entity<Notification>().HasKey(x => x.Id);
 
             builder.Entity<Item>().HasKey(x => x.Id);
+            builder.Entity<Item>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<Level>().HasKey(x => x.Id);
 
@@ -142,7 +143,7 @@ namespace SocialEmpires.Models
             builder.Entity<HonorLevel>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<OfferPack>().HasKey(x => x.Id);
-            builder.Entity<OfferPack>().Property(x => x.Id).ValueGeneratedNever();
+
             var OfferPackJsonSerializeOptions = new JsonSerializerOptions();
             OfferPackJsonSerializeOptions.Converters.Add(new IntListOrIntListListConverter());
             builder.Entity<OfferPack>()
@@ -167,14 +168,12 @@ namespace SocialEmpires.Models
             builder.Entity<SocialItem>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<DartsItem>().HasKey(x => x.Id);
-            builder.Entity<DartsItem>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<LevelRankingReward>().HasKey(x => x.Id);
             builder.Entity<LevelRankingReward>().Property(_ => _.Units)
                 .Metadata.SetValueComparer(dictionaryComparer);
 
             builder.Entity<UnitsCollectionsCategory>().HasKey(x => x.Id);
-            builder.Entity<UnitsCollectionsCategory>().Property(x => x.Id).ValueGeneratedNever();
 
             builder.Entity<Category>().HasKey(x => x.Id);
             builder.Entity<Category>().Property(x => x.Id).ValueGeneratedNever();

@@ -36,7 +36,7 @@
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script>
-    var connection = new signalR.HubConnectionBuilder().withUrl("/BulletinHub").build();
+    var connection = new signalR.HubConnectionBuilder().withUrl("/Notification").build();
 
     connection.on("ReceiveBulletin", function (bulletin) {
         var bulletinObj = JSON.parse(bulletin);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Utils;
 
 namespace SocialEmpires.Controllers
 {
@@ -24,7 +25,7 @@ namespace SocialEmpires.Controllers
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(language)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
 
-            return Redirect(Request.Headers.Referer);
+            return this.Redirect();
         }
     }
 }
