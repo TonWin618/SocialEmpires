@@ -57,5 +57,16 @@ namespace SocialEmpires.Controllers
             await _appDbContext.UnitsCollectionsCategories.AddAsync(category);
             return this.Redirect();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUnitCollection(int Id)
+        {
+            var collection = _appDbContext.UnitsCollectionsCategories.Find(Id);
+            if(collection != null)
+            {
+                _appDbContext.UnitsCollectionsCategories.Remove(collection);
+            }
+            return this.Redirect();
+        }
     }
 }
