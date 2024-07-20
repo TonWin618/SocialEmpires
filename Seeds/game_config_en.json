@@ -95261,44 +95261,44 @@
         "SPAWN_MENVSWOMEN_ADVERTISING": 1,
         "NEWS_ITEM": [
             {
-                "news_image": "new_bestciv3_5.jpg",
-                "news_store": "12.121.0"
-            },
-            {
-                "news_image": "new_punisherknight.jpg",
-                "news_store": "12.121.0"
-            },
-            {
-                "news_image": "new_gods2.jpg",
-                "news_store": "gods"
-            },
-            {
-                "news_image": "new_2hard.jpg",
-                "news_store": ""
-            },
-            {
-                "news_image": "new_hardgods.jpg",
-                "news_store": "godsquests"
-            },
-            {
-                "news_image": "new_decos.jpg",
-                "news_store": "2.45.0"
-            },
-            {
-                "news_image": "new_supreme.jpg",
-                "news_store": "1.13.0"
-            },
-            {
                 "news_image": "new_newmagics.jpg",
-                "news_store": "1.13.0"
-            },
-            {
-                "news_image": "new_hardcore.jpg",
                 "news_store": null
             },
             {
-                "news_image": "new_bahamut_riders.jpg",
-                "news_store": "1.13.0"
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
+            },
+            {
+                "news_image": "new_newmagics.jpg",
+                "news_store": null
             }
         ],
         "DRAGONS": {
