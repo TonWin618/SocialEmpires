@@ -70,12 +70,12 @@ namespace SocialEmpires.Dtos
                 .ForMember(dest => dest.Achievement, opt => opt.MapFrom(src => src.Achievement == "1"));
 
             CreateMap<Item, ItemDto>()
-                .ForMember(dest => dest.InStore, opt => opt.MapFrom(src => src.InStore == true ? "1" : "0"))
-                .ForMember(dest => dest.Giftable, opt => opt.MapFrom(src => src.Giftable == true ? "1" : "0"))
-                .ForMember(dest => dest.NewItem, opt => opt.MapFrom(src => src.NewItem == true ? "1" : "0"))
-                .ForMember(dest => dest.Flying, opt => opt.MapFrom(src => src.Flying == true ? "1" : "0"))
-                .ForMember(dest => dest.Protect, opt => opt.MapFrom(src => src.Protect == true ? "1" : "0"))
-                .ForMember(dest => dest.Achievement, opt => opt.MapFrom(src => src.Achievement == true ? "1" : "0"));
+                .ForCtorParam(nameof(ItemDto.InStore), opt => opt.MapFrom(src => src.InStore == true ? "1" : "0"))
+                .ForCtorParam(nameof(ItemDto.Giftable), opt => opt.MapFrom(src => src.Giftable == true ? "1" : "0"))
+                .ForCtorParam(nameof(ItemDto.NewItem), opt => opt.MapFrom(src => src.NewItem == true ? "1" : "0"))
+                .ForCtorParam(nameof(ItemDto.Flying), opt => opt.MapFrom(src => src.Flying == true ? "1" : "0"))
+                .ForCtorParam(nameof(ItemDto.Protect), opt => opt.MapFrom(src => src.Protect == true ? "1" : "0"))
+                .ForCtorParam(nameof(ItemDto.Achievement), opt => opt.MapFrom(src => src.Achievement == true ? "1" : "0"));
         }
     }
 }
