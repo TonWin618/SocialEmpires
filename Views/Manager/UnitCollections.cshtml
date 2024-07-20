@@ -1,0 +1,125 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Infrastructure.MultiLanguage
+@using SocialEmpires.Models.Configs
+@using SocialEmpires.Services
+@using SocialEmpires.Utils
+@using System.Text.Json
+@using static SocialEmpires.Controllers.ManagerController
+@attribute [Authorize(Roles = "Admin")]
+@inject IViewLocalizer localizer
+@{
+    Layout = "_ManagerLayout";
+    ViewData["Title"] = localizer["UnitCollections"];
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<UnitCollectionDto>;
+}
+
+<div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form asp-action="AddUnitCollection">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["NewUnitCollection"]</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label">@localizer["Items"]</label>
+                        <div class="d-flex justify-content-between mb-3">
+                            <input type="text" class="form-control" name="item1">
+                            <input type="text" class="form-control" name="item2">
+                            <input type="text" class="form-control" name="item3">
+                            <input type="text" class="form-control" name="item4">
+                            <input type="text" class="form-control" name="item5">
+                        </div>
+                        <label class="form-label">@localizer["Costs"]</label>
+                        <div class="d-flex justify-content-between mb-3">
+                            <input type="text" class="form-control" name="cost1">
+                            <input type="text" class="form-control" name="cost2">
+                            <input type="text" class="form-control" name="cost3">
+                            <input type="text" class="form-control" name="cost4">
+                            <input type="text" class="form-control" name="cost5">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">@localizer["Rewards"]</label>
+                            <input class="form-control" name="rewards" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@localizer["Close"]</button>
+                        <button type="submit" class="btn btn-primary">@localizer["Save"]</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <p class="h3">@localizer["DartsItems"]</p>
+        </div>
+        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ @localizer["New"]</button>
+    </div>
+    <table width="100%" class="table table-striped  table-sm">
+        <thead>
+            <tr>
+                <th>@localizer["Id"]</th>
+                <th>@localizer["LanguageId"]</th>
+                <th>@localizer["Position"]</th>
+                <th>@localizer["Rewards"]</th>
+                <th>@localizer["Units"]</th>
+                <th>@localizer["Costs"]</th>
+                <th>@localizer["Operation"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var unitCollection in pageData)
+                {
+                    <tr>
+                        <td>@unitCollection.Id</td>
+                        <td>@unitCollection.CategoryLangId</td>
+                        <td>@unitCollection.Position</td>
+                        <td>@unitCollection.Rewards</td>
+                        <td>@string.Join(", ", unitCollection.Units)</td>
+                        <td>@(unitCollection.Costs == null ? unitCollection.Cost : string.Join(", ", unitCollection.Costs!))</td>
+                        <td>
+                            <form asp-action="DeleteUnitCollection" asp-route-id="@unitCollection.Id">
+                                <div class="btn-group" role="group">
+                                    <button type="submit" class="btn btn-danger">@localizer["Delete"]</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
+        }
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
