@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AngleSharp.Dom;
+using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
 using System.Globalization;
@@ -31,5 +32,30 @@ namespace SocialEmpires.Controllers
         public record UnitCollectionDto(
             int Id, int CategoryLangId, int Position, List<string> Units, 
             string Rewards, int Cost, List<int>? Costs);
+
+        [HttpPost]
+        public async Task<IActionResult> AddUnitCollection(string units, string costs, int rewards)
+        {
+            var costNums = costs.Split(',').Select(int.Parse);
+            var cost = costNums.First();
+            if(costNums.All(_ => _.Equals(costNums.First())))
+            {
+                costNums = null;
+            }
+
+            var category = new UnitsCollectionsCategory()
+            {
+                CategoryId = _appDbContext.UnitsCollectionsCategories.Max(c => c.CategoryId) + 1,
+                Position = _appDbContext.UnitsCollectionsCategories.Max(c => c.Position) + 5,
+                CategoryLangId = _appDbContext.UnitsCollectionsCategories.Max(c => c.CategoryLangId) + 1,
+                Units = units.Split(',').Select(int.Parse).ToList(),
+                Cost = cost,
+                Costs = costNums?.ToList(),
+                Rewards = rewards
+            };
+
+            await _appDbContext.UnitsCollectionsCategories.AddAsync(category);
+            return this.Redirect();
+        }
     }
 }
