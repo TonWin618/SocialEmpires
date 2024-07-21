@@ -121,7 +121,7 @@ namespace SocialEmpires.Services
             var item = map.Items.First(_ => _.X == x && _.Y == y);
             item.Timestamp = TimestampNow();
 
-            ApplyCollectAsync(save, id, resourceMultiplier + (numUnitsContainedWhenHarvested - 1) * 0.2);
+            ApplyCollectAsync(save, id, resourceMultiplier + Math.Max(0, numUnitsContainedWhenHarvested - 1) * 0.2);
             DeductResource(save, ResourceType.Cash, cashToSubtract);
         }
 
