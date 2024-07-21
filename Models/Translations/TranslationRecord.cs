@@ -9,10 +9,10 @@
         public string Property { get; set; } = null!;
         public string Origin { get; set; } = null!;
         public string Translation { get; set; } = null!;
+        public string Language { get; set; } = null!;
 
         //null if anonymous
         public string? SubmitterId {  get; set; }
-
         public string? ApproverId {  get; set; }
         public bool Approved {  get; set; }
     }

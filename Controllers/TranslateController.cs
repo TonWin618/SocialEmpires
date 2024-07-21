@@ -57,7 +57,8 @@ namespace SocialEmpires.Controllers
                         .Where(_ =>
                             _.Section == section &&
                             _.ItemId == itemId &&
-                            _.Property == propertyInfo.Name)
+                            _.Property == propertyInfo.Name &&
+                            _.Language == CultureInfo.CurrentCulture.Name)
                         .Select(_ => _.Translation)
                         .ToList();
                     strings.Add(new TranslationString(
@@ -90,6 +91,7 @@ namespace SocialEmpires.Controllers
                 Property = property,
                 Origin = origin,
                 Translation = translation,
+                Language = CultureInfo.CurrentCulture.Name,
                 SubmitterId = User.Identity?.Name ?? "",
                 Approved = false
             });
