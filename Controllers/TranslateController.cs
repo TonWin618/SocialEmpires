@@ -1,11 +1,8 @@
-﻿using AutoMapper.Internal;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
-using SocialEmpires.Models.Configs;
 using SocialEmpires.Services;
 using SocialEmpires.Utils;
-using System.Collections;
 using System.Globalization;
 
 namespace SocialEmpires.Controllers
@@ -60,7 +57,7 @@ namespace SocialEmpires.Controllers
                         multiLanguageString.Get(CultureInfo.CurrentCulture.Name)));
                 }
                 translationItemDtos.Add(new TranslationItemDto(
-                    item.GetType().GetProperty("Id").GetValue(item).ToString(),
+                    (int)item.GetType().GetProperty("Id").GetValue(item),
                     strings));
             }
 
@@ -72,7 +69,7 @@ namespace SocialEmpires.Controllers
             return View();
         }
 
-        public record TranslationItemDto(string Id, List<TranslationString> Strings);
+        public record TranslationItemDto(int Id, List<TranslationString> Strings);
         public record TranslationString(string Property, string? Origin, string? Translation);
     }
 }
