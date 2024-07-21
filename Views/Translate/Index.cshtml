@@ -18,10 +18,41 @@
 <div>
     <div class="d-flex justify-content-between">
         <div>
-            <p class="h3">@localizer["Translate"] - @localizer[section]</p>
+            <p class="h3">@localizer["Translate"]</p>
         </div>
         <div>
-
+            <ul class="nav nav-tabs">
+                <li class="nav-item nav-underline">
+                    <a class="nav-link @(section == "Items" ? "active" : "")" asp-action="Index" asp-route-section="Items">@localizer["Items"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "LocalizationStrings" ? "active" : "")" asp-action="Index" asp-route-section="LocalizationStrings">@localizer["LocalizationStrings"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Levels" ? "active" : "")" asp-action="Index" asp-route-section="Levels">@localizer["Levels"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Missions" ? "active" : "")" asp-action="Index" asp-route-section="Missions">@localizer["Missions"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Magics" ? "active" : "")" asp-action="Index" asp-route-section="Magics">@localizer["Magics"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Categories" ? "active" : "")" asp-action="Index" asp-route-section="Categories">@localizer["Categories"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "FindableItems" ? "active" : "")" asp-action="Index" asp-route-section="FindableItems">@localizer["FindableItems"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "HonorLevels" ? "active" : "")" asp-action="Index" asp-route-section="HonorLevels">@localizer["HonorLevels"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "NeighborAssists" ? "active" : "")" asp-action="Index" asp-route-section="NeighborAssists">@localizer["NeighborAssists"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "SocialItems" ? "active" : "")" asp-action="Index" asp-route-section="SocialItems">@localizer["SocialItems"]</a>
+                </li>
+            </ul>
         </div>
     </div>
     <table width="100%" class="table table-striped  table-sm">
