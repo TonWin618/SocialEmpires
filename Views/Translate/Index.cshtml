@@ -49,10 +49,30 @@
 
                                 <td>@str.Origin</td>
                                 <td>
-                                    <form asp-action="AddTranslation" asp-route-section="@(section)" asp-route-id="@item.Id" asp-route-property="@str.Property">
+                                    <form asp-action="SubmitTranslation"
+                                          asp-route-section="@(section)" 
+                                          asp-route-id="@item.Id"
+                                          asp-route-property="@str.Property"
+                                          asp-route-origin="@str.Origin">
                                         <div class="input-group mb-1">
-                                            <input type="text" class="form-control form-control-sm" name="translation" value="@str.Translation" />
-                                            <button type="submit" class="btn btn-primary btn-sm">@localizer["Submit"]</button>
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">@localizer["Submit"]</button>
+                                            @{
+                                                if(str.ApprovingTranslations.Count > 0)
+                                                {
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <span class="visually-hidden">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        @{
+                                                            foreach (var approvingTranslation in str.ApprovingTranslations)
+                                                            {
+                                                                <li class="dropdown-item">@approvingTranslation</li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                }
+                                            }
+                                            <input type="text" class="form-control" value="@str.Translation" name="translation">
                                         </div>
                                     </form>
                                 </td>

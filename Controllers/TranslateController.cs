@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models;
+using SocialEmpires.Models.Translations;
 using SocialEmpires.Services;
 using SocialEmpires.Utils;
 using System.Globalization;
@@ -47,18 +48,25 @@ namespace SocialEmpires.Controllers
             var translationItemDtos = new List<TranslationItemDto>();
             foreach (var item in targetProperty.Page(pageIndex, pageSize, out pageCount))
             {
+                var itemId = (int)item.GetType().GetProperty("Id").GetValue(item);
                 var strings = new List<TranslationString>();
                 foreach (var propertyInfo in multiLanguagePropertyInfos)
                 {
                     var multiLanguageString = propertyInfo.GetValue(item) as MultiLanguageString;
+                    var approvingTranslation = _appDbContext.TranslationRecords
+                        .Where(_ =>
+                            _.Section == section &&
+                            _.ItemId == itemId &&
+                            _.Property == propertyInfo.Name)
+                        .Select(_ => _.Translation)
+                        .ToList();
                     strings.Add(new TranslationString(
                         propertyInfo.Name,
                         multiLanguageString.Get(SupportLanguages.Default),
-                        multiLanguageString.Get(CultureInfo.CurrentCulture.Name)));
+                        multiLanguageString.Get(CultureInfo.CurrentCulture.Name),
+                        approvingTranslation));
                 }
-                translationItemDtos.Add(new TranslationItemDto(
-                    (int)item.GetType().GetProperty("Id").GetValue(item),
-                    strings));
+                translationItemDtos.Add(new TranslationItemDto(itemId, strings));
             }
 
             ViewData["Section"] = section;
@@ -70,6 +78,22 @@ namespace SocialEmpires.Controllers
         }
 
         public record TranslationItemDto(int Id, List<TranslationString> Strings);
-        public record TranslationString(string Property, string? Origin, string? Translation);
+        public record TranslationString(string Property, string? Origin, string? Translation, List<string> ApprovingTranslations);
+
+        [HttpPost]
+        public async Task<IActionResult> SubmitTranslation(int id, string section, string property, string origin, string translation)
+        {
+            await _appDbContext.TranslationRecords.AddAsync(new TranslationRecord
+            {
+                ItemId = id,
+                Section = section,
+                Property = property,
+                Origin = origin,
+                Translation = translation,
+                SubmitterId = User.Identity?.Name ?? "",
+                Approved = false
+            });
+            return this.Redirect();
+        }
     }
 }

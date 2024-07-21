@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Notifications;
 using SocialEmpires.Models.PlayerSaves;
+using SocialEmpires.Models.Translations;
 using SocialEmpires.Utils;
 using System.Text.Json;
 
@@ -18,8 +19,9 @@ namespace SocialEmpires.Models
         public DbSet<PlayerState> PlayerStates { get; set; }
         public DbSet<PlayerInfo> PlayerInfos { get; set; }
 
-        //Bulletin
+        //System
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<TranslationRecord> TranslationRecords { get; set; }
 
         //Config
         public DbSet<Item> Items { get; set; }
@@ -120,6 +122,7 @@ namespace SocialEmpires.Models
             builder.Entity<PlayerInfo>().HasKey(x => x.Pid);
 
             builder.Entity<Notification>().HasKey(x => x.Id);
+            builder.Entity<TranslationRecord>().HasKey(x => x.Id);
 
             builder.Entity<Item>().HasKey(x => x.Id);
             builder.Entity<Item>().Property(x => x.Id).ValueGeneratedNever();
