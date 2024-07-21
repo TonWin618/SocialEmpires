@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Infrastructure.MultiLanguage;
-using SocialEmpires.Models.Notifications;
 using SocialEmpires.Utils;
 using System.Globalization;
 
@@ -16,6 +15,7 @@ namespace SocialEmpires.Controllers
             ViewData["PageData"] = _appDbContext
                 .TranslationRecords
                 .Where(_ => _.Language == CultureInfo.CurrentCulture.Name)
+                .OrderByDescending(_ => _.Id)
                 .Page(pageIndex, pageSize, out var pageCount)
                 .ToList();
             ViewData["PageCount"] = pageCount;
@@ -34,5 +34,35 @@ namespace SocialEmpires.Controllers
             return this.Redirect();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ApplyTranslation(int id)
+        {
+            var translationRecord = await _appDbContext.TranslationRecords.FindAsync(id);
+            if (translationRecord == null)
+            {
+                return NotFound();
+            }
+
+            var targetType = _configService
+                .GetType()
+                .GetProperty(translationRecord.Section)
+                .PropertyType
+                .GetGenericArguments()
+                .First();
+
+            if (targetType == null)
+            {
+                return NotFound();
+            }
+
+            var item = _appDbContext.Find(targetType, translationRecord.ItemId);
+            var targetPropertyInfo = item.GetType().GetProperty(translationRecord.Property);
+            var targetProperty = targetPropertyInfo.GetValue(item) as MultiLanguageString;
+            targetProperty.Set(translationRecord.Language, translationRecord.Translation);
+
+            translationRecord.Approved = true;
+
+            return this.Redirect();
+        }
     }
 }
