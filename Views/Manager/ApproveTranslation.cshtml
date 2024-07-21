@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Infrastructure.MultiLanguage
+@using SocialEmpires.Models.Configs
+@using SocialEmpires.Models.Notifications
+@using SocialEmpires.Models.Translations
+@using SocialEmpires.Services
+@using SocialEmpires.Utils
+@using System.Text.Json
+@inject IViewLocalizer localizer
+@{
+    Layout = "_ManagerLayout";
+    ViewData["Title"] = localizer["ApproveTranslation"];
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<TranslationRecord>;
+}
+
+<div class="d-flex justify-content-between">
+    <div>
+        <p class="h3">@localizer["Approve Translation"]</p>
+    </div>
+</div>
+
+<div>
+    <table width="100%" class="table table-striped  table-sm">
+        <thead>
+            <tr>
+                <th>@localizer["Section"]</th>
+                <th>@localizer["Property"]</th>
+                <th>@localizer["Origin"]</th>
+                <th>@localizer["Language"]</th>
+                <th>@localizer["Translation"]</th>
+                <th>@localizer["SumitterId"]</th>
+                <th>@localizer["Operation"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var translationRecord in pageData)
+                {
+                    <tr>
+                        <td>@translationRecord.Section</td>
+                        <td>@translationRecord.Property</td>
+                        <td>@translationRecord.Origin</td>
+                        <td>@translationRecord.Language</td>
+                        <td>@translationRecord.Translation</td>
+                        <td>@translationRecord.SubmitterId</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <form asp-action="ApplyTranslation" asp-route-id="@translationRecord.Id">
+                                    <button type="submit" class="btn btn-sm btn-success" disabled="@(translationRecord.Approved)">@localizer["Apply"]</button>
+                                </form>
+                                <form asp-action="DeleteTranslation" asp-route-id="@translationRecord.Id">
+                                    <button type="submit" class="btn btn-sm btn-danger">@localizer["Delete"]</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
+        }
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
