@@ -8,6 +8,7 @@ using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Infrastructures.NotificationHub;
 using SocialEmpires.Models.Notifications;
 using System.Globalization;
+using System.Text.Json;
 
 namespace SocialEmpires.EventHandlers
 {
@@ -35,7 +36,7 @@ namespace SocialEmpires.EventHandlers
                 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(language);
                 content.Set(
                     language, 
-                    $"[{_localizer["Debug"]}]{_localizer["ResourceChanged"]}:{_localizer[notification.ResourceName]}{notification.Quantity}");
+                    $"<div>[{_localizer["Debug"]}]{_localizer["ResourceChanged"]}:{_localizer[notification.ResourceName]}{notification.Quantity}</div>");
             }
 
             var notificationEntity = Notification.CreateFromDebug(notification.UserId, content);
@@ -44,7 +45,9 @@ namespace SocialEmpires.EventHandlers
                 .User(notification.UserId)
                 .SendAsync(
                 "ReceiveNotification", 
-                _mapper.Map<NotificationDto>(notificationEntity));
+                JsonSerializer.Serialize(
+                    _mapper.Map<NotificationDto>(notificationEntity), 
+                    new JsonSerializerOptions().WithLanguage("en")));
         }
     }
 }

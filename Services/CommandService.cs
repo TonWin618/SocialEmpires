@@ -322,7 +322,7 @@ namespace SocialEmpires.Services
         private void AddXp(PlayerSave save, int quantity)
         {
             save.DefaultMap.Xp += quantity;
-            _mediator.Publish(new ResourceChangeEvent(save.Pid, nameof(ResourceType.Cash), quantity));
+            _mediator.Publish(new ResourceChangeEvent(save.Pid, "Xp", quantity));
         }
 
         private static long TimestampNow()

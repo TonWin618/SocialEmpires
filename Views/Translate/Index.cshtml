@@ -1,0 +1,141 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Infrastructure.MultiLanguage
+@using SocialEmpires.Models.Configs
+@using SocialEmpires.Services
+@using SocialEmpires.Utils
+@using System.Text.Json
+@using static SocialEmpires.Controllers.TranslateController
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = localizer["Translate"];
+    var section = (string)ViewData["Section"]!;
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<TranslationItemDto>;
+}
+
+<div>
+    <div class="d-flex justify-content-between">
+        <div>
+            <p class="h3">@localizer["Translate"]</p>
+        </div>
+        <div>
+            <ul class="nav nav-tabs">
+                <li class="nav-item nav-underline">
+                    <a class="nav-link @(section == "Items" ? "active" : "")" asp-action="Index" asp-route-section="Items">@localizer["Items"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "LocalizationStrings" ? "active" : "")" asp-action="Index" asp-route-section="LocalizationStrings">@localizer["LocalizationStrings"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Levels" ? "active" : "")" asp-action="Index" asp-route-section="Levels">@localizer["Levels"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Missions" ? "active" : "")" asp-action="Index" asp-route-section="Missions">@localizer["Missions"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Magics" ? "active" : "")" asp-action="Index" asp-route-section="Magics">@localizer["Magics"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "Categories" ? "active" : "")" asp-action="Index" asp-route-section="Categories">@localizer["Categories"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "FindableItems" ? "active" : "")" asp-action="Index" asp-route-section="FindableItems">@localizer["FindableItems"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "HonorLevels" ? "active" : "")" asp-action="Index" asp-route-section="HonorLevels">@localizer["HonorLevels"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "NeighborAssists" ? "active" : "")" asp-action="Index" asp-route-section="NeighborAssists">@localizer["NeighborAssists"]</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(section == "SocialItems" ? "active" : "")" asp-action="Index" asp-route-section="SocialItems">@localizer["SocialItems"]</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <table width="100%" class="table table-striped  table-sm">
+        <thead>
+            <tr>
+                <th>@localizer["Id"]</th>
+                @{
+                    foreach(var str in pageData.First().Strings)
+                    {
+                        <th>@localizer[str.Property] @localizer["Origin"]</th>
+                        <th>@localizer[str.Property] @localizer["Translation"]</th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in pageData)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        @{
+                            foreach(var str in item.Strings)
+                            {
+
+                                <td>@str.Origin</td>
+                                <td>
+                                    <form asp-action="SubmitTranslation"
+                                          asp-route-section="@(section)" 
+                                          asp-route-id="@item.Id"
+                                          asp-route-property="@str.Property"
+                                          asp-route-origin="@str.Origin">
+                                        <div class="input-group mb-1">
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm">@localizer["Submit"]</button>
+                                            @{
+                                                if(str.ApprovingTranslations.Count > 0)
+                                                {
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <span class="visually-hidden">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        @{
+                                                            foreach (var approvingTranslation in str.ApprovingTranslations)
+                                                            {
+                                                                <li class="dropdown-item">@approvingTranslation</li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                }
+                                            }
+                                            <input type="text" class="form-control" value="@str.Translation" name="translation">
+                                        </div>
+                                    </form>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?section=@(section)&pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?section=@(section)&pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
+        }
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?section=@(section)&pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

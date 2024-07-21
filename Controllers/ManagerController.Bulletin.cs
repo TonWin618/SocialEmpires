@@ -41,7 +41,11 @@ namespace SocialEmpires.Controllers
 
             await _appDbContext.AddAsync(bulletin);
             var bulletinDto = _mapper.Map<NotificationDto>(bulletin);
-            await _bulletinHubContext.Clients.All.SendAsync("ReceiveBulletin", JsonSerializer.Serialize(bulletinDto));
+            await _bulletinHubContext.Clients.All.SendAsync(
+                "ReceiveNotification", 
+                JsonSerializer.Serialize(
+                    bulletinDto,
+                    new JsonSerializerOptions().WithLanguage(language)));
             return this.Redirect();
         }
     }

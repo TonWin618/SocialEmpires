@@ -264,19 +264,19 @@ namespace SocialEmpires.Controllers
                     ViewData["ErrorMessage"] = "UserExisted";
                     return View("Login");
                 }
-
-                await _signInManager.SignInAsync(user, isPersistent: true);
-
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                await _emailSender.SendAsync(
-                    email,
-                    $"{_localizer["EmailConfirmEmailTitle"]}",
-                    $"<html><body><h4>{_localizer["EmailConfirmEmailContent"]} </h4><h1>{token}</h1><br/></body></html>");
-
-                ViewData["SendingInterval"] = 60;
-                return View("Register");
             }
+
+            await _signInManager.SignInAsync(user, isPersistent: true);
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            await _emailSender.SendAsync(
+                email,
+                $"{_localizer["EmailConfirmEmailTitle"]}",
+                $"<html><body><h4>{_localizer["EmailConfirmEmailContent"]} </h4><h1>{token}</h1><br/></body></html>");
+
+            ViewData["SendingInterval"] = 60;
+            return View("Register");
         }
 
         #endregion
