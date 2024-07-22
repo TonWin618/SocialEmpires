@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using SocialEmpires.Infrastructure.MultiLanguage
+@using SocialEmpires.Models.Configs
+@using SocialEmpires.Models.Notifications
+@using SocialEmpires.Services
+@using SocialEmpires.Utils
+@using System.Text.Json
+@using static SocialEmpires.Controllers.AdminController
+@inject IViewLocalizer localizer
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = localizer["Authorize"];
+
+    var pageIndex = (int)ViewData["PageIndex"]!;
+    var pageSize = (int)ViewData["PageSize"]!;
+    var pageCount = (int)ViewData["PageCount"]!;
+    var pageData = ViewData["PageData"] as IEnumerable<UserDto>;
+}
+
+<div class="d-flex justify-content-between">
+    <div>
+        <p class="h3">@localizer["Authorize"]</p>
+    </div>
+    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ @localizer["Authorize"]</button>
+</div>
+
+<div>
+    <table width="100%" class="table table-striped  table-sm">
+        <thead>
+            <tr>
+                <th>@localizer["UserId"]</th>
+                <th>@localizer["Email"]</th>
+                <th>@localizer["EmailConfirmed"]</th>
+                <th>@localizer["Roles"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var user in pageData)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Email</td>
+                        <td>@user.EmailConfirmed</td>
+                        <td>@string.Join(", ", user.Roles)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(pageIndex <= 1?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        @{
+            var indexes = PageIndexesHelper.CalculatePageIndexes(pageIndex, pageCount, 11);
+            foreach (var index in indexes)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?pageIndex=@(index)&pageSize=@pageSize">@(index)</a>
+                </li>
+            }
+        }
+        <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
+            <a class="page-link" href="?pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form asp-action="SendGift">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["Authorize"]</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["UserId"]</span>
+                        <input class="form-control form-control-sm" type="text" name="userId" value="">
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Role"]</span>
+                        <input class="form-control form-control-sm" type="text" name="role" value="Manager">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@localizer["Close"]</button>
+                    <button type="submit" class="btn btn-primary">@localizer["Send"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

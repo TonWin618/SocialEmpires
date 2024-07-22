@@ -4,7 +4,7 @@ using SocialEmpires.Models.Configs;
 
 namespace SocialEmpires.Dtos
 {
-    public record LocalizationStringDto(int Id, MultiLanguageString Name, MultiLanguageString Text);
+    public record LocalizationStringDto(int Id, string Name, MultiLanguageString Text);
 
     public class LocalizationStringProfile : Profile
     {

@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Authorization
 @using SocialEmpires.Utils
+@using System.Globalization
 @attribute [Authorize(Roles = "Admin")]
 @inject ConfigService configFileService
 @inject IViewLocalizer localizer
@@ -42,7 +43,7 @@
                         <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(item.ImgName).jpg" width="30" height="30"/>
                     </td>
                     <td>@($"[{item.Type}] {item.Id}")</td>
-                    <td>@item.Name</td>
+                    <td>@item.Name.Get(CultureInfo.CurrentCulture.Name)</td>
                     <td>@item.CostType @item.Cost</td>
                     <td>@(item.Trains == "0" ? "---" : item.Trains)</td>
                     <td>@item.CategoryId : @item.SubcategoryId</td>

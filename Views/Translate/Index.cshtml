@@ -62,8 +62,8 @@
                 @{
                     foreach(var str in pageData.First().Strings)
                     {
-                        <th>@localizer[str.Property] @localizer["Origin"]</th>
-                        <th>@localizer[str.Property] @localizer["Translation"]</th>
+                        <th>@(localizer[str.Property])[@localizer["Origin"]]</th>
+                        <th>@(localizer[str.Property])[@localizer["Translation"]]</th>
                     }
                 }
             </tr>

@@ -117,10 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Home" xml:space="preserve">
-    <value>主页</value>
+  <data name="Admin" xml:space="preserve">
+    <value>系统管理员</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>登录</value>
+  <data name="Manager" xml:space="preserve">
+    <value>管理员</value>
+  </data>
+  <data name="Game" xml:space="preserve">
+    <value>游戏</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>翻译</value>
   </data>
 </root>
