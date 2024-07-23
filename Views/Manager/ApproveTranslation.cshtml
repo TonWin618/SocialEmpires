@@ -33,6 +33,7 @@
                 <th>@localizer["Current"]</th>
                 <th>@localizer["Translation"]</th>
                 <th>@localizer["SumitterId"]</th>
+                <th>@localizer["Status"]</th>
                 <th>@localizer["Operation"]</th>
             </tr>
         </thead>
@@ -47,10 +48,11 @@
                         <td>@translationRecord.Current</td>
                         <td>@translationRecord.Translation</td>
                         <td>@translationRecord.SubmitterId</td>
+                        <td>@(translationRecord.Approved ? $"[{localizer["Approved"].Value}]" : "")</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <form asp-action="ApplyTranslation" asp-route-id="@translationRecord.Id">
-                                    <button type="submit" class="btn btn-sm btn-success" disabled="@(translationRecord.Approved)">@localizer["Apply"]</button>
+                                    <button type="submit" class="btn btn-sm btn-success">@localizer["Apply"]</button>
                                 </form>
                                 <form asp-action="DeleteTranslation" asp-route-id="@translationRecord.Id">
                                     <button type="submit" class="btn btn-sm btn-danger">@localizer["Delete"]</button>
