@@ -4,8 +4,6 @@
 @using Microsoft.AspNetCore.Authorization
 @using SocialEmpires.Utils
 @using System.Globalization
-@attribute [Authorize(Roles = "Admin")]
-@inject ConfigService configFileService
 @inject IViewLocalizer localizer
 @{
     Layout = "_ManagerLayout";
@@ -107,7 +105,7 @@
 <script>
     function openItemDetail(id) {
         document.getElementById("itemDetailDiv").style.display = "block";
-        document.getElementById("itemDetailFrame").src = `/admin/item?id=${id}`;
+        document.getElementById("itemDetailFrame").src = `/Manager/Item?id=${id}`;
     }
 
     function closeItemDetail() {
