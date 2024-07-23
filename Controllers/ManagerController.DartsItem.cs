@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
 
@@ -16,6 +17,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "DartsItemManager")]
         public async Task<IActionResult> DeleteDartsItem(int id)
         {
             var dartsItem = await _appDbContext.DartsItems.FindAsync(id);
@@ -24,6 +26,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "DartsItemManager")]
         public async Task<IActionResult> AddDartsItem(int item1, int item2, int item3, int item4, int item5, int item6, int extraItem)
         {
             var dartsItem = new DartsItem()

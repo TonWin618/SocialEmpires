@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
@@ -29,6 +30,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ItemManager")]
         public async Task<IActionResult> ShelveItem(string id, string pageIndex)
         {
             var item = _configService.GetItem(id);
@@ -42,6 +44,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ItemManager")]
         public async Task<IActionResult> UnshelveItem(string id, string pageIndex)
         {
             var item = _configService.GetItem(id);
@@ -55,6 +58,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ItemManager")]
         public async Task<IActionResult> UpdateItem(
             [FromForm] Item updatedItem,
             [FromServices] IMapper _mapper)

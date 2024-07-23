@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Infrastructure.MultiLanguage;
+using SocialEmpires.Models.Translations;
 using SocialEmpires.Utils;
 using System.Globalization;
 
@@ -12,17 +15,33 @@ namespace SocialEmpires.Controllers
         {
             ViewData["PageIndex"] = pageIndex;
             ViewData["PageSize"] = pageSize;
-            ViewData["PageData"] = _appDbContext
+            
+            var records = _appDbContext
                 .TranslationRecords
                 .Where(_ => _.Language == CultureInfo.CurrentCulture.Name)
                 .OrderByDescending(_ => _.Id)
                 .Page(pageIndex, pageSize, out var pageCount)
                 .ToList();
+            foreach (var record in records) 
+            {
+                var targetType = _configService
+                    .GetType()
+                    .GetProperty(record.Section)
+                    .PropertyType
+                    .GetGenericArguments()
+                    .First();
+                var item = await _appDbContext.FindAsync(targetType, record.ItemId);
+                var targetProperty = targetType.GetProperty(record.Property).GetValue(item) as MultiLanguageString;
+                record.Current = targetProperty.Get(CultureInfo.CurrentCulture.Name);
+            }
+
+            ViewData["PageData"] = records;
             ViewData["PageCount"] = pageCount;
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "TranslationManager")]
         public async Task<IActionResult> DeleteTranslation(int id)
         {
             var translationRecord = await _appDbContext.TranslationRecords.FindAsync(id);
@@ -35,6 +54,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "TranslationManager")]
         public async Task<IActionResult> ApplyTranslation(int id)
         {
             var translationRecord = await _appDbContext.TranslationRecords.FindAsync(id);

@@ -6,6 +6,7 @@ using SocialEmpires.Models.Notifications;
 using System.Globalization;
 using System.Text.Json;
 using SocialEmpires.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SocialEmpires.Controllers
 {
@@ -26,6 +27,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "BulletinManager")]
         public async Task<IActionResult> PublishBulletin(
             [FromForm] string htmlContent,
             [FromForm] string language,

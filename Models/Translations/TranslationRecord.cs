@@ -1,4 +1,6 @@
-﻿namespace SocialEmpires.Models.Translations
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SocialEmpires.Models.Translations
 {
     public class TranslationRecord
     {
@@ -15,5 +17,8 @@
         public string? SubmitterId {  get; set; }
         public string? ApproverId {  get; set; }
         public bool Approved {  get; set; }
+
+        [NotMapped]
+        public string? Current { get; set; }
     }
 }
