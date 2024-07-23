@@ -40,6 +40,7 @@ namespace SocialEmpires.Controllers
             if (user == null) 
             {
                 ViewData["ErrorMessage"] = "UserNotFound";
+                return this.Redirect();
             }
             
             var result = await userManager.AddToRoleAsync(user, role);
