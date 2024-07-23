@@ -85,13 +85,13 @@
         <form asp-action="CreateRole">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["Authorize"]</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["CreateRole"]</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group mb-1">
                         <span class="input-group-text">@localizer["Role"]</span>
-                        <input class="form-control form-control-sm" type="text" name="role" value="Manager">
+                        <input class="form-control form-control-sm" type="text" name="role" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -135,7 +135,7 @@
         <form asp-action="RemoveAuthorize">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["Authorize"]</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["Deauthorize"]</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
