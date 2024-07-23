@@ -24,8 +24,9 @@
         <p class="h3">@localizer["Authorize"]</p>
     </div>
     <div>
-        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">@localizer["Add"]</button>
-        <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeModal">@localizer["Remove"]</button>
+        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createRoleModal">@localizer["CreateRole"]</button>
+        <button type="submit" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#authorizeModal">@localizer["Authorize"]</button>
+        <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deauthorizeModal">@localizer["Deauthorize"]</button>
     </div>
 </div>
 
@@ -79,7 +80,30 @@
     </ul>
 </nav>
 
-<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createRoleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form asp-action="CreateRole">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">@localizer["Authorize"]</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">@localizer["Role"]</span>
+                        <input class="form-control form-control-sm" type="text" name="role" value="Manager">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@localizer["Close"]</button>
+                    <button type="submit" class="btn btn-primary">@localizer["Create"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="authorizeModal" tabindex="-1">
     <div class="modal-dialog">
         <form asp-action="AddAuthorize">
             <div class="modal-content">
@@ -99,14 +123,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@localizer["Close"]</button>
-                    <button type="submit" class="btn btn-primary">@localizer["Send"]</button>
+                    <button type="submit" class="btn btn-warning">@localizer["Authorize"]</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deauthorizeModal" tabindex="-1">
     <div class="modal-dialog">
         <form asp-action="RemoveAuthorize">
             <div class="modal-content">
@@ -126,7 +150,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@localizer["Close"]</button>
-                    <button type="submit" class="btn btn-primary">@localizer["Send"]</button>
+                    <button type="submit" class="btn btn-danger">@localizer["Deauthorize"]</button>
                 </div>
             </div>
         </form>

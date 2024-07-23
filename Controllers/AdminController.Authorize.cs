@@ -75,5 +75,17 @@ namespace SocialEmpires.Controllers
             }
             return this.Redirect();
         }
+
+        public async Task<IActionResult> CreateRole(
+            [FromServices] RoleManager<IdentityRole> roleManager,
+            string role)
+        {
+            var result = await roleManager.CreateAsync(new IdentityRole(role));
+            if (!result.Succeeded)
+            {
+                ViewData["ErrorMessage"] = "CreateFaild";
+            }
+            return this.Redirect();
+        }
     }
 }
