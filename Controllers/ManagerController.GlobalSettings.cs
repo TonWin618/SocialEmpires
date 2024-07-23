@@ -15,7 +15,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "GlobalSettingsManager")]
         public async Task<IActionResult> UpdateGlobalSetting(string key, string value)
         {
             var setting = await _appDbContext.GlobalSettings.FindAsync(key);

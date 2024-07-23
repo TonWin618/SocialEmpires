@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Infrastructure.MultiLanguage;
 using SocialEmpires.Models.Translations;
@@ -40,6 +41,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "TranslationManager")]
         public async Task<IActionResult> DeleteTranslation(int id)
         {
             var translationRecord = await _appDbContext.TranslationRecords.FindAsync(id);
@@ -52,6 +54,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "TranslationManager")]
         public async Task<IActionResult> ApplyTranslation(int id)
         {
             var translationRecord = await _appDbContext.TranslationRecords.FindAsync(id);

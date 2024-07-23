@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Options;
@@ -19,6 +20,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "OfferPackManager")]
         public async Task<IActionResult> EnableOfferPack(int id)
         {
             var offerPack = await _appDbContext.OfferPacks.FindAsync(id);
@@ -27,6 +29,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "OfferPackManager")]
         public async Task<IActionResult> DisableOfferPack(int id)
         {
             var offerPack = await _appDbContext.OfferPacks.FindAsync(id);
@@ -35,6 +38,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "OfferPackManager")]
         public async Task<IActionResult> DeleteOfferPack(int id)
         {
             var offerPack = await _appDbContext.OfferPacks.FindAsync(id);
@@ -43,6 +47,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "OfferPackManager")]
         public async Task<IActionResult> AddOfferPack(
             int packType, int position, int costCash, 
             int gold, int stone, int wood, int food, int xp, int mana, string items,

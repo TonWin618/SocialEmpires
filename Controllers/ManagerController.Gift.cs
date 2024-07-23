@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SocialEmpires.Events;
 using SocialEmpires.Infrastructure.MultiLanguage;
@@ -26,6 +27,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "GiftManager")]
         public async Task<IActionResult> SendGift(string receiver, int cash, int gold, int stone, int wood, int food, int xp, string items)
         {
             var saves = new List<PlayerSave>();

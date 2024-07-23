@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SocialEmpires.Models.Configs;
 using SocialEmpires.Utils;
 using System.Globalization;
@@ -33,6 +34,7 @@ namespace SocialEmpires.Controllers
             string Rewards, int Cost, List<int>? Costs);
 
         [HttpPost]
+        [Authorize(Roles = "UnitCollectionManager")]
         public async Task<IActionResult> AddUnitCollection(string units, string costs, int rewards)
         {
             var costNums = costs.Split(',').Select(int.Parse);
@@ -58,6 +60,7 @@ namespace SocialEmpires.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "UnitCollectionManager")]
         public async Task<IActionResult> DeleteUnitCollection(int Id)
         {
             var collection = _appDbContext.UnitsCollectionsCategories.Find(Id);

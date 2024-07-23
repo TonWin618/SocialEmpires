@@ -53,6 +53,7 @@ namespace SocialEmpires.Controllers
         public record MapGridItem(int X, int Y, int Id, string Image, int Width, int Height);
 
         [HttpPost]
+        [Authorize(Roles = "PlayerManager")]
         public async Task ChangeCash(string playerId, [FromBody] int amount)
         {
             var save = await _playerSaveService.GetPlayerSaveAsync(playerId);
