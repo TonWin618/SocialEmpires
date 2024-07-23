@@ -25,5 +25,29 @@ namespace SocialEmpires.Controllers
         }
 
         public record UserDto(string Id, string Email, bool EmailConfirmed, List<string> Roles);
+
+        public async Task<IActionResult> AddAuthorize(
+            [FromServices] UserManager<IdentityUser> userManager,
+            string userId, 
+            string role)
+        {
+            if (role == "Admin")
+            {
+                ViewData["ErrorMessage"] = "InvalidOperation";
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null) 
+            {
+                ViewData["ErrorMessage"] = "UserNotFound";
+            }
+            
+            var result = await userManager.AddToRoleAsync(user, role);
+            if (!result.Succeeded)
+            {
+                ViewData["ErrorMessage"] = "RoleNotFound";
+            }
+            return this.Redirect();
+        }
     }
 }
