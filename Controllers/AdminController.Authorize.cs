@@ -50,5 +50,30 @@ namespace SocialEmpires.Controllers
             }
             return this.Redirect();
         }
+
+        public async Task<IActionResult> RemoveAuthorize(
+            [FromServices] UserManager<IdentityUser> userManager,
+            string userId,
+            string role)
+        {
+            if (role == "Admin")
+            {
+                ViewData["ErrorMessage"] = "InvalidOperation";
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                ViewData["ErrorMessage"] = "UserNotFound";
+                return this.Redirect();
+            }
+
+            var result = await userManager.RemoveFromRoleAsync(user, role);
+            if (!result.Succeeded)
+            {
+                ViewData["ErrorMessage"] = "RoleNotFound";
+            }
+            return this.Redirect();
+        }
     }
 }
