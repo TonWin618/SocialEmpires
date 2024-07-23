@@ -28,6 +28,24 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/Identity/Logout">@localizer["Logout"]</a></li>
+                @{
+                    if (ViewBag.IsUser)
+                    {
+
+                    }
+                    if (ViewBag.IsManager)
+                    {
+                        <li>
+                            <a class="dropdown-item" asp-controller="Manager" asp-action="Index">@localizer["Manager"]</a>
+                        </li>
+                    }
+                    if (ViewBag.IsAdmin)
+                    {
+                        <li>
+                            <a class="dropdown-item" asp-controller="Admin" asp-action="Index">@localizer["Admin"]</a>
+                        </li>
+                    }
+                }
             </ul>
         </div>
     }

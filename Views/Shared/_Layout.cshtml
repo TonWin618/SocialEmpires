@@ -2,12 +2,6 @@
 @using Microsoft.Extensions.Localization
 @inject IViewLocalizer localizer
 @inject IStringLocalizer<GlobalLocalizer> global
-@inject IHttpContextAccessor accessor
-@{
-    ViewBag.IsUser = accessor?.HttpContext?.User.IsInRole("User") ?? false;
-    ViewBag.IsAdmin = accessor?.HttpContext?.User.IsInRole("Admin") ?? false;
-    ViewBag.IsManager = accessor?.HttpContext?.User.IsInRole("Manager") ?? false;
-}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,32 +23,15 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @{
-                            if (ViewBag.IsUser)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Game" asp-action="Index">@localizer["Game"]</a>
-                                </li>
-                            }
-                            if (ViewBag.IsManager)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Manager" asp-action="Index">@localizer["Manager"]</a>
-                                </li>
-                            }
-                            if (ViewBag.IsAdmin)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">@localizer["Admin"]</a>
-                                </li>
-                            }
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Game" asp-action="Index">@localizer["Game"]</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Translate" asp-action="Index">@localizer["Translate"]</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
-                        @{Html.RenderPartial("_User");}
+                        <partial name="_User"></partial>
                     </ul>
                 </div>
             </div>
