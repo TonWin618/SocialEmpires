@@ -9,10 +9,13 @@ namespace SocialEmpires.Controllers
     {
         [HttpGet]
         public IActionResult Authorize(
-            [FromServices] UserManager<IdentityUser> userManager, 
+            [FromServices] UserManager<IdentityUser> userManager,
+            [FromServices] RoleManager<IdentityRole> roleManager,
             int pageIndex = 1, 
             int pageSize = 20)
         {
+            ViewData["Roles"] = roleManager.Roles.Select(_=>_.Name).ToList();
+
             ViewData["PageIndex"] = pageIndex;
             ViewData["PageSize"] = pageSize;
             ViewData["PageData"] = userManager

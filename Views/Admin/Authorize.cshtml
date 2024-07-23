@@ -12,7 +12,7 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = localizer["Authorize"];
-
+    var roles = (List<string?>)ViewData["Roles"]!;
     var pageIndex = (int)ViewData["PageIndex"]!;
     var pageSize = (int)ViewData["PageSize"]!;
     var pageCount = (int)ViewData["PageCount"]!;
@@ -89,6 +89,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div>
+                        <p>@string.Join(", ",roles)</p>
+                    </div>
                     <div class="input-group mb-1">
                         <span class="input-group-text">@localizer["Role"]</span>
                         <input class="form-control form-control-sm" type="text" name="role" value="">
