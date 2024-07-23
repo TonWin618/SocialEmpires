@@ -6,6 +6,7 @@
 @using System.Text.Json
 @using static SocialEmpires.Controllers.TranslateController
 @inject IViewLocalizer localizer
+@inject ConfigService configService
 @{
     ViewData["Title"] = localizer["Translate"];
     var section = (string)ViewData["Section"]!;
@@ -60,6 +61,10 @@
             <tr>
                 <th>@localizer["Id"]</th>
                 @{
+                    if(section == "Items")
+                    {
+                        <th></th>
+                    }
                     foreach(var str in pageData.First().Strings)
                     {
                         <th>@(localizer[str.Property])[@localizer["Origin"]]</th>
@@ -73,6 +78,14 @@
                 foreach (var item in pageData)
                 {
                     <tr>
+                        @{
+                            if (section == "Items")
+                            {
+                                <td>
+                                    <img src="/default01.static.socialpointgames.com/static/socialempires/buildingthumbs/@(configService.GetItem(item.Id).ImgName).jpg" width="30" height="30" />
+                                </td>
+                            }
+                        }
                         <td>@item.Id</td>
                         @{
                             foreach(var str in item.Strings)
