@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialEmpires.Models;
 using SocialEmpires.Models.Configs;
+using SocialEmpires.Seeds;
 using SocialEmpires.Utils;
+using System;
 
 namespace SocialEmpires.Services
 {
     public class ConfigService
     {
-        private readonly AppDbContext _appDbContext;
         private readonly ILogger<ConfigService> _logger;
 
         public List<LocalizationString> LocalizationStrings { get; private set; }
@@ -32,34 +33,37 @@ namespace SocialEmpires.Services
         public List<UnitsCollectionsCategory> UnitsCollectionsCategories { get; set; }
 
         public ConfigService(
-            AppDbContext appDbContext,
+            IServiceProvider serviceProvider,
             ILogger<ConfigService> logger)
         {
-            _appDbContext = appDbContext;
-            _logger = logger;
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var _appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                _logger = logger;
 
-            //load game config from database.
-            LocalizationStrings = _appDbContext.LocalizationStrings.ToList();
-            Items = _appDbContext.Items.ToList();
-            ExpansionPrices = _appDbContext.ExpansionPrices.ToList();
-            Levels = _appDbContext.Levels.ToList();
-            HonorLevels = _appDbContext.HonorLevels.ToList();
-            NeighborAssists = _appDbContext.NeighborAssists.ToList();
-            TownPrices = _appDbContext.TownPrices.ToList();
-            MapPrices = _appDbContext.MapPrices.ToList();
-            FindableItems = _appDbContext.FindableItems.ToList();
-            Missions = _appDbContext.Missions.ToList();
-            OfferPacks = _appDbContext.OfferPacks.ToList();
-            SocialItems = _appDbContext.SocialItems.ToList();
-            Magics = _appDbContext.Magics.ToList();
-            LevelRankingReward = _appDbContext.LevelRankingRewards.ToList();
-            DartsItems = _appDbContext.DartsItems.ToList();
+                //load game config from database.
+                LocalizationStrings = _appDbContext.LocalizationStrings.ToList();
+                Items = _appDbContext.Items.ToList();
+                ExpansionPrices = _appDbContext.ExpansionPrices.ToList();
+                Levels = _appDbContext.Levels.ToList();
+                HonorLevels = _appDbContext.HonorLevels.ToList();
+                NeighborAssists = _appDbContext.NeighborAssists.ToList();
+                TownPrices = _appDbContext.TownPrices.ToList();
+                MapPrices = _appDbContext.MapPrices.ToList();
+                FindableItems = _appDbContext.FindableItems.ToList();
+                Missions = _appDbContext.Missions.ToList();
+                OfferPacks = _appDbContext.OfferPacks.ToList();
+                SocialItems = _appDbContext.SocialItems.ToList();
+                Magics = _appDbContext.Magics.ToList();
+                LevelRankingReward = _appDbContext.LevelRankingRewards.ToList();
+                DartsItems = _appDbContext.DartsItems.ToList();
 
-            GlobalSettings = _appDbContext.GlobalSettings.ToList();
-            Categories = _appDbContext.Categories.Include(_ => _.Sub).ToList();
-            UnitsCollectionsCategories = _appDbContext.UnitsCollectionsCategories.ToList();
-            TournamentTypes = _appDbContext.TournamentTypes.Include(_ => _.WeeklyOpponent).Include(_=>_.Prize).ToList();
-            Images = _appDbContext.Images.ToList();
+                GlobalSettings = _appDbContext.GlobalSettings.ToList();
+                Categories = _appDbContext.Categories.Include(_ => _.Sub).ToList();
+                UnitsCollectionsCategories = _appDbContext.UnitsCollectionsCategories.ToList();
+                TournamentTypes = _appDbContext.TournamentTypes.Include(_ => _.WeeklyOpponent).Include(_ => _.Prize).ToList();
+                Images = _appDbContext.Images.ToList();
+            }
         }
 
         public Item? GetItem(int id)
