@@ -15,10 +15,10 @@ namespace SocialEmpires.Controllers
         {
             ViewData["PageIndex"] = pageIndex;
             ViewData["PageSize"] = pageSize;
-            
+
             var records = _appDbContext
                 .TranslationRecords
-                .Where(_ => _.Language == CultureInfo.CurrentCulture.Name)
+                .Where(_ => _.Language == CultureInfo.CurrentCulture.Name && _.Approved == false)
                 .OrderByDescending(_ => _.Id)
                 .Page(pageIndex, pageSize, out var pageCount)
                 .ToList();
@@ -82,6 +82,19 @@ namespace SocialEmpires.Controllers
 
             translationRecord.Approved = true;
 
+            return this.Redirect();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "TranslationManager")]
+        public async Task<IActionResult> IgnoreTranslation(int id)
+        {
+            var translationRecord = await _appDbContext.TranslationRecords.FindAsync(id);
+            if (translationRecord == null)
+            {
+                return NotFound();
+            }
+            translationRecord.Approved = true;
             return this.Redirect();
         }
     }

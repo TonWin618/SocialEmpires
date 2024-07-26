@@ -54,6 +54,9 @@
                                 <form asp-action="ApplyTranslation" asp-route-id="@translationRecord.Id">
                                     <button type="submit" class="btn btn-sm btn-success">@localizer["Apply"]</button>
                                 </form>
+                                <form asp-action="IgnoreTranslation" asp-route-id="@translationRecord.Id">
+                                    <button type="submit" class="btn btn-sm btn-secondary">@localizer["Ignore"]</button>
+                                </form>
                                 <form asp-action="DeleteTranslation" asp-route-id="@translationRecord.Id">
                                     <button type="submit" class="btn btn-sm btn-danger">@localizer["Delete"]</button>
                                 </form>
