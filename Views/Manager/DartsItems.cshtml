@@ -1,11 +1,9 @@
-﻿@using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using SocialEmpires.Infrastructure.MultiLanguage
 @using SocialEmpires.Models.Configs
 @using SocialEmpires.Services
 @using SocialEmpires.Utils
 @using System.Text.Json
-@attribute [Authorize(Roles = "Admin")]
 @inject IViewLocalizer localizer
 @{
     Layout = "_ManagerLayout";
