@@ -6,7 +6,6 @@ using System.Text;
 
 namespace SocialEmpires.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public partial class ManagerController : Controller
     {
         [HttpGet]
