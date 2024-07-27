@@ -10,6 +10,7 @@
 @{
     ViewData["Title"] = localizer["Translate"];
     var section = (string)ViewData["Section"]!;
+    var query = (string)ViewData["Query"]!;
     var pageIndex = (int)ViewData["PageIndex"]!;
     var pageSize = (int)ViewData["PageSize"]!;
     var pageCount = (int)ViewData["PageCount"]!;
@@ -55,6 +56,15 @@
                 </li>
             </ul>
         </div>
+        <div>
+            <form method="get" asp-action="FindTranslation">
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-sm visually-hidden" name="section" value="@(section)">
+                    <input type="text" class="form-control form-control-sm" name="query" placeholder="@localizer["SearchTip"]">
+                    <button class="btn btn-sm btn-primary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
     </div>
     <table width="100%" class="table table-striped  table-sm">
         <thead>
@@ -65,10 +75,13 @@
                     {
                         <th></th>
                     }
-                    foreach(var str in pageData.First().Strings)
+                    if(pageData.Count() > 0)
                     {
-                        <th>@(localizer[str.Property])[@localizer["Origin"]]</th>
-                        <th>@(localizer[str.Property])[@localizer["Translation"]]</th>
+                        foreach (var str in pageData.First().Strings)
+                        {
+                            <th>@(localizer[str.Property])[@localizer["Origin"]]</th>
+                            <th>@(localizer[str.Property])[@localizer["Translation"]]</th>
+                        }
                     }
                 }
             </tr>
@@ -132,7 +145,7 @@
 <nav>
     <ul class="pagination justify-content-center">
         <li class="page-item @(pageIndex <= 1?"disabled":"")">
-            <a class="page-link" href="?section=@(section)&pageIndex=@(pageIndex - 1)&pageSize=@pageSize" aria-label="Previous">
+            <a class="page-link" href="?section=@(section)&pageIndex=@(pageIndex - 1)&pageSize=@pageSize@{if(string.IsNullOrEmpty(query)){ @("&query="+query) }}">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
@@ -146,7 +159,7 @@
             }
         }
         <li class="page-item @(pageIndex >= pageCount?"disabled":"")">
-            <a class="page-link" href="?section=@(section)&pageIndex=@(pageIndex + 1)&pageSize=@pageSize" aria-label="Next">
+            <a class="page-link" href="?section=@(section)&pageIndex=@(pageIndex + 1)&pageSize=@pageSize">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
