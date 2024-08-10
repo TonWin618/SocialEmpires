@@ -211,31 +211,9 @@ namespace SocialEmpires.Services
             var townId = args[2].GetInt32();
             var itemId = args[3].GetInt32();
 
-            var map = save.Maps[townId];
-            var items = map.Items;
+            RemoveItem(save, townId, itemId, x, y);
 
-            // Remove item from map's items
-            foreach (var item in items)
-            {
-                if (item.Id == itemId && item.X == x && item.Y == y)
-                {
-                    items.Remove(item);
-                    break;
-                }
-            }
-
-            // Ensure gifts list is sufficient to access the item_id
-            var length = save.PrivateState.Gifts.Count;
-            if (length <= itemId)
-            {
-                for (var i = itemId - length + 1; i > 0; i--)
-                {
-                    save.PrivateState.Gifts.Add(0);
-                }
-            }
-
-            // Increment the count of the item_id in gifts
-            save.PrivateState.Gifts[itemId]++;
+            AddGift(save, itemId);
         }
     }
 }

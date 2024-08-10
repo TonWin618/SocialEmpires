@@ -325,6 +325,33 @@ namespace SocialEmpires.Services
             _mediator.Publish(new ResourceChangeEvent(save.Pid, "Xp", quantity));
         }
 
+        private void AddGift(PlayerSave save, int itemId, int quantity = 1)
+        {
+            var length = save.PrivateState.Gifts.Count;
+            if (length <= itemId)
+            {
+                for (var i = itemId - length + 1; i > 0; i--)
+                {
+                    save.PrivateState.Gifts.Add(0);
+                }
+            }
+
+            save.PrivateState.Gifts[itemId] += quantity;
+        }
+
+        private void RemoveItem(PlayerSave save, int townId, int itemId, int x, int y)
+        {
+            var items = save.Maps[townId].Items;
+            foreach (var item in items)
+            {
+                if (item.Id == itemId && item.X == x && item.Y == y)
+                {
+                    items.Remove(item);
+                    break;
+                }
+            }
+        }
+
         private static long TimestampNow()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeSeconds();

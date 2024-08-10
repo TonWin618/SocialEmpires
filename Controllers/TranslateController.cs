@@ -6,7 +6,6 @@ using SocialEmpires.Models.Translations;
 using SocialEmpires.Services;
 using SocialEmpires.Utils;
 using System.Globalization;
-using static System.Collections.Specialized.BitVector32;
 
 namespace SocialEmpires.Controllers
 {
