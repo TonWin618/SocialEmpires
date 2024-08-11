@@ -37,7 +37,8 @@ namespace SocialEmpires.Services
         public void HandleStoreAddItemsCommand(PlayerSave save, JsonElement[] args)
         {
             var items = args[0].GetString();
-            save.DefaultMap.
+            var itemId = int.Parse(items[1..^1]);
+            AddGift(save, itemId);
         }
     }
 }

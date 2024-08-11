@@ -186,6 +186,9 @@ namespace SocialEmpires.Services
                 case CommandNames.DARTS_NEW_FREE:
                     HandleDartsNewFreeCommand(save, args);
                     break;
+                case CommandNames.STORE_ADD_ITEMS:
+                    HandleStoreAddItemsCommand(save, args);
+                    break;
                 default:
                     _logger.LogWarning("Unknown command: {cmd}", cmd);
                     break;
