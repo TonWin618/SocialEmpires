@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AngleSharp.Dom;
+using MediatR;
 using SocialEmpires.Events;
+using SocialEmpires.Models.Configs;
 using SocialEmpires.Models.Enums;
 using SocialEmpires.Models.PlayerSaves;
 using SocialEmpires.Services.Constants;
@@ -174,6 +176,15 @@ namespace SocialEmpires.Services
                     break;
                 case CommandNames.ACTIVATE:
                     HandleActivateCommand(save, args);
+                    break;
+                case CommandNames.DARTS_RESET:
+                    HandleDartsResetCommand(save, args);
+                    break;
+                case CommandNames.DARTS_SHOOT_BALLOON:
+                    HandleDartsShootBallonCommand(save, args);
+                    break;
+                case CommandNames.DARTS_NEW_FREE:
+                    HandleDartsNewFreeCommand(save, args);
                     break;
                 default:
                     _logger.LogWarning("Unknown command: {cmd}", cmd);
